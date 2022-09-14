@@ -1,2 +1,2 @@
-cp -af ../../docs/src/_build/html/* .
+cp -af ../../docs/_build/html/* .
 
