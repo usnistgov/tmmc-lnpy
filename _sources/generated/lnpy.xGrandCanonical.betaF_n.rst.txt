@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.betaF\_n
-=============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xGrandCanonical.betaF_n

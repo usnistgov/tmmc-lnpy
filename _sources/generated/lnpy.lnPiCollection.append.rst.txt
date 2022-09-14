@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.append
-==========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiCollection.append

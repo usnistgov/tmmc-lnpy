@@ -1,6 +1,0 @@
-﻿lnpy.lnPiCollection.spinodal
-============================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiCollection.spinodal

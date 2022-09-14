@@ -1,6 +1,0 @@
-lnpy.PhaseCreator.build\_phases\_mu
-===================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: PhaseCreator.build_phases_mu

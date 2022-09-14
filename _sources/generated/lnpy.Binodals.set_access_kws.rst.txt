@@ -1,6 +1,0 @@
-lnpy.Binodals.set\_access\_kws
-==============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Binodals.set_access_kws

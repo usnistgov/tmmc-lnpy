@@ -1,6 +1,0 @@
-lnpy.wFreeEnergyCollection.w\_min
-=================================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: wFreeEnergyCollection.w_min

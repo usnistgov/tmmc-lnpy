@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.nlnz
-========================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiCollection.nlnz

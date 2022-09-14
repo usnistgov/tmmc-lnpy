@@ -1,6 +1,0 @@
-lnpy.wFreeEnergyPhases.get\_dw
-==============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: wFreeEnergyPhases.get_dw

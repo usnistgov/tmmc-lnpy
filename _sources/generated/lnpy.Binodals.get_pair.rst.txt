@@ -1,6 +1,0 @@
-lnpy.Binodals.get\_pair
-=======================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Binodals.get_pair

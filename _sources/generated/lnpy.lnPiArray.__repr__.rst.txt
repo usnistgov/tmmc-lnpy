@@ -1,6 +1,0 @@
-lnpy.lnPiArray.\_\_repr\_\_
-===========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiArray.__repr__

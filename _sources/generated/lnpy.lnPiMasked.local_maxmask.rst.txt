@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.local\_maxmask
-==============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiMasked.local_maxmask

@@ -1,6 +1,0 @@
-lnpy.Spinodals.parent
-=====================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: Spinodals.parent

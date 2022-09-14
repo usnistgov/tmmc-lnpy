@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.extra\_kws
-==========================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiMasked.extra_kws

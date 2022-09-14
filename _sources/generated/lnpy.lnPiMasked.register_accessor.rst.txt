@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.register\_accessor
-==================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiMasked.register_accessor

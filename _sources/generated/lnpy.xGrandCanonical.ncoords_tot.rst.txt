@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.ncoords\_tot
-=================================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.ncoords_tot

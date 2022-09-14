@@ -1,6 +1,0 @@
-lnpy.BuildPhases\_mu.\_\_call\_\_
-=================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: BuildPhases_mu.__call__

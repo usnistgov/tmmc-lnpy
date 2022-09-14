@@ -1,6 +1,0 @@
-lnpy.PhaseCreator.\_\_repr\_\_
-==============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: PhaseCreator.__repr__

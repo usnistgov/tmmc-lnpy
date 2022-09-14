@@ -1,6 +1,0 @@
-lnpy.xCanonical.ncoords
-=======================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xCanonical.ncoords

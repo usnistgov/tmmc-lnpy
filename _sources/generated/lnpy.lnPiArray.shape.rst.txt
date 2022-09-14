@@ -1,6 +1,0 @@
-lnpy.lnPiArray.shape
-====================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiArray.shape

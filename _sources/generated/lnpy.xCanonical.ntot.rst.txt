@@ -1,6 +1,0 @@
-lnpy.xCanonical.ntot
-====================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xCanonical.ntot

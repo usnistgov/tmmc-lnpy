@@ -1,6 +1,0 @@
-lnpy.Spinodals.\_\_repr\_\_
-===========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Spinodals.__repr__

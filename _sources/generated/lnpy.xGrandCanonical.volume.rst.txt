@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.volume
-===========================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.volume

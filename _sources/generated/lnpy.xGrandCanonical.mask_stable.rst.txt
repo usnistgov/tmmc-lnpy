@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.mask\_stable
-=================================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.mask_stable

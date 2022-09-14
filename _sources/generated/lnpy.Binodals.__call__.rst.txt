@@ -1,6 +1,0 @@
-lnpy.Binodals.\_\_call\_\_
-==========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Binodals.__call__

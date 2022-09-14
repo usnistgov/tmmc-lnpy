@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.dens\_tot
-==============================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.dens_tot

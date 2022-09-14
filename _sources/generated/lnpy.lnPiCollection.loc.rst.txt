@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.loc
-=======================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiCollection.loc

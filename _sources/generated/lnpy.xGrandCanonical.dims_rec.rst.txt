@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.dims\_rec
-==============================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.dims_rec

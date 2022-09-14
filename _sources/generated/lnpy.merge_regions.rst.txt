@@ -1,6 +1,0 @@
-﻿lnpy.merge\_regions
-===================
-
-.. currentmodule:: lnpy
-
-.. autofunction:: merge_regions

@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.new\_like
-=============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiCollection.new_like

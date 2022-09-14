@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.from\_dataarray
-===============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiMasked.from_dataarray

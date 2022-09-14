@@ -1,6 +1,0 @@
-﻿lnpy.utils.distance\_matrix
-===========================
-
-.. currentmodule:: lnpy.utils
-
-.. autofunction:: distance_matrix

@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.list\_from\_masks
-=================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiMasked.list_from_masks

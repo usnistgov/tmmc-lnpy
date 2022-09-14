@@ -1,6 +1,0 @@
-lnpy.Segmenter.segment\_lnpi
-============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Segmenter.segment_lnpi

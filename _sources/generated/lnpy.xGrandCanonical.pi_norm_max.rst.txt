@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.pi\_norm\_max
-==================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xGrandCanonical.pi_norm_max

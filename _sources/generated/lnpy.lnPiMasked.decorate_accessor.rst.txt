@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.decorate\_accessor
-==================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiMasked.decorate_accessor

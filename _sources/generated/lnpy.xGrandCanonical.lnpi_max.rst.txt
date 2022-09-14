@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.lnpi\_max
-==============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xGrandCanonical.lnpi_max

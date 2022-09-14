@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.zeromax
-=======================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiMasked.zeromax

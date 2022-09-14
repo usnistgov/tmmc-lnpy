@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.stability\_append
-=====================================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiCollection.stability_append

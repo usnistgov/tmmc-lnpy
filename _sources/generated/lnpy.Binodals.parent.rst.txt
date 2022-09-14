@@ -1,6 +1,0 @@
-lnpy.Binodals.parent
-====================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: Binodals.parent

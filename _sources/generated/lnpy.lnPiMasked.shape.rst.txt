@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.shape
-=====================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiMasked.shape

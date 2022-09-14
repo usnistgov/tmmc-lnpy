@@ -1,6 +1,0 @@
-lnpy.Spinodals.append\_to\_parent
-=================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Spinodals.append_to_parent

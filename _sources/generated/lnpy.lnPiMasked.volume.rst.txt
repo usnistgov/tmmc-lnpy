@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.volume
-======================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiMasked.volume

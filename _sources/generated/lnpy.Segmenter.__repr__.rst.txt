@@ -1,6 +1,0 @@
-lnpy.Segmenter.\_\_repr\_\_
-===========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Segmenter.__repr__

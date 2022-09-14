@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.dtype
-=====================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiMasked.dtype

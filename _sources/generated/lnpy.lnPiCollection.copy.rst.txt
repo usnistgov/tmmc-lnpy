@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.copy
-========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiCollection.copy

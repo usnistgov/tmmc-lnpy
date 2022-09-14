@@ -1,6 +1,0 @@
-lnpy.wFreeEnergyCollection.\_\_repr\_\_
-=======================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: wFreeEnergyCollection.__repr__

@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.xce
-===================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiMasked.xce

@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.pi\_sum
-============================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.pi_sum

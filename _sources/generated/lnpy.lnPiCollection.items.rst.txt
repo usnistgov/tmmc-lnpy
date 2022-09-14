@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.items
-=========================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiCollection.items

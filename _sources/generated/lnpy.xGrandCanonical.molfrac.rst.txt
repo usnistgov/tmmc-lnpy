@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.molfrac
-============================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.molfrac

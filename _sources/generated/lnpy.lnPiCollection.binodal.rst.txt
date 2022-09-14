@@ -1,6 +1,0 @@
-﻿lnpy.lnPiCollection.binodal
-===========================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiCollection.binodal

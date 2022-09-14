@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.from\_list
-==============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiCollection.from_list

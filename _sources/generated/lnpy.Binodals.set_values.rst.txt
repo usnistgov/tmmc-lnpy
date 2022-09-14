@@ -1,6 +1,0 @@
-lnpy.Binodals.set\_values
-=========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Binodals.set_values

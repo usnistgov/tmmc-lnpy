@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.S
-======================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xGrandCanonical.S

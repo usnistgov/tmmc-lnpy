@@ -1,6 +1,0 @@
-lnpy.Spinodals.set\_access\_kws
-===============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: Spinodals.set_access_kws

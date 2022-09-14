@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.lnz
-========================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xGrandCanonical.lnz

@@ -1,6 +1,0 @@
-lnpy.lnPiArray.new\_like
-========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiArray.new_like

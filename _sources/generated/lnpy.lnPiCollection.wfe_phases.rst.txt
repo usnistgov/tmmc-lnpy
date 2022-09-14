@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.wfe\_phases
-===============================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: lnPiCollection.wfe_phases

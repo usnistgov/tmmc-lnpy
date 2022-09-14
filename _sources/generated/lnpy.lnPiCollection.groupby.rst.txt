@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.groupby
-===========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiCollection.groupby

@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.\_\_init\_\_
-================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiCollection.__init__

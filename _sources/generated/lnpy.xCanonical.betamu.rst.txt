@@ -1,6 +1,0 @@
-lnpy.xCanonical.betamu
-======================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xCanonical.betamu

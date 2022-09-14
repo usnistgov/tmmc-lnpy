@@ -1,6 +1,0 @@
-lnpy.wFreeEnergy.w\_argmin
-==========================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: wFreeEnergy.w_argmin

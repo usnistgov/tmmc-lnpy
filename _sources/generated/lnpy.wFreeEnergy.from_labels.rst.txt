@@ -1,6 +1,0 @@
-lnpy.wFreeEnergy.from\_labels
-=============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: wFreeEnergy.from_labels

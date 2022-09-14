@@ -1,6 +1,0 @@
-lnpy.wFreeEnergyCollection.get\_dwx
-===================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: wFreeEnergyCollection.get_dwx

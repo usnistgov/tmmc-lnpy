@@ -1,6 +1,0 @@
-lnpy.xCanonical.\_\_init\_\_
-============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xCanonical.__init__

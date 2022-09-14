@@ -1,6 +1,0 @@
-lnpy.lnPiCollection.xs
-======================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiCollection.xs

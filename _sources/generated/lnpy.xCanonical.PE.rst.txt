@@ -1,6 +1,0 @@
-lnpy.xCanonical.PE
-==================
-
-.. currentmodule:: lnpy
-
-.. autoproperty:: xCanonical.PE

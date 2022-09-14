@@ -1,6 +1,0 @@
-lnpy.lnPiMasked.edge\_distance
-==============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: lnPiMasked.edge_distance

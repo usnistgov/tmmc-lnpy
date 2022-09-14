@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.table
-==========================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xGrandCanonical.table

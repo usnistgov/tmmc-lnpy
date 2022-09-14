@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.var\_pi
-============================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xGrandCanonical.var_pi

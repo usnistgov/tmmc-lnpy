@@ -1,6 +1,0 @@
-lnpy.xGrandCanonical.edge\_distance
-===================================
-
-.. currentmodule:: lnpy
-
-.. automethod:: xGrandCanonical.edge_distance
