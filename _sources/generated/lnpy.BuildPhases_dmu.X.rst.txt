@@ -1,0 +1,6 @@
+lnpy.BuildPhases\_dmu.X
+=======================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: BuildPhases_dmu.X

@@ -1,0 +1,6 @@
+lnpy.wFreeEnergy.\_\_init\_\_
+=============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: wFreeEnergy.__init__

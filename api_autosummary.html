@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; tmmc-lnpy 999 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lnpy.lnPiArray" href="generated/lnpy.lnPiArray.html" />
+    <link rel="prev" title="Why lnpy?" href="notebooks/Basic_usage.html" />
+<link rel="stylesheet" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
+  <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js" type="text/javascript" defer="defer"></script>
+
+<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+<script type="text/javascript" src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Mark external (non-nist.gov) A tags with class "external"
+  //If the adress start with https and ends with nist.gov
+  var re_nist = new RegExp('^https?:\/\/((^\/)*\.)*nist\\.gov(\/|$)');
+  //Regex to find address that start with https
+  var re_absolute_address = new RegExp('^((https?:)?\/\/)');
+  $("a").each(function(){
+    var url=$(this).attr('href');
+    if(re_nist.test(url) || !re_absolute_address.test(url)){
+      $(this).addClass('local');
+    }else{
+      //This a href appears to be external, so tag it
+      $(this).addClass('external');
+    }
+  });
+  // Add leaveNotice to external A elements
+  $('a.external').leaveNotice();
+});
+</script>
+<link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> tmmc-lnpy
+          </a>
+              <div class="version">
+                999
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">tmmc-lnpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Basic_usage.html">Why lnpy?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Basic_usage.html#Usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Basic_usage.html#Collections-of-lnPi-Values">Collections of lnPi Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Basic_usage.html#Loading-examples">Loading examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Basic_usage.html#Single-component-system-with-phase-transitions.">Single component system with phase transitions.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Basic_usage.html#Calculation-Binodal-and-spinodal">Calculation Binodal and spinodal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Basic_usage.html#Multi-component-systems">Multi component systems</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#masked-lnpi-objects">Masked lnPi objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.lnPiArray.html">lnpy.lnPiArray</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.lnPiMasked.html">lnpy.lnPiMasked</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#collection-of-lnpi">Collection of lnPi</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.lnPiCollection.html">lnpy.lnPiCollection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ensemble-properties">Ensemble properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.xGrandCanonical.html">lnpy.xGrandCanonical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.xCanonical.html">lnpy.xCanonical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-phases">Multiple phases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#local-free-energy-calculation">Local free energy calculation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.wFreeEnergy.html">lnpy.wFreeEnergy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.wFreeEnergyCollection.html">lnpy.wFreeEnergyCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.wFreeEnergyPhases.html">lnpy.wFreeEnergyPhases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.merge_regions.html">lnpy.merge_regions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#segmentation">Segmentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.Segmenter.html">lnpy.Segmenter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.PhaseCreator.html">lnpy.PhaseCreator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.BuildPhases_mu.html">lnpy.BuildPhases_mu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.BuildPhases_dmu.html">lnpy.BuildPhases_dmu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.peak_local_max_adaptive.html">lnpy.peak_local_max_adaptive</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stability">Stability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.Spinodals.html">lnpy.Spinodals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.Binodals.html">lnpy.Binodals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.lnPiCollection.spinodal.html">lnpy.lnPiCollection.spinodal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.lnPiCollection.binodal.html">lnpy.lnPiCollection.binodal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.utils.mask_change_convention.html">lnpy.utils.mask_change_convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.utils.masks_change_convention.html">lnpy.utils.masks_change_convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.utils.labels_to_masks.html">lnpy.utils.labels_to_masks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.utils.masks_to_labels.html">lnpy.utils.masks_to_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lnpy.utils.distance_matrix.html">lnpy.utils.distance_matrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tmmc-lnpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api_autosummary.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h1>
+<section id="masked-lnpi-objects">
+<h2>Masked lnPi objects<a class="headerlink" href="#masked-lnpi-objects" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.lnPiArray.html#lnpy.lnPiArray" title="lnpy.lnPiArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiArray</span></code></a>(lnz, data[, state_kws, extra_kws, ...])</p></td>
+<td><p>Wrapper on lnPi lnPiArray</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>(lnz, base[, mask, copy])</p></td>
+<td><p>Masked array like wrapper for lnPi data.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="collection-of-lnpi">
+<h2>Collection of lnPi<a class="headerlink" href="#collection-of-lnpi" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.lnPiCollection.html#lnpy.lnPiCollection" title="lnpy.lnPiCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>(data[, index, xarray_output, ...])</p></td>
+<td><p>Wrapper around <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a> for collection of <a class="reference internal" href="generated/lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiMasked</span></code></a> objects.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ensemble-properties">
+<h2>Ensemble properties<a class="headerlink" href="#ensemble-properties" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.xGrandCanonical.html#lnpy.xGrandCanonical" title="lnpy.xGrandCanonical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xGrandCanonical</span></code></a>(parent)</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code> accessor to Grand Canonical properties from lnPi</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.xCanonical.html#lnpy.xCanonical" title="lnpy.xCanonical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xCanonical</span></code></a>(parent)</p></td>
+<td><p>Canonical ensemble properties</p></td>
+</tr>
+</tbody>
+</table>
+<section id="multiple-phases">
+<h3>Multiple phases<a class="headerlink" href="#multiple-phases" title="Permalink to this heading"></a></h3>
+</section>
+</section>
+<section id="local-free-energy-calculation">
+<h2>Local free energy calculation<a class="headerlink" href="#local-free-energy-calculation" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.wFreeEnergy.html#lnpy.wFreeEnergy" title="lnpy.wFreeEnergy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wFreeEnergy</span></code></a>(data, masks[, convention, ...])</p></td>
+<td><p>Analysis of local free energy <span class="math notranslate nohighlight">\(w = \beta f = - \ln \Pi\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.wFreeEnergyCollection.html#lnpy.wFreeEnergyCollection" title="lnpy.wFreeEnergyCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wFreeEnergyCollection</span></code></a>(parent)</p></td>
+<td><p>Calculate the transition free energies for a <a class="reference internal" href="generated/lnpy.lnPiCollection.html#lnpy.lnPiCollection" title="lnpy.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiCollection</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.wFreeEnergyPhases.html#lnpy.wFreeEnergyPhases" title="lnpy.wFreeEnergyPhases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wFreeEnergyPhases</span></code></a>(parent)</p></td>
+<td><p>Stripped down version of <a class="reference internal" href="generated/lnpy.wFreeEnergyCollection.html#lnpy.wFreeEnergyCollection" title="lnpy.wFreeEnergyCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">wFreeEnergyCollection</span></code></a> for single phase grouping.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.merge_regions.html#lnpy.merge_regions" title="lnpy.merge_regions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">merge_regions</span></code></a>(w_tran, w_min, masks[, ...])</p></td>
+<td><p>Merge labels where free energy energy barrier &lt; efac.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="segmentation">
+<h2>Segmentation<a class="headerlink" href="#segmentation" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.Segmenter.html#lnpy.Segmenter" title="lnpy.Segmenter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segmenter</span></code></a>([min_distance, peak_kws, ...])</p></td>
+<td><p>Data segmenter:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.PhaseCreator.html#lnpy.PhaseCreator" title="lnpy.PhaseCreator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PhaseCreator</span></code></a>(nmax[, nmax_peak, ref, ...])</p></td>
+<td><p>Helper class to create phases</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.BuildPhases_mu.html#lnpy.BuildPhases_mu" title="lnpy.BuildPhases_mu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BuildPhases_mu</span></code></a>(lnz, phase_creator)</p></td>
+<td><p>create phases from scalar value of mu for fixed value of mu for other species</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.BuildPhases_dmu.html#lnpy.BuildPhases_dmu" title="lnpy.BuildPhases_dmu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BuildPhases_dmu</span></code></a>(dlnz, phase_creator)</p></td>
+<td><p>Create phases from scalar value of mu at fixed value of dmu for other species</p></td>
+</tr>
+</tbody>
+</table>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.peak_local_max_adaptive.html#lnpy.peak_local_max_adaptive" title="lnpy.peak_local_max_adaptive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peak_local_max_adaptive</span></code></a>(data[, mask, ...])</p></td>
+<td><p>Find local max with fall backs min_distance and filter.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stability">
+<h2>Stability<a class="headerlink" href="#stability" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.Spinodals.html#lnpy.Spinodals" title="lnpy.Spinodals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spinodals</span></code></a>(collection)</p></td>
+<td><p>Methods for calculation locations of spinodal</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.Binodals.html#lnpy.Binodals" title="lnpy.Binodals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Binodals</span></code></a>(collection)</p></td>
+<td><p>Routines to calculate binodal.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.lnPiCollection.spinodal.html#lnpy.lnPiCollection.spinodal" title="lnpy.lnPiCollection.spinodal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiCollection.spinodal</span></code></a></p></td>
+<td><p>Methods for calculation locations of spinodal</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.lnPiCollection.binodal.html#lnpy.lnPiCollection.binodal" title="lnpy.lnPiCollection.binodal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiCollection.binodal</span></code></a></p></td>
+<td><p>Routines to calculate binodal.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.utils.mask_change_convention.html#lnpy.utils.mask_change_convention" title="lnpy.utils.mask_change_convention"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.mask_change_convention</span></code></a>(mask[, ...])</p></td>
+<td><p>convert an array from one 'mask' convention to another.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.utils.masks_change_convention.html#lnpy.utils.masks_change_convention" title="lnpy.utils.masks_change_convention"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.masks_change_convention</span></code></a>(masks[, ...])</p></td>
+<td><p>Perform convension change of sequence of masks</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.utils.labels_to_masks.html#lnpy.utils.labels_to_masks" title="lnpy.utils.labels_to_masks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.labels_to_masks</span></code></a>(labels[, features, ...])</p></td>
+<td><p>convert labels array to list of masks</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lnpy.utils.masks_to_labels.html#lnpy.utils.masks_to_labels" title="lnpy.utils.masks_to_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.masks_to_labels</span></code></a>(masks[, features, ...])</p></td>
+<td><p>convert list of masks to labels</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lnpy.utils.distance_matrix.html#lnpy.utils.distance_matrix" title="lnpy.utils.distance_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.distance_matrix</span></code></a>(mask[, convention])</p></td>
+<td><p>create matrix of distances from elements of mask to nearest background point</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="notebooks/Basic_usage.html" class="btn btn-neutral float-left" title="Why lnpy?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/lnpy.lnPiArray.html" class="btn btn-neutral float-right" title="lnpy.lnPiArray" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, William P. Krekelberg.
+      <span class="lastupdated">Last updated on 2022-09-14.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

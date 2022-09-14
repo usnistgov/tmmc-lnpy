@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.droplevel
+=============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.droplevel

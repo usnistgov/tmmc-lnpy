@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.nvec
+=========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xGrandCanonical.nvec

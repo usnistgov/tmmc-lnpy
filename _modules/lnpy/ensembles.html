@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lnpy.ensembles &mdash; tmmc-lnpy 999 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="stylesheet" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
+  <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js" type="text/javascript" defer="defer"></script>
+
+<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+<script type="text/javascript" src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Mark external (non-nist.gov) A tags with class "external"
+  //If the adress start with https and ends with nist.gov
+  var re_nist = new RegExp('^https?:\/\/((^\/)*\.)*nist\\.gov(\/|$)');
+  //Regex to find address that start with https
+  var re_absolute_address = new RegExp('^((https?:)?\/\/)');
+  $("a").each(function(){
+    var url=$(this).attr('href');
+    if(re_nist.test(url) || !re_absolute_address.test(url)){
+      $(this).addClass('local');
+    }else{
+      //This a href appears to be external, so tag it
+      $(this).addClass('external');
+    }
+  });
+  // Add leaveNotice to external A elements
+  $('a.external').leaveNotice();
+});
+</script>
+<link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> tmmc-lnpy
+          </a>
+              <div class="version">
+                999
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">tmmc-lnpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Basic_usage.html">Why lnpy?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Basic_usage.html#Usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Basic_usage.html#Collections-of-lnPi-Values">Collections of lnPi Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Basic_usage.html#Loading-examples">Loading examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Basic_usage.html#Single-component-system-with-phase-transitions.">Single component system with phase transitions.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Basic_usage.html#Calculation-Binodal-and-spinodal">Calculation Binodal and spinodal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Basic_usage.html#Multi-component-systems">Multi component systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_autosummary.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tmmc-lnpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>lnpy.ensembles</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lnpy.ensembles</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span><span class="p">,</span> <span class="n">wraps</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># import pandas as pd</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="kn">from</span> <span class="nn">.cached_decorators</span> <span class="kn">import</span> <span class="n">gcached_use_cache</span> <span class="k">as</span> <span class="n">gcached</span>
+<span class="kn">from</span> <span class="nn">.lnpidata</span> <span class="kn">import</span> <span class="n">MaskedlnPiDelayed</span><span class="p">,</span> <span class="n">lnPiMasked</span>
+<span class="kn">from</span> <span class="nn">.lnpiseries</span> <span class="kn">import</span> <span class="n">lnPiCollection</span>
+<span class="kn">from</span> <span class="nn">.maskedlnpi_legacy</span> <span class="kn">import</span> <span class="n">MaskedlnPiLegacy</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">dim_to_suffix_dataset</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1"># xlnPi wrapper</span>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_get_indices</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_get_range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_xrlnPiWrapper</span><span class="p">(</span>
+    <span class="n">shape</span><span class="p">,</span>
+    <span class="n">rec_name</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="n">n_name</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+    <span class="n">lnz_name</span><span class="o">=</span><span class="s2">&quot;lnz&quot;</span><span class="p">,</span>
+    <span class="n">comp_name</span><span class="o">=</span><span class="s2">&quot;component&quot;</span><span class="p">,</span>
+    <span class="n">phase_name</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">return</span> <span class="n">xlnPiWrapper</span><span class="p">(</span>
+        <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span>
+        <span class="n">rec_name</span><span class="o">=</span><span class="n">rec_name</span><span class="p">,</span>
+        <span class="n">n_name</span><span class="o">=</span><span class="n">n_name</span><span class="p">,</span>
+        <span class="n">lnz_name</span><span class="o">=</span><span class="n">lnz_name</span><span class="p">,</span>
+        <span class="n">comp_name</span><span class="o">=</span><span class="n">comp_name</span><span class="p">,</span>
+        <span class="n">phase_name</span><span class="o">=</span><span class="n">phase_name</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">xlnPiWrapper</span><span class="p">:</span>
+    <span class="n">_use_cache</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class just wraps lnPi with xarray functionality</span>
+
+<span class="sd">    Most likely, this shouldn&#39;t be accessed by the user.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">,</span>
+        <span class="n">rec_name</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+        <span class="n">n_name</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+        <span class="n">lnz_name</span><span class="o">=</span><span class="s2">&quot;lnz&quot;</span><span class="p">,</span>
+        <span class="n">comp_name</span><span class="o">=</span><span class="s2">&quot;component&quot;</span><span class="p">,</span>
+        <span class="n">phase_name</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="c1"># dimension names</span>
+        <span class="k">if</span> <span class="n">rec_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span> <span class="o">=</span> <span class="p">[</span><span class="n">rec_name</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_name</span> <span class="o">=</span> <span class="n">n_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_name</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dims_lnz</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lnz_name</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dims_comp</span> <span class="o">=</span> <span class="p">[</span><span class="n">comp_name</span><span class="p">]</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">coords_n</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">k</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+                <span class="n">_get_range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">dims</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;long_name&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$</span><span class="si">{}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">)}</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="p">}</span>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dims_n&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span>
+            <span class="s2">&quot;dims_lnz&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_lnz</span><span class="p">,</span>
+            <span class="s2">&quot;dims_comp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">,</span>
+            <span class="s2">&quot;dims_state&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_lnz</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;dims_rec&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ncoords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords_n</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">coords_n</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords_n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+            <span class="n">_get_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+            <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_comp</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_name</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ncoords_tot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords_n</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncoords</span><span class="p">(</span><span class="n">coords_n</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">wrap_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">coords_n</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">coords_n</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">coords_n</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">(</span><span class="o">*</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">wrap_lnpi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi</span><span class="p">,</span> <span class="n">coords_n</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_data</span><span class="p">(</span><span class="n">lnpi</span><span class="p">,</span> <span class="n">coords_n</span><span class="o">=</span><span class="n">coords_n</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">wrap_lnz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnz</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">lnz</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">wrap_lnpi_0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">lnpi_0</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># xlnPi</span>
+<span class="c1"># register xge property to collection classes</span>
+<span class="k">def</span> <span class="nf">xr_name</span><span class="p">(</span><span class="n">long_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unstack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    decorator to add name, longname to xarray output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_name</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_standard_attrs&quot;</span><span class="p">):</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_standard_attrs</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">long_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;long_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">long_name</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">unstack</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xarray_unstack</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">out</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
+
+
+<span class="nd">@lnPiMasked</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;xge&quot;</span><span class="p">)</span>
+<span class="nd">@MaskedlnPiDelayed</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;xge&quot;</span><span class="p">)</span>
+<span class="nd">@MaskedlnPiLegacy</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;xge&quot;</span><span class="p">)</span>
+<span class="nd">@lnPiCollection</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;xge&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">xge_accessor</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accessor to :class:`~lnpy.xGrandCanonical`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">xGrandCanonical</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="xGrandCanonical"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.html#lnpy.xGrandCanonical">[docs]</a><span class="k">class</span> <span class="nc">xGrandCanonical</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :class:`DataArray` accessor to Grand Canonical properties from lnPi</span>
+
+
+<span class="sd">    This class is primarily interacted with through the attributes ``xge`` attached</span>
+<span class="sd">    to :class:`~lnpy.lnPiMasked` and :class:`~lnpy.lnPiCollection`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="xGrandCanonical.__init__"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.__init__.html#lnpy.xGrandCanonical.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rec_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_concat_dim&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rec_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="n">get_xrlnPiWrapper</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">rec_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rec_name</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_use_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_use_cache&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_xarray_unstack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_xarray_unstack&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_standard_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">attrs</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="c1"># @gcached() to much memory</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_rec_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rec_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_index_dict</span><span class="p">(),</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_concat_dim</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span><span class="p">,</span>
+            <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_xarray_dot_kws</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_xarray_dot_kws&quot;</span><span class="p">,</span> <span class="p">{})</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ncoords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Particle number coordinates.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">ncoords</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ncoords_tot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Total number of particles coordinates&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">ncoords_tot</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims_n</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dimension(s) corresponding to  number of particles&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">dims_n</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims_lnz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Dimension corresponding to values of :math:`\ln z`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">dims_lnz</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims_comp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dimension of component number&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">dims_comp</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dimensions corresponding to &#39;state variables&#39;&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;dims_state&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims_rec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dimensions for replicates&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">dims_rec</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">beta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Inverse temperature :math:`\beta = 1 / (k_{\rm B} T)`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;System volume :math:`V`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">]</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">coords_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims_state</span><span class="p">}</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta {\bf \mu}$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betamu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled checmical potential :math:`\beta \mu`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">wrap_lnz</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_lnz_tot</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rec_coords</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\ln\beta{\bf\mu}$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">lnz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Log of activity :math:`\ln z``&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betamu</span>
+
+<div class="viewcode-block" id="xGrandCanonical.lnpi"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.lnpi.html#lnpy.xGrandCanonical.lnpi">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\ln \Pi(n,\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">unstack</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">lnpi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;DataArray view of :math:`\ln \Pi(N)`</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This value is always in &#39;stacked&#39; form.</span>
+<span class="sd">        You must manually unstack it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">wrap_lnpi</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_lnpi_tot</span><span class="p">(</span><span class="n">fill_value</span><span class="p">),</span>
+            <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rec_coords</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span><span class="p">,</span>
+        <span class="p">)</span>  <span class="c1"># .assign_coords(**self._rec_coords)</span></div>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_pi_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pi_norm</span><span class="p">,</span> <span class="n">pi_sum</span><span class="p">,</span> <span class="n">lnpi_zero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_pi_params</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+
+        <span class="n">pi_sum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">wrap_lnpi_0</span><span class="p">(</span>
+            <span class="n">pi_sum</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pi_sum&quot;</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rec_coords</span>
+        <span class="p">)</span>
+
+        <span class="n">lnpi_zero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">wrap_lnpi_0</span><span class="p">(</span>
+            <span class="n">lnpi_zero</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lnpi_zero&quot;</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rec_coords</span>
+        <span class="p">)</span>
+
+        <span class="n">pi_norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">wrap_lnpi</span><span class="p">(</span>
+            <span class="n">pi_norm</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rec_coords</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pi_norm</span><span class="p">,</span> <span class="n">pi_sum</span><span class="p">,</span> <span class="n">lnpi_zero</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pi_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Normalized value of :math:`\Pi_{\rm norm}(N) = \Pi(N) / \sum_N \Pi(N)`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pi_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pi_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sum of unnormalized :math:`\Pi(N)`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pi_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_lnpi_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pi_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lnpi_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;:math:`\ln \Pi_{\rm norm}(N)`.&quot;&quot;&quot;</span>
+        <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pi</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_prop_from_extra_kws</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_series&quot;</span><span class="p">):</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">prop</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">extra_kws</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2"> not found in extra_kws&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">extra_kws</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">prop</span>
+
+    <span class="k">def</span> <span class="nf">_array_or_callable_to_xarray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">allow_extra_kws</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">allow_extra_kws</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_prop_from_extra_kws</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">_mean_pi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_xarray_dot_kws</span><span class="p">)</span>
+
+<div class="viewcode-block" id="xGrandCanonical.mean_pi"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.mean_pi.html#lnpy.xGrandCanonical.mean_pi">[docs]</a>    <span class="nd">@xr_name</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mean_pi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates :math:`\overline{x} = \sum_N \Pi_{\rm norm}(N) x(N)`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : array, callable, or str</span>
+<span class="sd">            If callable, should have form ``x = x(self, *args, **kwargs)``.</span>
+<span class="sd">            If string, then set `x = self.parent.extra_kws[x]`.</span>
+<span class="sd">            Otherwise, should be an array of same shape as single lnPi.</span>
+<span class="sd">        *args, **kwargs</span>
+<span class="sd">            Extra arguments to `x` if passing callable</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ave : DataArray</span>
+<span class="sd">        x can be an array or a callable</span>
+
+<span class="sd">        f(self, *args, **kwargs)</span>
+
+<span class="sd">        if x is not an xr.DataArray, try to convert it to one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_array_or_callable_to_xarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_central_moment_bar</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">xmom</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">ymom</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">xmom_dim</span><span class="o">=</span><span class="s2">&quot;xmom&quot;</span><span class="p">,</span>
+        <span class="n">ymom_dim</span><span class="o">=</span><span class="s2">&quot;ymom&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate central moments of the form sum(Pi * (\bar{x} - &lt;\bar{x}&gt;) ** n)</span>
+
+<span class="sd">        Note that if you pass in the</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">_get_dx</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">mom</span><span class="p">,</span> <span class="n">mom_dim</span><span class="p">):</span>
+            <span class="n">xx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_array_or_callable_to_xarray</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mom</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">mom</span> <span class="o">=</span> <span class="p">[</span><span class="n">mom</span><span class="p">]</span>
+
+            <span class="n">mom</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">mom</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">mom_dim</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="n">mom_dim</span><span class="p">:</span> <span class="n">mom</span><span class="p">})</span>
+
+            <span class="k">return</span> <span class="p">(</span><span class="n">xx</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span> <span class="o">**</span> <span class="n">mom</span>
+
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">_get_dx</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xmom</span><span class="p">,</span> <span class="n">xmom_dim</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">_get_dx</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ymom</span><span class="p">,</span> <span class="n">ymom_dim</span><span class="p">)</span>
+
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dy</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span>
+
+<div class="viewcode-block" id="xGrandCanonical.var_pi"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.var_pi.html#lnpy.xGrandCanonical.var_pi">[docs]</a>    <span class="k">def</span> <span class="nf">var_pi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate Grand Canonical variance from canonical properties.</span>
+
+<span class="sd">        Given x(N) and y(N), calculate</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            {\rm var}(x, y) = \overline{(x - \overline{x}) (y - \overline{y})}</span>
+
+<span class="sd">        ``x`` and ``y`` can be arrays, or callables, in which case:</span>
+<span class="sd">        ``x = x(self, *args, **kwargs)``</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        :math:`mean_pi`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># x_mean = self.mean_pi(x)</span>
+        <span class="c1"># if y is None:</span>
+        <span class="c1">#     y = x</span>
+        <span class="c1"># if y is x:</span>
+        <span class="c1">#     y_mean = x_mean</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     if callable(y):</span>
+        <span class="c1">#         y = y(self, *args, **kwargs)</span>
+        <span class="c1">#     y_mean = self.mean_pi(y)</span>
+        <span class="c1"># return self.mean_pi((x - x_mean) * (y - y_mean))</span>
+
+        <span class="c1"># this cuts down on memory usage</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">yy</span> <span class="o">=</span> <span class="n">xx</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">yy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_xarray_dot_kws</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.pipe"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.pipe.html#lnpy.xGrandCanonical.pipe">[docs]</a>    <span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply function to `self`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;${\bf n}(\mu,V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">nvec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Average number of particles of each component :math:`\overline{{\bf N}}`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncoords</span><span class="p">)</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$n(\mu,V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ntot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Average total number of particles :math:`\overline{N}`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncoords_tot</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;${\bf x}(\mu,V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">molfrac</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Average molfrac for each components :math:`{\bf x} = \overline{{\bf N}} / N`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvec</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">))</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$var[{\bf n}(\mu,V,T)]$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">nvec_var</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Variance in particle number :math:`{\rm var}\, \bf{N}`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_pi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncoords</span><span class="p">)</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$var[n(\mu,V,T)]$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ntot_var</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Variance in total number of particles :math:`{\rm var}\, N`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_pi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncoords_tot</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;${\bf \rho}(\mu,V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">dens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Density of each component :math:`{\bf \rho} = \overline{{\bf N}} / V`&quot;&quot;&quot;</span>
+        <span class="c1"># NOTE: keep this here because of some internal calculations</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvec</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\rho(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;total_density&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">dens_tot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Total density :math:`\overline{N} / V`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="xGrandCanonical.max"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.max.html#lnpy.xGrandCanonical.max">[docs]</a>    <span class="k">def</span> <span class="nf">max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;:math:`\max_N \ln \Pi(N)`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lnpi</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">)</span></div>
+
+    <span class="c1"># def argmax(self, *args, **kwargs):</span>
+    <span class="c1">#     return np.array(</span>
+    <span class="c1">#         [x.local_argmax(*args, **kwargs) for x in self._parent])</span>
+
+    <span class="c1"># @xr_name(&#39;distance from upper edge&#39;)</span>
+    <span class="c1"># def edge_distance(self, ref, *args, **kwargs):</span>
+    <span class="c1">#     &quot;&quot;&quot;distance from endpoint&quot;&quot;&quot;</span>
+
+    <span class="c1">#     return xr.DataArray([x.edge_distance(ref) for x in self._parent],</span>
+    <span class="c1">#                         dims=self.dims_rec,</span>
+    <span class="c1">#                         coords=self._rec_coords)</span>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_argmax_indexer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">idx_flat</span> <span class="o">=</span> <span class="n">xx</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">indexer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">idx_flat</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">return</span> <span class="n">indexer</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_argmax_indexer_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">k</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_concat_dim</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argmax_indexer</span><span class="p">())</span>
+        <span class="p">}</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_sample_indexer_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_concat_dim</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+                <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)),</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_concat_dim</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_sample_argmax_indexer_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_argmax_indexer_dict</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_sample_indexer_dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="xGrandCanonical.lnpi_max"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.lnpi_max.html#lnpy.xGrandCanonical.lnpi_max">[docs]</a>    <span class="k">def</span> <span class="nf">lnpi_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_n_coords</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;maximum value of :math:`\max_N \ln \Pi(N, ...)`&quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lnpi</span><span class="p">(</span><span class="n">fill_value</span><span class="p">)</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_sample_argmax_indexer_dict</span><span class="p">)</span>
+
+        <span class="c1"># NOTE : This assumes each n value corresponds to index</span>
+        <span class="c1"># alternatively, could put through filter like</span>
+        <span class="c1"># coords = {k : out[k].isel(**{k : v}) for k, v in self._argmax_index_dict.items()}</span>
+
+        <span class="k">if</span> <span class="n">add_n_coords</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_argmax_indexer_dict</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.pi_norm_max"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.pi_norm_max.html#lnpy.xGrandCanonical.pi_norm_max">[docs]</a>    <span class="k">def</span> <span class="nf">pi_norm_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">add_n_coords</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Maximum value :math:`\max_N \Pi_{\rm norm}(N, meta)`&quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_sample_argmax_indexer_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">add_n_coords</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_argmax_indexer_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.argmax"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.argmax.html#lnpy.xGrandCanonical.argmax">[docs]</a>    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_argmax_indexer</span><span class="p">())</span><span class="o">.</span><span class="n">T</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.edge_distance"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.edge_distance.html#lnpy.xGrandCanonical.edge_distance">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="s2">&quot;distance from upper edge&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">edge_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Distance from argmax(lnPi) to endpoint&quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">edge_distance_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_argmax_indexer</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_rec</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rec_coords</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.edge_distance_val"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.edge_distance_val.html#lnpy.xGrandCanonical.edge_distance_val">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="s2">&quot;distance from edge of cut value&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">edge_distance_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_frac</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calulate min distance from where self.pi_norm &gt; val to edge</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ref : lnPiMasked</span>
+<span class="sd">            reference object to consider.</span>
+<span class="sd">        val : float</span>
+
+<span class="sd">        max_frac : bool, optional</span>
+<span class="sd">        if not None, val = max_frac * self.pi_norm.max(self.dims_n)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">max_frac</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">max_frac</span> <span class="o">&lt;</span> <span class="mf">1.0</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_norm_max</span><span class="p">(</span><span class="n">add_n_coords</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_frac</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+        <span class="n">e</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">edge_distance_matrix</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_norm</span> <span class="o">&gt;</span> <span class="n">val</span>
+        <span class="k">return</span> <span class="n">e</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">)</span></div>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta \Omega(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;grand_potential&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_betaOmega</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">lnpi_zero</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lnpi_zero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lnpi_zero</span>
+        <span class="k">return</span> <span class="n">lnpi_zero</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pi_sum</span><span class="p">)</span>
+
+<div class="viewcode-block" id="xGrandCanonical.betaOmega"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betaOmega.html#lnpy.xGrandCanonical.betaOmega">[docs]</a>    <span class="k">def</span> <span class="nf">betaOmega</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled grand potential :math:`\beta \Omega`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lnpi_zero : float or None</span>
+<span class="sd">            if None, lnpi_zero = self.data.ravel()[0]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Note.  Put calculation in _betaOmega</span>
+        <span class="c1"># because so many other things</span>
+        <span class="c1"># call it with lnpi_zero set to None</span>
+        <span class="c1"># so end up with copies of the same</span>
+        <span class="c1"># thing in cache</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betaOmega</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;${\rm PE}(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;potential_energy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">PE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Potential energy :math:`\overline{PE}`&quot;&quot;&quot;</span>
+
+        <span class="c1"># if betaPE available, use that:</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_series&quot;</span><span class="p">):</span>
+            <span class="n">PE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">extra_kws</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">PE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">extra_kws</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">PE</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;must set &quot;PE&quot; in &quot;extra_kws&quot; of lnPiMasked&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">PE</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">PE</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="n">PE</span><span class="p">)</span>
+
+<div class="viewcode-block" id="xGrandCanonical.betaF_alt"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betaF_alt.html#lnpy.xGrandCanonical.betaF_alt">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta F(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;helmholtz_free_energy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaF_alt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">betaF_can</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Alternate scaled Helmholtz free energy :math:`\beta \overline{F}`.</span>
+
+<span class="sd">        Calculated using</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \beta \overline{F} = \sum_N [\Pi(N) \beta F(N) + C(N)]</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        betaF_can : array-like</span>
+<span class="sd">            Value of :math:`F(N)`</span>
+<span class="sd">        correction : bool, default=True</span>
+<span class="sd">            If True, :math:`C(N) = \ln \Pi(N) `.  Otherwise, :math:`C=0`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">correction</span><span class="p">:</span>
+            <span class="n">betaF_can</span> <span class="o">=</span> <span class="n">betaF_can</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lnpi_norm</span>
+        <span class="c1"># return (self.pi_norm * betaF_can).sum(self.dims_n)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_pi</span><span class="p">(</span><span class="n">betaF_can</span><span class="p">)</span></div>
+
+    <span class="c1">################################################################################</span>
+    <span class="c1"># Other properties</span>
+<div class="viewcode-block" id="xGrandCanonical.betaOmega_n"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betaOmega_n.html#lnpy.xGrandCanonical.betaOmega_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta\omega(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;grand_potential_per_particle&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaOmega_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Grand potential per particle :math:`\beta \Omega / \overline{N}`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaOmega</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div>
+
+    <span class="c1"># @gcached(prop=False)</span>
+<div class="viewcode-block" id="xGrandCanonical.betapV"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betapV.html#lnpy.xGrandCanonical.betapV">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta p(\mu,V,T)V$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betapV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;:math:`\beta p V = - \beta \Omega`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">betaOmega</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="s2">&quot;mask_stable&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;True where state is most stable&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">mask_stable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Masks are True where values are stable. Only works for unstacked data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xarray_unstack</span><span class="p">:</span>
+            <span class="c1"># raise Value&#39;only mask with unstack&#39;)</span>
+            <span class="n">pv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">betapV</span><span class="p">()</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_concat_dim</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">pv</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s2">&quot;phase&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">x</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">sample</span><span class="o">=</span><span class="n">pv</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pv</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;sample&quot;</span><span class="p">]]</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betapV</span><span class="p">()</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s2">&quot;phase&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># @gcached(prop=False)</span>
+<div class="viewcode-block" id="xGrandCanonical.Z"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.Z.html#lnpy.xGrandCanonical.Z">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta p(\mu,V,T)/\rho$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;compressibility_factor&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">Z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compressibility factor :math:`\beta p / \rho`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">betaOmega_n</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.pressure"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.pressure.html#lnpy.xGrandCanonical.pressure">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$p(\mu,V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Pressure :math:`p = -\Omega / V`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betapV</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">]))</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;${\rm PE}(\mu,V,T)/n$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;potential_energy_per_particle&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">PE_n</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Potential energy per particle :math:`\overline{PE}/\overline{N}`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PE</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span>
+
+<div class="viewcode-block" id="xGrandCanonical.table"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.table.html#lnpy.xGrandCanonical.table">[docs]</a>    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">default_keys</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;nvec&quot;</span><span class="p">,</span> <span class="s2">&quot;betapV&quot;</span><span class="p">,</span> <span class="s2">&quot;PE_n&quot;</span><span class="p">),</span>
+        <span class="n">ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mask_stable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dim_to_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create :class:`xarray.Dataset` of calculated properties.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        keys : sequence of str, optional</span>
+<span class="sd">            keys of attributes or methods of `self` to include in ouput</span>
+<span class="sd">        default_keys : sequence of str</span>
+<span class="sd">            Default keys to consider.</span>
+<span class="sd">        ref : lnPiMasked, optional</span>
+<span class="sd">            If calculating `edge_distastance`, need a reference :class:`~lnpy.lnPiMasked` object.</span>
+<span class="sd">        mask_stable : bool, default=False</span>
+<span class="sd">            If True, remove any unstable values</span>
+<span class="sd">        dim_to_suffix : sequence of hashables, optional</span>
+<span class="sd">            dimensions to remove from ouput.  These are instead added as suffix to variable names</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ds : Dataset</span>
+<span class="sd">            Contianing all the calculated properties in a single object</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The results can be easily convert to a :class:`pandas.DataFrame` using ``ds.to_frame()``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_distance</span><span class="p">(</span><span class="n">ref</span><span class="p">))</span>
+
+        <span class="k">def</span> <span class="nf">_process_keys</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">_process_keys</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span> <span class="o">+</span> <span class="n">_process_keys</span><span class="p">(</span><span class="n">default_keys</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;must specify some keys or default_keys to use&quot;</span><span class="p">)</span>
+
+        <span class="c1"># only unique keys</span>
+        <span class="c1"># this preserves order</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">()</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;lnz&quot;</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="c1"># if including property lnz, then drop lnz_0, lnz_1,...</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">&quot;lnz&quot;</span><span class="p">][</span><span class="s2">&quot;dims_lnz&quot;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">mask_stable</span><span class="p">:</span>
+            <span class="c1"># mask_stable inserts nan in non-stable</span>
+            <span class="n">mask_stable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask_stable</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xarray_unstack</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask_stable</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">phase</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">phase</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">out</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask_stable</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s2">&quot;phase&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">phase</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">phase</span><span class="p">[</span><span class="n">mask_stable</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="s2">&quot;phase&quot;</span><span class="p">)])</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dim_to_suffix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim_to_suffix</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">dim_to_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="n">dim_to_suffix</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dim_to_suffix</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">dim_to_suffix_dataset</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta G(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;Gibbs_free_energy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaG</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Gibbs free energy :math:`\beta G = \sum_i \beta \mu_i \overline{N}_i`.&quot;&quot;&quot;</span>
+        <span class="c1"># return self.betamu.pipe(lambda betamu: (betamu * self.nvec).sum(betamu.dims_comp))</span>
+        <span class="c1"># return (self.betamu * self.nvec).sum(self.dims_comp)</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">betamu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvec</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_xarray_dot_kws</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta G(\mu,V,T)/n$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;Gibbs_free_energy_per_particle&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaG_n</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Gibbs free energy per particle :math:`\beta G / \overline{N}`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaG</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span>
+
+<div class="viewcode-block" id="xGrandCanonical.betaF"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betaF.html#lnpy.xGrandCanonical.betaF">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta F(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;helmholtz_free_energy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Helmholtz free energy :math:`\beta F = \beta \Omega + \beta G`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaOmega</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaG</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.betaF_n"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betaF_n.html#lnpy.xGrandCanonical.betaF_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;$\beta F(\mu,V,T)/n$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;helmholtz_free_energy_per_particle&quot;</span>
+    <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaF_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Helmholtz free enenergy per particle :math:`\beta F / \overline{N}`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaF</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.betaE"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betaE.html#lnpy.xGrandCanonical.betaE">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta E(\mu,V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;total_energy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled total energy :math:`\beta E = \beta \overline{PE} + \beta \overline{KE}`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ndim</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PE</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.betaE_n"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.betaE_n.html#lnpy.xGrandCanonical.betaE_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta E(\mu,V,T)/ n$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;total_energy_per_particle&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaE_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled total energy per particle :math:`\beta E / \overline{N}`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaE</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.S"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.S.html#lnpy.xGrandCanonical.S">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$S(\mu,V,T) / k_{\rm B}$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;entropy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">S</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled entropy :math:`S / k_{\rm B} = \beta E - \beta F`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaE</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaF</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xGrandCanonical.S_n"><a class="viewcode-back" href="../../generated/lnpy.xGrandCanonical.S_n.html#lnpy.xGrandCanonical.S_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$S(\mu,V,T)/(n kB)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;entropy_per_particle&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">S_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled entropy per particle :math:`S / (N k_{\rm B})`.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">,</span> <span class="n">ndim</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div></div>
+
+
+<span class="c1"># NOTE: Using function accessor to override the docstring</span>
+<span class="nd">@lnPiMasked</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;xce&quot;</span><span class="p">)</span>
+<span class="nd">@MaskedlnPiDelayed</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;xce&quot;</span><span class="p">)</span>
+<span class="nd">@MaskedlnPiLegacy</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;xce&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">xce_accessor</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Accessor to :class:`~lnpy.xCanonical`&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">xCanonical</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="xCanonical"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.html#lnpy.xCanonical">[docs]</a><span class="k">class</span> <span class="nc">xCanonical</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Canonical ensemble properties</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parent : lnPiMasked</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="xCanonical.__init__"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.__init__.html#lnpy.xCanonical.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">xge</span></div>
+
+<div class="viewcode-block" id="xCanonical.lnpi"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.lnpi.html#lnpy.xCanonical.lnpi">[docs]</a>    <span class="k">def</span> <span class="nf">lnpi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;DataArray view of :math:`\ln Pi(N)`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">lnpi</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="n">fill_value</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_xarray_unstack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_xarray_unstack&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">ncoords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Coordinate vector `dims_n`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">ncoords</span>
+            <span class="c1"># NOTE: if don&#39;t use &#39;.values&#39;, then get extra coords don&#39;t want</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">lnpi</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nvec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Number of particles for each components :math:`{\bf N}`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncoords</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;nvec&quot;</span><span class="p">)</span>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">ntot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Total number of particles :math:`N`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncoords</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">)</span>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta F({\bf n},V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;helmholtz_free_energy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_betaF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helmholtz free energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">xge</span>
+
+        <span class="k">if</span> <span class="n">lnpi_zero</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lnpi_zero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># lnpi_zero = x.lnpi_zero</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">lnpi</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="o">-</span> <span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">ncoords</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">betamu</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="o">**</span><span class="n">x</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">coords_n</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dims_lnz</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_standard_attrs</span><span class="p">)</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="xCanonical.betaF"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betaF.html#lnpy.xCanonical.betaF">[docs]</a>    <span class="k">def</span> <span class="nf">betaF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Helmoltz free energy :math:`\beta F`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betaF</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xCanonical.betaF_n"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betaF_n.html#lnpy.xCanonical.betaF_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;$\beta F({\bf n},V,T)/n$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;helmholtz_free_energy_per_particle&quot;</span>
+    <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaF_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Helmoltz free energy per particle :math:`\beta F / N`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaF</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div>
+
+    <span class="nd">@gcached</span><span class="p">()</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;${\rm PE}({\bf n},V,T)/n$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;potential_energy&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">PE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Internal Energy :math:`PE`&quot;&quot;&quot;</span>
+        <span class="c1"># if betaPE available, use that:</span>
+        <span class="n">PE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">extra_kws</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">PE</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;must set &quot;PE&quot; in &quot;extra_kws&quot; of lnPiMasked&#39;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_wrapper</span><span class="o">.</span><span class="n">coords_n</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">state_kws</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">PE</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dims_n</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_standard_attrs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;${\rm PE}({\bf n},V,T)/n$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;potential_energy_per_particle&quot;</span>
+    <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">PE_n</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Internal energy per particle :math:`PE / N`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PE</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span>
+
+<div class="viewcode-block" id="xCanonical.betaE"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betaE.html#lnpy.xCanonical.betaE">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta E({\bf n},V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled total energy :math:`\beta E = \beta PE + \beta KE`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ndim</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">PE</span></div>
+
+<div class="viewcode-block" id="xCanonical.betaE_n"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betaE_n.html#lnpy.xCanonical.betaE_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta E({\bf n},V,T)/n$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaE_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Scaled total energy per particle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaE</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div>
+
+<div class="viewcode-block" id="xCanonical.S"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.S.html#lnpy.xCanonical.S">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$S({\bf n},V,T)/k_{\rm B}$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">S</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Entropy :math:`S / k_{\rm B}`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaE</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaF</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xCanonical.S_n"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.S_n.html#lnpy.xCanonical.S_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$S({\bf n},V,T)/(n k_{rm B})$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">S_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Entropy per particle :math:`S / (N k_{\rm B})`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="n">ndim</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta {\bf\mu}({bf n},V,T)$&quot;</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;absolute_activity&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_betamu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">betaF</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">dims_n</span><span class="p">],</span>
+            <span class="n">dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">dims_comp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">_standard_attrs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="xCanonical.betamu"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betamu.html#lnpy.xCanonical.betamu">[docs]</a>    <span class="k">def</span> <span class="nf">betamu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled chemical potential :math:`\beta \mu`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betamu</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;${\bf \rho}({\bf n},V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">dens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Density :math:`\rho = N / V`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncoords</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">volume</span>
+
+    <span class="nd">@gcached</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta\Omega({\bf n},V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_betaOmega</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        beta * Omega = betaF - lnz .dot. N</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaF</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">betamu</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncoords</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_xge</span><span class="o">.</span><span class="n">dims_comp</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="xCanonical.betaOmega"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betaOmega.html#lnpy.xCanonical.betaOmega">[docs]</a>    <span class="k">def</span> <span class="nf">betaOmega</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Grand Potential :math:`\beta \Omega`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betaOmega</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xCanonical.betaOmega_n"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betaOmega_n.html#lnpy.xCanonical.betaOmega_n">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta\Omega({\bf n},V,T)/n$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betaOmega_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scaled Grand potential per particle, :math:`\beta\Omega / N`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaOmega</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntot</span></div>
+
+<div class="viewcode-block" id="xCanonical.betapV"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.betapV.html#lnpy.xCanonical.betapV">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta p({\bf n},V,T)V$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">betapV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;:math:`\beta p V = -\beta \Omega`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">betaOmega</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xCanonical.Z"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.Z.html#lnpy.xCanonical.Z">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta p({\bf n},V,T)/\rho$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">Z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compressibility :math:`Z = \beta p / \rho = pV / (k_{\rm B} T)`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">betaOmega_n</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xCanonical.pressure"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.pressure.html#lnpy.xCanonical.pressure">[docs]</a>    <span class="nd">@xr_name</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$p({\bf n},V,T)$&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lnpi_zero</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Pressure :math:`p = -\Omega / V`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">betapV</span><span class="p">(</span><span class="n">lnpi_zero</span><span class="p">)</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">volume</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="xCanonical.table"><a class="viewcode-back" href="../../generated/lnpy.xCanonical.table.html#lnpy.xCanonical.table">[docs]</a>    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">default_keys</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;betamu&quot;</span><span class="p">,</span> <span class="s2">&quot;betapV&quot;</span><span class="p">,</span> <span class="s2">&quot;PE_n&quot;</span><span class="p">,</span> <span class="s2">&quot;betaF_n&quot;</span><span class="p">),</span>
+        <span class="n">dim_to_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create Dataset from attributes/methods of `self`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        keys : sequence of str</span>
+<span class="sd">            Names of attributes/methods to access</span>
+<span class="sd">        default_keys : sequence of str</span>
+<span class="sd">            Default keys to access.</span>
+<span class="sd">        dim_to_suffix : str, sequence of str, optional</span>
+<span class="sd">            If passed, convert dimenensions in `dim_to_suffix` from dimensions in output to suffixes to variable names</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        table : Dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">def</span> <span class="nf">_process_keys</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">_process_keys</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span> <span class="o">+</span> <span class="n">_process_keys</span><span class="p">(</span><span class="n">default_keys</span><span class="p">)</span>
+
+        <span class="c1"># loop over unique keys only, in order</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">()</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dim_to_suffix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim_to_suffix</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">dim_to_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="n">dim_to_suffix</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dim_to_suffix</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">dim_to_suffix_dataset</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, William P. Krekelberg.
+      <span class="lastupdated">Last updated on 2022-09-14.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

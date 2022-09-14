@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.register\_accessor\_flat
+============================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.register_accessor_flat

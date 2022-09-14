@@ -1,0 +1,6 @@
+lnpy.BuildPhases\_mu.phase\_creator
+===================================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: BuildPhases_mu.phase_creator

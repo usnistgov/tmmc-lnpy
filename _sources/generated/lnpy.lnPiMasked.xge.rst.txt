@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.xge
+===================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiMasked.xge

@@ -1,0 +1,6 @@
+lnpy.Segmenter.watershed
+========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Segmenter.watershed

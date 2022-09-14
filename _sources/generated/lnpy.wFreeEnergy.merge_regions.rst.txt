@@ -1,0 +1,6 @@
+lnpy.wFreeEnergy.merge\_regions
+===============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: wFreeEnergy.merge_regions

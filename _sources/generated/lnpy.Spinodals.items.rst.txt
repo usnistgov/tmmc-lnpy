@@ -1,0 +1,6 @@
+lnpy.Spinodals.items
+====================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: Spinodals.items

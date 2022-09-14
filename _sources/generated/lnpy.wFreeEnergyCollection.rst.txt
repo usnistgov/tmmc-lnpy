@@ -1,0 +1,50 @@
+﻿lnpy.wFreeEnergyCollection
+==========================
+
+.. currentmodule:: lnpy
+
+.. autoclass:: wFreeEnergyCollection
+   :show-inheritance:
+
+   
+   ..
+      .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~wFreeEnergyCollection.__init__
+      ~wFreeEnergyCollection.get_dw
+      ~wFreeEnergyCollection.get_dwx
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ~wFreeEnergyCollection.dw
+      ~wFreeEnergyCollection.dwx
+      ~wFreeEnergyCollection.w_argmin
+      ~wFreeEnergyCollection.w_argtran
+      ~wFreeEnergyCollection.w_min
+      ~wFreeEnergyCollection.w_tran
+   
+   
+
+   
+   
+   .. rubric:: Dunder Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~wFreeEnergyCollection.__repr__
+   
+   

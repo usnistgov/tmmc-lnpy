@@ -1,0 +1,6 @@
+lnpy.PhaseCreator.build\_phases\_dmu
+====================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: PhaseCreator.build_phases_dmu

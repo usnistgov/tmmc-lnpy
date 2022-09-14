@@ -1,0 +1,6 @@
+lnpy.wFreeEnergyCollection.dwx
+==============================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: wFreeEnergyCollection.dwx

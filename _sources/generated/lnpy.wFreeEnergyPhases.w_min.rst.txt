@@ -1,0 +1,6 @@
+lnpy.wFreeEnergyPhases.w\_min
+=============================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: wFreeEnergyPhases.w_min

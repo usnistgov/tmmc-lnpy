@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.betamu
+======================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiMasked.betamu

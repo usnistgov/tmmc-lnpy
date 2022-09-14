@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.\_\_repr\_\_
+=================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xGrandCanonical.__repr__

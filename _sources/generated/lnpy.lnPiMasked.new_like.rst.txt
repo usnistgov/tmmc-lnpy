@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.new\_like
+=========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.new_like

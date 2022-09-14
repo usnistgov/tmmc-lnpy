@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.wrap\_list\_results
+=======================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.wrap_list_results

@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.iloc
+========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiCollection.iloc

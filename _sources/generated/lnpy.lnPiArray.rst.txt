@@ -1,0 +1,46 @@
+﻿lnpy.lnPiArray
+==============
+
+.. currentmodule:: lnpy
+
+.. autoclass:: lnPiArray
+   :show-inheritance:
+
+   
+   ..
+      .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~lnPiArray.__init__
+      ~lnPiArray.new_like
+      ~lnPiArray.pad
+      ~lnPiArray.zeromax
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ~lnPiArray.shape
+   
+   
+
+   
+   
+   .. rubric:: Dunder Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~lnPiArray.__repr__
+   
+   

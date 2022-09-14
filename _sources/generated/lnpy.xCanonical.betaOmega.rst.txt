@@ -1,0 +1,6 @@
+lnpy.xCanonical.betaOmega
+=========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xCanonical.betaOmega

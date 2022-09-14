@@ -1,0 +1,6 @@
+lnpy.Binodals.\_\_getitem\_\_
+=============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Binodals.__getitem__

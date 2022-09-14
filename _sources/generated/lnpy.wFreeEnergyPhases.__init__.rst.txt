@@ -1,0 +1,6 @@
+lnpy.wFreeEnergyPhases.\_\_init\_\_
+===================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: wFreeEnergyPhases.__init__

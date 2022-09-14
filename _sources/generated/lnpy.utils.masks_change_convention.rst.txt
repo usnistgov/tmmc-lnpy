@@ -1,0 +1,6 @@
+﻿lnpy.utils.masks\_change\_convention
+====================================
+
+.. currentmodule:: lnpy.utils
+
+.. autofunction:: masks_change_convention

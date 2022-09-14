@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.sort\_index
+===============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.sort_index

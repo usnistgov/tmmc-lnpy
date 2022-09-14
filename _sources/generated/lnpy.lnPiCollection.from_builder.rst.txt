@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.from\_builder
+=================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.from_builder

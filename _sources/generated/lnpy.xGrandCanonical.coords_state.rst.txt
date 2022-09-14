@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.coords\_state
+==================================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xGrandCanonical.coords_state

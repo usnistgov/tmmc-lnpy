@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.reweight
+========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.reweight

@@ -1,0 +1,6 @@
+lnpy.lnPiArray.zeromax
+======================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiArray.zeromax

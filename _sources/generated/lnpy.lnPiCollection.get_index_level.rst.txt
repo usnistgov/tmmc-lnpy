@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.get\_index\_level
+=====================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.get_index_level

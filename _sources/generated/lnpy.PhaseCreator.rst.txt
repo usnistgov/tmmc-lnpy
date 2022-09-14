@@ -1,0 +1,39 @@
+﻿lnpy.PhaseCreator
+=================
+
+.. currentmodule:: lnpy
+
+.. autoclass:: PhaseCreator
+   :show-inheritance:
+
+   
+   ..
+      .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~PhaseCreator.__init__
+      ~PhaseCreator.build_phases
+      ~PhaseCreator.build_phases_dmu
+      ~PhaseCreator.build_phases_mu
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Dunder Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~PhaseCreator.__repr__
+   
+   

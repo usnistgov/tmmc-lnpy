@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.pad
+===================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.pad

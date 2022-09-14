@@ -1,0 +1,6 @@
+lnpy.wFreeEnergy.nfeature
+=========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: wFreeEnergy.nfeature

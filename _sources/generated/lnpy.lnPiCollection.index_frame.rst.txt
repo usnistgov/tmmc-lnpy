@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.index\_frame
+================================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiCollection.index_frame

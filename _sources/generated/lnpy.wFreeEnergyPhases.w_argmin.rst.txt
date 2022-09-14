@@ -1,0 +1,6 @@
+lnpy.wFreeEnergyPhases.w\_argmin
+================================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: wFreeEnergyPhases.w_argmin

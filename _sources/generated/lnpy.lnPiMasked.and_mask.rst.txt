@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.and\_mask
+=========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.and_mask

@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.register\_accessor
+======================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.register_accessor

@@ -1,0 +1,6 @@
+lnpy.wFreeEnergy.delta\_w
+=========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: wFreeEnergy.delta_w

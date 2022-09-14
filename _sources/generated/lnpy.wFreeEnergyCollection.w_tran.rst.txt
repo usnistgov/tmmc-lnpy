@@ -1,0 +1,6 @@
+lnpy.wFreeEnergyCollection.w\_tran
+==================================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: wFreeEnergyCollection.w_tran

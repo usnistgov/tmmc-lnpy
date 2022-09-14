@@ -1,0 +1,6 @@
+lnpy.Binodals.access
+====================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: Binodals.access

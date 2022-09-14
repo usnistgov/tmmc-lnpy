@@ -1,0 +1,6 @@
+lnpy.lnPiArray.pad
+==================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiArray.pad

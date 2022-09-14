@@ -1,0 +1,6 @@
+lnpy.BuildPhases\_dmu.\_\_repr\_\_
+==================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: BuildPhases_dmu.__repr__

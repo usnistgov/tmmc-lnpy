@@ -1,0 +1,6 @@
+﻿lnpy.utils.masks\_to\_labels
+============================
+
+.. currentmodule:: lnpy.utils
+
+.. autofunction:: masks_to_labels

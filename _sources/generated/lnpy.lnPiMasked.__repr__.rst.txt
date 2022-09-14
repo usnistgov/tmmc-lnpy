@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.\_\_repr\_\_
+============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.__repr__

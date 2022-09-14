@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.betapV
+===========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xGrandCanonical.betapV

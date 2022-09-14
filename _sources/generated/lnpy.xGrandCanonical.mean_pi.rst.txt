@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.mean\_pi
+=============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xGrandCanonical.mean_pi

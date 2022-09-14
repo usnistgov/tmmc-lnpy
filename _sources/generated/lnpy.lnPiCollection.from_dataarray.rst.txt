@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.from\_dataarray
+===================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.from_dataarray

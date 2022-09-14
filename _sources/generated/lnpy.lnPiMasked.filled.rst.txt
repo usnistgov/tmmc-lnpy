@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.filled
+======================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.filled

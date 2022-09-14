@@ -1,0 +1,6 @@
+lnpy.Segmenter.\_\_init\_\_
+===========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Segmenter.__init__

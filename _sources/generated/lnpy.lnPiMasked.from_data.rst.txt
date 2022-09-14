@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.from\_data
+==========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.from_data

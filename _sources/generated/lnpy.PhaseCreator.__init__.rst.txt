@@ -1,0 +1,6 @@
+lnpy.PhaseCreator.\_\_init\_\_
+==============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: PhaseCreator.__init__

@@ -1,0 +1,6 @@
+lnpy.Binodals.items
+===================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: Binodals.items

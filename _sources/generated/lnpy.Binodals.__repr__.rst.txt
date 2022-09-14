@@ -1,0 +1,6 @@
+lnpy.Binodals.\_\_repr\_\_
+==========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Binodals.__repr__

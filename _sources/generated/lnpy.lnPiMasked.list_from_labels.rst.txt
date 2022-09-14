@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.list\_from\_labels
+==================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiMasked.list_from_labels

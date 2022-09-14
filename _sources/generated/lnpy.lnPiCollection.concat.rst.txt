@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.concat
+==========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.concat

@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.pressure
+=============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xGrandCanonical.pressure

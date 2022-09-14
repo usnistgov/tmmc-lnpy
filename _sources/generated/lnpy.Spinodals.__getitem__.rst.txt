@@ -1,0 +1,6 @@
+lnpy.Spinodals.\_\_getitem\_\_
+==============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Spinodals.__getitem__

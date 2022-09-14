@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.xge
+=======================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiCollection.xge

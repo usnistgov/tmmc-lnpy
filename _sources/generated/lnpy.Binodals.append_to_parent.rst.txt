@@ -1,0 +1,6 @@
+lnpy.Binodals.append\_to\_parent
+================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Binodals.append_to_parent

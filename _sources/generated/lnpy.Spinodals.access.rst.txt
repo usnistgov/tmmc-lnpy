@@ -1,0 +1,6 @@
+lnpy.Spinodals.access
+=====================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: Spinodals.access

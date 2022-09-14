@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.ndim
+====================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiMasked.ndim

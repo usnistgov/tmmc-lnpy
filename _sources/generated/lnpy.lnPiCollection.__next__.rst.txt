@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.\_\_next\_\_
+================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.__next__

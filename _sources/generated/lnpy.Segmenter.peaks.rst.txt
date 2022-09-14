@@ -1,0 +1,6 @@
+lnpy.Segmenter.peaks
+====================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Segmenter.peaks

@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.PE
+=======================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xGrandCanonical.PE

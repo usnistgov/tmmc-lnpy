@@ -1,0 +1,6 @@
+lnpy.xCanonical.dens
+====================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xCanonical.dens

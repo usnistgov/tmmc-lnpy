@@ -1,0 +1,77 @@
+﻿lnpy.lnPiMasked
+===============
+
+.. currentmodule:: lnpy
+
+.. autoclass:: lnPiMasked
+   :show-inheritance:
+
+   
+   ..
+      .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~lnPiMasked.__init__
+      ~lnPiMasked.and_mask
+      ~lnPiMasked.decorate_accessor
+      ~lnPiMasked.edge_distance
+      ~lnPiMasked.filled
+      ~lnPiMasked.from_data
+      ~lnPiMasked.from_dataarray
+      ~lnPiMasked.from_table
+      ~lnPiMasked.list_from_labels
+      ~lnPiMasked.list_from_masks
+      ~lnPiMasked.local_argmax
+      ~lnPiMasked.local_max
+      ~lnPiMasked.local_maxmask
+      ~lnPiMasked.new_like
+      ~lnPiMasked.or_mask
+      ~lnPiMasked.pad
+      ~lnPiMasked.register_accessor
+      ~lnPiMasked.register_accessor_flat
+      ~lnPiMasked.reweight
+      ~lnPiMasked.zeromax
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ~lnPiMasked.beta
+      ~lnPiMasked.betamu
+      ~lnPiMasked.data
+      ~lnPiMasked.dtype
+      ~lnPiMasked.edge_distance_matrix
+      ~lnPiMasked.extra_kws
+      ~lnPiMasked.lnz
+      ~lnPiMasked.ma
+      ~lnPiMasked.mask
+      ~lnPiMasked.ndim
+      ~lnPiMasked.shape
+      ~lnPiMasked.state_kws
+      ~lnPiMasked.volume
+      ~lnPiMasked.xce
+      ~lnPiMasked.xge
+   
+   
+
+   
+   
+   .. rubric:: Dunder Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~lnPiMasked.__len__
+      ~lnPiMasked.__repr__
+   
+   

@@ -1,0 +1,6 @@
+lnpy.wFreeEnergyPhases.dw
+=========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: wFreeEnergyPhases.dw

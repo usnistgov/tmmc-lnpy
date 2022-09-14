@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.edge\_distance\_matrix
+======================================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiMasked.edge_distance_matrix

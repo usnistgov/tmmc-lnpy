@@ -1,0 +1,6 @@
+lnpy.lnPiMasked.beta
+====================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiMasked.beta

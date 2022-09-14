@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.groupby\_allbut
+===================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.groupby_allbut

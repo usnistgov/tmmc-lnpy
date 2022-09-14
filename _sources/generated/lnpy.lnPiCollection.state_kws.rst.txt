@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.state\_kws
+==============================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiCollection.state_kws

@@ -1,0 +1,6 @@
+﻿lnpy.peak\_local\_max\_adaptive
+===============================
+
+.. currentmodule:: lnpy
+
+.. autofunction:: peak_local_max_adaptive

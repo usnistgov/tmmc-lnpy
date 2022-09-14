@@ -1,0 +1,6 @@
+lnpy.Spinodals.set\_values
+==========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: Spinodals.set_values

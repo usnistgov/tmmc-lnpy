@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.\_\_setitem\_\_
+===================================
+
+.. currentmodule:: lnpy
+
+.. automethod:: lnPiCollection.__setitem__

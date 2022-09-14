@@ -1,0 +1,6 @@
+lnpy.xCanonical.table
+=====================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xCanonical.table

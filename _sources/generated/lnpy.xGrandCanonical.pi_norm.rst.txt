@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.pi\_norm
+=============================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xGrandCanonical.pi_norm

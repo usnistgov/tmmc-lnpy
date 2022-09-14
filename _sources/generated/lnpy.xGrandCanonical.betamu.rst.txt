@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.betamu
+===========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xGrandCanonical.betamu

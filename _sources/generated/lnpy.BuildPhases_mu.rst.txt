@@ -1,0 +1,46 @@
+﻿lnpy.BuildPhases\_mu
+====================
+
+.. currentmodule:: lnpy
+
+.. autoclass:: BuildPhases_mu
+   :show-inheritance:
+
+   
+   ..
+      .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~BuildPhases_mu.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ~BuildPhases_mu.X
+      ~BuildPhases_mu.index
+      ~BuildPhases_mu.phase_creator
+   
+   
+
+   
+   
+   .. rubric:: Dunder Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~BuildPhases_mu.__call__
+      ~BuildPhases_mu.__repr__
+   
+   

@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.betaG
+==========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xGrandCanonical.betaG

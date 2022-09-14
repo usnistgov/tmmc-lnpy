@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.name
+========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiCollection.name

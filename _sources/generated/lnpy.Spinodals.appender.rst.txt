@@ -1,0 +1,6 @@
+lnpy.Spinodals.appender
+=======================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: Spinodals.appender

@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.betaE\_n
+=============================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xGrandCanonical.betaE_n

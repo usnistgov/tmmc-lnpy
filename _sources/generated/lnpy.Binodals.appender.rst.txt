@@ -1,0 +1,6 @@
+lnpy.Binodals.appender
+======================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: Binodals.appender

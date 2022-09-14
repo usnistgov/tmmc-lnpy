@@ -1,0 +1,6 @@
+lnpy.lnPiCollection.query
+=========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: lnPiCollection.query

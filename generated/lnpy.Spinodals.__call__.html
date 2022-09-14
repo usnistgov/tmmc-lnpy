@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lnpy.Spinodals.__call__ &mdash; tmmc-lnpy 999 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lnpy.Spinodals.__getitem__" href="lnpy.Spinodals.__getitem__.html" />
+    <link rel="prev" title="lnpy.Spinodals.parent" href="lnpy.Spinodals.parent.html" />
+<link rel="stylesheet" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
+  <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js" type="text/javascript" defer="defer"></script>
+
+<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+<script type="text/javascript" src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Mark external (non-nist.gov) A tags with class "external"
+  //If the adress start with https and ends with nist.gov
+  var re_nist = new RegExp('^https?:\/\/((^\/)*\.)*nist\\.gov(\/|$)');
+  //Regex to find address that start with https
+  var re_absolute_address = new RegExp('^((https?:)?\/\/)');
+  $("a").each(function(){
+    var url=$(this).attr('href');
+    if(re_nist.test(url) || !re_absolute_address.test(url)){
+      $(this).addClass('local');
+    }else{
+      //This a href appears to be external, so tag it
+      $(this).addClass('external');
+    }
+  });
+  // Add leaveNotice to external A elements
+  $('a.external').leaveNotice();
+});
+</script>
+<link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> tmmc-lnpy
+          </a>
+              <div class="version">
+                999
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">tmmc-lnpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Basic_usage.html">Why lnpy?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Basic_usage.html#Usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Basic_usage.html#Collections-of-lnPi-Values">Collections of lnPi Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Basic_usage.html#Loading-examples">Loading examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Basic_usage.html#Single-component-system-with-phase-transitions.">Single component system with phase transitions.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Basic_usage.html#Calculation-Binodal-and-spinodal">Calculation Binodal and spinodal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Basic_usage.html#Multi-component-systems">Multi component systems</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_autosummary.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#masked-lnpi-objects">Masked lnPi objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#collection-of-lnpi">Collection of lnPi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#ensemble-properties">Ensemble properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#local-free-energy-calculation">Local free energy calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#segmentation">Segmentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#stability">Stability</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="lnpy.Spinodals.html">lnpy.Spinodals</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.__init__.html">lnpy.Spinodals.__init__</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.append_to_parent.html">lnpy.Spinodals.append_to_parent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.set_access_kws.html">lnpy.Spinodals.set_access_kws</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.set_values.html">lnpy.Spinodals.set_values</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.access.html">lnpy.Spinodals.access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.appender.html">lnpy.Spinodals.appender</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.items.html">lnpy.Spinodals.items</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.parent.html">lnpy.Spinodals.parent</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">lnpy.Spinodals.__call__</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.__getitem__.html">lnpy.Spinodals.__getitem__</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lnpy.Spinodals.__repr__.html">lnpy.Spinodals.__repr__</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.Binodals.html">lnpy.Binodals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnPiCollection.spinodal.html">lnpy.lnPiCollection.spinodal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnPiCollection.binodal.html">lnpy.lnPiCollection.binodal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tmmc-lnpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../api_autosummary.html">API Reference</a> &raquo;</li>
+          <li><a href="lnpy.Spinodals.html">lnpy.Spinodals</a> &raquo;</li>
+      <li>lnpy.Spinodals.__call__</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/lnpy.Spinodals.__call__.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="lnpy-spinodals-call">
+<h1>lnpy.Spinodals.__call__<a class="headerlink" href="#lnpy-spinodals-call" title="Permalink to this heading"></a></h1>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.Spinodals.__call__">
+<span class="sig-prename descclassname"><span class="pre">Spinodals.</span></span><span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/stability.html#Spinodals.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.Spinodals.__call__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phase_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a>) – Phase ids to calculate spinodal for.  If int, then find spinodals for phases
+range(phase_ids).</p></li>
+<li><p><strong>build_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>) – Factory function to build phases.
+This should most likely be an instance of <a class="reference internal" href="lnpy.BuildPhases_mu.html#lnpy.BuildPhases_mu" title="lnpy.BuildPhases_mu"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.BuildPhases_mu</span></code></a></p></li>
+<li><p><strong>efac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Target value of <cite>dw</cite> to define spinodal.</p></li>
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>, <em>optional</em>)</p></li>
+<li><p><strong>build_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – optional arguments to <cite>build_phases</cite></p></li>
+<li><p><strong>inplace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, add spinodal inplace, otherwise return spinodal object</p></li>
+<li><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – if True, force recalcuation of spinodal if alread set inplace.  Otherwise return already
+calculated values</p></li>
+<li><p><strong>as_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, return dict of form {phase_id[0] : phases object, …}.</p></li>
+<li><p><strong>unstack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – if passed, create lnPiCollection objects with this unstack value.  If not passed,
+use unstack parameter from parent object</p></li>
+<li><p><strong>**kwargs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">extra</span> <span class="pre">argument</span></code> to <cite>get_spinodal</cite> function)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – if inplace, return self.
+if not inplace, and as dict, return dict, else return <a class="reference internal" href="lnpy.lnPiCollection.html#lnpy.lnPiCollection" title="lnpy.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiCollection</span></code></a> with phase_id in index</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">output</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lnpy.Spinodals.parent.html" class="btn btn-neutral float-left" title="lnpy.Spinodals.parent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lnpy.Spinodals.__getitem__.html" class="btn btn-neutral float-right" title="lnpy.Spinodals.__getitem__" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, William P. Krekelberg.
+      <span class="lastupdated">Last updated on 2022-09-14.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

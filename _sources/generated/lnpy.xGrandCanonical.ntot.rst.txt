@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.ntot
+=========================
+
+.. currentmodule:: lnpy
+
+.. autoproperty:: xGrandCanonical.ntot

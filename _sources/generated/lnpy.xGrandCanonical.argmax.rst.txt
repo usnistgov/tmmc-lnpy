@@ -1,0 +1,6 @@
+lnpy.xGrandCanonical.argmax
+===========================
+
+.. currentmodule:: lnpy
+
+.. automethod:: xGrandCanonical.argmax

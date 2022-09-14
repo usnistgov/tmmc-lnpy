@@ -1,0 +1,92 @@
+﻿lnpy.xGrandCanonical
+====================
+
+.. currentmodule:: lnpy
+
+.. autoclass:: xGrandCanonical
+   :show-inheritance:
+
+   
+   ..
+      .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~xGrandCanonical.S
+      ~xGrandCanonical.S_n
+      ~xGrandCanonical.Z
+      ~xGrandCanonical.__init__
+      ~xGrandCanonical.argmax
+      ~xGrandCanonical.betaE
+      ~xGrandCanonical.betaE_n
+      ~xGrandCanonical.betaF
+      ~xGrandCanonical.betaF_alt
+      ~xGrandCanonical.betaF_n
+      ~xGrandCanonical.betaOmega
+      ~xGrandCanonical.betaOmega_n
+      ~xGrandCanonical.betapV
+      ~xGrandCanonical.edge_distance
+      ~xGrandCanonical.edge_distance_val
+      ~xGrandCanonical.lnpi
+      ~xGrandCanonical.lnpi_max
+      ~xGrandCanonical.max
+      ~xGrandCanonical.mean_pi
+      ~xGrandCanonical.pi_norm_max
+      ~xGrandCanonical.pipe
+      ~xGrandCanonical.pressure
+      ~xGrandCanonical.table
+      ~xGrandCanonical.var_pi
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ~xGrandCanonical.PE
+      ~xGrandCanonical.PE_n
+      ~xGrandCanonical.beta
+      ~xGrandCanonical.betaG
+      ~xGrandCanonical.betaG_n
+      ~xGrandCanonical.betamu
+      ~xGrandCanonical.coords_state
+      ~xGrandCanonical.dens
+      ~xGrandCanonical.dens_tot
+      ~xGrandCanonical.dims_comp
+      ~xGrandCanonical.dims_lnz
+      ~xGrandCanonical.dims_n
+      ~xGrandCanonical.dims_rec
+      ~xGrandCanonical.dims_state
+      ~xGrandCanonical.lnpi_norm
+      ~xGrandCanonical.lnz
+      ~xGrandCanonical.mask_stable
+      ~xGrandCanonical.molfrac
+      ~xGrandCanonical.ncoords
+      ~xGrandCanonical.ncoords_tot
+      ~xGrandCanonical.ntot
+      ~xGrandCanonical.ntot_var
+      ~xGrandCanonical.nvec
+      ~xGrandCanonical.nvec_var
+      ~xGrandCanonical.pi_norm
+      ~xGrandCanonical.pi_sum
+      ~xGrandCanonical.volume
+   
+   
+
+   
+   
+   .. rubric:: Dunder Methods
+
+   .. autosummary::
+      :toctree:
+   
+      ~xGrandCanonical.__repr__
+   
+   
