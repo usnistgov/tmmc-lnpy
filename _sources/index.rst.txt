@@ -9,6 +9,7 @@ Welcome to ``tmmc-lnpy``'s documentation!
    installation
    notebooks/Basic_usage
    api_autosummary
+   license
    contributing
    authors
    history
