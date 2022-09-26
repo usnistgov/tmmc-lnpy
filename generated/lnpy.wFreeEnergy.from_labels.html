@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.wFreeEnergy.from_labels &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.wFreeEnergy.from_labels &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +73,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -93,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#ensemble-properties">Ensemble properties</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#local-free-energy-calculation">Local free energy calculation</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="lnpy.wFreeEnergy.html">lnpy.wFreeEnergy</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="lnpy.wFreeEnergy.html#lnpy.wFreeEnergy"><code class="docutils literal notranslate"><span class="pre">wFreeEnergy</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.wFreeEnergy.__init__.html">lnpy.wFreeEnergy.__init__</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">lnpy.wFreeEnergy.from_labels</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.wFreeEnergy.merge_regions.html">lnpy.wFreeEnergy.merge_regions</a></li>
@@ -226,13 +228,13 @@
 <h1>lnpy.wFreeEnergy.from_labels<a class="headerlink" href="#lnpy-wfreeenergy-from-labels" title="Permalink to this heading"></a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="lnpy.wFreeEnergy.from_labels">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wFreeEnergy.</span></span><span class="sig-name descname"><span class="pre">from_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/lnpienergy.html#wFreeEnergy.from_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.wFreeEnergy.from_labels" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wFreeEnergy.</span></span><span class="sig-name descname"><span class="pre">from_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/lnpienergy.py#L346-L390"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.wFreeEnergy.from_labels" title="Permalink to this definition"></a></dt>
 <dd><p>create wFreeEnergy from labels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – lnPi data</p></li>
-<li><p><strong>labels</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.23)"><span class="xref std std-term">array-like</span></a> of <code class="xref py py-class docutils literal notranslate"><span class="pre">ints</span></code>) – Where <cite>labels == k</cite>, indicates regions where data corresponds to the kth label.</p></li>
+<li><p><strong>labels</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.23)"><span class="xref std std-term">array-like</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Where <cite>labels == k</cite>, indicates regions where data corresponds to the kth label.</p></li>
 <li><p><strong>connectivity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – connectivity parameters</p></li>
 <li><p><strong>features</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.23)"><span class="xref std std-term">array-like</span></a>, <em>optional</em>) – list of features to extract from labels.  Note that returned
 mask[i] corresponds to labels == feature[i].</p></li>
@@ -267,7 +269,7 @@ mask[i] corresponds to labels == feature[i].</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.xGrandCanonical.table &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.xGrandCanonical.table &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +73,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -92,6 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#collection-of-lnpi">Collection of lnPi</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#ensemble-properties">Ensemble properties</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="lnpy.xGrandCanonical.html">lnpy.xGrandCanonical</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.xGrandCanonical"><code class="docutils literal notranslate"><span class="pre">xGrandCanonical</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.S.html">lnpy.xGrandCanonical.S</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.S_n.html">lnpy.xGrandCanonical.S_n</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.Z.html">lnpy.xGrandCanonical.Z</a></li>
@@ -267,27 +269,27 @@
 <h1>lnpy.xGrandCanonical.table<a class="headerlink" href="#lnpy-xgrandcanonical-table" title="Permalink to this heading"></a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="lnpy.xGrandCanonical.table">
-<span class="sig-prename descclassname"><span class="pre">xGrandCanonical.</span></span><span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('nvec',</span> <span class="pre">'betapV',</span> <span class="pre">'PE_n')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_stable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_to_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/ensembles.html#xGrandCanonical.table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.xGrandCanonical.table" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">xGrandCanonical.</span></span><span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('nvec',</span> <span class="pre">'betapV',</span> <span class="pre">'PE_n')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_stable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_to_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/ensembles.py#L745-L829"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.xGrandCanonical.table" title="Permalink to this definition"></a></dt>
 <dd><p>Create <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> of calculated properties.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – keys of attributes or methods of <cite>self</cite> to include in ouput</p></li>
+<li><p><strong>keys</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – keys of attributes or methods of <cite>self</cite> to include in output</p></li>
 <li><p><strong>default_keys</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Default keys to consider.</p></li>
 <li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>, <em>optional</em>) – If calculating <cite>edge_distastance</cite>, need a reference <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> object.</p></li>
 <li><p><strong>mask_stable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – If True, remove any unstable values</p></li>
-<li><p><strong>dim_to_suffix</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <code class="xref py py-class docutils literal notranslate"><span class="pre">hashables</span></code>, <em>optional</em>) – dimensions to remove from ouput.  These are instead added as suffix to variable names</p></li>
+<li><p><strong>dim_to_suffix</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <code class="xref py py-class docutils literal notranslate"><span class="pre">hashables</span></code>, <em>optional</em>) – dimensions to remove from output.  These are instead added as suffix to variable names</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>ds</strong> – Contianing all the calculated properties in a single object</p>
+<dd class="field-even"><p><strong>ds</strong> – Containing all the calculated properties in a single object</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>The results can be easily convert to a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> using <code class="docutils literal notranslate"><span class="pre">ds.to_frame()</span></code></p>
+<p>The results can be easily convert to a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> using <code class="docutils literal notranslate"><span class="pre">ds.to_frame()</span></code></p>
 </dd></dl>
 
 </section>
@@ -304,7 +306,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

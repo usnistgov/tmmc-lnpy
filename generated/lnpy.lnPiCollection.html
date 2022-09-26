@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.lnPiCollection &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.lnPiCollection &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -74,7 +75,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -93,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#masked-lnpi-objects">Masked lnPi objects</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#collection-of-lnpi">Collection of lnPi</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.lnPiCollection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.lnPiCollection"><code class="docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.lnPiCollection.__init__.html">lnpy.lnPiCollection.__init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.lnPiCollection.append.html">lnpy.lnPiCollection.append</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.lnPiCollection.apply.html">lnpy.lnPiCollection.apply</a></li>
@@ -263,14 +265,14 @@
 <h1>lnpy.lnPiCollection<a class="headerlink" href="#lnpy-lnpicollection" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lnpy.lnPiCollection">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">lnPiCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xarray_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_coords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/lnpiseries.html#lnPiCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnPiCollection" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">lnPiCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xarray_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_coords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/lnpiseries.py#L390-L828"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnPiCollection" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">SeriesWrapper</span></code></p>
-<p>Wrapper around <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a> for collection of <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiMasked</span></code></a> objects.</p>
+<p>Wrapper around <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a> for collection of <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiMasked</span></code></a> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>) – <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span> instances to consider.</p></li>
-<li><p><strong>index</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.23)"><span class="xref std std-term">array-like</span></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Index</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.MultiIndex</span></code></a>, <em>optional</em>) – Index to apply to Series.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.23)"><span class="xref std std-term">array-like</span></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Index</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.MultiIndex</span></code></a>, <em>optional</em>) – Index to apply to Series.</p></li>
 <li><p><strong>xarray_output</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">=</span> <span class="pre">True</span></code>) – If True, then wrap lnPiCollection outputs in <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a></p></li>
 <li><p><strong>concat_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – Name of dimensions to concat results along.
 Also Used by <a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.xGrandCanonical" title="lnpy.ensembles.xGrandCanonical"><code class="xref py py-class docutils literal notranslate"><span class="pre">xGrandCanonical</span></code></a>.</p></li>
@@ -291,10 +293,10 @@ Also Used by <a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.lnPiCollection.append.html#lnpy.lnPiCollection.append" title="lnpy.lnPiCollection.append"><code class="xref py py-obj docutils literal notranslate"><span class="pre">append</span></code></a>(to_append[, ignore_index, ...])</p></td>
-<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.append.html#pandas.Series.append" title="(in pandas v1.4.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.append()</span></code></a></p></td>
+<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.append.html#pandas.Series.append" title="(in pandas v1.5.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.append()</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.lnPiCollection.apply.html#lnpy.lnPiCollection.apply" title="lnpy.lnPiCollection.apply"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code></a>(func[, convert_dtype, args, wrap])</p></td>
-<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.apply.html#pandas.Series.apply" title="(in pandas v1.4.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.apply()</span></code></a></p></td>
+<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.apply.html#pandas.Series.apply" title="(in pandas v1.5.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.apply()</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.lnPiCollection.concat.html#lnpy.lnPiCollection.concat" title="lnpy.lnPiCollection.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a>(objs[, concat_kws])</p></td>
 <td><p>Create collection from sequence of objects</p></td>
@@ -327,7 +329,7 @@ Also Used by <a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.
 <td><p>Get index values for specified level</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.lnPiCollection.groupby.html#lnpy.lnPiCollection.groupby" title="lnpy.lnPiCollection.groupby"><code class="xref py py-obj docutils literal notranslate"><span class="pre">groupby</span></code></a>([by, axis, level, as_index, sort, ...])</p></td>
-<td><p>Wrapper around <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.groupby.html#pandas.Series.groupby" title="(in pandas v1.4.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.groupby()</span></code></a>.</p></td>
+<td><p>Wrapper around <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.groupby.html#pandas.Series.groupby" title="(in pandas v1.5.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.groupby()</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.lnPiCollection.groupby_allbut.html#lnpy.lnPiCollection.groupby_allbut" title="lnpy.lnPiCollection.groupby_allbut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">groupby_allbut</span></code></a>(drop, **kwargs)</p></td>
 <td><p>groupby all but columns in drop</p></td>
@@ -342,16 +344,16 @@ Also Used by <a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.
 <td><p>helper class to register stuff to top of CollectionPhases</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.lnPiCollection.sort_index.html#lnpy.lnPiCollection.sort_index" title="lnpy.lnPiCollection.sort_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_index</span></code></a>([wrap])</p></td>
-<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.sort_index.html#pandas.Series.sort_index" title="(in pandas v1.4.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.sort_index()</span></code></a></p></td>
+<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.sort_index.html#pandas.Series.sort_index" title="(in pandas v1.5.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.sort_index()</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.lnPiCollection.to_dataarray.html#lnpy.lnPiCollection.to_dataarray" title="lnpy.lnPiCollection.to_dataarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dataarray</span></code></a>([dtype, reset_index])</p></td>
 <td><p>Convert collection to a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.lnPiCollection.wrap_list_results.html#lnpy.lnPiCollection.wrap_list_results" title="lnpy.lnPiCollection.wrap_list_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrap_list_results</span></code></a>(items)</p></td>
-<td><p>Unitility to wrap output in :class:xarray.DataArray</p></td>
+<td><p>Utility to wrap output in :class:xarray.DataArray</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.lnPiCollection.xs.html#lnpy.lnPiCollection.xs" title="lnpy.lnPiCollection.xs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xs</span></code></a>(key[, axis, level, drop_level, wrap])</p></td>
-<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.xs.html#pandas.Series.xs" title="(in pandas v1.4.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.xs()</span></code></a></p></td>
+<td><p>Interface to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.xs.html#pandas.Series.xs" title="(in pandas v1.5.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.xs()</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -396,7 +398,7 @@ Also Used by <a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.
 <td><p>Alias to <cite>self.series</cite></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.lnPiCollection.series.html#lnpy.lnPiCollection.series" title="lnpy.lnPiCollection.series"><code class="xref py py-obj docutils literal notranslate"><span class="pre">series</span></code></a></p></td>
-<td><p>View of the underlying <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a></p></td>
+<td><p>View of the underlying <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.lnPiCollection.spinodal.html#lnpy.lnPiCollection.spinodal" title="lnpy.lnPiCollection.spinodal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spinodal</span></code></a></p></td>
 <td><p>Methods for calculation locations of spinodal</p></td>
@@ -473,7 +475,7 @@ Also Used by <a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

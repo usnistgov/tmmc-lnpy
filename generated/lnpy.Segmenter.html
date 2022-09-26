@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.Segmenter &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.Segmenter &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +73,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -94,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#local-free-energy-calculation">Local free energy calculation</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#segmentation">Segmentation</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.Segmenter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.Segmenter"><code class="docutils literal notranslate"><span class="pre">Segmenter</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.Segmenter.__init__.html">lnpy.Segmenter.__init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.Segmenter.peaks.html">lnpy.Segmenter.peaks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.Segmenter.segment_lnpi.html">lnpy.Segmenter.segment_lnpi</a></li>
@@ -220,13 +222,13 @@
 <h1>lnpy.Segmenter<a class="headerlink" href="#lnpy-segmenter" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lnpy.Segmenter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">Segmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peak_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">watershed_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/segment.html#Segmenter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.Segmenter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">Segmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peak_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">watershed_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/segment.py#L182-L341"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.Segmenter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Data segmenter:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>min_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <code class="xref py py-class docutils literal notranslate"><span class="pre">ints</span></code>, <em>default</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">(5</span></code>, <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">15</span></code>, <code class="docutils literal notranslate"><span class="pre">20</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">25)</span></code>) – min_distance parameter.  If sequence, then call
+<li><p><strong>min_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">(5</span></code>, <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">15</span></code>, <code class="docutils literal notranslate"><span class="pre">20</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">25)</span></code>) – min_distance parameter.  If sequence, then call
 <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.19.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a> until number of peaks <code class="docutils literal notranslate"><span class="pre">&lt;=num_peaks_max</span></code>.</p></li>
 <li><p><strong>peak_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.10)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional parameters to <code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></p></li>
 <li><p><strong>watershed_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.10)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional parameters to <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.19.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">watershed()</span></code></a></p></li>
@@ -282,7 +284,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

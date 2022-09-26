@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.utils.mask_change_convention &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.utils.mask_change_convention &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +73,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -95,7 +96,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#segmentation">Segmentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#stability">Stability</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#utilities">Utilities</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.utils.mask_change_convention</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.utils.mask_change_convention</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.utils.mask_change_convention"><code class="docutils literal notranslate"><span class="pre">mask_change_convention()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="lnpy.utils.masks_change_convention.html">lnpy.utils.masks_change_convention</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lnpy.utils.labels_to_masks.html">lnpy.utils.labels_to_masks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lnpy.utils.masks_to_labels.html">lnpy.utils.masks_to_labels</a></li>
@@ -213,7 +217,7 @@
 <h1>lnpy.utils.mask_change_convention<a class="headerlink" href="#lnpy-utils-mask-change-convention" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="lnpy.utils.mask_change_convention">
-<span class="sig-prename descclassname"><span class="pre">lnpy.utils.</span></span><span class="sig-name descname"><span class="pre">mask_change_convention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'image'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'masked'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/utils.html#mask_change_convention"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.utils.mask_change_convention" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lnpy.utils.</span></span><span class="sig-name descname"><span class="pre">mask_change_convention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'image'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'masked'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/utils.py#L212-L245"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.utils.mask_change_convention" title="Permalink to this definition"></a></dt>
 <dd><p>convert an array from one ‘mask’ convention to another.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -234,7 +238,7 @@ This is the convention in <a class="reference external" href="https://numpy.org/
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>new_mask</strong> (<a class="reference external" href="https://scikit-image.org/docs/stable/glossary.html#term-array" title="(in skimage v0.19.2)"><span class="xref std std-term">array</span></a>)</p></li>
-<li><p>New <code class="docutils literal notranslate"><span class="pre">'mask'</span></code> array with specified convension.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">'mask'</span></code> array with specified convention.</p></li>
 </ul>
 </p>
 </dd>
@@ -255,7 +259,7 @@ This is the convention in <a class="reference external" href="https://numpy.org/
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

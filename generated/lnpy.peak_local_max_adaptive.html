@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.peak_local_max_adaptive &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.peak_local_max_adaptive &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +73,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -97,7 +98,10 @@
 <li class="toctree-l3"><a class="reference internal" href="lnpy.PhaseCreator.html">lnpy.PhaseCreator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lnpy.BuildPhases_mu.html">lnpy.BuildPhases_mu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lnpy.BuildPhases_dmu.html">lnpy.BuildPhases_dmu</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.peak_local_max_adaptive</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.peak_local_max_adaptive</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.peak_local_max_adaptive"><code class="docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#stability">Stability</a></li>
@@ -213,7 +217,7 @@
 <h1>lnpy.peak_local_max_adaptive<a class="headerlink" href="#lnpy-peak-local-max-adaptive" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="lnpy.peak_local_max_adaptive">
-<span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">peak_local_max_adaptive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_rel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_abs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_peaks_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'indices'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/segment.html#peak_local_max_adaptive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.peak_local_max_adaptive" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">peak_local_max_adaptive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_rel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_abs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_peaks_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'indices'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/segment.py#L71-L179"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.peak_local_max_adaptive" title="Permalink to this definition"></a></dt>
 <dd><p>Find local max with fall backs min_distance and filter.</p>
 <p>This is an adaptation of <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.19.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a>, which is
 called iteratively until the number of <cite>peaks</cite> is less than <cite>num_peaks_max</cite>.</p>
@@ -222,7 +226,7 @@ called iteratively until the number of <cite>peaks</cite> is less than <cite>num
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.23)"><span class="xref std std-term">array-like</span></a>) – Image data to analyze</p></li>
 <li><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.23)"><span class="xref std std-term">array-like</span></a>, <em>optional</em>) – This uses the “image” convention.  Where <cite>mask</cite> is <cite>True</cite>, values are include.</p></li>
-<li><p><strong>min_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <code class="xref py py-class docutils literal notranslate"><span class="pre">ints</span></code>, <em>default</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">(5</span></code>, <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">15</span></code>, <code class="docutils literal notranslate"><span class="pre">20</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">25)</span></code>) – min_distance parameter.  If sequence, then call
+<li><p><strong>min_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">(5</span></code>, <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">15</span></code>, <code class="docutils literal notranslate"><span class="pre">20</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">25)</span></code>) – min_distance parameter.  If sequence, then call
 <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.19.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a> until number of peaks <code class="docutils literal notranslate"><span class="pre">&lt;=num_peaks_max</span></code>.</p></li>
 <li><p><strong>threshold_rel, threshold_abs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – thresholds parameters</p></li>
 <li><p><strong>num_peaks_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">optional.</span></code>) – Max number of maxima/peaks to find. If not specified, any number of peaks allowed.</p></li>
@@ -230,13 +234,13 @@ called iteratively until the number of <cite>peaks</cite> is less than <cite>num
 <ul>
 <li><p>indices : indices of peaks</p></li>
 <li><p>mask : bool array marking peak locations</p></li>
-<li><p>marker : array of ints</p></li>
+<li><p>marker : array of int</p></li>
 </ul>
 </li>
 <li><p><strong>connectivity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Maximum number of orthogonal hops to consider a pixel/voxel as a neighbor.
 Accepted values are ranging from 1 to <code class="docutils literal notranslate"><span class="pre">input.ndim</span></code>. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a full connectivity of <code class="docutils literal notranslate"><span class="pre">input.ndim</span></code> is used.</p></li>
-<li><p><strong>indices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, return indicies of peaks.
-if False, return array of ints of shape <cite>data.shape</cite> with peaks
+<li><p><strong>indices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, return indices of peaks.
+if False, return array of int of shape <cite>data.shape</cite> with peaks
 marked by value &gt; 0.</p></li>
 <li><p><strong>errors</strong> (<code class="docutils literal notranslate"><span class="pre">{'ignore','raise','warn'}</span></code>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">'warn'</span></code>) –</p>
 <ul>
@@ -277,7 +281,7 @@ marked by value &gt; 0.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

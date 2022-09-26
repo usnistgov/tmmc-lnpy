@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.merge_regions &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.merge_regions &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -74,7 +75,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -97,7 +98,10 @@
 <li class="toctree-l3"><a class="reference internal" href="lnpy.wFreeEnergy.html">lnpy.wFreeEnergy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lnpy.wFreeEnergyCollection.html">lnpy.wFreeEnergyCollection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lnpy.wFreeEnergyPhases.html">lnpy.wFreeEnergyPhases</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.merge_regions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.merge_regions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.merge_regions"><code class="docutils literal notranslate"><span class="pre">merge_regions()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#segmentation">Segmentation</a></li>
@@ -214,7 +218,7 @@
 <h1>lnpy.merge_regions<a class="headerlink" href="#lnpy-merge-regions" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="lnpy.merge_regions">
-<span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">merge_regions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w_tran</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">masks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nfeature_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'image'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/lnpienergy.html#merge_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.merge_regions" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">merge_regions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w_tran</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">masks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nfeature_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'image'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/lnpienergy.py#L185-L298"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.merge_regions" title="Permalink to this definition"></a></dt>
 <dd><p>Merge labels where free energy energy barrier &lt; efac.</p>
 <p>The scaled free energy <span class="math notranslate nohighlight">\(w = \beta f = - \ln \Pi \)</span>Delta w = text{w_tran} - text{w_min} &lt; text{efac}` will be merged into a single phase.  Here,
 <code class="docutils literal notranslate"><span class="pre">w_trans</span></code> is the transition energy between phases (i.e., the minimum value of <cite>lnPi`</cite> between regions`) and <code class="docutils literal notranslate"><span class="pre">w_min</span></code> is the minimum energy (the maximum <cite>lnPi</cite>) for a phase.</p>
@@ -226,7 +230,7 @@
 <li><p><strong>w_min</strong> (<a class="reference external" href="https://scikit-image.org/docs/stable/glossary.html#term-array" title="(in skimage v0.19.2)"><span class="xref std std-term">array</span></a>) – Shape of array is <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">1)</span></code>.</p></li>
 <li><p><strong>masks</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><span class="xref std std-term">sequence</span></a> of <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span> <span class="pre">arrays</span></code>) – Masks for each region using <cite>convention</cite></p></li>
 <li><p><strong>nfeature_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – maximum number of features/phases to allow</p></li>
-<li><p><strong>efac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">0.5</span></code>) – Wnergy difference to merge on. When <code class="docutils literal notranslate"><span class="pre">w_trans[i,</span> <span class="pre">j]</span> <span class="pre">-</span> <span class="pre">w_min[i]</span> <span class="pre">&lt;</span> <span class="pre">efac</span></code>, phases
+<li><p><strong>efac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">0.5</span></code>) – Energy difference to merge on. When <code class="docutils literal notranslate"><span class="pre">w_trans[i,</span> <span class="pre">j]</span> <span class="pre">-</span> <span class="pre">w_min[i]</span> <span class="pre">&lt;</span> <span class="pre">efac</span></code>, phases
 <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code> will be merged together.</p></li>
 <li><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, then keep going until nfeature &lt;= nfeature_max
 even if min_val &gt; efac.</p></li>
@@ -266,7 +270,7 @@ This is the convention in <a class="reference external" href="https://numpy.org/
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.wFreeEnergyCollection &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.wFreeEnergyCollection &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -74,7 +75,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -96,6 +97,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#local-free-energy-calculation">Local free energy calculation</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="lnpy.wFreeEnergy.html">lnpy.wFreeEnergy</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.wFreeEnergyCollection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.wFreeEnergyCollection"><code class="docutils literal notranslate"><span class="pre">wFreeEnergyCollection</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.wFreeEnergyCollection.__init__.html">lnpy.wFreeEnergyCollection.__init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.wFreeEnergyCollection.get_dw.html">lnpy.wFreeEnergyCollection.get_dw</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.wFreeEnergyCollection.get_dwx.html">lnpy.wFreeEnergyCollection.get_dwx</a></li>
@@ -226,7 +228,7 @@
 <h1>lnpy.wFreeEnergyCollection<a class="headerlink" href="#lnpy-wfreeenergycollection" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lnpy.wFreeEnergyCollection">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">wFreeEnergyCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/lnpienergy.html#wFreeEnergyCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.wFreeEnergyCollection" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">wFreeEnergyCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/lnpienergy.py#L569-L685"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.wFreeEnergyCollection" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Calculate the transition free energies for a <a class="reference internal" href="lnpy.lnPiCollection.html#lnpy.lnPiCollection" title="lnpy.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiCollection</span></code></a>.</p>
 <p><span class="math notranslate nohighlight">\(w(N) = \beta f(N) = - \ln \Pi(N)\)</span></p>
@@ -248,7 +250,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.wFreeEnergyCollection.get_dw.html#lnpy.wFreeEnergyCollection.get_dw" title="lnpy.wFreeEnergyCollection.get_dw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dw</span></code></a>(idx[, idx_nebr])</p></td>
-<td><p>Sereis version of <a class="reference internal" href="lnpy.wFreeEnergyCollection.get_dwx.html#lnpy.wFreeEnergyCollection.get_dwx" title="lnpy.wFreeEnergyCollection.get_dwx"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_dwx()</span></code></a></p></td>
+<td><p>Series version of <a class="reference internal" href="lnpy.wFreeEnergyCollection.get_dwx.html#lnpy.wFreeEnergyCollection.get_dwx" title="lnpy.wFreeEnergyCollection.get_dwx"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_dwx()</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.wFreeEnergyCollection.get_dwx.html#lnpy.wFreeEnergyCollection.get_dwx" title="lnpy.wFreeEnergyCollection.get_dwx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dwx</span></code></a>(idx[, idx_nebr])</p></td>
 <td><p>helper function to get the change in energy from phase idx to idx_nebr.</p></td>
@@ -310,7 +312,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.PhaseCreator &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.PhaseCreator &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +73,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -95,6 +96,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#segmentation">Segmentation</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="lnpy.Segmenter.html">lnpy.Segmenter</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.PhaseCreator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.PhaseCreator"><code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.PhaseCreator.__init__.html">lnpy.PhaseCreator.__init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.PhaseCreator.build_phases.html">lnpy.PhaseCreator.build_phases</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.PhaseCreator.build_phases_dmu.html">lnpy.PhaseCreator.build_phases_dmu</a></li>
@@ -220,7 +222,7 @@
 <h1>lnpy.PhaseCreator<a class="headerlink" href="#lnpy-phasecreator" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lnpy.PhaseCreator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">PhaseCreator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax_peak</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmenter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_phases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnPiFreeEnergy_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/segment.html#PhaseCreator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.PhaseCreator" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">PhaseCreator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax_peak</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmenter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_phases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnPiFreeEnergy_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/segment.py#L344-L609"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.PhaseCreator" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Helper class to create phases</p>
 <dl class="field-list simple">
@@ -232,7 +234,7 @@ This can be useful for some cases.  These phases will be merged out at the end.<
 <li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>, <em>optional</em>)</p></li>
 <li><p><strong>segmenter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Segmenter</span> <span class="pre">object</span></code>, <em>optional</em>) – segmenter object to create labels/masks. Defaults to using base segmenter.</p></li>
 <li><p><strong>segment_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.10)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional arguments to be passed to :meth`Segmenter.segmenter_lnpi`.</p></li>
-<li><p><strong>tag_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, <em>optional</em>) – Optional funciton which takes a list of <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiMasked</span></code></a> objects
+<li><p><strong>tag_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, <em>optional</em>) – Optional function which takes a list of <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiMasked</span></code></a> objects
 and returns on integer label for each object.</p></li>
 <li><p><strong>phases_factory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, <em>optional</em>) – Factory function for returning Collection from a list of <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" title="lnpy.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnPiMasked</span></code></a> object.
 Defaults to <a class="reference internal" href="lnpy.lnPiCollection.from_list.html#lnpy.lnPiCollection.from_list" title="lnpy.lnPiCollection.from_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lnpy.lnPiCollection.from_list()</span></code></a>.</p></li>
@@ -290,7 +292,7 @@ Defaults to <a class="reference internal" href="lnpy.lnPiCollection.from_list.ht
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.xGrandCanonical.edge_distance_val &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.xGrandCanonical.edge_distance_val &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +73,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -92,6 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#collection-of-lnpi">Collection of lnPi</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#ensemble-properties">Ensemble properties</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="lnpy.xGrandCanonical.html">lnpy.xGrandCanonical</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.html#lnpy.xGrandCanonical"><code class="docutils literal notranslate"><span class="pre">xGrandCanonical</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.S.html">lnpy.xGrandCanonical.S</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.S_n.html">lnpy.xGrandCanonical.S_n</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.Z.html">lnpy.xGrandCanonical.Z</a></li>
@@ -267,8 +269,8 @@
 <h1>lnpy.xGrandCanonical.edge_distance_val<a class="headerlink" href="#lnpy-xgrandcanonical-edge-distance-val" title="Permalink to this heading"></a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="lnpy.xGrandCanonical.edge_distance_val">
-<span class="sig-prename descclassname"><span class="pre">xGrandCanonical.</span></span><span class="sig-name descname"><span class="pre">edge_distance_val</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/ensembles.html#xGrandCanonical.edge_distance_val"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.xGrandCanonical.edge_distance_val" title="Permalink to this definition"></a></dt>
-<dd><p>Calulate min distance from where self.pi_norm &gt; val to edge</p>
+<span class="sig-prename descclassname"><span class="pre">xGrandCanonical.</span></span><span class="sig-name descname"><span class="pre">edge_distance_val</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/ensembles.py#L609-L632"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.xGrandCanonical.edge_distance_val" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate min distance from where self.pi_norm &gt; val to edge</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -295,7 +297,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lnpy.xGrandCanonical &mdash; tmmc-lnpy 0.1.2 documentation</title>
+  <title>lnpy.xGrandCanonical &mdash; tmmc-lnpy 0.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -74,7 +75,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.2
+                0.1.4
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -94,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api_autosummary.html#collection-of-lnpi">Collection of lnPi</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api_autosummary.html#ensemble-properties">Ensemble properties</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">lnpy.xGrandCanonical</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lnpy.xGrandCanonical"><code class="docutils literal notranslate"><span class="pre">xGrandCanonical</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.S.html">lnpy.xGrandCanonical.S</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.S_n.html">lnpy.xGrandCanonical.S_n</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lnpy.xGrandCanonical.Z.html">lnpy.xGrandCanonical.Z</a></li>
@@ -267,7 +269,7 @@
 <h1>lnpy.xGrandCanonical<a class="headerlink" href="#lnpy-xgrandcanonical" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lnpy.xGrandCanonical">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">xGrandCanonical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lnpy/ensembles.html#xGrandCanonical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.xGrandCanonical" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.</span></span><span class="sig-name descname"><span class="pre">xGrandCanonical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/lnpy/ensembles.py#L193-L878"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.xGrandCanonical" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code> accessor to Grand Canonical properties from lnPi</p>
 <p>This class is primarily interacted with through the attributes <code class="docutils literal notranslate"><span class="pre">xge</span></code> attached
@@ -307,7 +309,7 @@ to <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" tit
 <td><p>Alternate scaled Helmholtz free energy <span class="math notranslate nohighlight">\(\beta \overline{F}\)</span>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.xGrandCanonical.betaF_n.html#lnpy.xGrandCanonical.betaF_n" title="lnpy.xGrandCanonical.betaF_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaF_n</span></code></a>([lnpi_zero])</p></td>
-<td><p>Scaled Helmholtz free enenergy per particle <span class="math notranslate nohighlight">\(\beta F / \overline{N}\)</span>.</p></td>
+<td><p>Scaled Helmholtz free energy per particle <span class="math notranslate nohighlight">\(\beta F / \overline{N}\)</span>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.xGrandCanonical.betaOmega.html#lnpy.xGrandCanonical.betaOmega" title="lnpy.xGrandCanonical.betaOmega"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaOmega</span></code></a>([lnpi_zero])</p></td>
 <td><p>Scaled grand potential <span class="math notranslate nohighlight">\(\beta \Omega\)</span>.</p></td>
@@ -322,7 +324,7 @@ to <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" tit
 <td><p>Distance from argmax(lnPi) to endpoint</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.xGrandCanonical.edge_distance_val.html#lnpy.xGrandCanonical.edge_distance_val" title="lnpy.xGrandCanonical.edge_distance_val"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_distance_val</span></code></a>(ref[, val, max_frac])</p></td>
-<td><p>Calulate min distance from where self.pi_norm &gt; val to edge</p></td>
+<td><p>Calculate min distance from where self.pi_norm &gt; val to edge</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.xGrandCanonical.lnpi.html#lnpy.xGrandCanonical.lnpi" title="lnpy.xGrandCanonical.lnpi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpi</span></code></a>([fill_value])</p></td>
 <td><p>DataArray view of <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span></p></td>
@@ -376,7 +378,7 @@ to <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" tit
 <td><p>Scaled Gibbs free energy per particle <span class="math notranslate nohighlight">\(\beta G / \overline{N}\)</span>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lnpy.xGrandCanonical.betamu.html#lnpy.xGrandCanonical.betamu" title="lnpy.xGrandCanonical.betamu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betamu</span></code></a></p></td>
-<td><p>Scaled checmical potential <span class="math notranslate nohighlight">\(\beta \mu\)</span></p></td>
+<td><p>Scaled chemical potential <span class="math notranslate nohighlight">\(\beta \mu\)</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lnpy.xGrandCanonical.coords_state.html#lnpy.xGrandCanonical.coords_state" title="lnpy.xGrandCanonical.coords_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coords_state</span></code></a></p></td>
 <td><p></p></td>
@@ -471,7 +473,7 @@ to <a class="reference internal" href="lnpy.lnPiMasked.html#lnpy.lnPiMasked" tit
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-15.
+      <span class="lastupdated">Last updated on 2022-09-26.
       </span></p>
   </div>
 
