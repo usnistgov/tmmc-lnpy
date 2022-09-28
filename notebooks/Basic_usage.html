@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Why tmmc-lnpy? &mdash; tmmc-lnpy 0.1.4 documentation</title>
+  <title>Why tmmc-lnpy? &mdash; tmmc-lnpy 0.1.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -75,7 +74,7 @@
             <a href="../index.html" class="icon icon-home"> tmmc-lnpy
           </a>
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
@@ -474,7 +473,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <p>You can view this notebook <a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/master/doc/notebooks/Basic_usage.ipynb">on Github</a>.</p>
-<section id="Why-tmmc-lnpy?">
+<div class="section" id="Why-tmmc-lnpy?">
 <h1>Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?<a class="headerlink" href="#Why-tmmc-lnpy?" title="Permalink to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code> is a python package to analyze the main output of Grand Canonical Transition Matrix Monte Carlo (GC-TMMC) simulations: <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span>. Hence the name. The <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code> is designed to calculate a host of properties in the Canonical and Grand Canonical ensembles. For a review of GC-TMMC and the property <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span>, look at some of the following references:</p>
 <ul class="simple">
@@ -497,12 +496,12 @@ other chemical potential <span class="math notranslate nohighlight">\(\mu\)</spa
 <div class="math notranslate nohighlight">
 \[\overline{X} = \frac{\sum_N \Pi(N) X(N)}{\sum_N \Pi(N)}\]</div>
 <p>Plus, <span class="math notranslate nohighlight">\(\ln \Pi\)</span> can be directly analyzed to identify unique phases, phase transitions, limits of stability, etc. The package <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code> provides a simple means to perform all the above calculations simply, and quickly.</p>
-</section>
-<section id="A-note-on-the-package-name">
+</div>
+<div class="section" id="A-note-on-the-package-name">
 <h1>A note on the package name<a class="headerlink" href="#A-note-on-the-package-name" title="Permalink to this heading"></a></h1>
 <p>While the distribution is named <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>, it provides the python package <code class="docutils literal notranslate"><span class="pre">lnpy</span></code>. This naming was done to avoid conflicts with other packages on pypi. The name of the module <code class="docutils literal notranslate"><span class="pre">lnpy</span></code> may be changed in the future.</p>
-</section>
-<section id="Usage">
+</div>
+<div class="section" id="Usage">
 <h1>Usage<a class="headerlink" href="#Usage" title="Permalink to this heading"></a></h1>
 <div class="line-block">
 <div class="line">Lets consider a simple example: a Lennard-Jones (LJ) fluid at supercritical temperatures.</div>
@@ -542,7 +541,7 @@ lnz:[2.77]
 <li><p>extra_kws: dict of ‘extra’ variables. Here, it include ‘PE’, the canonical potential energy</p></li>
 <li><p>lnz: log of activity <span class="math notranslate nohighlight">\(\ln z = \beta \mu\)</span>, where <span class="math notranslate nohighlight">\(\mu\)</span> is chemical potential.</p></li>
 </ul>
-<section id="lnPiMasked">
+<div class="section" id="lnPiMasked">
 <h2>lnPiMasked<a class="headerlink" href="#lnPiMasked" title="Permalink to this heading"></a></h2>
 <p>The first important class is <code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code>. This class handles the basics of dealing with <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span>. To create it, to the following.</p>
 <div class="nbinput docutils container">
@@ -599,7 +598,7 @@ lnz:[2.77]
 <img alt="../_images/notebooks_Basic_usage_9_1.png" src="../_images/notebooks_Basic_usage_9_1.png" />
 </div>
 </div>
-<section id="Reweighting-results">
+<div class="section" id="Reweighting-results">
 <h3>Reweighting results<a class="headerlink" href="#Reweighting-results" title="Permalink to this heading"></a></h3>
 <p>One of the amazing things about <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span> calculated at some chemical potential <span class="math notranslate nohighlight">\(\mu_{\rm ref}\)</span> is that it can be reweighted to any other chemical potential <span class="math notranslate nohighlight">\(\mu\)</span>. This is done with the formula</p>
 <div class="math notranslate nohighlight">
@@ -649,9 +648,9 @@ lnz:[2.77]
 <li></li>
 </ul>
 <p>Check out the api docs for further details</p>
-</section>
-</section>
-<section id="Calculating-Ensemble-properties">
+</div>
+</div>
+<div class="section" id="Calculating-Ensemble-properties">
 <h2>Calculating Ensemble properties<a class="headerlink" href="#Calculating-Ensemble-properties" title="Permalink to this heading"></a></h2>
 <p><span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span> can be used to calculate a variety of properties in the Canonical and Grand Canonical ensembles. To make everything easier, the actual value of <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span> is wrapped in an DataArray object, which provides some nice data goodies. To access this view, use the <code class="docutils literal notranslate"><span class="pre">ref.xce</span></code> or <code class="docutils literal notranslate"><span class="pre">ref.xge</span></code> accessors (short for Xarray Canonical Ensemble and Xarray Grand canonical Ensemble). For example, the canonical properties can be obtained as follows:</p>
 <div class="admonition note">
@@ -3127,9 +3126,9 @@ Attributes:
 <img alt="../_images/notebooks_Basic_usage_26_1.png" src="../_images/notebooks_Basic_usage_26_1.png" />
 </div>
 </div>
-</section>
-</section>
-<section id="Collections-of-lnPi-Values">
+</div>
+</div>
+<div class="section" id="Collections-of-lnPi-Values">
 <h1>Collections of lnPi Values<a class="headerlink" href="#Collections-of-lnPi-Values" title="Permalink to this heading"></a></h1>
 <p>Ok, we can reweight a <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span> from one chemical potential to another, and calculate a variety of properties for a <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span>. But what if we want to calculate properties at a variety of values of <span class="math notranslate nohighlight">\(\ln z\)</span>. We could do list comprehension, but that’s slow, and can get unwieldy. Instead, <code class="docutils literal notranslate"><span class="pre">lnPi</span></code> provides a helper class to deal with multiple <code class="docutils literal notranslate"><span class="pre">lnPi</span></code>s. To use it, we must first have a <code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code>. We will discuss this object in detail later, but for now, know that for
 the simple case of a single component system that does not have any phase transitions, it suffices to use the following.</p>
@@ -3278,7 +3277,7 @@ lnz_0     phase
 dtype: object
 </pre></div></div>
 </div>
-<section id="Accessing-properties-of-collection">
+<div class="section" id="Accessing-properties-of-collection">
 <h2>Accessing properties of collection<a class="headerlink" href="#Accessing-properties-of-collection" title="Permalink to this heading"></a></h2>
 <p>The really nice thing about <code class="docutils literal notranslate"><span class="pre">lnPiColletion</span></code> is that all the properties for <em>all</em> the <code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code> objects can be calculated at once, in a vectorized way. The same accessor <code class="docutils literal notranslate"><span class="pre">xge</span></code> is available to <code class="docutils literal notranslate"><span class="pre">lnPiCollection</span></code> as for <code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code>. Note that the <code class="docutils literal notranslate"><span class="pre">xce</span></code> accessor is not available, as it only makes sense for a single value of <code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code>.</p>
 <div class="nbinput docutils container">
@@ -3737,9 +3736,9 @@ Attributes:
 <img alt="../_images/notebooks_Basic_usage_41_1.png" src="../_images/notebooks_Basic_usage_41_1.png" />
 </div>
 </div>
-</section>
-</section>
-<section id="Loading-examples">
+</div>
+</div>
+<div class="section" id="Loading-examples">
 <h1>Loading examples<a class="headerlink" href="#Loading-examples" title="Permalink to this heading"></a></h1>
 <p>lnPi comes with some pre-defined examples. We say above loading a dictionary of data that we then turned into a <code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code> object. This can be streamlined using the following:</p>
 <div class="nbinput docutils container">
@@ -3762,8 +3761,8 @@ Attributes:
 </pre></div></div>
 </div>
 <p>Alternatively, for some examples, you can load an object with contains a predefined <code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code> object. We’ll save this for later.</p>
-</section>
-<section id="Single-component-system-with-phase-transitions.">
+</div>
+<div class="section" id="Single-component-system-with-phase-transitions.">
 <h1>Single component system with phase transitions.<a class="headerlink" href="#Single-component-system-with-phase-transitions." title="Permalink to this heading"></a></h1>
 <p>Next, let’s consider a system with a phase transition. First, lets load some example data</p>
 <div class="nbinput nblast docutils container">
@@ -3885,9 +3884,9 @@ dtype: object
 <li><p>return result</p></li>
 </ol>
 <p>OK, that’s a bunch of steps. Let take them one at a time.</p>
-<section id="Breaking-it-down-segmentation">
+<div class="section" id="Breaking-it-down-segmentation">
 <h2>Breaking it down segmentation<a class="headerlink" href="#Breaking-it-down-segmentation" title="Permalink to this heading"></a></h2>
-<section id="local-maxima">
+<div class="section" id="local-maxima">
 <h3>local maxima<a class="headerlink" href="#local-maxima" title="Permalink to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
@@ -3923,8 +3922,8 @@ dtype: object
 <img alt="../_images/notebooks_Basic_usage_56_1.png" src="../_images/notebooks_Basic_usage_56_1.png" />
 </div>
 </div>
-</section>
-<section id="Watershed">
+</div>
+<div class="section" id="Watershed">
 <h3>Watershed<a class="headerlink" href="#Watershed" title="Permalink to this heading"></a></h3>
 <p>OK, great. Now we can segment the data. <code class="docutils literal notranslate"><span class="pre">lnPi</span></code> provides a wrapper to <code class="docutils literal notranslate"><span class="pre">watershed</span></code> through <code class="docutils literal notranslate"><span class="pre">lnpy.segment.Segmenter</span></code>.</p>
 <div class="nbinput nblast docutils container">
@@ -3973,8 +3972,8 @@ array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </pre></div></div>
 </div>
 <p>Each unique value in <code class="docutils literal notranslate"><span class="pre">labels</span></code> corresponds to a phase. We can construct multiple <code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code> objects from labels using</p>
-</section>
-<section id="local-free-energy">
+</div>
+<div class="section" id="local-free-energy">
 <h3>local free energy<a class="headerlink" href="#local-free-energy" title="Permalink to this heading"></a></h3>
 <p>Now, we look at the local free energy. The local (scaled) free energy is defined as <span class="math notranslate nohighlight">\(w(N) = \beta f(N) = -\ln \Pi(N)\)</span>. We consider the energy at the location of the local minima in <span class="math notranslate nohighlight">\(w\)</span> (local maxima in <span class="math notranslate nohighlight">\(\ln \Pi\)</span>) versus the value of <span class="math notranslate nohighlight">\(w\)</span> at the transition between phases (around <span class="math notranslate nohighlight">\(n=100\)</span> in the figure above). This is performed by the class <code class="docutils literal notranslate"><span class="pre">wFreeEnergy</span></code>.</p>
 <div class="nbinput nblast docutils container">
@@ -4113,8 +4112,8 @@ array([[         inf,   6.601764  ],
 [&lt;lnPi(lnz=[-3.60995641])&gt;, &lt;lnPi(lnz=[-3.60995641])&gt;]
 </pre></div></div>
 </div>
-</section>
-<section id="Construct-collection">
+</div>
+<div class="section" id="Construct-collection">
 <h3>Construct collection<a class="headerlink" href="#Construct-collection" title="Permalink to this heading"></a></h3>
 <p>Now these can be converted to a <code class="docutils literal notranslate"><span class="pre">MaskedlnPiCollection</span></code> object.</p>
 <div class="nbinput docutils container">
@@ -4140,9 +4139,9 @@ dtype: object
 </pre></div></div>
 </div>
 <p>So, the segmentation can get pretty involved. This is why there is the helper class <code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code>. There are a slew of options to the different routines. Look at the docs for more information</p>
-</section>
-</section>
-<section id="At-a-different-\ln-z-value">
+</div>
+</div>
+<div class="section" id="At-a-different-\ln-z-value">
 <h2>At a different <span class="math notranslate nohighlight">\(\ln z\)</span> value<a class="headerlink" href="#At-a-different-\ln-z-value" title="Permalink to this heading"></a></h2>
 <p>Let us instead consider a different value of chemical potential. One near the critical point.</p>
 <div class="nbinput docutils container">
@@ -4283,8 +4282,8 @@ dtype: object
 </pre></div></div>
 </div>
 <p>Now if the <span class="math notranslate nohighlight">\(\Delta w\)</span> between phases is smaller than <code class="docutils literal notranslate"><span class="pre">efac</span></code>, the phases are merged. For more information, see that api docs.</p>
-</section>
-<section id="Tagging-phases">
+</div>
+<div class="section" id="Tagging-phases">
 <h2>Tagging phases<a class="headerlink" href="#Tagging-phases" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code> allows passing a callback <code class="docutils literal notranslate"><span class="pre">tag_phases</span></code> to attach a label to each phase. By default, the phases are labeled by there list index. This can be confusing, because over a range of <span class="math notranslate nohighlight">\(\ln z\)</span> values, different physical phases can have the same label. For example</p>
 <div class="nbinput nblast docutils container">
@@ -4423,9 +4422,9 @@ dtype: object
 <img alt="../_images/notebooks_Basic_usage_93_1.png" src="../_images/notebooks_Basic_usage_93_1.png" />
 </div>
 </div>
-</section>
-</section>
-<section id="Calculation-Binodal-and-spinodal">
+</div>
+</div>
+<div class="section" id="Calculation-Binodal-and-spinodal">
 <h1>Calculation Binodal and spinodal<a class="headerlink" href="#Calculation-Binodal-and-spinodal" title="Permalink to this heading"></a></h1>
 <p>The binodal and spinodal can be found using the <code class="docutils literal notranslate"><span class="pre">lnpy.stablity</span></code> module. This module adds accessors to <code class="docutils literal notranslate"><span class="pre">lnPiCollection</span></code> class. A collection is needed to provide a decent guess for the location of the binodal and spinodal.</p>
 <div class="nbinput nblast docutils container">
@@ -5029,8 +5028,8 @@ lnz_0       phase
 dtype: object
 </pre></div></div>
 </div>
-</section>
-<section id="Multi-component-systems">
+</div>
+<div class="section" id="Multi-component-systems">
 <h1>Multi component systems<a class="headerlink" href="#Multi-component-systems" title="Permalink to this heading"></a></h1>
 <p>lnPi is designed to work with single and multicomponent systems. Let’s take a look at a system without phase transitions to start.</p>
 <div class="nbinput nblast docutils container">
@@ -5148,7 +5147,7 @@ dtype: object
 </pre></div>
 </div>
 </div>
-<section id="Considering-lines-of-constant-\ln-z-or-constant-\Delta-\ln-z.">
+<div class="section" id="Considering-lines-of-constant-\ln-z-or-constant-\Delta-\ln-z.">
 <h2>Considering lines of constant <span class="math notranslate nohighlight">\(\ln z\)</span> or constant <span class="math notranslate nohighlight">\(\Delta \ln z\)</span>.<a class="headerlink" href="#Considering-lines-of-constant-\ln-z-or-constant-\Delta-\ln-z." title="Permalink to this heading"></a></h2>
 <p>Considering a multicomponent system will hopefully help explain why some design choices were made for <code class="docutils literal notranslate"><span class="pre">lnpy</span></code>.</p>
 <p>It is common to want to consider a multicomponent system along lines of constant ‘something’. For example, we might want to consider a spectrum of values of <span class="math notranslate nohighlight">\(\ln z_0\)</span> while holding <span class="math notranslate nohighlight">\(\ln z_1\)</span> constant. This can be accomplished using some built in <code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code> constructors.</p>
@@ -5320,8 +5319,8 @@ dtype: object
 Float64Index([1.0, 1.0, 1.0, 1.0, 1.0], dtype=&#39;float64&#39;)
 </pre></div></div>
 </div>
-</section>
-<section id="Multicomponent-system-with-phase-transitions">
+</div>
+<div class="section" id="Multicomponent-system-with-phase-transitions">
 <h2>Multicomponent system with phase transitions<a class="headerlink" href="#Multicomponent-system-with-phase-transitions" title="Permalink to this heading"></a></h2>
 <p>Next, we consider a multicomponent system</p>
 <div class="nbinput docutils container">
@@ -6953,8 +6952,8 @@ Attributes:
 <img alt="../_images/notebooks_Basic_usage_150_0.png" src="../_images/notebooks_Basic_usage_150_0.png" />
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
@@ -6968,7 +6967,7 @@ Attributes:
 
   <div role="contentinfo">
     <p>&#169; Copyright .
-      <span class="lastupdated">Last updated on 2022-09-26.
+      <span class="lastupdated">Last updated on 2022-09-28.
       </span></p>
   </div>
 

@@ -1,4 +1,4 @@
-lnpy.lnPiCollection.binodal
+﻿lnpy.lnPiCollection.binodal
 ===========================
 
 .. currentmodule:: lnpy
