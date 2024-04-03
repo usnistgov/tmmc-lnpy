@@ -13,7 +13,7 @@ numpy==1.26.4             # via bottleneck, imageio, pandas, pandas-stubs, sciki
 packaging==24.0           # via pytest, scikit-image, xarray
 pandas==2.2.1             # via xarray
 pandas-stubs==2.2.1.240316
-pillow==10.2.0            # via imageio, scikit-image
+pillow==10.3.0            # via imageio, scikit-image
 pluggy==1.4.0             # via pytest
 pytest==8.1.1
 python-dateutil==2.9.0.post0  # via pandas
