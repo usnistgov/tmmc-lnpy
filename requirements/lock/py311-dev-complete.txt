@@ -24,7 +24,7 @@ fastjsonschema==2.19.1    # via nbformat
 filelock==3.13.3          # via virtualenv
 fonttools==4.50.0         # via matplotlib
 identify==2.5.35          # via pre-commit
-idna==3.6                 # via requests
+idna==3.7                 # via requests
 imageio==2.34.0           # via scikit-image
 importlib-resources==6.4.0
 iniconfig==2.0.0          # via pytest

@@ -23,7 +23,7 @@ executing==2.0.1          # via stack-data
 fastjsonschema==2.19.1    # via nbformat
 fonttools==4.50.0         # via matplotlib
 greenlet==3.0.3           # via sqlalchemy
-idna==3.6                 # via requests
+idna==3.7                 # via requests
 imageio==2.34.0           # via scikit-image
 imagesize==1.4.1          # via sphinx
 importlib-metadata==7.1.0  # via jupyter-cache, myst-nb
