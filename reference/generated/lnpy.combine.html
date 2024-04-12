@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Routines to combine \(\ln \Pi\) data (combine) &#8212; tmmc-lnpy v0.8.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=a3bab12e"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/generated/lnpy.combine';</script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js"></script>
+    <script src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+    <script src="../../_static/js/leave_notice.js?v=133c5535"></script>
+    <script async="async" id="_fed_au_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Thermodynamic stability (stability)" href="lnpy.stability.html" />
+    <link rel="prev" title="Ensemble averages (ensembles)" href="lnpy.ensembles.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2024-04-12"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tmmc-lnpy v0.8.0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    tmmc-lnpy
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/usage/Basic_usage.html">Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?</a></li>
+
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">API reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api-public.html">Top level API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpy</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lnpy.lnpidata.html">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.lnpienergy.html">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.segment.html">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.ensembles.html">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.stability.html">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.lnpiseries.html">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.examples.html">Examples (<code class="xref py py-mod docutils literal notranslate"><span class="pre">examples</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.utils.html">Utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="lnpy.options.html">Options (<code class="xref py py-mod docutils literal notranslate"><span class="pre">options</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../api-other.html">Base classes and other methods</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api-legacy.html">Legacy API</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lnPi.maskedlnpi_legacy.html">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../navigation.html">Indices and tables</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py-modindex.html">Module Index</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy/issues/new?title=Issue%20on%20page%20%2Freference/generated/lnpy.combine.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/generated/lnpy.combine.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Routines to combine \ln \Pi data (combine)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.OverlapError"><code class="docutils literal notranslate"><span class="pre">OverlapError</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.OverlapError.add_note"><code class="docutils literal notranslate"><span class="pre">OverlapError.add_note()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.OverlapError.with_traceback"><code class="docutils literal notranslate"><span class="pre">OverlapError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.check_windows_overlap"><code class="docutils literal notranslate"><span class="pre">check_windows_overlap()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.combine_scaled_lnpi"><code class="docutils literal notranslate"><span class="pre">combine_scaled_lnpi()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.combine_dropfirst"><code class="docutils literal notranslate"><span class="pre">combine_dropfirst()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.combine_updown_mean"><code class="docutils literal notranslate"><span class="pre">combine_updown_mean()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.updown_from_collectionmatrix"><code class="docutils literal notranslate"><span class="pre">updown_from_collectionmatrix()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.delta_lnpi_from_updown"><code class="docutils literal notranslate"><span class="pre">delta_lnpi_from_updown()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.lnpi_from_updown"><code class="docutils literal notranslate"><span class="pre">lnpi_from_updown()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.normalize_lnpi"><code class="docutils literal notranslate"><span class="pre">normalize_lnpi()</span></code></a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="routines-to-combine-ln-pi-data-combine">
+<span id="module-lnpy.combine"></span><h1>Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<a class="reference internal" href="#module-lnpy.combine" title="lnpy.combine"><code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code></a>)<a class="headerlink" href="#routines-to-combine-ln-pi-data-combine" title="Link to this heading">#</a></h1>
+</section>
+<p><strong>Exceptions:</strong></p>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.combine.OverlapError" title="lnpy.combine.OverlapError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OverlapError</span></code></a></p></td>
+<td><p>Specific error for missing overlaps.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions:</strong></p>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.combine.check_windows_overlap" title="lnpy.combine.check_windows_overlap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_windows_overlap</span></code></a>(overlap_table, ...[, ...])</p></td>
+<td><p>Check that window overlaps form a connected graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.combine.combine_scaled_lnpi" title="lnpy.combine.combine_scaled_lnpi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combine_scaled_lnpi</span></code></a>(tables[, ...])</p></td>
+<td><p>Combine multiple windows by scaling each <span class="math notranslate nohighlight">\(\ln \Pi\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.combine.combine_dropfirst" title="lnpy.combine.combine_dropfirst"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combine_dropfirst</span></code></a>(tables[, window_name, ...])</p></td>
+<td><p>Combine windows by dropping first elements that overlap previous window.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.combine.combine_updown_mean" title="lnpy.combine.combine_updown_mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combine_updown_mean</span></code></a>(table[, by, as_index, ...])</p></td>
+<td><p>Combine up/down probabilities using weighted average.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.combine.updown_from_collectionmatrix" title="lnpy.combine.updown_from_collectionmatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updown_from_collectionmatrix</span></code></a>(table[, ...])</p></td>
+<td><p>Add up/down probabilities from collection matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.combine.delta_lnpi_from_updown" title="lnpy.combine.delta_lnpi_from_updown"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delta_lnpi_from_updown</span></code></a>(table[, up_name, ...])</p></td>
+<td><p>Add <span class="math notranslate nohighlight">\(\Delta \ln \Pi(N) = \ln \Pi(N) - \ln \Pi(N-1)\)</span> from up/down probabilities.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.combine.lnpi_from_updown" title="lnpy.combine.lnpi_from_updown"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpi_from_updown</span></code></a>(table[, lnpi_name, ...])</p></td>
+<td><p>Assign <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span> from up/down sorted probabilities.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.combine.normalize_lnpi" title="lnpy.combine.normalize_lnpi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_lnpi</span></code></a>(lnpi)</p></td>
+<td><p>Normalize <span class="math notranslate nohighlight">\(\ln\Pi\)</span> series or array.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lnpy.combine.OverlapError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">OverlapError</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L74-L75"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.OverlapError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
+<p>Specific error for missing overlaps.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.combine.OverlapError.add_note">
+<span class="sig-name descname"><span class="pre">add_note</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lnpy.combine.OverlapError.add_note" title="Link to this definition">#</a></dt>
+<dd><p>Exception.add_note(note) –
+add a note to the exception</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.combine.OverlapError.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lnpy.combine.OverlapError.with_traceback" title="Link to this definition">#</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.check_windows_overlap">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">check_windows_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">overlap_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">windows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_index_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">macrostate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'state'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L121-L163"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.check_windows_overlap" title="Link to this definition">#</a></dt>
+<dd><p>Check that window overlaps form a connected graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>overlap_table</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – Frame should contain columns <code class="docutils literal notranslate"><span class="pre">macrostate_names</span></code> and <code class="docutils literal notranslate"><span class="pre">window_index_name</span></code>
+and rows corresponding to overlaps.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lnpy.combine.OverlapError" title="lnpy.combine.OverlapError"><strong>OverlapError</strong></a> – If the overlaps do not form a connected graph, then raise a <code class="docutils literal notranslate"><span class="pre">OverlapError</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.combine_scaled_lnpi">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">combine_scaled_lnpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">macrostate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'state'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnpi_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ln_prob'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'window'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L317-L471"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.combine_scaled_lnpi" title="Link to this definition">#</a></dt>
+<dd><p>Combine multiple windows by scaling each <span class="math notranslate nohighlight">\(\ln \Pi\)</span>.</p>
+<p>This performs least squares on the problem:</p>
+<div class="math notranslate nohighlight">
+\[\min_{C_0, C_1, ..., C_{W-1}} \sum_{\rm{overlap}_m \in \rm{overlaps}}
+\, \sum_{N_m, k \in \rm{overlap}_m} [\ln \bar{\Pi}(N_m) - (\ln \Pi_k
+(N_m) + C_k)]^2\]</div>
+<p>where,</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(C_j\)</span> : shift for sample <span class="math notranslate nohighlight">\(j\)</span>. <span class="math notranslate nohighlight">\(W\)</span> : number of</p></li>
+<li><p>overlapping samples <span class="math notranslate nohighlight">\(\Pi_k(N)\)</span> : transition matrix at particle</p></li>
+<li><p>number <span class="math notranslate nohighlight">\(N\)</span> for the kth sample <span class="math notranslate nohighlight">\(\rm{overlap}_m\)</span> : a particular</p></li>
+<li><p>overlap at particle number <span class="math notranslate nohighlight">\(N_m\)</span> and over samples <span class="math notranslate nohighlight">\(k\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\ln \bar{\Pi}\)</span> is the to be determined average value.</p></li>
+</ul>
+<p>This can be reduced to a matrix problem of the form:</p>
+<div class="math notranslate nohighlight">
+\[S C_j - \sum_{k \in \rm{overlap}_m} C_k = - (S \ln \Pi_j(N_m) - \sum_{k
+\in \rm{overlap}_m} \ln \Pi_k(N_m))\]</div>
+<p>the sum runs over all samples with overlap at state <span class="math notranslate nohighlight">\(N_m\)</span>, <span class="math notranslate nohighlight">\(S\)</span>
+is the number of such overlaps (i.e., <span class="math notranslate nohighlight">\(S = \sum_{k \in
+\rm{overlap}_m} 1\)</span>). There are such equations for all <span class="math notranslate nohighlight">\(j \in
+\rm{overlap}_m\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tables</strong> – Individual sample windows. If pass in a single
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>, it must contain the column <code class="docutils literal notranslate"><span class="pre">window_name</span></code>.
+Otherwise, the individual frames will be concatenated and the
+<code class="docutils literal notranslate"><span class="pre">window_name</span></code> column will be added (or replaced if already present).</p></li>
+<li><p><strong>macrostate_names</strong> – Column name(s) corresponding to a single “state”. For example, for a single
+component system, this could be <code class="docutils literal notranslate"><span class="pre">macrostate_names=&quot;n&quot;</span></code>, and for a binary
+system <code class="docutils literal notranslate"><span class="pre">macrostate_names=[&quot;n_0&quot;,</span> <span class="pre">&quot;n_1&quot;]</span></code></p></li>
+<li><p><strong>lnpi_name</strong> – Column name corresponding to <span class="math notranslate nohighlight">\(\ln \Pi\)</span>.</p></li>
+<li><p><strong>window_name</strong> – Column name corresponding to “window”, i.e., an individual simulation.
+Note that this is only used if passing in a single dataframe with multiple windows.</p></li>
+<li><p><strong>use_sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – Use <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.coo_array.html#scipy.sparse.coo_array" title="(in SciPy v1.13.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">coo_array</span></code></a> array in matrix equation. This is
+often faster than using a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p></li>
+<li><p><strong>check_connected</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, check that all windows form a connected graph.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> – Combined table with appropriately shifted <code class="docutils literal notranslate"><span class="pre">lnpi_name</span></code> column.
+Note that the table is not yet averaged over <code class="docutils literal notranslate"><span class="pre">macrostate_names</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">states</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">states</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">states</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">table</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">lnpi</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">   state  lnpi</span>
+<span class="go">0      0     0</span>
+<span class="go">1      1     1</span>
+<span class="go">2      2     2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">   state  lnpi</span>
+<span class="go">2      2    12</span>
+<span class="go">3      3    13</span>
+<span class="go">4      4    14</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">combined_table</span> <span class="o">=</span> <span class="n">combine_scaled_lnpi</span><span class="p">(</span><span class="n">tables</span><span class="p">,</span> <span class="n">lnpi_name</span><span class="o">=</span><span class="s2">&quot;lnpi&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">combined_table</span><span class="p">)</span>
+<span class="go">   state  lnpi</span>
+<span class="go">0      0   0.0</span>
+<span class="go">1      1   1.0</span>
+<span class="go">2      2   2.0</span>
+<span class="go">2      2   2.0</span>
+<span class="go">3      3   3.0</span>
+<span class="go">4      4   4.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.combine_dropfirst">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">combine_dropfirst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'window'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'state'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L475-L600"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.combine_dropfirst" title="Link to this definition">#</a></dt>
+<dd><p>Combine windows by dropping first elements that overlap previous window.</p>
+<p>For example, if have two windows <cite>A</cite> and <cite>B</cite> with states <cite>state_A=[0,1,2]</cite>
+and <cite>state_B=[1,2,3]</cite> and observable <cite>x_A(state_A)</cite>, <cite>x_B(state_B)</cite>, then
+the combined result will be <cite>state=[0,1,2,3]</cite>, <cite>x = [x_A(0), x_A(1),
+x_A(2), x_B(3)]</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tables</strong> – Individual sample windows. If pass in a single
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>, it must contain the column <code class="docutils literal notranslate"><span class="pre">window_name</span></code>.
+Otherwise, the individual frames will be concatenated and the
+<code class="docutils literal notranslate"><span class="pre">window_name</span></code> column will be added (or replaced if already present).</p></li>
+<li><p><strong>window_name</strong> – Column name corresponding to “window”, i.e., an individual simulation.
+Note that this is only used if passing in a single dataframe with multiple windows.</p></li>
+<li><p><strong>state_name</strong> – Column name corresponding to simulation state. For example, <code class="docutils literal notranslate"><span class="pre">state=&quot;state&quot;</span></code>.</p></li>
+<li><p><strong>check_connected</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, check that all windows form a connected graph.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> – Combined table.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there is not expanded ensemble sampling (i.e., non-integer <code class="docutils literal notranslate"><span class="pre">state</span></code>
+values) in windows, you should prefer using <a class="reference internal" href="#lnpy.combine.combine_updown_mean" title="lnpy.combine.combine_updown_mean"><code class="xref py py-func docutils literal notranslate"><span class="pre">combine_updown_mean()</span></code></a>.</p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">states</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">states</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">states</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">table</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">lnpi</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">   state  lnpi</span>
+<span class="go">0      0     0</span>
+<span class="go">1      1     1</span>
+<span class="go">2      2     2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">   state  lnpi</span>
+<span class="go">2      2    12</span>
+<span class="go">3      3    13</span>
+<span class="go">4      4    14</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">combined_table</span> <span class="o">=</span> <span class="n">combine_dropfirst</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">combined_table</span><span class="p">)</span>
+<span class="go">   state  lnpi</span>
+<span class="go">0      0     0</span>
+<span class="go">1      1     1</span>
+<span class="go">2      2     2</span>
+<span class="go">3      3    13</span>
+<span class="go">4      4    14</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.combine_updown_mean">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">combine_updown_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'state'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'n_trials'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_down'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">up_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_up'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_running</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L627-L693"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.combine_updown_mean" title="Link to this definition">#</a></dt>
+<dd><p>Combine up/down probabilities using weighted average.</p>
+<p>This can be used to splice overlapping windows into a single window, combine across replicate
+simulations, or both.</p>
+<p class="rubric">Notes</p>
+<p>If any windows use expanded ensemble (i.e., non-integer <code class="docutils literal notranslate"><span class="pre">state</span></code> values),
+then this method should not be used to splice across windows.  Instead, use <a class="reference internal" href="#lnpy.combine.combine_dropfirst" title="lnpy.combine.combine_dropfirst"><code class="xref py py-func docutils literal notranslate"><span class="pre">combine_dropfirst()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – Table containing <code class="docutils literal notranslate"><span class="pre">by</span></code>, <code class="docutils literal notranslate"><span class="pre">up_name</span></code>, <code class="docutils literal notranslate"><span class="pre">down_name</span></code>, and <code class="docutils literal notranslate"><span class="pre">weight_name</span></code> columns.</p></li>
+<li><p><strong>by</strong> – Groupby column(s).</p></li>
+<li><p><strong>as_index</strong> – <code class="docutils literal notranslate"><span class="pre">as_index</span></code> keyword argument (see <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby" title="(in pandas v2.2.2)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.DataFrame.groupby()</span></code></a>).</p></li>
+<li><p><strong>weight_name</strong> – Column name corresponding to “weight” of probability.</p></li>
+<li><p><strong>down_name</strong> – Column name corresponding to “down” probability.</p></li>
+<li><p><strong>up_name</strong> – Column name corresponding to “up” probability.</p></li>
+<li><p><strong>use_running</strong> – If False (default), use straight weighted average. If True, use running
+weighted average. The latter can be slower, but numerically stable.</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby" title="(in pandas v2.2.2)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.DataFrame.groupby()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> – Combined transition matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.updown_from_collectionmatrix">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">updown_from_collectionmatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['c0',</span> <span class="pre">'c1',</span> <span class="pre">'c2']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'n_trials'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_down'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">up_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_up'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L696-L729"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.updown_from_collectionmatrix" title="Link to this definition">#</a></dt>
+<dd><p>Add up/down probabilities from collection matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></p></li>
+<li><p><strong>matrix_names</strong> – Column names for collection matrix.</p></li>
+<li><p><strong>weight_name</strong> – Column name corresponding to “weight” of probability.</p></li>
+<li><p><strong>down_name</strong> – Column name corresponding to “down” probability.</p></li>
+<li><p><strong>up_name</strong> – Column name corresponding to “up” probability.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> – New dataframe with assigned columns.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.delta_lnpi_from_updown">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">delta_lnpi_from_updown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">up_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_up'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_down'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_lnpi_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'delta_lnpi'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L732-L765"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.delta_lnpi_from_updown" title="Link to this definition">#</a></dt>
+<dd><p>Add <span class="math notranslate nohighlight">\(\Delta \ln \Pi(N) = \ln \Pi(N) - \ln \Pi(N-1)\)</span> from up/down probabilities.</p>
+<p>This assumes <code class="docutils literal notranslate"><span class="pre">table</span></code> is sorted by <code class="docutils literal notranslate"><span class="pre">state</span></code> value. This function is
+useful if the simulation windows use extended ensemble sampling and have
+non-integer steps in the <code class="docutils literal notranslate"><span class="pre">state</span></code> variable. The deltas can be combined
+with <a class="reference internal" href="#lnpy.combine.combine_dropfirst" title="lnpy.combine.combine_dropfirst"><code class="xref py py-func docutils literal notranslate"><span class="pre">combine_dropfirst()</span></code></a>, cumalitively summed, then non integer
+states dropped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>up_name</strong> – Column name corresponding to “up” probability.</p></li>
+<li><p><strong>down_name</strong> – Column name corresponding to “down” probability.</p></li>
+<li><p><strong>delta_lnpi_name</strong> – Name of output column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> – Table with <code class="docutils literal notranslate"><span class="pre">delta_lnpi_name</span></code> column.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.lnpi_from_updown">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">lnpi_from_updown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnpi_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ln_prob'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_down'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">up_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P_up'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L768-L808"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.lnpi_from_updown" title="Link to this definition">#</a></dt>
+<dd><p>Assign <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span> from up/down sorted probabilities.</p>
+<p>This assumes <code class="docutils literal notranslate"><span class="pre">table</span></code> is sorted by <code class="docutils literal notranslate"><span class="pre">state</span></code> value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></p></li>
+<li><p><strong>lnpi_name</strong> – Column name corresponding to <span class="math notranslate nohighlight">\(\ln \Pi\)</span>.</p></li>
+<li><p><strong>down_name</strong> – Column name corresponding to “down” probability.</p></li>
+<li><p><strong>up_name</strong> – Column name corresponding to “up” probability.</p></li>
+<li><p><strong>use_prod</strong> – If true (default), calculate from cumulative product (on probability).
+Otherwise, calculate from cumulative sum (on log of probability).</p></li>
+<li><p><strong>norm</strong> – If true (default), normalize distribution.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> – New dataframe with assigned <span class="math notranslate nohighlight">\(\ln \Pi\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.combine.normalize_lnpi">
+<span class="sig-prename descclassname"><span class="pre">lnpy.combine.</span></span><span class="sig-name descname"><span class="pre">normalize_lnpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/combine.py#L811-L814"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.combine.normalize_lnpi" title="Link to this definition">#</a></dt>
+<dd><p>Normalize <span class="math notranslate nohighlight">\(\ln\Pi\)</span> series or array.</p>
+</dd></dl>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lnpy.ensembles.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lnpy.stability.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.OverlapError"><code class="docutils literal notranslate"><span class="pre">OverlapError</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.OverlapError.add_note"><code class="docutils literal notranslate"><span class="pre">OverlapError.add_note()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.OverlapError.with_traceback"><code class="docutils literal notranslate"><span class="pre">OverlapError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.check_windows_overlap"><code class="docutils literal notranslate"><span class="pre">check_windows_overlap()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.combine_scaled_lnpi"><code class="docutils literal notranslate"><span class="pre">combine_scaled_lnpi()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.combine_dropfirst"><code class="docutils literal notranslate"><span class="pre">combine_dropfirst()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.combine_updown_mean"><code class="docutils literal notranslate"><span class="pre">combine_updown_mean()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.updown_from_collectionmatrix"><code class="docutils literal notranslate"><span class="pre">updown_from_collectionmatrix()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.delta_lnpi_from_updown"><code class="docutils literal notranslate"><span class="pre">delta_lnpi_from_updown()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.lnpi_from_updown"><code class="docutils literal notranslate"><span class="pre">lnpi_from_updown()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.combine.normalize_lnpi"><code class="docutils literal notranslate"><span class="pre">normalize_lnpi()</span></code></a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By William P. Krekelberg
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2015, William P. Krekelberg.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-04-12.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
