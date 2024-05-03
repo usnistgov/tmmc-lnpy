@@ -22,7 +22,7 @@ scipy==1.13.0             # via scikit-image
 six==1.16.0               # via python-dateutil
 tifffile==2024.2.12       # via scikit-image
 tomli==2.0.1              # via pytest
-tqdm==4.66.2
+tqdm==4.66.3
 types-pytz==2024.1.0.20240203  # via pandas-stubs
 types-tqdm==4.66.0.20240106
 typing-extensions==4.11.0  # via module-utilities

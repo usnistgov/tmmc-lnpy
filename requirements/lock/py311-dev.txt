@@ -75,7 +75,7 @@ stack-data==0.6.3         # via ipython
 termcolor==2.4.0          # via pytest-sugar
 tifffile==2024.2.12       # via scikit-image
 tornado==6.4              # via ipykernel, jupyter-client
-tqdm==4.66.2
+tqdm==4.66.3
 traitlets==5.14.2         # via comm, ipykernel, ipython, ipywidgets, jupyter-client, jupyter-core, matplotlib-inline, nbclient, nbformat
 types-pytz==2024.1.0.20240203  # via pandas-stubs
 types-tqdm==4.66.0.20240106
