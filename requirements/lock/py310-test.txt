@@ -27,7 +27,7 @@ six==1.16.0               # via python-dateutil
 termcolor==2.4.0          # via pytest-sugar
 tifffile==2024.2.12       # via scikit-image
 tomli==2.0.1              # via coverage, pytest
-tqdm==4.66.2
+tqdm==4.66.3
 typing-extensions==4.11.0  # via module-utilities
 tzdata==2024.1            # via pandas
 xarray==2024.3.0
