@@ -75,7 +75,7 @@ pytz==2024.1              # via pandas
 pyyaml==6.0.1             # via jupyter-cache, myst-nb, myst-parser
 pyzmq==25.1.2             # via ipykernel, jupyter-client
 referencing==0.34.0       # via jsonschema, jsonschema-specifications
-requests==2.31.0          # via sphinx
+requests==2.32.0          # via sphinx
 rpds-py==0.18.0           # via jsonschema, referencing
 scikit-image==0.23.1
 scipy==1.13.0             # via scikit-image
