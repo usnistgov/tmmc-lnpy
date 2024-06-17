@@ -102,7 +102,7 @@ tqdm==4.66.2
 traitlets==5.14.2         # via comm, ipykernel, ipython, ipywidgets, jupyter-client, jupyter-core, matplotlib-inline, nbclient, nbformat
 typing-extensions==4.11.0  # via ipython, module-utilities, myst-nb, pydata-sphinx-theme, sqlalchemy
 tzdata==2024.1            # via pandas
-urllib3==2.2.1            # via requests
+urllib3==1.26.19            # via requests
 wcwidth==0.2.13           # via prompt-toolkit
 widgetsnbextension==4.0.10  # via ipywidgets
 xarray==2024.3.0
