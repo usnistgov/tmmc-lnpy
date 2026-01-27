@@ -842,10 +842,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             (x._pi_params(fill_value) for x in self), total=n, desc="pi_norm"
         )
 
-        for i, (_pi_norm, _pi_sum, _lnpi_zero) in enumerate(seq):
-            pi_norm[i, ...] = _pi_norm
-            pi_sum[i, ...] = _pi_sum
-            lnpi_zero[i, ...] = _lnpi_zero
+        for i, (pi_norm_, pi_sum_, lnpi_zero_) in enumerate(seq):
+            pi_norm[i, ...] = pi_norm_
+            pi_sum[i, ...] = pi_sum_
+            lnpi_zero[i, ...] = lnpi_zero_
         return pi_norm, pi_sum, lnpi_zero
 
     def wrap_list_results(

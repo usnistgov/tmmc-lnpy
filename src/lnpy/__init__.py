@@ -1,4 +1,5 @@
 """Publicly accessible classes/routines."""
+# ruff: noqa: RUF067
 
 # updated versioning scheme
 from importlib.metadata import PackageNotFoundError

@@ -276,8 +276,6 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
 
         pad : bool, default=False
 
-        phases : dict
-
 
         Returns
         -------

@@ -2,6 +2,7 @@
 Legacy interface to :mod:`lnpy` (:mod:`lnPi`)
 =============================================
 """
+# ruff: noqa: RUF067
 
 from warnings import warn
 
