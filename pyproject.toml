@@ -29,6 +29,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering",
 ]
 dependencies = [
@@ -46,18 +47,22 @@ dependencies = [
     "typing-extensions>=4.10.0; python_version<'3.13'",
     "xarray",
 ]
-optional-dependencies.all = [ "tmmc-lnpy[resample,viz]" ]
-optional-dependencies.resample = [
+
+[project.optional-dependencies]
+all = [ "tmmc-lnpy[resample,viz]" ]
+resample = [
     "cmomy>=1.0.1",
     "dask[diagnostics]",
     "netcdf4",
 ]
-optional-dependencies.viz = [
+viz = [
     "ipywidgets",
     "matplotlib",
 ]
-urls.Documentation = "https://pages.nist.gov/tmmc-lnpy/"
-urls.Homepage = "https://github.com/usnistgov/tmmc-lnpy"
+
+[project.urls]
+Documentation = "https://pages.nist.gov/tmmc-lnpy/"
+Homepage = "https://github.com/usnistgov/tmmc-lnpy"
 
 [dependency-groups]
 dev = [
@@ -82,22 +87,13 @@ docs = [
     "myst-nb",
     "pyenchant",
     "sphinx>=5.3.0",
+    # other
     "sphinx-book-theme",
     "sphinx-copybutton",
     "sphinxcontrib-spelling",
     { include-group = "viz" },
 ]
-# other packages/tools
-ipython = [ "ipython" ]
-mypy = [ "mypy>=1.15.0", "orjson" ]
-notebook = [ "ipykernel", "nbclient" ]
-nox = [ "nox>=2025.5.1" ]
-pylint = [ "pylint" ]
-pytest = [ "pytest!=8.4" ]
-pytest-accept = [ "pytest-accept" ]
-# other environments
-optional = [ "tmmc-lnpy[all]" ]
-viz = [ "tmmc-lnpy[viz]" ]
+# other groups
 docs-live = [
     "sphinx-autobuild",
     { include-group = "docs" },
@@ -107,6 +103,14 @@ docs-spelling = [
     "sphinxcontrib-spelling",
     { include-group = "docs" },
 ]
+ipython = [ "ipython" ]
+mypy = [ "mypy>=1.15.0", "orjson" ]
+notebook = [ "ipykernel", "nbclient" ]
+nox = [ "nox>=2025.5.1" ]
+optional = [ "tmmc-lnpy[all]" ]
+pylint = [ "pylint" ]
+pytest = [ "pytest!=8.4" ]
+pytest-accept = [ "pytest-accept" ]
 test-extras = [
     { include-group = "test" },
 ]
@@ -122,72 +126,93 @@ typecheck = [
     { include-group = "pylint" },
     { include-group = "pytest" },
 ]
+viz = [ "tmmc-lnpy[viz]" ]
 
 # * uv -------------------------------------------------------------------------
 
 [tool.uv]
-managed = true
+required-version = ">=0.7.15"
 default-groups = [ "dev" ]
 fork-strategy = "requires-python"
-required-version = ">=0.7.15"
-
-[tool.uv.pip]
-annotation-style = "line"
-generate-hashes = true
+managed = true
+build-backend.module-name = [ "lnPi", "lnpy" ]
+build-backend.source-include = [ "tests/**" ]
+pip.annotation-style = "line"
+pip.generate-hashes = true
 
 [tool.uv.dependency-groups]
 dev.requires-python = ">=3.13"
 docs.requires-python = ">=3.13"
 docs-live.requires-python = ">=3.13"
 docs-spelling.requires-python = ">=3.13"
-# other tools
 ipython.requires-python = ">=3.13"
 mypy.requires-python = ">=3.13"
 notebook.requires-python = ">=3.13"
 nox.requires-python = ">=3.13"
 
-[tool.uv.build-backend]
-source-include = [ "tests/**" ]
-module-name = [ "lnpy", "lnPi" ]
-
+[tool.nbqa]
 # * Checks ---------------------------------------------------------------------
 
-[tool.nbqa.exclude]
-codespell = "^examples/archived"
+exclude.codespell = "^examples/archived"
 
 [tool.repo-review]
 ignore = [
     "GH",     # enable for actions
+    "NOX103", # I prefer using "nox.options.sessions"
     "PC140",  # do this externally
     "PC170",  # pygrep
     "PC901",  # ci message
     "RTD",
-    "NOX103", # I prefer using "nox.options.sessions"
 ]
 
 [tool.check-wheel-contents]
-toplevel = [
-    "lnpy",
-    "lnPi",
-]
 src_dir = [
     "src",
 ]
+toplevel = [
+    "lnPi",
+    "lnpy",
+]
 
 [tool.pyproject-fmt]
-max_supported_python = "3.13"
+# max_supported_python = "3.13"
+expand_tables = [
+    "project.entry-points",
+    "project.optional-dependencies",
+    "project.scripts",
+    "project.urls",
+    "tool.mypy.overrides",
+    "tool.pyproject2conda",
+    "tool.pyright.executionEnvironments",
+    "tool.pytest",
+    "tool.typos",
+    "tool.uv.dependency-groups",
+]
+indent = 4
+keep_full_version = true
+
+[tool.typos.default]
+extend-ignore-identifiers-re = [ "NDArray.*" ]
+
+[tool.typos.default.extend-identifiers]
+fileprefix_inh = "fileprefix_inh"
+
+[tool.typos.default.extend-words]
+STABL = "STABL"
+datas = "datas"
 
 # * Testing --------------------------------------------------------------------
 
 [tool.pytest.ini_options]
 addopts = [
-    "-ra",
+    "--cov-config=pyproject.toml",
+    "--doctest-glob=*.md",
+    "--doctest-modules",
+    "--pyargs",
     "--strict-config",
     "--strict-markers",
-    "--doctest-modules",
-    "--doctest-glob=*.md",
-    "--cov-config=pyproject.toml",
-    "--pyargs",
+    "-ra",
+    # xdist
     "-n",
     "4",
 ]
@@ -197,63 +222,58 @@ testpaths = [
     "lnpy",
     "tests",
 ]
-minversion = "8"
-log_cli_level = "INFO"
-xfail_strict = true
+# options
 filterwarnings = [
     "error",
-    "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
     "ignore: FNV hashing is not implemented in Numba:UserWarning",
-    "ignore: This process:DeprecationWarning",
     "ignore: Module lnpy was never imported:coverage.exceptions.CoverageWarning",
     "ignore: No data was collected:coverage.exceptions.CoverageWarning",
+    "ignore: This process:DeprecationWarning",
     "ignore: importing 'Const' from 'astroid':DeprecationWarning",
+    "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
 ]
+log_cli_level = "INFO"
+minversion = "8"
+xfail_strict = true
 
-[tool.coverage.run]
-branch = true
-
-[tool.coverage.report]
-show_missing = true
-exclude_also = [
-    "if TYPE_CHECKING:",
-    "@overload",
-]
-omit = [
-    "*/vendored/*",
-    "*/core/typing.py",
-]
-include = [
-    "src/*",
-]
-
-[tool.coverage.paths]
-source = [
+[tool.coverage]
+run.branch = true
+paths.source = [
     "src/",
+    # needed for testing source if not editable install
     ".nox/**/site-packages/",
 ]
+report.exclude_also = [
+    "@overload",
+    "if TYPE_CHECKING:",
+]
+report.include = [
+    "src/*",
+]
+report.omit = [
+    "*/core/typing.py",
+    "*/vendored/*",
+]
+report.show_missing = true
 
 # * typecheck ---------------------------------------------------------------------
 
 [tool.mypy]
+exclude = [
+    ".eggs",
+    ".nox",
+    ".numba_cache",
+    ".tox",
+    ".venv",
+    "docs",
+]
 files = [
     "src",
     "tests",
 ]
-warn_unused_ignores = true
-warn_return_any = true
-warn_unused_configs = true
-warn_unreachable = true
-exclude = [
-    ".eggs",
-    ".tox",
-    ".nox",
-    ".venv",
-    ".numba_cache",
-    "docs",
-]
-check_untyped_defs = true
 strict = true
+# options
+check_untyped_defs = true
 enable_error_code = [
     "ignore-without-code",
     "redundant-expr",
@@ -262,21 +282,25 @@ enable_error_code = [
 untyped_calls_exclude = [
     "skimage",
 ]
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
 
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 module = [
-    "bottleneck.*",
     "IPython.*",
+    "bottleneck.*",
     "joblib.*",
     "lnPi.*",
     "matplotlib.*",
     "numba.*",
     "pooch.*",
     "scipy.ndimage.*",
-    "scipy.spatial.*",
     "scipy.optimize.*",
     "scipy.sparse.*",
+    "scipy.spatial.*",
     "skimage.*",
 ]
 
@@ -286,24 +310,23 @@ disallow_untyped_defs = false
 disallow_untyped_calls = false
 disallow_incomplete_defs = false
 module = [
-    "tests.*",
     "lnPi.maskedlnpi_legacy.*",
+    "tests.*",
 ]
 
 [tool.pyright]
+exclude = [
+    "**/.mypy_cache",
+    "**/.numba_cache",
+    "**/__pycache__",
+    ".nox/**",
+    ".tox/**",
+    ".venv/**",
+]
 include = [
     "src",
     "tests",
 ]
-exclude = [
-    "**/__pycache__",
-    ".tox/**",
-    ".nox/**",
-    ".venv/**",
-    "**/.mypy_cache",
-    "**/.numba_cache",
-]
-typeCheckingMode = "standard"
 strict = [
     # "src",
     # "tests",
@@ -312,6 +335,8 @@ strict = [
     # "src/lnpy/*.py",
     # "src/lnpy/core/*.py",
 ]
+typeCheckingMode = "standard"
+# options
 reportDuplicateImport = true
 reportInvalidStubStatement = true
 reportOverlappingOverload = true
@@ -356,19 +381,24 @@ python = "default"
 groups = [ "test" ]
 python = "all"
 
+[tool.pyproject2conda.envs.test-extras]
+groups = [ "test-extras" ]
+skip-package = true
+python = "all"
+
 [tool.pyproject2conda.envs.uvx-tools]
 reqs = [
     # these used solely for specking tools to be used with uvx ...
+    "basedpyright>=1.31.3",
     "conda-lock>=2.5.5",
     "cruft",
     "grayskull>=2.5.3",
     "nbqa>=1.8.4",
-    "pre-commit>=4.0.0",
     "pre-commit-uv",
+    "pre-commit>=4.0.0",
     "prek",
     "pyrefly>=0.37.0",
     "pyright>=1.1.396",
-    "basedpyright>=1.31.3",
     "scriv",
     "twine>=5.0.0",
     "ty",
@@ -379,11 +409,6 @@ groups = [
 ]
 skip-package = true
 style = "requirements"
-
-[tool.pyproject2conda.envs.test-extras]
-groups = [ "test-extras" ]
-skip-package = true
-python = "all"
 
 # * Other tools ----------------------------------------------------------------
 
@@ -396,13 +421,3 @@ new_fragment_template = "file: changelog.d/templates/new_fragment.md.j2"
 use_shortcuts = true
 
 [tool.cruft]
-
-[tool.typos.default]
-extend-ignore-identifiers-re = [ "NDArray.*" ]
-
-[tool.typos.default.extend-words]
-datas = "datas"
-STABL = "STABL"
-
-[tool.typos.default.extend-identifiers]
-fileprefix_inh = "fileprefix_inh"
