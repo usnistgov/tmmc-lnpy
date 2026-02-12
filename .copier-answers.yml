@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.6.0-3-g76080a0
+_src_path: https://github.com/usnistgov/cookiecutter-nist-python.git
+command_line_interface: none
+conda_channel: conda-forge
+email: wpk@nist.gov
+full_name: William P. Krekelberg
+github_username: usnistgov
+project_name: tmmc-lnpy
+project_short_description: Analysis of lnPi results from TMMC simulation
+project_slug: lnpy
+pypi_username: wpk-nist
+sphinx_theme: sphinx_book_theme
+sphinx_use_autodocsumm: true
+year: '2015'
