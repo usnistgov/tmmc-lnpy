@@ -87,17 +87,6 @@ docs = [
     "sphinxcontrib-spelling",
     { include-group = "viz" },
 ]
-# other packages/tools
-ipython = [ "ipython" ]
-mypy = [ "mypy>=1.15.0", "orjson" ]
-notebook = [ "ipykernel", "nbclient" ]
-nox = [ "nox>=2025.5.1" ]
-pylint = [ "pylint" ]
-pytest = [ "pytest!=8.4" ]
-pytest-accept = [ "pytest-accept" ]
-# other environments
-optional = [ "tmmc-lnpy[all]" ]
-viz = [ "tmmc-lnpy[viz]" ]
 docs-live = [
     "sphinx-autobuild",
     { include-group = "docs" },
@@ -107,6 +96,16 @@ docs-spelling = [
     "sphinxcontrib-spelling",
     { include-group = "docs" },
 ]
+# other packages/tools
+ipython = [ "ipython" ]
+mypy = [ "mypy>=1.15.0", "orjson" ]
+notebook = [ "ipykernel", "nbclient" ]
+nox = [ "nox>=2025.5.1" ]
+# other environments
+optional = [ "tmmc-lnpy[all]" ]
+pylint = [ "pylint" ]
+pytest = [ "pytest!=8.4" ]
+pytest-accept = [ "pytest-accept" ]
 test-extras = [
     { include-group = "test" },
 ]
@@ -122,38 +121,33 @@ typecheck = [
     { include-group = "pylint" },
     { include-group = "pytest" },
 ]
+viz = [ "tmmc-lnpy[viz]" ]
 
 # * uv -------------------------------------------------------------------------
 
 [tool.uv]
-managed = true
-default-groups = [ "dev" ]
-fork-strategy = "requires-python"
 required-version = ">=0.7.15"
-
-[tool.uv.pip]
-annotation-style = "line"
-generate-hashes = true
-
-[tool.uv.dependency-groups]
-dev.requires-python = ">=3.13"
-docs.requires-python = ">=3.13"
-docs-live.requires-python = ">=3.13"
-docs-spelling.requires-python = ">=3.13"
+default-groups = [ "dev" ]
+dependency-groups.dev.requires-python = ">=3.13"
+dependency-groups.docs-live.requires-python = ">=3.13"
+dependency-groups.docs-spelling.requires-python = ">=3.13"
+dependency-groups.docs.requires-python = ">=3.13"
 # other tools
-ipython.requires-python = ">=3.13"
-mypy.requires-python = ">=3.13"
-notebook.requires-python = ">=3.13"
-nox.requires-python = ">=3.13"
+dependency-groups.ipython.requires-python = ">=3.13"
+dependency-groups.mypy.requires-python = ">=3.13"
+dependency-groups.notebook.requires-python = ">=3.13"
+dependency-groups.nox.requires-python = ">=3.13"
+fork-strategy = "requires-python"
+managed = true
+build-backend.module-name = [ "lnpy", "lnPi" ]
+build-backend.source-include = [ "tests/**" ]
+pip.annotation-style = "line"
+pip.generate-hashes = true
 
-[tool.uv.build-backend]
-source-include = [ "tests/**" ]
-module-name = [ "lnpy", "lnPi" ]
-
+[tool.nbqa]
 # * Checks ---------------------------------------------------------------------
 
-[tool.nbqa.exclude]
-codespell = "^examples/archived"
+exclude.codespell = "^examples/archived"
 
 [tool.repo-review]
 ignore = [
@@ -177,10 +171,16 @@ src_dir = [
 [tool.pyproject-fmt]
 max_supported_python = "3.13"
 
+[tool.typos]
+default.extend-ignore-identifiers-re = [ "NDArray.*" ]
+default.extend-identifiers.fileprefix_inh = "fileprefix_inh"
+default.extend-words.datas = "datas"
+default.extend-words.STABL = "STABL"
+
+[tool.pytest]
 # * Testing --------------------------------------------------------------------
 
-[tool.pytest.ini_options]
-addopts = [
+ini_options.addopts = [
     "-ra",
     "--strict-config",
     "--strict-markers",
@@ -191,16 +191,16 @@ addopts = [
     "-n",
     "4",
 ]
-testpaths = [
+ini_options.testpaths = [
     # "README.md",  # py38 issues.
     "lnPi",
     "lnpy",
     "tests",
 ]
-minversion = "8"
-log_cli_level = "INFO"
-xfail_strict = true
-filterwarnings = [
+ini_options.minversion = "8"
+ini_options.log_cli_level = "INFO"
+ini_options.xfail_strict = true
+ini_options.filterwarnings = [
     "error",
     "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
     "ignore: FNV hashing is not implemented in Numba:UserWarning",
@@ -210,28 +210,24 @@ filterwarnings = [
     "ignore: importing 'Const' from 'astroid':DeprecationWarning",
 ]
 
-[tool.coverage.run]
-branch = true
-
-[tool.coverage.report]
-show_missing = true
-exclude_also = [
-    "if TYPE_CHECKING:",
-    "@overload",
-]
-omit = [
-    "*/vendored/*",
-    "*/core/typing.py",
-]
-include = [
-    "src/*",
-]
-
-[tool.coverage.paths]
-source = [
+[tool.coverage]
+run.branch = true
+paths.source = [
     "src/",
     ".nox/**/site-packages/",
 ]
+report.exclude_also = [
+    "@overload",
+    "if TYPE_CHECKING:",
+]
+report.include = [
+    "src/*",
+]
+report.omit = [
+    "*/core/typing.py",
+    "*/vendored/*",
+]
+report.show_missing = true
 
 # * typecheck ---------------------------------------------------------------------
 
@@ -342,22 +338,17 @@ python = "default"
 channels = "conda-forge"
 style = "yaml"
 deps = "pip"
-
-[tool.pyproject2conda.dependencies]
-pytest-accept = { pip = true }
-matplotlib = { skip = true, packages = "matplotlib-base" }
-lazy-loader = { skip = true, packages = "lazy_loader" }
-
-[tool.pyproject2conda.envs.dev]
-groups = [ "dev" ]
-python = "default"
-
-[tool.pyproject2conda.envs.test]
-groups = [ "test" ]
-python = "all"
-
-[tool.pyproject2conda.envs.uvx-tools]
-reqs = [
+dependencies.pytest-accept = { pip = true }
+dependencies.matplotlib = { skip = true, packages = "matplotlib-base" }
+dependencies.lazy-loader = { skip = true, packages = "lazy_loader" }
+envs.dev.groups = [ "dev" ]
+envs.dev.python = "default"
+envs.test.groups = [ "test" ]
+envs.test.python = "all"
+envs.test-extras.groups = [ "test-extras" ]
+envs.test-extras.skip-package = true
+envs.test-extras.python = "all"
+envs.uvx-tools.reqs = [
     # these used solely for specking tools to be used with uvx ...
     "conda-lock>=2.5.5",
     "cruft",
@@ -373,17 +364,12 @@ reqs = [
     "twine>=5.0.0",
     "ty",
 ]
-groups = [
+envs.uvx-tools.groups = [
     "mypy",
     "nox",
 ]
-skip-package = true
-style = "requirements"
-
-[tool.pyproject2conda.envs.test-extras]
-groups = [ "test-extras" ]
-skip-package = true
-python = "all"
+envs.uvx-tools.skip-package = true
+envs.uvx-tools.style = "requirements"
 
 # * Other tools ----------------------------------------------------------------
 
@@ -396,13 +382,3 @@ new_fragment_template = "file: changelog.d/templates/new_fragment.md.j2"
 use_shortcuts = true
 
 [tool.cruft]
-
-[tool.typos.default]
-extend-ignore-identifiers-re = [ "NDArray.*" ]
-
-[tool.typos.default.extend-words]
-datas = "datas"
-STABL = "STABL"
-
-[tool.typos.default.extend-identifiers]
-fileprefix_inh = "fileprefix_inh"
