@@ -574,8 +574,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         --------
         pandas.Series.groupby
         """
-        group = self.s.groupby(  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
-            by=by,
+        group = self.s.groupby(  # pyright: ignore[reportCallIssue]
+            by=by,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
             level=level,
             as_index=as_index,
             sort=sort,
@@ -586,7 +586,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
         if wrap:
             return _Groupby(self, group)
-        return group  # type: ignore[no-any-return]
+        return group
 
     @overload
     def groupby_allbut(

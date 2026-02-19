@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict, dataclass
 from functools import lru_cache
-from typing import TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING, TypedDict, cast
 
 import numpy as np
 import pooch
@@ -47,7 +47,7 @@ def _get_pooch() -> pooch.Pooch:
 
 
 def cache_path() -> Path:
-    return _get_pooch().path  # pyright: ignore[reportReturnType]
+    return cast("Path", _get_pooch().path)
 
 
 def json_to_dict(basename: str) -> dict[str, Any]:
