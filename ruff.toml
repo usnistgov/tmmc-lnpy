@@ -78,6 +78,7 @@ pylint.max-public-methods = 30
 # Project specific ignores (avoid changing per-file-ignores directly)
 # extend-per-file-ignores."path/to/file.py" = [ ... ]
 [lint.extend-per-file-ignores]
+"conftest.py" = [ "D103" ]
 "**/*.ipynb" = [
     "ANN",
     "D103",

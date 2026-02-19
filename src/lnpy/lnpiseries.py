@@ -179,7 +179,9 @@ class _LocIndexer_unstack_zloc:  # noqa: N801
 
     def __getitem__(self, idx: Any) -> lnPiCollection:
         out = self._loc[idx]
-        out = out.stack(self._level) if isinstance(out, pd.DataFrame) else out.dropna()  # noqa: PD013
+        if isinstance(out, pd.DataFrame):
+            out = out.stack(self._level, future_stack=True)  # noqa: PD013
+        out = out.dropna()
 
         if isinstance(out, pd.Series):
             out = self._parent.new_like(out)
@@ -531,20 +533,6 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         group_keys: bool = ...,
         observed: bool = ...,
         dropna: bool = ...,
-        wrap: Literal[False] = ...,
-    ) -> SeriesGroupBy[Any, Any]: ...
-
-    @overload
-    def groupby(
-        self,
-        by: Hashable | Sequence[Hashable] = ...,
-        *,
-        level: int | Hashable | Sequence[int | Hashable] | None = ...,
-        as_index: bool = ...,
-        sort: bool = ...,
-        group_keys: bool = ...,
-        observed: bool = ...,
-        dropna: bool = ...,
         wrap: Literal[True],
     ) -> _Groupby: ...
 
@@ -588,7 +576,6 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         """
         group = self.s.groupby(  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
             by=by,
-            axis=0,
             level=level,
             as_index=as_index,
             sort=sort,

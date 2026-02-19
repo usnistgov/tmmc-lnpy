@@ -30,6 +30,7 @@ dependencies:
   - numpy
   - orjson
   - pandas-stubs
+  - pandas>=2.3.0
   - pooch
   - pylint
   - pytest!=8.4

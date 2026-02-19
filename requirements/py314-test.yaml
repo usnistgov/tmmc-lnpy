@@ -17,6 +17,7 @@ dependencies:
   - lazy_loader
   - module-utilities>=0.9.0
   - numpy
+  - pandas>=2.3.0
   - pooch
   - pytest!=8.4
   - pytest-cov
