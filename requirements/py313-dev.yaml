@@ -13,7 +13,7 @@ channels:
 dependencies:
   - python=3.13
   - bottleneck
-  - cmomy>=1.0.1
+  - cmomy>=1.0.3
   - dask
   - ipykernel
   - ipywidgets
@@ -26,7 +26,7 @@ dependencies:
   - nbval
   - netcdf4
   - nox>=2025.5.1
-  - numba
+  - numba<0.63,>=0.58
   - numpy
   - orjson
   - pandas-stubs

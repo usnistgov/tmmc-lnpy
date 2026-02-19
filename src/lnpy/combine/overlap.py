@@ -237,7 +237,7 @@ def _create_lhs_matrix_numpy(
 
 
 # * Shift combine -------------------------------------------------------------
-@np.vectorize(signature="(n), (n), (n, d), (), () -> (n)")  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+@np.vectorize(signature="(n), (n), (n, d), (), () -> (n)")
 def _shift_lnpi_windows(
     lnpi: NDArrayAny,
     windows: NDArrayAny,
@@ -321,7 +321,7 @@ def _shift_lnpi_windows(
     shift[:-1] = np.linalg.solve(lhs, rhs)
     shift -= shift[0]
 
-    return lnpi + shift[window_codes]  # type: ignore[no-any-return]
+    return lnpi + shift[window_codes]
 
 
 def _shift_lnpi_windows_indexed(
@@ -337,7 +337,7 @@ def _shift_lnpi_windows_indexed(
     # _shift_lnpi_windows applied over groups
 
     out = []
-    for start, end in zip(group_start, group_end):
+    for start, end in zip(group_start, group_end, strict=True):
         idx = index[start:end]
 
         out.append(

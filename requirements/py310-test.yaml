@@ -16,7 +16,7 @@ dependencies:
   - joblib
   - lazy_loader
   - module-utilities>=0.9.0
-  - numba
+  - numba<0.63,>=0.58
   - numpy
   - pooch
   - pytest!=8.4

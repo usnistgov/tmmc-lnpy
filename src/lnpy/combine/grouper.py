@@ -87,7 +87,7 @@ def factor_by(
     >>> by = pd.Index(["a", "a", None, "c", "c", None])
     >>> groups, codes = factor_by(by)
     >>> groups
-    Index(['a', 'c'], dtype='object')
+    Index(['a', 'c'], dtype='str')
     >>> codes
     array([ 0,  0, -1,  1,  1, -1])
 
@@ -166,7 +166,7 @@ def factor_by_to_index(
     You can also pass :class:`pandas.Index` objects:
 
     >>> factor_by_to_index(pd.Index([None, "a", None, "b"], name="my_index"))
-    (Index(['a', 'b'], dtype='object', name='my_index'), array([1, 3]), array([0, 1]), array([1, 2]))
+    (Index(['a', 'b'], dtype='str', name='my_index'), array([1, 3]), array([0, 1]), array([1, 2]))
 
     """
     # factorize by to groups and codes

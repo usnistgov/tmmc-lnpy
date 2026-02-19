@@ -7,14 +7,24 @@
 # You should not manually edit this file.
 # Instead edit the corresponding pyproject.toml file.
 #
-name: py39-test-extras
+name: py314-test
 channels:
   - conda-forge
 dependencies:
-  - python=3.9
+  - python=3.14
+  - bottleneck
+  - joblib
+  - lazy_loader
+  - module-utilities>=0.9.0
+  - numpy
+  - pooch
   - pytest!=8.4
   - pytest-cov
   - pytest-env
   - pytest-sugar
   - pytest-xdist
+  - scikit-image>=0.21
+  - scipy
+  - tqdm
+  - xarray
   - pip

@@ -42,12 +42,12 @@ def _get_pooch() -> pooch.Pooch:
         env="TMMC_LNPY_DATA_DIR",
     )
 
-    obj.load_registry(resources.files("lnpy.data").joinpath("registry.txt"))
+    obj.load_registry(resources.files("lnpy.data").joinpath("registry.txt"))  # pyright: ignore[reportArgumentType]
     return obj
 
 
 def cache_path() -> Path:
-    return _get_pooch().path  # type: ignore[no-any-return]
+    return _get_pooch().path  # pyright: ignore[reportReturnType]
 
 
 def json_to_dict(basename: str) -> dict[str, Any]:

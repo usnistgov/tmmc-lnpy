@@ -291,7 +291,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         dlnz = new.lnz - self.lnz
 
         shift = np.zeros([], dtype=float)
-        for _i, (s, m) in enumerate(zip(self.shape, dlnz)):
+        for _i, (s, m) in enumerate(zip(self.shape, dlnz, strict=False)):
             shift = np.add.outer(shift, np.arange(s) * m)
 
         new.data[...] += shift

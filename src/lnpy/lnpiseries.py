@@ -212,7 +212,7 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
             drop: list[Hashable] = list(self._index_names - set(idx.names))
             index = index.droplevel(drop)
             # reorder idx
-            idx = idx.reorder_levels(index.names)  # type: ignore[no-untyped-call]
+            idx = idx.reorder_levels(index.names)
         else:
             drop = list(set(index.names) - {idx.name})
             index = index.droplevel(drop)
@@ -308,6 +308,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         if not self._verify:
             return
 
+        series = series.dropna()
+
+        if series.empty:
+            msg = "No non null values in series"
+            raise ValueError(msg)
+
         base_class = self._base_class
         if isinstance(base_class, str) and base_class.lower() == "first":
             base_class = type(series.iloc[0])
@@ -316,7 +322,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
         for d in series:
             if not issubclass(type(d), base_class):
-                msg = f"all elements must be of type {base_class}"
+                # print("series", series)  # noqa: ERA001
+                # print("series.iloc[0]", series.dropna().iloc[0])  # noqa: ERA001
+                # print("series", d)  # noqa: ERA001
+                msg = f"all elements must be of type {base_class}.  found {type(d)}."
                 raise TypeError(msg)
 
         # lnpy
@@ -669,7 +678,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             if isinstance(first, cls):
                 objs = (x._series for x in objs)  # pyright: ignore[reportAttributeAccessIssue]
 
-        return pd.concat(objs, **concat_kws)  # type: ignore[return-value,arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]
+        return pd.concat(objs, **concat_kws)  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]
 
     def concat_like(
         self,
@@ -882,7 +891,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         lnPiCollection
         """
         table = pd.DataFrame(
-            [lnpi._index_dict(phase) for lnpi, phase in zip(items, index)]
+            [lnpi._index_dict(phase) for lnpi, phase in zip(items, index, strict=True)]
         )
         new_index = pd.MultiIndex.from_frame(table)
         return cls(data=items, index=new_index, **kwargs)
@@ -1032,7 +1041,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         items = []
         indexes = []
 
-        for label, lnz in zip(labels, lnzs):
+        for label, lnz in zip(labels, lnzs, strict=True):
             lnpi = ref.reweight(lnz)
 
             masks, features_tmp = labels_to_masks(

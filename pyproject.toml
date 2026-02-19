@@ -17,14 +17,13 @@ license-files = [ "LICENSE" ]
 authors = [
     { name = "William P. Krekelberg", email = "wpk@nist.gov" },
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -38,8 +37,10 @@ dependencies = [
     "joblib",
     "lazy-loader",
     "module-utilities>=0.9.0",
-    "numba",
+    "numba>=0.58,<0.63; python_version<'3.14' and sys_platform=='darwin' and platform_machine=='x86_64'",
+    "numba>=0.58; python_version<'3.14' and sys_platform!='darwin' or platform_machine!='x86_64'",
     "numpy",
+    # "pandas<3.0",
     "pooch",
     "scikit-image>=0.21",
     "scipy",
@@ -51,7 +52,7 @@ dependencies = [
 [project.optional-dependencies]
 all = [ "tmmc-lnpy[resample,viz]" ]
 resample = [
-    "cmomy>=1.0.1",
+    "cmomy>=1.0.3",
     "dask[diagnostics]",
     "netcdf4",
 ]

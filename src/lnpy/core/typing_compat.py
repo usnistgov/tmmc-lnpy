@@ -2,12 +2,13 @@
 # pyright: reportUnreachable=false
 
 import sys
-from typing import TYPE_CHECKING, Any  # pylint: disable=unused-import
-
-if sys.version_info >= (3, 10):
-    from typing import Concatenate, ParamSpec, TypeAlias
-else:
-    from typing_extensions import Concatenate, ParamSpec, TypeAlias
+from typing import (  # pylint: disable=unused-import
+    TYPE_CHECKING,
+    Any,
+    Concatenate,
+    ParamSpec,
+    TypeAlias,
+)
 
 if sys.version_info >= (3, 11):
     from typing import Self

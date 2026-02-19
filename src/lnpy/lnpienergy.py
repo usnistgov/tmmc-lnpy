@@ -506,7 +506,10 @@ class wFreeEnergy:  # noqa: N801
         out_max = np.full((self.nfeature,) * 2, dtype=float, fill_value=fill_value)
         if method == "approx":
             for (i, j), arg, val in zip(
-                cast("Iterable[tuple[int, int]]", overlap), argmax, valmax
+                cast("Iterable[tuple[int, int]]", overlap),
+                argmax,
+                valmax,
+                strict=True,
             ):
                 out_max[i, j] = out_max[j, i] = val
                 out_arg[i, j] = arg
@@ -514,8 +517,8 @@ class wFreeEnergy:  # noqa: N801
         elif method == "exact":
             # attach keys to argmax, valmax
             overlap_keys = list(overlap)
-            argmax_dict = dict(zip(overlap_keys, argmax))
-            valmax_dict = dict(zip(overlap_keys, valmax))
+            argmax_dict = dict(zip(overlap_keys, argmax, strict=True))
+            valmax_dict = dict(zip(overlap_keys, valmax, strict=True))
 
             # loop over unique keys
             for i, j in {
@@ -628,7 +631,8 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
 
     argtran = []
     for idxs in zip(
-        *[w_tran.index.get_level_values(_) for _ in ("phase", "phase_nebr")]
+        *[w_tran.index.get_level_values(_) for _ in ("phase", "phase_nebr")],
+        strict=True,
     ):
         i, j = (index_map[_] for _ in idxs)
 
@@ -676,7 +680,7 @@ class wFreeEnergyCollection:  # noqa: N801
         ws = []
         for _, phases in self._parent.groupby_allbut("phase"):
             indexes.append(phases.index)
-            masks = [x.mask for x in phases.to_numpy()]  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
+            masks = [x.mask for x in phases.to_numpy()]
 
             ws.append(
                 wFreeEnergy(data=phases.iloc[0].data, masks=masks, convention=False)
@@ -686,7 +690,9 @@ class wFreeEnergyCollection:  # noqa: N801
     @cached.prop
     def _data(self) -> dict[str, pd.Series[Any]]:
         indexes, ws = self._get_items_ws()
-        seq = get_tqdm(zip(indexes, ws), total=len(ws), desc="wFreeEnergyCollection")
+        seq = get_tqdm(
+            zip(indexes, ws, strict=True), total=len(ws), desc="wFreeEnergyCollection"
+        )
         out = parallel_map_func_starargs(
             _get_w_data, items=seq, use_joblib=self._use_joblib, total=len(ws)
         )
@@ -796,7 +802,7 @@ class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
 
         dw = w.w_tran - w.w_min
         dims = ["phase", "phase_nebr"]
-        coords = dict(zip(dims, [index] * 2))
+        coords = dict(zip(dims, [index] * 2, strict=True))
         return xr.DataArray(dw, dims=dims, coords=coords)
 
     @property

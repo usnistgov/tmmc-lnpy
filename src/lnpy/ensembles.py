@@ -135,7 +135,7 @@ class LogPiWrapper:
     def coords_n(self) -> dict[str, xr.DataArray]:
         return {
             k: xr.DataArray(_get_range(n), dims=k, attrs={"long_name": rf"${k}$"})
-            for k, n in zip(self.dims_n, self.shape)
+            for k, n in zip(self.dims_n, self.shape, strict=True)
         }
 
     @cached_meth
@@ -573,7 +573,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
 
         return {
             k: xr.DataArray(v, dims=self._parent._concat_dim)
-            for k, v in zip(self.dims_n, self._argmax_indexer())
+            for k, v in zip(self.dims_n, self._argmax_indexer(), strict=True)
         }
 
     @cached_prop
