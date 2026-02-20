@@ -35,7 +35,7 @@ def _thread_backend() -> str | None:
     # Note that `importlib.util.find_spec` doesn't work for these; it will falsely return True
     try:
         from numba.np.ufunc import (
-            tbbpool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue, reportUnusedImport]
+            tbbpool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]
         )
     except ImportError:
         pass
@@ -44,7 +44,7 @@ def _thread_backend() -> str | None:
 
     try:
         from numba.np.ufunc import (
-            omppool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue, reportUnusedImport]
+            omppool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]
         )
     except ImportError:
         pass

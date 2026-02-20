@@ -1006,7 +1006,7 @@ class BuildPhases_dmu(BuildPhasesBase):  # noqa: N801
         super().__init__(x=dlnz, phase_creator=phase_creator)
 
     def _set_params(self) -> None:
-        self._dlnz: NDArrayAny = np.array([x if x is not None else 0.0 for x in self.x])  # pylint: disable=attribute-defined-outside-init
+        self._dlnz: NDArrayAny = np.array([x if x is not None else 0.0 for x in self.x])  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
 
     def _get_lnz(self, lnz_index: float) -> NDArrayAny:
         return self._dlnz + lnz_index

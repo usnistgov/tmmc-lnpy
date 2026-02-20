@@ -517,7 +517,7 @@ def keep_first_indexer(
         for _, g in pd.DataFrame(
             {"rec": rec, "window": window, "state": state}
         ).groupby("rec"):
-            _create_overlap_table(
+            _ = _create_overlap_table(
                 g,
                 window_index_name="window",
                 window_max=window.max(),

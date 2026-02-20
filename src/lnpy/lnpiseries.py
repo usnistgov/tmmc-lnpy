@@ -50,7 +50,7 @@ if TYPE_CHECKING:
 # Accessors
 class _CallableResult:
     def __init__(self, parent: lnPiCollection, func: Callable[..., Any]) -> None:
-        functools.update_wrapper(self, func)
+        _ = functools.update_wrapper(self, func)
 
         self._parent = parent
         self._func = func

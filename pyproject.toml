@@ -338,18 +338,34 @@ strict = [
 ]
 typeCheckingMode = "standard"
 # options
-reportDuplicateImport = true
-reportInvalidStubStatement = true
+# reportMissingSuperCall = true
+deprecateTypingAliases = true
+enableReachabilityAnalysis = false
+enableTypeIgnoreComments = false
+reportCallInDefaultInitializer = true
+# reportImplicitOverride = true  # TODO(wpk): enable
+# reportImportCycles = true  # TODO(wpk): enable
 reportOverlappingOverload = true
 reportPropertyTypeMismatch = true
-reportUntypedClassDecorator = true
-reportUntypedFunctionDecorator = true
-reportUntypedNamedTuple = true
-reportUnusedImport = true
-# Extra flags
-enableTypeIgnoreComments = false
+reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnreachable = "warning"
+reportUntypedClassDecorator = true
+reportUntypedFunctionDecorator = true
+reportUnusedCallResult = true
+# type-checkers should type-check; linters should lint
+reportImplicitStringConcatenation = false
+reportPrivateImportUsage = false
+reportPrivateUsage = false
+reportUnusedImport = false
+reportUnusedVariable = false
+
+[[tool.pyright.executionEnvironments]]
+root = "tests"
+# reportArgumentType = false
+# reportCallIssue = false
+# reportMissingImports = false
+reportUnusedCallResult = false
 
 [tool.pytype]
 inputs = [

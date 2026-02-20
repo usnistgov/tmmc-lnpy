@@ -779,7 +779,7 @@ def _filter_min_max_keep_first(
     )
 
     if check_connected:
-        _create_overlap_table(
+        _ = _create_overlap_table(
             table,
             window_index_name=window_index_name,
             window_max=window_max,

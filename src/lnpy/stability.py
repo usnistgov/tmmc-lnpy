@@ -339,7 +339,7 @@ def _get_step(collection: lnPiCollection, idx: int, idx_nebr: int | None) -> int
 class _SolveSpinodal:
     """Spinodal solve base."""
 
-    collection: lnPiCollection
+    collection: lnPiCollection  # pyright: ignore[reportUninitializedInstanceVariable]
 
     def __init__(
         self,
@@ -532,7 +532,7 @@ class _SolveBinodal:
         optional arguments to build_phases
     """
 
-    collection: lnPiCollection
+    collection: lnPiCollection  # pyright: ignore[reportUninitializedInstanceVariable]
 
     def __init__(
         self,
@@ -588,7 +588,7 @@ class _SolveBinodal:
             msg = f"{ids=} must have length 2."
             raise ValueError(msg)
 
-        self.ids = ids  # pylint: disable=attribute-defined-outside-init
+        self.ids = ids  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
 
         a, b = min(lnz_min, lnz_max), max(lnz_min, lnz_max)
 
@@ -615,8 +615,8 @@ class StabilityBase:
 
     _NAME = "base"
 
-    _items: dict[int, lnPiCollection | None]
-    _info: dict[int, RootResultTotal]
+    _items: dict[int, lnPiCollection | None]  # pyright: ignore[reportUninitializedInstanceVariable]
+    _info: dict[int, RootResultTotal]  # pyright: ignore[reportUninitializedInstanceVariable]
 
     def __init__(self, collection: lnPiCollection) -> None:
         self._parent = collection
@@ -1003,7 +1003,7 @@ class Binodals(StabilityBase):
             out = self._items if as_dict else self.access  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
             return out, self._info
 
-        self._solver = _SolveBinodal(  # pylint: disable=attribute-defined-outside-init
+        self._solver = _SolveBinodal(  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
             ref=ref, build_phases=build_phases, build_kws=build_kws
         )
 
@@ -1035,7 +1035,7 @@ class Binodals(StabilityBase):
         if inplace:
             self._items = out  # pyright: ignore[reportIncompatibleVariableOverride]
             self._info = info
-            self._index = index  # pylint: disable=attribute-defined-outside-init
+            self._index = index  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
             return self
 
         if not as_dict and converged:
