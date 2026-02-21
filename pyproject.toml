@@ -81,7 +81,7 @@ test = [
     "pytest-cov",
     "pytest-env",
     "pytest-sugar",
-    # "pytest-xdist",
+    "pytest-xdist",
     { include-group = "pytest" },
 ]
 type = [
@@ -213,8 +213,8 @@ addopts = [
     "--strict-markers",
     "-ra",
     # xdist
-    # "-n",
-    # "4",
+    "-n",
+    "4",
 ]
 testpaths = [
     # "README.md"

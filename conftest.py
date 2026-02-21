@@ -26,3 +26,9 @@ def pytest_ignore_collect(collection_path) -> bool:
     if not _is_default_version():
         return "tmmc-lnpy/tests" not in str(collection_path)
     return False
+
+
+def pytest_collectstart(collector):
+    if collector.fspath and collector.fspath.ext == ".ipynb":
+        # Ignore stderr in comparison
+        collector.skip_compare += ("stderr",)

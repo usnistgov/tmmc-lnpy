@@ -162,7 +162,7 @@ jobs:
           style: ${{ matrix.style }}
         run: >-
           $UVX_COMMAND nox -s "${style}-${python_version}" -- ++installpkg
-          dist/*.whl
+          dist/*.whl ++test-options -n auto
         shell: bash
 
       - name: Upload coverage data

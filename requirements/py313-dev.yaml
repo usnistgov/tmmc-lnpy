@@ -36,6 +36,7 @@ dependencies:
   - pytest-cov
   - pytest-env
   - pytest-sugar
+  - pytest-xdist
   - scikit-image>=0.21
   - scipy
   - scipy-stubs

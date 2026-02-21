@@ -554,6 +554,7 @@ def test_notebook(session: nox.Session, opts: SessionParams) -> None:
     --nbval
     --nbval-current-env
     --nbval-sanitize-with=config/nbval.ini
+    --dist loadscope
    """,
     )
 
