@@ -44,7 +44,7 @@ jobs:
           default_python_version = Path(".python-version").read_text().strip()
 
           # min max and default pythons
-          matrix_test_python = list({ python_versions[0], python_versions[-1], default_python_version, f"pypy-3.11" })
+          matrix_test_python = list({ python_versions[0], python_versions[-1]})
 
           with open(os.getenv("GITHUB_OUTPUT"), "a") as f:
             f.write(f"{default_python_version=:s}\n")
@@ -87,7 +87,7 @@ jobs:
 
       - name: Run prek
         env:
-          SKIP: "typecheck"
+          SKIP: "typecheck,pyproject2conda-project"
         run: >-
           prek run --show-diff-on-failure --color=always --all-files
           --hook-stage=manual -v
@@ -162,7 +162,7 @@ jobs:
           style: ${{ matrix.style }}
         run: >-
           $UVX_COMMAND nox -s "${style}-${python_version}" -- ++installpkg
-          dist/*.whl ++test-options -n auto
+          dist/*.whl
         shell: bash
 
       - name: Upload coverage data

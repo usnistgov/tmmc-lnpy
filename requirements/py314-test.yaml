@@ -16,6 +16,7 @@ dependencies:
   - joblib
   - lazy_loader
   - module-utilities>=0.9.0
+  - numba>=0.63
   - numpy
   - pandas>=2.3.0
   - pooch
@@ -23,7 +24,6 @@ dependencies:
   - pytest-cov
   - pytest-env
   - pytest-sugar
-  - pytest-xdist
   - scikit-image>=0.21
   - scipy
   - tqdm
