@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Thermodynamic stability (stability) &#8212; tmmc-lnpy 0.8.1.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=907d4a6a"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/generated/lnpy.stability';</script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js"></script>
+    <script src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+    <script src="../../_static/js/leave_notice.js?v=133c5535"></script>
+    <script async="async" id="_fed_au_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Collection of lnPi objects (lnpiseries)" href="lnpy.lnpiseries.html" />
+    <link rel="prev" title="Routines to combine \(\ln \Pi\) data (combine)" href="lnpy.combine.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2026-02-21"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tmmc-lnpy 0.8.1.dev0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    tmmc-lnpy
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/usage/Basic_usage.html">Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?</a></li>
+
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">API reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api-public.html">Top level API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpy</span></code>)</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../api-modules.html">Modules</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpidata.html">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpienergy.html">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.segment.html">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.ensembles.html">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.combine.html">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpiseries.html">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.examples.html">Examples (<code class="xref py py-mod docutils literal notranslate"><span class="pre">examples</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.utils.html">Utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.mask.html"><code class="docutils literal notranslate"><span class="pre">mask_change_convention()</span></code></a></li>
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.rootresults.html"><code class="docutils literal notranslate"><span class="pre">RootResultDictReq</span></code></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.options.html">Options (<code class="xref py py-mod docutils literal notranslate"><span class="pre">options</span></code>)</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-other.html">Base classes and other methods</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api-legacy.html">Legacy API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lnPi.maskedlnpi_legacy.html">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../navigation.html">Indices and tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py-modindex.html">Module Index</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy/issues/new?title=Issue%20on%20page%20%2Freference/generated/lnpy.stability.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/generated/lnpy.stability.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Thermodynamic stability (stability)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.RootResultTotal"><code class="docutils literal notranslate"><span class="pre">RootResultTotal</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.get_spinodal"><code class="docutils literal notranslate"><span class="pre">get_spinodal()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase"><code class="docutils literal notranslate"><span class="pre">StabilityBase</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.parent"><code class="docutils literal notranslate"><span class="pre">StabilityBase.parent</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.items"><code class="docutils literal notranslate"><span class="pre">StabilityBase.items</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.access"><code class="docutils literal notranslate"><span class="pre">StabilityBase.access</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.appender"><code class="docutils literal notranslate"><span class="pre">StabilityBase.appender</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.append_to_parent"><code class="docutils literal notranslate"><span class="pre">StabilityBase.append_to_parent()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Spinodals"><code class="docutils literal notranslate"><span class="pre">Spinodals</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Spinodals.__call__"><code class="docutils literal notranslate"><span class="pre">Spinodals.__call__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Binodals"><code class="docutils literal notranslate"><span class="pre">Binodals</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Binodals.__call__"><code class="docutils literal notranslate"><span class="pre">Binodals.__call__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="thermodynamic-stability-stability">
+<span id="module-lnpy.stability"></span><h1>Thermodynamic stability (<a class="reference internal" href="#module-lnpy.stability" title="lnpy.stability"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code></a>)<a class="headerlink" href="#thermodynamic-stability-stability" title="Link to this heading">#</a></h1>
+<p>Calculation of spinodal and binodal</p>
+</section>
+<p><strong>Classes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.RootResultTotal" title="lnpy.stability.RootResultTotal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RootResultTotal</span></code></a></p></td>
+<td><p>Modified root result</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.stability.StabilityBase" title="lnpy.stability.StabilityBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StabilityBase</span></code></a>(collection)</p></td>
+<td><p>Base class for stability</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.Spinodals" title="lnpy.stability.Spinodals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spinodals</span></code></a>(collection)</p></td>
+<td><p>Methods for calculation locations of spinodal</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.stability.Binodals" title="lnpy.stability.Binodals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Binodals</span></code></a>(collection)</p></td>
+<td><p>Routines to calculate binodal.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Functions:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.get_spinodal" title="lnpy.stability.get_spinodal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spinodal</span></code></a>(collection, build_phases, idx)</p></td>
+<td><p>Locate spinodal point for a given pair of phases.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.stability.RootResultTotal">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.stability.</span></span><span class="sig-name descname"><span class="pre">RootResultTotal</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L33-L42"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.RootResultTotal" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lnpy.core.rootresults.html#lnpy.core.rootresults.RootResultDict" title="lnpy.core.rootresults.RootResultDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">RootResultDict</span></code></a></p>
+<p>Modified root result</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.stability.get_spinodal">
+<span class="sig-prename descclassname"><span class="pre">lnpy.stability.</span></span><span class="sig-name descname"><span class="pre">get_spinodal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_nebr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dlnz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dfac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ntry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L380-L516"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.get_spinodal" title="Link to this definition">#</a></dt>
+<dd><p>Locate spinodal point for a given pair of phases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>)</p></li>
+<li><p><strong>collection</strong> (<a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>) – initial estimates to work from.  Function assumes collection is in lnz sorted order</p></li>
+<li><p><strong>idx, idx_nebr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – from/to phase id</p></li>
+<li><p><strong>efac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>optional</em>) – cutoff value for spinodal</p></li>
+<li><p><strong>dlnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>optional</em>) – factor to kick back if collection doesn’t already have left and right bounds</p></li>
+<li><p><strong>vmin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>optional</em>) – Value denoting <code class="docutils literal notranslate"><span class="pre">vmin</span></code>, i.e., value of free energy difference phase does not exist.</p></li>
+<li><p><strong>vmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>optional</em>) – value indicating no transition, but phase <cite>idx</cite> is present.</p></li>
+<li><p><strong>ntry</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">20</span></code>) – number of times to try kicking forward/backwards to find bracket</p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – if +1, step forward
+if -1, step backward
+if None, try to determine step</p></li>
+<li><p><strong>nmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">20</span></code>) – max number of steps to refine bracket</p></li>
+<li><p><strong>build_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, <em>optional</em>) – Function to create Phases.  Default is that from get_default_phasecreator</p></li>
+<li><p><strong>build_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – extra arguments to <code class="docutils literal notranslate"><span class="pre">build_phases</span></code></p></li>
+<li><p><strong>close_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – arguments to <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.allclose.html#numpy.allclose" title="(in NumPy v2.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.allclose()</span></code></a></p></li>
+<li><p><strong>solve_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – extra arguments to <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.brentq.html#scipy.optimize.brentq" title="(in SciPy v1.17.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.brentq()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>out</strong> (<a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a> object at spinodal point)</p></li>
+<li><p><strong>r</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>) – Info object</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.stability.StabilityBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.stability.</span></span><span class="sig-name descname"><span class="pre">StabilityBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L605-L682"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.StabilityBase" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for stability</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>collection</strong> (<a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>) – Used to bracket the location limit of stability</p>
+</dd>
+</dl>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.StabilityBase.parent" title="lnpy.stability.StabilityBase.parent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parent</span></code></a></p></td>
+<td><p>Accessor to parent <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a> object</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.stability.StabilityBase.items" title="lnpy.stability.StabilityBase.items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code></a></p></td>
+<td><p>Access to the underlying data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.StabilityBase.access" title="lnpy.stability.StabilityBase.access"><code class="xref py py-obj docutils literal notranslate"><span class="pre">access</span></code></a></p></td>
+<td><p>View (<a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnpiseries.lnPiCollection</span></code></a>) of stability</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.stability.StabilityBase.appender" title="lnpy.stability.StabilityBase.appender"><code class="xref py py-obj docutils literal notranslate"><span class="pre">appender</span></code></a></p></td>
+<td><p>View of <a class="reference internal" href="#lnpy.stability.StabilityBase.access" title="lnpy.stability.StabilityBase.access"><code class="xref py py-attr docutils literal notranslate"><span class="pre">access</span></code></a> to be appended to <a class="reference internal" href="#lnpy.stability.StabilityBase.parent" title="lnpy.stability.StabilityBase.parent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parent</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.StabilityBase.append_to_parent" title="lnpy.stability.StabilityBase.append_to_parent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">append_to_parent</span></code></a>([sort, copy_stability])</p></td>
+<td><p>New collection with spinodal data appended to parent.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.stability.StabilityBase.parent">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#lnpy.stability.StabilityBase.parent" title="Link to this definition">#</a></dt>
+<dd><p>Accessor to parent <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a> object</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.stability.StabilityBase.items">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><a class="headerlink" href="#lnpy.stability.StabilityBase.items" title="Link to this definition">#</a></dt>
+<dd><p>Access to the underlying data</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.stability.StabilityBase.access">
+<span class="sig-name descname"><span class="pre">access</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L654-L657"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.StabilityBase.access" title="Link to this definition">#</a></dt>
+<dd><p>View (<a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnpiseries.lnPiCollection</span></code></a>) of stability</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.stability.StabilityBase.appender">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">appender</span></span><a class="headerlink" href="#lnpy.stability.StabilityBase.appender" title="Link to this definition">#</a></dt>
+<dd><p>View of <a class="reference internal" href="#lnpy.stability.StabilityBase.access" title="lnpy.stability.StabilityBase.access"><code class="xref py py-attr docutils literal notranslate"><span class="pre">access</span></code></a> to be appended to <a class="reference internal" href="#lnpy.stability.StabilityBase.parent" title="lnpy.stability.StabilityBase.parent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parent</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.stability.StabilityBase.append_to_parent">
+<span class="sig-name descname"><span class="pre">append_to_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy_stability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L672-L682"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.StabilityBase.append_to_parent" title="Link to this definition">#</a></dt>
+<dd><p>New collection with spinodal data appended to parent.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.stability.Spinodals">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.stability.</span></span><span class="sig-name descname"><span class="pre">Spinodals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L687-L854"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.Spinodals" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lnpy.stability.StabilityBase" title="lnpy.stability.StabilityBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">StabilityBase</span></code></a></p>
+<p>Methods for calculation locations of spinodal</p>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.Spinodals.__call__" title="lnpy.stability.Spinodals.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a>(phase_ids, build_phases, *[, ...])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.stability.Spinodals.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_phases</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_unconverged</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L751-L854"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.Spinodals.__call__" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phase_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a>) – Phase ids to calculate spinodal for.  If int, then find spinodals for phases
+range(phase_ids).</p></li>
+<li><p><strong>build_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>) – Factory function to build phases.
+This should most likely be an instance of <a class="reference internal" href="lnpy.segment.html#lnpy.segment.BuildPhasesBase" title="lnpy.segment.BuildPhasesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.segment.BuildPhasesBase</span></code></a></p></li>
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>, <em>optional</em>)</p></li>
+<li><p><strong>build_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – optional arguments to <cite>build_phases</cite></p></li>
+<li><p><strong>inplace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, add spinodal inplace, otherwise return spinodal object</p></li>
+<li><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – if True, force recalculation of spinodal if already set inplace.  Otherwise return already
+calculated values</p></li>
+<li><p><strong>as_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, return dict of form {phase_id[0] : phases object, …}.</p></li>
+<li><p><strong>unstack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – if passed, create lnPiCollection objects with this unstack value.  If not passed,
+use unstack parameter from parent object</p></li>
+<li><p><strong>raise_unconverged</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – If True, raise error if calculation does not converge.</p></li>
+<li><p><strong>**kwargs</strong> – Extra argument to <a class="reference internal" href="#lnpy.stability.get_spinodal" title="lnpy.stability.get_spinodal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_spinodal()</span></code></a> function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> or <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>, <em>optional</em>) – if inplace, return self.
+if not inplace, and as dict, return dict, else return <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnpiseries.lnPiCollection</span></code></a> with phase_id in index</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.stability.Binodals">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.stability.</span></span><span class="sig-name descname"><span class="pre">Binodals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L858-L1043"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.Binodals" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lnpy.stability.StabilityBase" title="lnpy.stability.StabilityBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">StabilityBase</span></code></a></p>
+<p>Routines to calculate binodal.</p>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.stability.Binodals.__call__" title="lnpy.stability.Binodals.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a>(phase_ids, build_phases, *[, ...])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.stability.Binodals.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_phases</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spinodals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_unconverged</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/stability.py#L945-L1043"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.stability.Binodals.__call__" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phase_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a>) – Phase ids to calculate binodal for.  If int, then find binodal for phases
+range(phase_ids).</p></li>
+<li><p><strong>build_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>) – Factory function to build phases</p></li>
+<li><p><strong>inplace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, add binodal inplace, otherwise return spinodal object</p></li>
+<li><p><strong>spinodals</strong> (<strong>optional</strong>) – if not passes, then use parent.spinodal
+Used for bounding binodal</p></li>
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>, <em>optional</em>)</p></li>
+<li><p><strong>build_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – optional arguments to <cite>build_phases</cite></p></li>
+<li><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – if True, force recalculation of spinodal if already set inplace.  Otherwise return already
+calculated values</p></li>
+<li><p><strong>as_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – if True, return dict of form {phase_id[0] : phases object, …}</p></li>
+<li><p><strong>unstack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – if passed, create lnPiCollection objects with this unstack value.  If not passed,
+use unstack parameter from parent object</p></li>
+<li><p><strong>raise_unconverged</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – If True, raise error if calculation does not converge.</p></li>
+<li><p><strong>**kwargs</strong> – Extra argument to <a class="reference internal" href="#lnpy.stability.get_spinodal" title="lnpy.stability.get_spinodal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_spinodal()</span></code></a> function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>) – if inplace, return self
+if not inplace, and as dict, return dict, else return lnPiCollection with phase_id in index</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lnpy.combine.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lnpy.lnpiseries.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.RootResultTotal"><code class="docutils literal notranslate"><span class="pre">RootResultTotal</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.get_spinodal"><code class="docutils literal notranslate"><span class="pre">get_spinodal()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase"><code class="docutils literal notranslate"><span class="pre">StabilityBase</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.parent"><code class="docutils literal notranslate"><span class="pre">StabilityBase.parent</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.items"><code class="docutils literal notranslate"><span class="pre">StabilityBase.items</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.access"><code class="docutils literal notranslate"><span class="pre">StabilityBase.access</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.appender"><code class="docutils literal notranslate"><span class="pre">StabilityBase.appender</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.StabilityBase.append_to_parent"><code class="docutils literal notranslate"><span class="pre">StabilityBase.append_to_parent()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Spinodals"><code class="docutils literal notranslate"><span class="pre">Spinodals</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Spinodals.__call__"><code class="docutils literal notranslate"><span class="pre">Spinodals.__call__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Binodals"><code class="docutils literal notranslate"><span class="pre">Binodals</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.stability.Binodals.__call__"><code class="docutils literal notranslate"><span class="pre">Binodals.__call__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By William P. Krekelberg
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2015, William P. Krekelberg.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2026-02-21.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

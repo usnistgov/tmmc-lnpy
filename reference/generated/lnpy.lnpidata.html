@@ -1,0 +1,1292 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>lnPi data classes and routines (lnpidata) &#8212; tmmc-lnpy 0.8.1.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=907d4a6a"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/generated/lnpy.lnpidata';</script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js"></script>
+    <script src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+    <script src="../../_static/js/leave_notice.js?v=133c5535"></script>
+    <script async="async" id="_fed_au_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Local free energy of lnPi (lnpienergy)" href="lnpy.lnpienergy.html" />
+    <link rel="prev" title="Modules" href="../api-modules.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2026-02-21"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tmmc-lnpy 0.8.1.dev0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    tmmc-lnpy
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/usage/Basic_usage.html">Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?</a></li>
+
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">API reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api-public.html">Top level API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpy</span></code>)</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../api-modules.html">Modules</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpienergy.html">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.segment.html">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.ensembles.html">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.combine.html">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.stability.html">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpiseries.html">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.examples.html">Examples (<code class="xref py py-mod docutils literal notranslate"><span class="pre">examples</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.utils.html">Utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.mask.html"><code class="docutils literal notranslate"><span class="pre">mask_change_convention()</span></code></a></li>
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.rootresults.html"><code class="docutils literal notranslate"><span class="pre">RootResultDictReq</span></code></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.options.html">Options (<code class="xref py py-mod docutils literal notranslate"><span class="pre">options</span></code>)</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-other.html">Base classes and other methods</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api-legacy.html">Legacy API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lnPi.maskedlnpi_legacy.html">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../navigation.html">Indices and tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py-modindex.html">Module Index</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy/issues/new?title=Issue%20on%20page%20%2Freference/generated/lnpy.lnpidata.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/generated/lnpy.lnpidata.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>lnPi data classes and routines (lnpidata)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray"><code class="docutils literal notranslate"><span class="pre">lnPiArray</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray.new_like"><code class="docutils literal notranslate"><span class="pre">lnPiArray.new_like()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray.pad"><code class="docutils literal notranslate"><span class="pre">lnPiArray.pad()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray.zeromax"><code class="docutils literal notranslate"><span class="pre">lnPiArray.zeromax()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked"><code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.from_data"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.from_data()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.dtype"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.dtype</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.state_kws"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.state_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.extra_kws"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.extra_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.ma"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.ma</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.filled"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.filled()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.data"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.data</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.mask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.mask</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.shape"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.shape</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.lnz"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.lnz</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.betamu"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.betamu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.volume"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.volume</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.beta"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.beta</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.local_argmax"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.local_argmax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.local_max"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.local_max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.local_maxmask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.local_maxmask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.edge_distance_matrix"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.edge_distance_matrix</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.edge_distance"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.edge_distance()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.new_like"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.new_like()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.pad"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.pad()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.zeromax"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.zeromax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.reweight"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.reweight()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.or_mask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.or_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.and_mask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.and_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.from_table"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.from_table()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.from_dataarray"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.from_dataarray()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.list_from_masks"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.list_from_masks()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.list_from_labels"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.list_from_labels()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.xge"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.xge</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.xce"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.xce</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.decorate_accessor"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.decorate_accessor()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.register_accessor"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.register_accessor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="lnpi-data-classes-and-routines-lnpidata">
+<span id="module-lnpy.lnpidata"></span><h1>lnPi data classes and routines (<a class="reference internal" href="#module-lnpy.lnpidata" title="lnpy.lnpidata"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code></a>)<a class="headerlink" href="#lnpi-data-classes-and-routines-lnpidata" title="Link to this heading">#</a></h1>
+</section>
+<p><strong>Classes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiArray" title="lnpy.lnpidata.lnPiArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiArray</span></code></a>(lnz, data[, state_kws, extra_kws, ...])</p></td>
+<td><p>Wrapper on lnPi lnPiArray</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>(lnz, base[, mask, copy])</p></td>
+<td><p>Masked array like wrapper for lnPi data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiArray">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.lnpidata.</span></span><span class="sig-name descname"><span class="pre">lnPiArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L80-L228"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiArray" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Wrapper on lnPi lnPiArray</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>)</p>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiArray.new_like" title="lnpy.lnpidata.lnPiArray.new_like"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_like</span></code></a>([lnz, data, copy])</p></td>
+<td><p>Create new object with optional replacements.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiArray.pad" title="lnpy.lnpidata.lnPiArray.pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pad</span></code></a>([axes, ffill, bfill, limit])</p></td>
+<td><p>Pad nan values in underlying data to values</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiArray.zeromax" title="lnpy.lnpidata.lnPiArray.zeromax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zeromax</span></code></a>([mask])</p></td>
+<td><p>Shift values such that lnpi.max() == 0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiArray.new_like">
+<span class="sig-name descname"><span class="pre">new_like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L136-L171"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiArray.new_like" title="Link to this definition">#</a></dt>
+<dd><p>Create new object with optional replacements.</p>
+<p>All parameters are optional.  If not passed, use values in <cite>self</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>{lnz}</strong></p></li>
+<li><p><strong>{data}</strong></p></li>
+<li><p><strong>{copy}</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference internal" href="#lnpy.lnpidata.lnPiArray" title="lnpy.lnpidata.lnPiArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiArray</span></code></a>) – New object with optionally updated parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiArray.pad">
+<span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bfill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L173-L215"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiArray.pad" title="Link to this definition">#</a></dt>
+<dd><p>Pad nan values in underlying data to values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffill</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – Do forward filling</p></li>
+<li><p><strong>bfill</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – Do back filling</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – The maximum number of consecutive NaN values to forward fill. In
+other words, if there is a gap with more than this number of
+consecutive NaNs, it will only be partially filled. Must be greater
+than 0 or None for no limit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference internal" href="#lnpy.lnpidata.lnPiArray" title="lnpy.lnpidata.lnPiArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiArray</span></code></a>) – object with padded data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiArray.zeromax">
+<span class="sig-name descname"><span class="pre">zeromax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L217-L228"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiArray.zeromax" title="Link to this definition">#</a></dt>
+<dd><p>Shift values such that lnpi.max() == 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Optional mask to apply to data.  Where <cite>mask</cite> is True,
+data is excluded from calculating maximum.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.lnpidata.</span></span><span class="sig-name descname"><span class="pre">lnPiMasked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L232-L798"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api-other.html#lnpy.extensions.AccessorMixin" title="lnpy.extensions.AccessorMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccessorMixin</span></code></a></p>
+<p>Masked array like wrapper for lnPi data.</p>
+<p>This is the basic data structure for storing the output from a single TMMC simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Value(s) of <code class="docutils literal notranslate"><span class="pre">lnz</span></code> (log of activity)</p></li>
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>) – lnPi data object.</p></li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Mask using “masked” convention. Where <cite>mask</cite> is <cite>True</cite>, values are excluded.</p></li>
+<li><p><strong>copy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, copy the data.  If None or False, attempt to use view.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Note that in most cases, <a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> should not be called directly.
+Rather, a constructor like <a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.from_data" title="lnpy.lnpidata.lnPiMasked.from_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_data()</span></code></a> should be used to construct the object.</p>
+<p>Note the the value of <cite>lnz</cite> is the value to reweight to.</p>
+<p>Basic terminology:</p>
+<ul class="simple">
+<li><p>T : temperature.</p></li>
+<li><p>k : Boltzmann’s constant.</p></li>
+<li><p>beta : Inverse temperature <cite>= 1/(k T)</cite>.</p></li>
+<li><p>mu : chemical potential.</p></li>
+<li><p>lnz : log of activity <cite>= ln(z)</cite>.</p></li>
+<li><p>z : activity <cite>= beta * mu</cite>.</p></li>
+<li><p>lnPi : log of macrostate distribution.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://numpy.org/doc/stable/reference/maskedarray.baseclass.html#numpy.ma.MaskedArray" title="(in NumPy v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ma.MaskedArray</span></code></a></p>
+</div>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.from_data" title="lnpy.lnpidata.lnPiMasked.from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data</span></code></a>(lnz, lnz_data, data[, mask, ...])</p></td>
+<td><p>Create <a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> object from raw data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.filled" title="lnpy.lnpidata.lnPiMasked.filled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filled</span></code></a>([fill_value])</p></td>
+<td><p>Filled view or reweighted data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.local_argmax" title="lnpy.lnpidata.lnPiMasked.local_argmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">local_argmax</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Calculate index of maximum of masked data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.local_max" title="lnpy.lnpidata.lnPiMasked.local_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">local_max</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Calculate index of maximum of masked data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.local_maxmask" title="lnpy.lnpidata.lnPiMasked.local_maxmask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">local_maxmask</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Calculate mask where <code class="docutils literal notranslate"><span class="pre">self.ma</span> <span class="pre">==</span> <span class="pre">self.local_max()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.edge_distance" title="lnpy.lnpidata.lnPiMasked.edge_distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_distance</span></code></a>(ref, *args, **kwargs)</p></td>
+<td><p>Distance of local maximum value to nearest background point.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.new_like" title="lnpy.lnpidata.lnPiMasked.new_like"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_like</span></code></a>([lnz, base, mask, copy])</p></td>
+<td><p>Create new object with optional parameters</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.pad" title="lnpy.lnpidata.lnPiMasked.pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pad</span></code></a>([axes, ffill, bfill, limit])</p></td>
+<td><p>Pad nan values in underlying data to values</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.zeromax" title="lnpy.lnpidata.lnPiMasked.zeromax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zeromax</span></code></a>()</p></td>
+<td><p>Shift so that lnpi.max() == 0 on reference</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.reweight" title="lnpy.lnpidata.lnPiMasked.reweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reweight</span></code></a>(lnz)</p></td>
+<td><p>Create new object at specified value of <cite>lnz</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.or_mask" title="lnpy.lnpidata.lnPiMasked.or_mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">or_mask</span></code></a>(mask)</p></td>
+<td><p>New object with logical or of self.mask and mask</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.and_mask" title="lnpy.lnpidata.lnPiMasked.and_mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">and_mask</span></code></a>(mask)</p></td>
+<td><p>New object with logical and of self.mask and mask</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.from_table" title="lnpy.lnpidata.lnPiMasked.from_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_table</span></code></a>(path, lnz[, state_kws, sep, ...])</p></td>
+<td><p>Create lnPi object from text file table with columns [n_0,...,n_ndim, lnpi]</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.from_dataarray" title="lnpy.lnpidata.lnPiMasked.from_dataarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dataarray</span></code></a>(da[, state_as_attrs])</p></td>
+<td><p>Create a lnPi object from <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.list_from_masks" title="lnpy.lnpidata.lnPiMasked.list_from_masks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_from_masks</span></code></a>(masks[, convention])</p></td>
+<td><p>Create list of lnpis corresponding to masks[i]</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.list_from_labels" title="lnpy.lnpidata.lnPiMasked.list_from_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_from_labels</span></code></a>(labels[, features, ...])</p></td>
+<td><p>Create sequence of lnpis from labels array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.decorate_accessor" title="lnpy.lnpidata.lnPiMasked.decorate_accessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decorate_accessor</span></code></a>(name[, single_create])</p></td>
+<td><p>Register a property <cite>name</cite> to <cite>class</cite> of type <cite>accessor(self)</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.register_accessor" title="lnpy.lnpidata.lnPiMasked.register_accessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_accessor</span></code></a>(name, accessor[, ...])</p></td>
+<td><p>Register a property <cite>name</cite> to <cite>class</cite> of type <cite>accessor(self)</cite></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.dtype" title="lnpy.lnpidata.lnPiMasked.dtype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dtype</span></code></a></p></td>
+<td><p>Type (dtype) of underling data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.state_kws" title="lnpy.lnpidata.lnPiMasked.state_kws"><code class="xref py py-obj docutils literal notranslate"><span class="pre">state_kws</span></code></a></p></td>
+<td><p>State variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.extra_kws" title="lnpy.lnpidata.lnPiMasked.extra_kws"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extra_kws</span></code></a></p></td>
+<td><p>Extra parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.ma" title="lnpy.lnpidata.lnPiMasked.ma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ma</span></code></a></p></td>
+<td><p>Masked array view of data reweighted data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.data" title="lnpy.lnpidata.lnPiMasked.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p>Reweighted data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.mask" title="lnpy.lnpidata.lnPiMasked.mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask</span></code></a></p></td>
+<td><p>Where <cite>True</cite>, values are masked out.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.shape" title="lnpy.lnpidata.lnPiMasked.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
+<td><p>Shape of lnPiArray</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.lnz" title="lnpy.lnpidata.lnPiMasked.lnz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnz</span></code></a></p></td>
+<td><p>Value of log(activity) evaluated at</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.betamu" title="lnpy.lnpidata.lnPiMasked.betamu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betamu</span></code></a></p></td>
+<td><p>Alias to <cite>self.lnz</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.volume" title="lnpy.lnpidata.lnPiMasked.volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">volume</span></code></a></p></td>
+<td><p>Accessor to self.state_kws['volume'].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.beta" title="lnpy.lnpidata.lnPiMasked.beta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">beta</span></code></a></p></td>
+<td><p>Accessor to self.state_kws['beta'].</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.edge_distance_matrix" title="lnpy.lnpidata.lnPiMasked.edge_distance_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_distance_matrix</span></code></a></p></td>
+<td><p>Matrix of distance from each element to a background (i.e., masked) point.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.xge" title="lnpy.lnpidata.lnPiMasked.xge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xge</span></code></a></p></td>
+<td><p>Accessor to <a class="reference internal" href="lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble" title="lnpy.ensembles.GrandCanonicalEnsemble"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.xce" title="lnpy.lnpidata.lnPiMasked.xce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xce</span></code></a></p></td>
+<td><p>Accessor to <a class="reference internal" href="lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble" title="lnpy.ensembles.CanonicalEnsemble"><code class="xref py py-class docutils literal notranslate"><span class="pre">CanonicalEnsemble</span></code></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.from_data">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnz_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L302-L344"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.from_data" title="Link to this definition">#</a></dt>
+<dd><p>Create <a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> object from raw data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Value of <cite>lnz</cite> to reweight data to.</p></li>
+<li><p><strong>lnz_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Value of <cite>lnz</cite> at which <cite>data</cite> was collected</p></li>
+<li><p><strong>{data}</strong></p></li>
+<li><p><strong>{mask_masked}</strong></p></li>
+<li><p><strong>{state_kws}</strong></p></li>
+<li><p><strong>{extra_kws}</strong></p></li>
+<li><p><strong>{fill_value}</strong></p></li>
+<li><p><strong>{copy}</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.dtype">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.dtype" title="Link to this definition">#</a></dt>
+<dd><p>Type (dtype) of underling data</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.state_kws">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">state_kws</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.state_kws" title="Link to this definition">#</a></dt>
+<dd><p>State variables.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.extra_kws">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extra_kws</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.extra_kws" title="Link to this definition">#</a></dt>
+<dd><p>Extra parameters.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.ma">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ma</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.ma" title="Link to this definition">#</a></dt>
+<dd><p>Masked array view of data reweighted data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.filled">
+<span class="sig-name descname"><span class="pre">filled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L373-L375"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.filled" title="Link to this definition">#</a></dt>
+<dd><p>Filled view or reweighted data</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.data" title="Link to this definition">#</a></dt>
+<dd><p>Reweighted data</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.mask">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.mask" title="Link to this definition">#</a></dt>
+<dd><p>Where <cite>True</cite>, values are masked out.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.shape">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.shape" title="Link to this definition">#</a></dt>
+<dd><p>Shape of lnPiArray</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.lnz">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lnz</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.lnz" title="Link to this definition">#</a></dt>
+<dd><p>Value of log(activity) evaluated at</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.betamu">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">betamu</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.betamu" title="Link to this definition">#</a></dt>
+<dd><p>Alias to <cite>self.lnz</cite></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.volume">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.volume" title="Link to this definition">#</a></dt>
+<dd><p>Accessor to self.state_kws[‘volume’].</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.beta">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">beta</span></span><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.beta" title="Link to this definition">#</a></dt>
+<dd><p>Accessor to self.state_kws[‘beta’].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.local_argmax">
+<span class="sig-name descname"><span class="pre">local_argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L454-L470"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.local_argmax" title="Link to this definition">#</a></dt>
+<dd><p>Calculate index of maximum of masked data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Positional arguments to argmax</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments to argmax</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ma.MaskedArray.argmax.html#numpy.ma.MaskedArray.argmax" title="(in NumPy v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ma.MaskedArray.argmax</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.unravel_index.html#numpy.unravel_index" title="(in NumPy v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.unravel_index</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.local_max">
+<span class="sig-name descname"><span class="pre">local_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L473-L490"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.local_max" title="Link to this definition">#</a></dt>
+<dd><p>Calculate index of maximum of masked data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Positional arguments to argmax</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments to argmax</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ma.MaskedArray.max.html#numpy.ma.MaskedArray.max" title="(in NumPy v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ma.MaskedArray.max</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.local_maxmask">
+<span class="sig-name descname"><span class="pre">local_maxmask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L493-L497"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.local_maxmask" title="Link to this definition">#</a></dt>
+<dd><p>Calculate mask where <code class="docutils literal notranslate"><span class="pre">self.ma</span> <span class="pre">==</span> <span class="pre">self.local_max()</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.edge_distance_matrix">
+<span class="sig-name descname"><span class="pre">edge_distance_matrix</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L499-L510"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.edge_distance_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Matrix of distance from each element to a background (i.e., masked) point.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="lnpy.core.utils.html#lnpy.core.utils.distance_matrix" title="lnpy.core.utils.distance_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpy.core.utils.distance_matrix</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.edge_distance">
+<span class="sig-name descname"><span class="pre">edge_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L512-L526"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.edge_distance" title="Link to this definition">#</a></dt>
+<dd><p>Distance of local maximum value to nearest background point.</p>
+<p>If <cite>edge_distance</cite> is too small, the value of properties calculated from this
+lnPi cannot be trusted.   This usually is due to the data being reweighted to
+too high a value of <cite>lnz</cite>, or not sampled to sufficiently high values of <cite>N</cite>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.edge_distance_matrix" title="lnpy.lnpidata.lnPiMasked.edge_distance_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_distance_matrix</span></code></a>, <a class="reference internal" href="lnpy.core.utils.html#lnpy.core.utils.distance_matrix" title="lnpy.core.utils.distance_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpy.core.utils.distance_matrix</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.new_like">
+<span class="sig-name descname"><span class="pre">new_like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L528-L553"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.new_like" title="Link to this definition">#</a></dt>
+<dd><p>Create new object with optional parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Value(s) of <code class="docutils literal notranslate"><span class="pre">lnz</span></code> (log of activity)</p></li>
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>) – lnPi data object.</p></li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Mask using “masked” convention. Where <cite>mask</cite> is <cite>True</cite>, values are excluded.</p></li>
+<li><p><strong>copy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, copy the data.  If None or False, attempt to use view.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.pad">
+<span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bfill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L555-L583"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.pad" title="Link to this definition">#</a></dt>
+<dd><p>Pad nan values in underlying data to values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffill</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – Do forward filling</p></li>
+<li><p><strong>bfill</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – Do back filling</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – The maximum number of consecutive NaN values to forward fill. In
+other words, if there is a gap with more than this number of
+consecutive NaNs, it will only be partially filled. Must be greater
+than 0 or None for no limit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>) – padded object</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.lnpidata.lnPiArray.pad" title="lnpy.lnpidata.lnPiArray.pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiArray.pad</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.zeromax">
+<span class="sig-name descname"><span class="pre">zeromax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L585-L594"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.zeromax" title="Link to this definition">#</a></dt>
+<dd><p>Shift so that lnpi.max() == 0 on reference</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.lnpidata.lnPiArray.zeromax" title="lnpy.lnpidata.lnPiArray.zeromax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiArray.zeromax</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.reweight">
+<span class="sig-name descname"><span class="pre">reweight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L596-L598"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.reweight" title="Link to this definition">#</a></dt>
+<dd><p>Create new object at specified value of <cite>lnz</cite></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.or_mask">
+<span class="sig-name descname"><span class="pre">or_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L600-L602"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.or_mask" title="Link to this definition">#</a></dt>
+<dd><p>New object with logical or of self.mask and mask</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.and_mask">
+<span class="sig-name descname"><span class="pre">and_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L604-L606"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.and_mask" title="Link to this definition">#</a></dt>
+<dd><p>New object with logical and of self.mask and mask</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.from_table">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\s+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L608-L659"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.from_table" title="Link to this definition">#</a></dt>
+<dd><p>Create lnPi object from text file table with columns [n_0,…,n_ndim, lnpi]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-path-like-object" title="(in Python v3.14)"><span class="xref std std-term">path-like</span></a>) – file object to be read</p></li>
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – <span class="math notranslate nohighlight">\(\beta \mu\)</span> for each component</p></li>
+<li><p><strong>state_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – define state variables, like volume, beta</p></li>
+<li><p><strong>sep</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string</span></code></a>, <em>optional</em>) – separator for file read</p></li>
+<li><p><strong>names</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p><strong>csv_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – optional arguments to <cite>pandas.read_csv</cite></p></li>
+<li><p><strong>**kwargs</strong> – Passed to lnPi constructor</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.from_dataarray">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dataarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_as_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L661-L717"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.from_dataarray" title="Link to this definition">#</a></dt>
+<dd><p>Create a lnPi object from <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>da</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>) – DataArray containing the lnPi data</p></li>
+<li><p><strong>state_as_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, get <cite>state_kws</cite> from <code class="docutils literal notranslate"><span class="pre">da.attrs</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.from_data" title="lnpy.lnpidata.lnPiMasked.from_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_data()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.from_data" title="lnpy.lnpidata.lnPiMasked.from_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_data()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.list_from_masks">
+<span class="sig-name descname"><span class="pre">list_from_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">masks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'image'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L719-L742"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.list_from_masks" title="Link to this definition">#</a></dt>
+<dd><p>Create list of lnpis corresponding to masks[i]</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul>
+<li><p><strong>masks</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Masks using “masked” convention.  Where <cite>mask[i]</cite> is <cite>True</cite>, values are excluded
+for sample <cite>i</cite>.</p></li>
+<li><p><strong>convention</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Convention for mask.  Allowable values are:</p>
+<ul>
+<li><dl>
+<dt>‘image’ or True<span class="classifier"><cite>True</cite> values included, <cite>False</cite> values excluded.</span></dt><dd><p>This is the normal convention in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/ndimage.html#module-scipy.ndimage" title="(in SciPy v1.17.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.ndimage</span></code></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>‘masked’ or False:  <cite>False</cite> values are included, <cite>True</cite> values are excluded.</dt><dd><p>This is the convention in <a class="reference external" href="https://numpy.org/doc/stable/reference/maskedarray.generic.html#module-numpy.ma" title="(in NumPy v2.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy.ma</span></code></a></p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>lnpis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list of lnpis corresponding to each mask</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="lnpy.core.mask.html#lnpy.core.mask.masks_change_convention" title="lnpy.core.mask.masks_change_convention"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpy.core.mask.masks_change_convention</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.list_from_labels">
+<span class="sig-name descname"><span class="pre">list_from_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L744-L782"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.list_from_labels" title="Link to this definition">#</a></dt>
+<dd><p>Create sequence of lnpis from labels array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>labels</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Each unique value <cite>i</cite> in <cite>labels</cite> indicates a mask.
+That is <code class="docutils literal notranslate"><span class="pre">labels</span> <span class="pre">==</span> <span class="pre">i</span></code> is a mask for feature <cite>i</cite>.</p></li>
+<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – If specified, extract only those locations where <code class="docutils literal notranslate"><span class="pre">labels</span> <span class="pre">==</span> <span class="pre">feature</span></code>
+for all values <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">in</span> <span class="pre">features</span></code>.  That is, select a subset of
+unique label values.</p></li>
+<li><p><strong>include_boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if True, include boundary regions in output mask</p></li>
+<li><p><strong>check_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if True, then make sure each feature is in labels</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to to <a class="reference internal" href="lnpy.core.mask.html#lnpy.core.mask.labels_to_masks" title="lnpy.core.mask.labels_to_masks"><code class="xref py py-func docutils literal notranslate"><span class="pre">labels_to_masks()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>outputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference internal" href="#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>)</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.lnpidata.lnPiMasked.list_from_masks" title="lnpy.lnpidata.lnPiMasked.list_from_masks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnPiMasked.list_from_masks</span></code></a>, <a class="reference internal" href="lnpy.core.mask.html#lnpy.core.mask.labels_to_masks" title="lnpy.core.mask.labels_to_masks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpy.core.mask.labels_to_masks</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.xge">
+<span class="sig-name descname"><span class="pre">xge</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L784-L790"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.xge" title="Link to this definition">#</a></dt>
+<dd><p>Accessor to <a class="reference internal" href="lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble" title="lnpy.ensembles.GrandCanonicalEnsemble"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.xce">
+<span class="sig-name descname"><span class="pre">xce</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/lnpidata.py#L792-L798"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.xce" title="Link to this definition">#</a></dt>
+<dd><p>Accessor to <a class="reference internal" href="lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble" title="lnpy.ensembles.CanonicalEnsemble"><code class="xref py py-class docutils literal notranslate"><span class="pre">CanonicalEnsemble</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.decorate_accessor">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decorate_accessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/extensions.py#L151-L180"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.decorate_accessor" title="Link to this definition">#</a></dt>
+<dd><p>Register a property <cite>name</cite> to <cite>class</cite> of type <cite>accessor(self)</cite>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">parent</span><span class="p">(</span><span class="n">AccessorMixin</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@parent</span><span class="o">.</span><span class="n">decorate_accessor</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">class</span><span class="w"> </span><span class="nc">hello</span><span class="p">(</span><span class="n">AccessorMixin</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">there</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">parent</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">hello</span><span class="o">.</span><span class="n">there</span><span class="p">()</span>
+<span class="go">&quot;&lt;class &#39;lnpy.extensions.parent&#39;&gt;&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.lnpidata.lnPiMasked.register_accessor">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_accessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/extensions.py#L126-L149"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.lnpidata.lnPiMasked.register_accessor" title="Link to this definition">#</a></dt>
+<dd><p>Register a property <cite>name</cite> to <cite>class</cite> of type <cite>accessor(self)</cite></p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">parent</span><span class="p">(</span><span class="n">AccessorMixin</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">hello</span><span class="p">(</span><span class="n">AccessorMixin</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">there</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parent</span><span class="o">.</span><span class="n">register_accessor</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">hello</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">parent</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">hello</span><span class="o">.</span><span class="n">there</span><span class="p">()</span>
+<span class="go">&quot;&lt;class &#39;lnpy.extensions.parent&#39;&gt;&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../api-modules.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modules</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lnpy.lnpienergy.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray"><code class="docutils literal notranslate"><span class="pre">lnPiArray</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray.new_like"><code class="docutils literal notranslate"><span class="pre">lnPiArray.new_like()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray.pad"><code class="docutils literal notranslate"><span class="pre">lnPiArray.pad()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiArray.zeromax"><code class="docutils literal notranslate"><span class="pre">lnPiArray.zeromax()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked"><code class="docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.from_data"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.from_data()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.dtype"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.dtype</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.state_kws"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.state_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.extra_kws"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.extra_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.ma"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.ma</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.filled"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.filled()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.data"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.data</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.mask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.mask</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.shape"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.shape</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.lnz"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.lnz</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.betamu"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.betamu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.volume"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.volume</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.beta"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.beta</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.local_argmax"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.local_argmax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.local_max"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.local_max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.local_maxmask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.local_maxmask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.edge_distance_matrix"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.edge_distance_matrix</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.edge_distance"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.edge_distance()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.new_like"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.new_like()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.pad"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.pad()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.zeromax"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.zeromax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.reweight"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.reweight()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.or_mask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.or_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.and_mask"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.and_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.from_table"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.from_table()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.from_dataarray"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.from_dataarray()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.list_from_masks"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.list_from_masks()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.list_from_labels"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.list_from_labels()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.xge"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.xge</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.xce"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.xce</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.decorate_accessor"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.decorate_accessor()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.lnpidata.lnPiMasked.register_accessor"><code class="docutils literal notranslate"><span class="pre">lnPiMasked.register_accessor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By William P. Krekelberg
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2015, William P. Krekelberg.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2026-02-21.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

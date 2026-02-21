@@ -1,0 +1,1207 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Segmentation of lnPi (segment) &#8212; tmmc-lnpy 0.8.1.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=907d4a6a"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/generated/lnpy.segment';</script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js"></script>
+    <script src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+    <script src="../../_static/js/leave_notice.js?v=133c5535"></script>
+    <script async="async" id="_fed_au_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Ensemble averages (ensembles)" href="lnpy.ensembles.html" />
+    <link rel="prev" title="Local free energy of lnPi (lnpienergy)" href="lnpy.lnpienergy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2026-02-21"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tmmc-lnpy 0.8.1.dev0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    tmmc-lnpy
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/usage/Basic_usage.html">Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?</a></li>
+
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">API reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api-public.html">Top level API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpy</span></code>)</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../api-modules.html">Modules</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpidata.html">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpienergy.html">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.ensembles.html">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.combine.html">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.stability.html">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpiseries.html">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.examples.html">Examples (<code class="xref py py-mod docutils literal notranslate"><span class="pre">examples</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.utils.html">Utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.mask.html"><code class="docutils literal notranslate"><span class="pre">mask_change_convention()</span></code></a></li>
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.rootresults.html"><code class="docutils literal notranslate"><span class="pre">RootResultDictReq</span></code></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.options.html">Options (<code class="xref py py-mod docutils literal notranslate"><span class="pre">options</span></code>)</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-other.html">Base classes and other methods</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api-legacy.html">Legacy API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lnPi.maskedlnpi_legacy.html">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../navigation.html">Indices and tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py-modindex.html">Module Index</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy/issues/new?title=Issue%20on%20page%20%2Freference/generated/lnpy.segment.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/generated/lnpy.segment.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Segmentation of lnPi (segment)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.peak_local_max_adaptive"><code class="docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter"><code class="docutils literal notranslate"><span class="pre">Segmenter</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter.peaks"><code class="docutils literal notranslate"><span class="pre">Segmenter.peaks()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter.watershed"><code class="docutils literal notranslate"><span class="pre">Segmenter.watershed()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter.segment_lnpi"><code class="docutils literal notranslate"><span class="pre">Segmenter.segment_lnpi()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator"><code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator.build_phases"><code class="docutils literal notranslate"><span class="pre">PhaseCreator.build_phases()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator.build_phases_mu"><code class="docutils literal notranslate"><span class="pre">PhaseCreator.build_phases_mu()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator.build_phases_dmu"><code class="docutils literal notranslate"><span class="pre">PhaseCreator.build_phases_dmu()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhasesBase"><code class="docutils literal notranslate"><span class="pre">BuildPhasesBase</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhasesBase.index"><code class="docutils literal notranslate"><span class="pre">BuildPhasesBase.index</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhasesBase.__call__"><code class="docutils literal notranslate"><span class="pre">BuildPhasesBase.__call__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_mu"><code class="docutils literal notranslate"><span class="pre">BuildPhases_mu</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_mu.__call__"><code class="docutils literal notranslate"><span class="pre">BuildPhases_mu.__call__()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_mu.index"><code class="docutils literal notranslate"><span class="pre">BuildPhases_mu.index</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_dmu"><code class="docutils literal notranslate"><span class="pre">BuildPhases_dmu</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_dmu.__call__"><code class="docutils literal notranslate"><span class="pre">BuildPhases_dmu.__call__()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_dmu.index"><code class="docutils literal notranslate"><span class="pre">BuildPhases_dmu.index</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="segmentation-of-lnpi-segment">
+<span id="module-lnpy.segment"></span><h1>Segmentation of lnPi (<a class="reference internal" href="#module-lnpy.segment" title="lnpy.segment"><code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code></a>)<a class="headerlink" href="#segmentation-of-lnpi-segment" title="Link to this heading">#</a></h1>
+<p>Routines to segment lnPi</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>find max/peaks in lnPi</p></li>
+<li><p>segment lnPi about these peaks</p></li>
+<li><p>determine free energy difference between segments
+a. Merge based on low free energy difference</p></li>
+<li><p>combination of 1-3.</p></li>
+</ol>
+</div></blockquote>
+</section>
+<p><strong>Functions:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peak_local_max_adaptive</span></code></a>(data, *[, mask, ...])</p></td>
+<td><p>Find local max with fall backs min_distance and filter.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Classes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.Segmenter" title="lnpy.segment.Segmenter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segmenter</span></code></a>([peak_kws, watershed_kws])</p></td>
+<td><p>Data segmenter:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.segment.PhaseCreator" title="lnpy.segment.PhaseCreator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PhaseCreator</span></code></a>(nmax[, nmax_peak, ref, ...])</p></td>
+<td><p>Helper class to create phases</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhasesBase" title="lnpy.segment.BuildPhasesBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BuildPhasesBase</span></code></a>(x, phase_creator)</p></td>
+<td><p>Base class to build Phases objects from scalar values of <cite>lnz</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhases_mu" title="lnpy.segment.BuildPhases_mu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BuildPhases_mu</span></code></a>(lnz, phase_creator)</p></td>
+<td><p>create phases from scalar value of mu for fixed value of mu for other species</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhases_dmu" title="lnpy.segment.BuildPhases_dmu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BuildPhases_dmu</span></code></a>(dlnz, phase_creator)</p></td>
+<td><p>Create phases from scalar value of mu at fixed value of dmu for other species</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.segment.peak_local_max_adaptive">
+<span class="sig-prename descclassname"><span class="pre">lnpy.segment.</span></span><span class="sig-name descname"><span class="pre">peak_local_max_adaptive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'indices'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_rel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_abs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_peaks_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L148-L257"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.peak_local_max_adaptive" title="Link to this definition">#</a></dt>
+<dd><p>Find local max with fall backs min_distance and filter.</p>
+<p>This is an adaptation of <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a>, which is
+called iteratively until the number of <cite>peaks</cite> is less than <cite>num_peaks_max</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – Image data to analyze</p></li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Mask using “image” convention. Where <cite>mask</cite> is <cite>True</cite>, values are included.</p></li>
+<li><p><strong>min_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – min_distance parameter.  If sequence, then call
+<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a> until number of peaks <code class="docutils literal notranslate"><span class="pre">&lt;=num_peaks_max</span></code>.
+Default value is <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">15,</span> <span class="pre">20,</span> <span class="pre">25)</span></code>.</p></li>
+<li><p><strong>style</strong> (<code class="docutils literal notranslate"><span class="pre">{'indices',</span> <span class="pre">'mask',</span> <span class="pre">'marker'}</span></code>) – Controls output style</p>
+<ul>
+<li><p>indices : indices of peaks</p></li>
+<li><p>mask : array of bool marking peak locations</p></li>
+<li><p>marker : array of int</p></li>
+</ul>
+</li>
+<li><p><strong>threshold_rel, threshold_abs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – thresholds parameters</p></li>
+<li><p><strong>num_peaks_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Max number of maxima/peaks to find. If not specified, any number of peaks allowed.</p></li>
+<li><p><strong>connectivity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Maximum number of orthogonal hops to consider a pixel/voxel as a neighbor.
+Accepted values are ranging from 1 to <code class="docutils literal notranslate"><span class="pre">input.ndim</span></code>. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a full
+connectivity of <code class="docutils literal notranslate"><span class="pre">input.ndim</span></code> is used.</p></li>
+<li><p><strong>errors</strong> (<code class="docutils literal notranslate"><span class="pre">{'ignore','raise','warn'}</span></code>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">'warn'</span></code>) –</p>
+<ul>
+<li><p>If raise, raise exception if npeaks &gt; num_peaks_max</p></li>
+<li><p>If ignore, return all found maxima</p></li>
+<li><p>If warn, raise warning if npeaks &gt; num_peaks_max</p></li>
+</ul>
+</li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Depending on the value of <cite>indices</cite>.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The option <cite>mask</cite> is passed as the value <cite>labels</cite> in <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.26.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peak_local_max</span></code></a>, <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.morphology.html#skimage.morphology.label" title="(in skimage v0.26.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">label</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.segment.Segmenter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.segment.</span></span><span class="sig-name descname"><span class="pre">Segmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">watershed_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L260-L479"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.Segmenter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Data segmenter:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – min_distance parameter.  If sequence, then call
+<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max()</span></code></a> until number of peaks <code class="docutils literal notranslate"><span class="pre">&lt;=num_peaks_max</span></code>.
+Default value is <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">15,</span> <span class="pre">20,</span> <span class="pre">25)</span></code>.</p></li>
+<li><p><strong>peak_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional parameters to <a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a></p></li>
+<li><p><strong>watershed_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional parameters to <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">watershed()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.Segmenter.peaks" title="lnpy.segment.Segmenter.peaks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peaks</span></code></a>(data[, mask, num_peaks_max, style])</p></td>
+<td><p>Interface to <a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a> with default values from <cite>self</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.segment.Segmenter.watershed" title="lnpy.segment.Segmenter.watershed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">watershed</span></code></a>(data, markers, mask[, connectivity])</p></td>
+<td><p>Interface to <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.segmentation.watershed()</span></code></a> function</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.Segmenter.segment_lnpi" title="lnpy.segment.Segmenter.segment_lnpi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment_lnpi</span></code></a>(lnpi[, markers, find_peaks, ...])</p></td>
+<td><p>Perform segmentations of lnPi object using watershed on negative of lnPi data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.Segmenter.peaks">
+<span class="sig-name descname"><span class="pre">peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_peaks_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'marker'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L330-L375"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.Segmenter.peaks" title="Link to this definition">#</a></dt>
+<dd><p>Interface to <a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a> with default values from <cite>self</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – Image data to analyze</p></li>
+<li><p><strong>num_peaks_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Max number of maxima/peaks to find. If not specified, any number of peaks allowed.</p></li>
+<li><p><strong>style</strong> (<code class="docutils literal notranslate"><span class="pre">{'indices',</span> <span class="pre">'mask',</span> <span class="pre">'marker'}</span></code>) – Controls output style</p>
+<ul>
+<li><p>indices : indices of peaks</p></li>
+<li><p>mask : array of bool marking peak locations</p></li>
+<li><p>marker : array of int</p></li>
+</ul>
+</li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Mask using “image” convention. Where <cite>mask</cite> is <cite>True</cite>, values are included.</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> – If <code class="docutils literal notranslate"><span class="pre">style=='marker'</span></code>, then return label array.  Otherwise,
+return indices of peaks.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Any value not set will be inherited from <cite>self.peak_kws</cite></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peak_local_max_adaptive</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.Segmenter.watershed">
+<span class="sig-name descname"><span class="pre">watershed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L377-L412"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.Segmenter.watershed" title="Link to this definition">#</a></dt>
+<dd><p>Interface to <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.segmentation.watershed()</span></code></a> function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – Image data to analyze</p></li>
+<li><p><strong>markers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Same shape as image. The desired number of markers, or an array marking the
+basins with the values to be assigned in the label matrix. Zero means not a
+marker. If None (no markers given), the local minima of the image are used
+as markers.</p></li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Mask using “image” convention. Where <cite>mask</cite> is <cite>True</cite>, values are included.</p></li>
+<li><p><strong>connectivity</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <em>optional</em>) – An array with the same number of dimensions as image whose non-zero
+elements indicate neighbors for connection. Following the scipy convention,
+default is a one-connected array of the dimension of the image.</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">watershed()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>labels</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Each unique value <cite>i</cite> in <cite>labels</cite> indicates a mask.
+That is <code class="docutils literal notranslate"><span class="pre">labels</span> <span class="pre">==</span> <span class="pre">i</span></code> is a mask for feature <cite>i</cite>.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.26.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">watershed</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.Segmenter.segment_lnpi">
+<span class="sig-name descname"><span class="pre">segment_lnpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">find_peaks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_peaks_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peaks_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">watershed_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L414-L479"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.Segmenter.segment_lnpi" title="Link to this definition">#</a></dt>
+<dd><p>Perform segmentations of lnPi object using watershed on negative of lnPi data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnpi</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>) – Object to be segmented</p></li>
+<li><p><strong>markers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Same shape as image. The desired number of markers, or an array marking the
+basins with the values to be assigned in the label matrix. Zero means not a
+marker. If None (no markers given), the local minima of the image are used
+as markers.</p></li>
+<li><p><strong>find_peaks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – If True, use <a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a> to construct <cite>markers</cite>.</p></li>
+<li><p><strong>num_peaks_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Max number of maxima/peaks to find. If not specified, any number of peaks allowed.</p></li>
+<li><p><strong>connectivity</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <em>optional</em>) – An array with the same number of dimensions as image whose non-zero
+elements indicate neighbors for connection. Following the scipy convention,
+default is a one-connected array of the dimension of the image.</p></li>
+<li><p><strong>peak_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional parameters to <a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a></p></li>
+<li><p><strong>watershed_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional parameters to <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.26.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">watershed()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>labels</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Each unique value <cite>i</cite> in <cite>labels</cite> indicates a mask.
+That is <code class="docutils literal notranslate"><span class="pre">labels</span> <span class="pre">==</span> <span class="pre">i</span></code> is a mask for feature <cite>i</cite>.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.segment.Segmenter.watershed" title="lnpy.segment.Segmenter.watershed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segmenter.watershed</span></code></a>, <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.segmentation.html#skimage.segmentation.watershed" title="(in skimage v0.26.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">watershed</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.segment.PhaseCreator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.segment.</span></span><span class="sig-name descname"><span class="pre">PhaseCreator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax_peak</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmenter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_phases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_energy_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L482-L871"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.PhaseCreator" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Helper class to create phases</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Maximum number of phases to allow</p></li>
+<li><p><strong>nmax_peak</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – if specified, the allowable number of peaks to locate.
+This can be useful for some cases.  These phases will be merged out at the end.</p></li>
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>, <em>optional</em>) – Reference object.</p></li>
+<li><p><strong>segmenter</strong> (<a class="reference internal" href="#lnpy.segment.Segmenter" title="lnpy.segment.Segmenter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segmenter</span></code></a>, <em>optional</em>) – segmenter object to create labels/masks. Defaults to using base segmenter.</p></li>
+<li><p><strong>segment_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional arguments to be passed to <a class="reference internal" href="#lnpy.segment.Segmenter.segment_lnpi" title="lnpy.segment.Segmenter.segment_lnpi"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Segmenter.segment_lnpi()</span></code></a>.</p></li>
+<li><p><strong>tag_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, <em>optional</em>) – Optional function which takes a list of <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> objects
+and returns on integer label for each object.</p></li>
+<li><p><strong>phases_factory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, <em>optional</em>) – Factory function for returning Collection from a list of <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> object.
+Defaults to <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.from_list" title="lnpy.lnpiseries.lnPiCollection.from_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lnPiCollection.from_list()</span></code></a>.</p></li>
+<li><p><strong>free_energy_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional arguments to …</p></li>
+<li><p><strong>merge_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Optional arguments to <a class="reference internal" href="lnpy.lnpienergy.html#lnpy.lnpienergy.merge_regions" title="lnpy.lnpienergy.merge_regions"><code class="xref py py-func docutils literal notranslate"><span class="pre">merge_regions()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases" title="lnpy.segment.PhaseCreator.build_phases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_phases</span></code></a>([lnz, ref, efac, nmax, ...])</p></td>
+<td><p>Construct 'phases' for a lnPi object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases_mu" title="lnpy.segment.PhaseCreator.build_phases_mu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_phases_mu</span></code></a>(lnz)</p></td>
+<td><p>Factory constructor at fixed values of <cite>mu</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases_dmu" title="lnpy.segment.PhaseCreator.build_phases_dmu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_phases_dmu</span></code></a>(dlnz)</p></td>
+<td><p>Factory constructor at fixed values of <cite>dmu</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.PhaseCreator.build_phases">
+<span class="sig-name descname"><span class="pre">build_phases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">efac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax_peak</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reweight_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_phase_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_phases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_energy_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_phases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L636-L784"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.PhaseCreator.build_phases" title="Link to this definition">#</a></dt>
+<dd><p>Construct ‘phases’ for a lnPi object.</p>
+<p>This is quite an involved process.  The steps are</p>
+<ul class="simple">
+<li><p>Optionally find the location of the maxima in lnPi.</p></li>
+<li><p>Segment lnpi using watershed</p></li>
+<li><p>Merge phases which are energetically similar</p></li>
+<li><p>Optionally merge phases which have the same <cite>phase_id</cite></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – lnz value to evaluate <cite>ref</cite> at.  If not specified, use
+<cite>ref.lnz</cite></p></li>
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>) – Object to be segmented</p></li>
+<li><p><strong>efac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>optional</em>) – Optional value to use in energetic merging of phases.</p></li>
+<li><p><strong>nmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Maximum number of phases.  Defaults to <cite>self.nmax</cite></p></li>
+<li><p><strong>nmax_peak</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Maximum number of peaks to allow in <a class="reference internal" href="#lnpy.segment.peak_local_max_adaptive" title="lnpy.segment.peak_local_max_adaptive"><code class="xref py py-func docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a>.
+Note that this value can be larger than <cite>nmax</cite>.  Defaults to <cite>self.nmax_peak</cite>.</p></li>
+<li><p><strong>connectivity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – Maximum number of orthogonal hops to consider a pixel/voxel as a neighbor.
+Accepted values are ranging from 1 to <code class="docutils literal notranslate"><span class="pre">input.ndim</span></code>. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a full
+connectivity of <code class="docutils literal notranslate"><span class="pre">input.ndim</span></code> is used.</p></li>
+<li><p><strong>reweight_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Extra arguments to <cite>ref.reweight</cite></p></li>
+<li><p><strong>merge_phase_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – If True and calling <cite>tag_phases</cite> routine, merge phases with same phase_id.</p></li>
+<li><p><strong>phases_factory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – Function to convert list of phases into Phases object.
+If <cite>phases_factory</cite> <code class="docutils literal notranslate"><span class="pre">True</span></code>, revert to <cite>self.phases_factory</cite>.
+If <cite>phases_factory</cite> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, do not apply a factory, and
+return list of <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnpy.lnpidata.lnPiMasked</span></code></a> and array of phase indices.</p></li>
+<li><p><strong>phase_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Extra arguments to <cite>phases_factory</cite></p></li>
+<li><p><strong>segment_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Extra arguments to <cite>self.segmenter.segment_lnpi</cite></p></li>
+<li><p><strong>free_energy_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Extra arguments to free energy calculation</p></li>
+<li><p><strong>merge_kws</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-mapping" title="(in Python v3.14)"><span class="xref std std-term">mapping</span></a>, <em>optional</em>) – Extra arguments to merge</p></li>
+<li><p><strong>tag_phases</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, <em>optional</em>) – Function to tag phases.  Defaults to <cite>self.tag_phases</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> and <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, or <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>) – If no phase creator, return list of lnPiMasked objects and array of phase indices.
+Otherwise, lnPiCollection object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.PhaseCreator.build_phases_mu">
+<span class="sig-name descname"><span class="pre">build_phases_mu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L786-L855"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.PhaseCreator.build_phases_mu" title="Link to this definition">#</a></dt>
+<dd><p>Factory constructor at fixed values of <cite>mu</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>{lnz_buildphases_mu}</strong></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.segment.BuildPhases_mu" title="lnpy.segment.BuildPhases_mu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BuildPhases_mu</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">lnpy.examples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">lnpy</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">hsmix_example</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The default build phases from this multicomponent system requires specifies the
+activity for both species.  For example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">phase_creator</span><span class="o">.</span><span class="n">build_phases</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="go">&lt;class lnPiCollection&gt;</span>
+<span class="go">lnz_0  lnz_1  phase</span>
+<span class="go">0.1    0.2    0        [0.1, 0.2]</span>
+<span class="go">              1        [0.1, 0.2]</span>
+<span class="go">dtype: object</span>
+</pre></div>
+</div>
+<p>But if we want to creat phases at a fixed value of either lnz_0 or lnz_1, we can
+do the following:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">phase_creator</span><span class="o">.</span><span class="n">build_phases_mu</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Note the syntax [None, 0.5].  This means that calling <cite>b(lnz_0)</cite> will
+create a new object at [lnz_0, 0.5].</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="go">&lt;class lnPiCollection&gt;</span>
+<span class="go">lnz_0  lnz_1  phase</span>
+<span class="go">0.1    0.5    0        [0.1, 0.5]</span>
+<span class="go">              1        [0.1, 0.5]</span>
+<span class="go">dtype: object</span>
+</pre></div>
+</div>
+<p>Likewise, we can fix lnz_0 with</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">phase_creator</span><span class="o">.</span><span class="n">build_phases_mu</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="go">&lt;class lnPiCollection&gt;</span>
+<span class="go">lnz_0  lnz_1  phase</span>
+<span class="go">0.5    0.1    0        [0.5, 0.1]</span>
+<span class="go">              1        [0.5, 0.1]</span>
+<span class="go">dtype: object</span>
+</pre></div>
+</div>
+<p>To create an object at fixed value of <code class="docutils literal notranslate"><span class="pre">dmu_i</span> <span class="pre">=</span> <span class="pre">lnz_i</span> <span class="pre">-</span> <span class="pre">lnz_fixed</span></code>, we use the following:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">phase_creator</span><span class="o">.</span><span class="n">build_phases_dmu</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Now any phase created will have <code class="docutils literal notranslate"><span class="pre">lnz</span> <span class="pre">=</span> <span class="pre">[lnz_0,</span> <span class="pre">0.5</span> <span class="pre">+</span> <span class="pre">lnz_0]</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="go">&lt;class lnPiCollection&gt;</span>
+<span class="go">lnz_0  lnz_1  phase</span>
+<span class="go">0.5    1.0    0        [0.5, 1.0]</span>
+<span class="go">              1        [0.5, 1.0]</span>
+<span class="go">dtype: object</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.PhaseCreator.build_phases_dmu">
+<span class="sig-name descname"><span class="pre">build_phases_dmu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dlnz</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L857-L871"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.PhaseCreator.build_phases_dmu" title="Link to this definition">#</a></dt>
+<dd><p>Factory constructor at fixed values of <cite>dmu</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>{dlnz_buildphases_dmu}</strong></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.segment.BuildPhases_dmu" title="lnpy.segment.BuildPhases_dmu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BuildPhases_dmu</span></code></a>, <a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases_mu" title="lnpy.segment.PhaseCreator.build_phases_mu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_phases_mu</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhasesBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.segment.</span></span><span class="sig-name descname"><span class="pre">BuildPhasesBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_creator</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L874-L971"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.BuildPhasesBase" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class to build Phases objects from scalar values of <cite>lnz</cite>.</p>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhasesBase.index" title="lnpy.segment.BuildPhasesBase.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a></p></td>
+<td><p>Index number which varies</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhasesBase.__call__" title="lnpy.segment.BuildPhasesBase.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a>(lnz_index, *[, phases_factory])</p></td>
+<td><p>Build phases from scalar value of lnz.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhasesBase.index">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#lnpy.segment.BuildPhasesBase.index" title="Link to this definition">#</a></dt>
+<dd><p>Index number which varies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhasesBase.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz_index</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L940-L971"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.BuildPhasesBase.__call__" title="Link to this definition">#</a></dt>
+<dd><p>Build phases from scalar value of lnz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Value of lnz for <cite>self.index</cite> index.</p></li>
+<li><p><strong>{phases_factory}</strong></p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases" title="lnpy.segment.PhaseCreator.build_phases"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PhaseCreator.build_phases()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> and <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, or <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>) – If no phase creator, return list of lnPiMasked objects and array of phase indices.
+Otherwise, lnPiCollection object.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases" title="lnpy.segment.PhaseCreator.build_phases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PhaseCreator.build_phases</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhases_mu">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.segment.</span></span><span class="sig-name descname"><span class="pre">BuildPhases_mu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_creator</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L974-L991"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.BuildPhases_mu" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lnpy.segment.BuildPhasesBase" title="lnpy.segment.BuildPhasesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">BuildPhasesBase</span></code></a></p>
+<p>create phases from scalar value of mu for fixed value of mu for other species</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – list with one element equal to None.  This is the component which will be varied
+For example, lnz=[lnz0, None, lnz2] implies use values of lnz0,lnz2 for components 0 and 2, and
+vary component 1.</p></li>
+<li><p><strong>phase_creator</strong> (<a class="reference internal" href="#lnpy.segment.PhaseCreator" title="lnpy.segment.PhaseCreator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhaseCreator</span></code></a>) – Factory method to create phases collection object.
+For example, <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.from_list" title="lnpy.lnpiseries.lnPiCollection.from_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lnPiCollection.from_list()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhases_mu.__call__" title="lnpy.segment.BuildPhases_mu.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a>(lnz_index, *[, phases_factory])</p></td>
+<td><p>Build phases from scalar value of lnz.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhases_mu.index" title="lnpy.segment.BuildPhases_mu.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a></p></td>
+<td><p>Index number which varies</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhases_mu.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz_index</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L940-L971"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.BuildPhases_mu.__call__" title="Link to this definition">#</a></dt>
+<dd><p>Build phases from scalar value of lnz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Value of lnz for <cite>self.index</cite> index.</p></li>
+<li><p><strong>{phases_factory}</strong></p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases" title="lnpy.segment.PhaseCreator.build_phases"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PhaseCreator.build_phases()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> and <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, or <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>) – If no phase creator, return list of lnPiMasked objects and array of phase indices.
+Otherwise, lnPiCollection object.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases" title="lnpy.segment.PhaseCreator.build_phases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PhaseCreator.build_phases</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhases_mu.index">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#lnpy.segment.BuildPhases_mu.index" title="Link to this definition">#</a></dt>
+<dd><p>Index number which varies</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhases_dmu">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.segment.</span></span><span class="sig-name descname"><span class="pre">BuildPhases_dmu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dlnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_creator</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L994-L1012"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.BuildPhases_dmu" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lnpy.segment.BuildPhasesBase" title="lnpy.segment.BuildPhasesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">BuildPhasesBase</span></code></a></p>
+<p>Create phases from scalar value of mu at fixed value of dmu for other species</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dlnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – list with one element equal to None.  This is the component which will be varied
+For example, dlnz=[dlnz0,None,dlnz2] implies use values of dlnz0,dlnz2
+for components 0 and 2, and vary component 1.
+dlnz_i = lnz_i - lnz_index, where lnz_index is the value varied.</p></li>
+<li><p><strong>phase_creator</strong> (<a class="reference internal" href="#lnpy.segment.PhaseCreator" title="lnpy.segment.PhaseCreator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhaseCreator</span></code></a>) – Factory method to create phases collection object.
+For example, <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.from_list" title="lnpy.lnpiseries.lnPiCollection.from_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lnPiCollection.from_list()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhases_dmu.__call__" title="lnpy.segment.BuildPhases_dmu.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a>(lnz_index, *[, phases_factory])</p></td>
+<td><p>Build phases from scalar value of lnz.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.segment.BuildPhases_dmu.index" title="lnpy.segment.BuildPhases_dmu.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a></p></td>
+<td><p>Index number which varies</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhases_dmu.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz_index</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/segment.py#L940-L971"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.segment.BuildPhases_dmu.__call__" title="Link to this definition">#</a></dt>
+<dd><p>Build phases from scalar value of lnz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Value of lnz for <cite>self.index</cite> index.</p></li>
+<li><p><strong>{phases_factory}</strong></p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases" title="lnpy.segment.PhaseCreator.build_phases"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PhaseCreator.build_phases()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> and <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, or <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>) – If no phase creator, return list of lnPiMasked objects and array of phase indices.
+Otherwise, lnPiCollection object.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lnpy.segment.PhaseCreator.build_phases" title="lnpy.segment.PhaseCreator.build_phases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PhaseCreator.build_phases</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.segment.BuildPhases_dmu.index">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#lnpy.segment.BuildPhases_dmu.index" title="Link to this definition">#</a></dt>
+<dd><p>Index number which varies</p>
+</dd></dl>
+
+</dd></dl>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lnpy.lnpienergy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lnpy.ensembles.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.peak_local_max_adaptive"><code class="docutils literal notranslate"><span class="pre">peak_local_max_adaptive()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter"><code class="docutils literal notranslate"><span class="pre">Segmenter</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter.peaks"><code class="docutils literal notranslate"><span class="pre">Segmenter.peaks()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter.watershed"><code class="docutils literal notranslate"><span class="pre">Segmenter.watershed()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.Segmenter.segment_lnpi"><code class="docutils literal notranslate"><span class="pre">Segmenter.segment_lnpi()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator"><code class="docutils literal notranslate"><span class="pre">PhaseCreator</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator.build_phases"><code class="docutils literal notranslate"><span class="pre">PhaseCreator.build_phases()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator.build_phases_mu"><code class="docutils literal notranslate"><span class="pre">PhaseCreator.build_phases_mu()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.PhaseCreator.build_phases_dmu"><code class="docutils literal notranslate"><span class="pre">PhaseCreator.build_phases_dmu()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhasesBase"><code class="docutils literal notranslate"><span class="pre">BuildPhasesBase</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhasesBase.index"><code class="docutils literal notranslate"><span class="pre">BuildPhasesBase.index</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhasesBase.__call__"><code class="docutils literal notranslate"><span class="pre">BuildPhasesBase.__call__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_mu"><code class="docutils literal notranslate"><span class="pre">BuildPhases_mu</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_mu.__call__"><code class="docutils literal notranslate"><span class="pre">BuildPhases_mu.__call__()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_mu.index"><code class="docutils literal notranslate"><span class="pre">BuildPhases_mu.index</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_dmu"><code class="docutils literal notranslate"><span class="pre">BuildPhases_dmu</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_dmu.__call__"><code class="docutils literal notranslate"><span class="pre">BuildPhases_dmu.__call__()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.segment.BuildPhases_dmu.index"><code class="docutils literal notranslate"><span class="pre">BuildPhases_dmu.index</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By William P. Krekelberg
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2015, William P. Krekelberg.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2026-02-21.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

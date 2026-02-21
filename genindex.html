@@ -1,0 +1,1469 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; tmmc-lnpy 0.8.1.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=907d4a6a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js"></script>
+    <script src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+    <script src="_static/js/leave_notice.js?v=133c5535"></script>
+    <script async="async" id="_fed_au_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2026-02-21"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tmmc-lnpy 0.8.1.dev0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    tmmc-lnpy
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/usage/Basic_usage.html">Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?</a></li>
+
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/api-public.html">Top level API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpy</span></code>)</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/api-modules.html">Modules</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.lnpidata.html">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.lnpienergy.html">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.segment.html">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.ensembles.html">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.combine.html">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.stability.html">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.lnpiseries.html">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.examples.html">Examples (<code class="xref py py-mod docutils literal notranslate"><span class="pre">examples</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.core.utils.html">Utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.core.mask.html"><code class="docutils literal notranslate"><span class="pre">mask_change_convention()</span></code></a></li>
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.core.rootresults.html"><code class="docutils literal notranslate"><span class="pre">RootResultDictReq</span></code></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnpy.options.html">Options (<code class="xref py py-mod docutils literal notranslate"><span class="pre">options</span></code>)</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/api-other.html">Base classes and other methods</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/api-legacy.html">Legacy API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/lnPi.maskedlnpi_legacy.html">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="navigation.html">Indices and tables</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="py-modindex.html">Module Index</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy/issues/new?title=Issue%20on%20page%20%2Fgenindex.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhases_dmu.__call__">__call__() (lnpy.segment.BuildPhases_dmu method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhases_mu.__call__">(lnpy.segment.BuildPhases_mu method)</a>
+</li>
+        <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhasesBase.__call__">(lnpy.segment.BuildPhasesBase method)</a>
+</li>
+        <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.Binodals.__call__">(lnpy.stability.Binodals method)</a>
+</li>
+        <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.Spinodals.__call__">(lnpy.stability.Spinodals method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.StabilityBase.access">access (lnpy.stability.StabilityBase attribute)</a>
+</li>
+      <li><a href="reference/api-other.html#lnpy.extensions.AccessorMixin">AccessorMixin (class in lnpy.extensions)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.adjust">adjust() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.and_mask">and_mask() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.and_mask">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.append">append() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.StabilityBase.append_to_parent">append_to_parent() (lnpy.stability.StabilityBase method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.StabilityBase.appender">appender (lnpy.stability.StabilityBase property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.apply">apply() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.beta">beta (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.beta">(lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betaE">betaE() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaE">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betaE_n">betaE_n() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaE_n">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betaF">betaF() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaF">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaF_alt">betaF_alt() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betaF_n">betaF_n() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaF_n">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaG">betaG (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaG_n">betaG_n (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betamu">betamu (lnpy.ensembles.GrandCanonicalEnsemble attribute)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.betamu">(lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betamu">betamu() (lnpy.ensembles.CanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betaOmega">betaOmega() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betaOmega_n">betaOmega_n() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega_n">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.betapV">betapV() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.betapV">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.binodal">binodal (lnpy.lnpiseries.lnPiCollection attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.Binodals">Binodals (class in lnpy.stability)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.Example.build_phases">build_phases (lnpy.examples.Example attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.PhaseCreator.build_phases">build_phases() (lnpy.segment.PhaseCreator method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.PhaseCreator.build_phases_dmu">build_phases_dmu() (lnpy.segment.PhaseCreator method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.PhaseCreator.build_phases_mu">build_phases_mu() (lnpy.segment.PhaseCreator method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhases_dmu">BuildPhases_dmu (class in lnpy.segment)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhases_mu">BuildPhases_mu (class in lnpy.segment)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhasesBase">BuildPhasesBase (class in lnpy.segment)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble">CanonicalEnsemble (class in lnpy.ensembles)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.concat">concat() (lnpy.lnpiseries.lnPiCollection class method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.concat_like">concat_like() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.copy_shallow">copy_shallow() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.data">data (lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.utils.html#lnpy.core.utils.dataset_to_lnpimasked">dataset_to_lnpimasked() (in module lnpy.core.utils)</a>
+</li>
+      <li><a href="reference/api-other.html#lnpy.extensions.AccessorMixin.decorate_accessor">decorate_accessor() (lnpy.extensions.AccessorMixin class method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.decorate_accessor">(lnpy.lnpidata.lnPiMasked class method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.delta_w">delta_w (lnpy.lnpienergy.wFreeEnergy attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.dens">dens (lnpy.ensembles.CanonicalEnsemble property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.dens">(lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.dens_tot">dens_tot (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.dims_comp">dims_comp (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.dims_lnz">dims_lnz (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.dims_n">dims_n (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.dims_rec">dims_rec (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.dims_state">dims_state (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.utils.html#lnpy.core.utils.distance_matrix">distance_matrix() (in module lnpy.core.utils)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.droplevel">droplevel() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.dtype">dtype (lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.dw">dw (lnpy.lnpienergy.wFreeEnergyCollection property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.dw">(lnpy.lnpienergy.wFreeEnergyPhases property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.dwx">dwx (lnpy.lnpienergy.wFreeEnergyCollection property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.dwx">(lnpy.lnpienergy.wFreeEnergyPhases property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance">edge_distance() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.edge_distance">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.edge_distance_matrix">edge_distance_matrix (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy attribute)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.edge_distance_matrix">(lnpy.lnpidata.lnPiMasked attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance_val">edge_distance_val() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api-other.html#lnpy.core.typing.EnsembleT">EnsembleT (class in lnpy.core.typing)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.Example">Example (class in lnpy.examples)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.ExampleDict">ExampleDict (class in lnpy.examples)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.extra_kws">extra_kws (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.extra_kws">(lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.filled">filled() (lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.find_boundaries">find_boundaries() (in module lnpy.lnpienergy)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.find_boundaries_overlap">find_boundaries_overlap() (in module lnpy.lnpienergy)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.find_masked_extrema">find_masked_extrema() (in module lnpy.lnpienergy)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.from_builder">from_builder() (lnpy.lnpiseries.lnPiCollection class method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.from_data">from_data() (lnpy.lnpidata.lnPiMasked class method)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_dataarray">from_dataarray() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy class method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.from_dataarray">(lnpy.lnpidata.lnPiMasked class method)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.from_dataarray">(lnpy.lnpiseries.lnPiCollection class method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.from_labels">from_labels() (lnpy.lnpienergy.wFreeEnergy class method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.from_labels">(lnpy.lnpiseries.lnPiCollection class method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.from_list">from_list() (lnpy.lnpiseries.lnPiCollection class method)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_table">from_table() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy class method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.from_table">(lnpy.lnpidata.lnPiMasked class method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.get_dw">get_dw() (lnpy.lnpienergy.wFreeEnergyCollection method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.get_dw">(lnpy.lnpienergy.wFreeEnergyPhases method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.get_dwx">get_dwx() (lnpy.lnpienergy.wFreeEnergyCollection method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.get_dwx">(lnpy.lnpienergy.wFreeEnergyPhases method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.get_index_level">get_index_level() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.core.utils.html#lnpy.core.utils.get_lnz_iter">get_lnz_iter() (in module lnpy.core.utils)</a>
+</li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.get_spinodal">get_spinodal() (in module lnpy.stability)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble">GrandCanonicalEnsemble (class in lnpy.ensembles)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.groupby">groupby() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.groupby_allbut">groupby_allbut() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.hsmix_example">hsmix_example() (in module lnpy.examples)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.index">index (lnpy.lnpiseries.lnPiCollection property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhases_dmu.index">(lnpy.segment.BuildPhases_dmu property)</a>
+</li>
+        <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhases_mu.index">(lnpy.segment.BuildPhases_mu property)</a>
+</li>
+        <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.BuildPhasesBase.index">(lnpy.segment.BuildPhasesBase property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.index_frame">index_frame (lnpy.lnpiseries.lnPiCollection attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.items">items (lnpy.lnpiseries.lnPiCollection property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.StabilityBase.items">(lnpy.stability.StabilityBase property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.json_to_dict">json_to_dict() (in module lnpy.examples)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.core.mask.html#lnpy.core.mask.labels_to_masks">labels_to_masks() (in module lnpy.core.mask)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_labels">list_from_labels() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.list_from_labels">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_masks">list_from_masks() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.list_from_masks">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.lj_sub_example">lj_sub_example() (in module lnpy.examples)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.lj_sup_example">lj_sup_example() (in module lnpy.examples)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.ljmix_sup_example">ljmix_sup_example() (in module lnpy.examples)</a>
+</li>
+      <li>
+    lnPi
+
+      <ul>
+        <li><a href="reference/api-legacy.html#module-lnPi">module</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.lnpi">lnpi() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.lnpi">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li>
+    lnPi.maskedlnpi_legacy
+
+      <ul>
+        <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#module-lnPi.maskedlnpi_legacy">module</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_max">lnpi_max() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_norm">lnpi_norm (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiArray">lnPiArray (class in lnpy.lnpidata)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection">lnPiCollection (class in lnpy.lnpiseries)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked">lnPiMasked (class in lnpy.lnpidata)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.utils.html#lnpy.core.utils.lnpimasked_to_dataset">lnpimasked_to_dataset() (in module lnpy.core.utils)</a>
+</li>
+      <li>
+    lnpy
+
+      <ul>
+        <li><a href="reference/api-public.html#module-lnpy">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.combine
+
+      <ul>
+        <li><a href="reference/generated/lnpy.combine.html#module-lnpy.combine">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.core.mask
+
+      <ul>
+        <li><a href="reference/generated/lnpy.core.mask.html#module-lnpy.core.mask">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.core.rootresults
+
+      <ul>
+        <li><a href="reference/generated/lnpy.core.rootresults.html#module-lnpy.core.rootresults">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    lnpy.core.typing
+
+      <ul>
+        <li><a href="reference/api-other.html#module-lnpy.core.typing">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.core.utils
+
+      <ul>
+        <li><a href="reference/generated/lnpy.core.utils.html#module-lnpy.core.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.ensembles
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#module-lnpy.ensembles">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.examples
+
+      <ul>
+        <li><a href="reference/generated/lnpy.examples.html#module-lnpy.examples">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.lnpidata
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#module-lnpy.lnpidata">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.lnpienergy
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#module-lnpy.lnpienergy">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.lnpiseries
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpiseries.html#module-lnpy.lnpiseries">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.options
+
+      <ul>
+        <li><a href="reference/generated/lnpy.options.html#module-lnpy.options">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.segment
+
+      <ul>
+        <li><a href="reference/generated/lnpy.segment.html#module-lnpy.segment">module</a>
+</li>
+      </ul></li>
+      <li>
+    lnpy.stability
+
+      <ul>
+        <li><a href="reference/generated/lnpy.stability.html#module-lnpy.stability">module</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.lnz">lnz (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.lnz">(lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.load_example_dict">load_example_dict() (in module lnpy.examples)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.load_example_lnpimasked">load_example_lnpimasked() (in module lnpy.examples)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.local_argmax">local_argmax() (lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.local_max">local_max() (lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.local_maxmask">local_maxmask() (lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.LogPiWrapper">LogPiWrapper (class in lnpy.ensembles)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.ma">ma (lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.mask">mask (lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.mask.html#lnpy.core.mask.mask_change_convention">mask_change_convention() (in module lnpy.core.mask)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.mask_stable">mask_stable (lnpy.ensembles.GrandCanonicalEnsemble attribute)</a>
+</li>
+      <li><a href="reference/api-other.html#lnpy.core.typing.MaskConvention">MaskConvention (in module lnpy.core.typing)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy">MaskedlnPiLegacy (class in lnPi.maskedlnpi_legacy)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.mask.html#lnpy.core.mask.masks_change_convention">masks_change_convention() (in module lnpy.core.mask)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.mask.html#lnpy.core.mask.masks_to_labels">masks_to_labels() (in module lnpy.core.mask)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.max">max() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.mean_pi">mean_pi() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.merge_regions">merge_regions() (in module lnpy.lnpienergy)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.merge_regions">(lnpy.lnpienergy.wFreeEnergy method)</a>
+</li>
+      </ul></li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="reference/api-legacy.html#module-lnPi">lnPi</a>
+</li>
+        <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#module-lnPi.maskedlnpi_legacy">lnPi.maskedlnpi_legacy</a>
+</li>
+        <li><a href="reference/api-public.html#module-lnpy">lnpy</a>
+</li>
+        <li><a href="reference/generated/lnpy.combine.html#module-lnpy.combine">lnpy.combine</a>
+</li>
+        <li><a href="reference/generated/lnpy.core.mask.html#module-lnpy.core.mask">lnpy.core.mask</a>
+</li>
+        <li><a href="reference/generated/lnpy.core.rootresults.html#module-lnpy.core.rootresults">lnpy.core.rootresults</a>
+</li>
+        <li><a href="reference/api-other.html#module-lnpy.core.typing">lnpy.core.typing</a>
+</li>
+        <li><a href="reference/generated/lnpy.core.utils.html#module-lnpy.core.utils">lnpy.core.utils</a>
+</li>
+        <li><a href="reference/generated/lnpy.ensembles.html#module-lnpy.ensembles">lnpy.ensembles</a>
+</li>
+        <li><a href="reference/generated/lnpy.examples.html#module-lnpy.examples">lnpy.examples</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpidata.html#module-lnpy.lnpidata">lnpy.lnpidata</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#module-lnpy.lnpienergy">lnpy.lnpienergy</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpiseries.html#module-lnpy.lnpiseries">lnpy.lnpiseries</a>
+</li>
+        <li><a href="reference/generated/lnpy.options.html#module-lnpy.options">lnpy.options</a>
+</li>
+        <li><a href="reference/generated/lnpy.segment.html#module-lnpy.segment">lnpy.segment</a>
+</li>
+        <li><a href="reference/generated/lnpy.stability.html#module-lnpy.stability">lnpy.stability</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.molfrac">molfrac (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.name">name (lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.ncoords">ncoords (lnpy.ensembles.CanonicalEnsemble attribute)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.ncoords">(lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.ncoords_tot">ncoords_tot (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/api-other.html#lnpy.core.typing.NDArrayAny">NDArrayAny (in module lnpy.core.typing)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiArray.new_like">new_like() (lnpy.lnpidata.lnPiArray method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.new_like">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.new_like">(lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.nfeature">nfeature (lnpy.lnpienergy.wFreeEnergy property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.nlnz">nlnz (lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.ntot">ntot (lnpy.ensembles.CanonicalEnsemble attribute)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.ntot">(lnpy.ensembles.GrandCanonicalEnsemble attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.ntot_var">ntot_var (lnpy.ensembles.GrandCanonicalEnsemble attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.nvec">nvec (lnpy.ensembles.CanonicalEnsemble property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.nvec">(lnpy.ensembles.GrandCanonicalEnsemble attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.nvec_var">nvec_var (lnpy.ensembles.GrandCanonicalEnsemble attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.optinfo">optinfo (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.options.html#lnpy.options.Options">Options (class in lnpy.options)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.options.html#lnpy.options.OptionsReq">OptionsReq (class in lnpy.options)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.or_mask">or_mask() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.or_mask">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.pad">pad() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiArray.pad">(lnpy.lnpidata.lnPiArray method)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.pad">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.StabilityBase.parent">parent (lnpy.stability.StabilityBase property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.PE">PE (lnpy.ensembles.CanonicalEnsemble attribute)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.PE">(lnpy.ensembles.GrandCanonicalEnsemble attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.PE_n">PE_n (lnpy.ensembles.CanonicalEnsemble property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.PE_n">(lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.peak_local_max_adaptive">peak_local_max_adaptive() (in module lnpy.segment)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.Segmenter.peaks">peaks() (lnpy.segment.Segmenter method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.core.utils.html#lnpy.core.utils.peek_at">peek_at() (in module lnpy.core.utils)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.Example.phase_creator">phase_creator (lnpy.examples.Example attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.PhaseCreator">PhaseCreator (class in lnpy.segment)</a>
+</li>
+      <li><a href="reference/api-other.html#lnpy.core.typing.PhasesFactorySignature">PhasesFactorySignature (in module lnpy.core.typing)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm">pi_norm (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm_max">pi_norm_max() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.pi_sum">pi_sum (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.pipe">pipe() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.pressure">pressure() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.pressure">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.Example.ref">ref (lnpy.examples.Example attribute)</a>
+</li>
+      <li><a href="reference/api-other.html#lnpy.extensions.AccessorMixin.register_accessor">register_accessor() (lnpy.extensions.AccessorMixin class method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.register_accessor">(lnpy.lnpidata.lnPiMasked class method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.reweight">reweight() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.reweight">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.core.rootresults.html#lnpy.core.rootresults.RootResultDict">RootResultDict (class in lnpy.core.rootresults)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.rootresults.html#lnpy.core.rootresults.RootResultDictReq">RootResultDictReq (class in lnpy.core.rootresults)</a>
+</li>
+      <li><a href="reference/generated/lnpy.core.rootresults.html#lnpy.core.rootresults.rootresults_to_rootresultdict">rootresults_to_rootresultdict() (in module lnpy.core.rootresults)</a>
+</li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.RootResultTotal">RootResultTotal (class in lnpy.stability)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.s">s (lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.S">S() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.S">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.S_n">S_n() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.S_n">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.Segmenter.segment_lnpi">segment_lnpi() (lnpy.segment.Segmenter method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.Segmenter">Segmenter (class in lnpy.segment)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.series">series (lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.options.html#lnpy.options.set_options">set_options (class in lnpy.options)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.shape">shape (lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.smooth">smooth() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.sort_index">sort_index() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.spinodal">spinodal (lnpy.lnpiseries.lnPiCollection attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.Spinodals">Spinodals (class in lnpy.stability)</a>
+</li>
+      <li><a href="reference/generated/lnpy.stability.html#lnpy.stability.StabilityBase">StabilityBase (class in lnpy.stability)</a>
+</li>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.state_kws">state_kws (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.state_kws">(lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.state_kws">(lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.table">table() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.table">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api-other.html#lnpy.core.typing.TagPhasesSignature">TagPhasesSignature (in module lnpy.core.typing)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.to_dataarray">to_dataarray() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.Example.to_dict">to_dict() (lnpy.examples.Example method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.examples.html#lnpy.examples.Example.unpack">unpack() (lnpy.examples.Example method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.options.html#lnpy.options.Validators">Validators (class in lnpy.options)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.values">values (lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.var_pi">var_pi() (lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.volume">volume (lnpy.ensembles.GrandCanonicalEnsemble property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.volume">(lnpy.lnpidata.lnPiMasked property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.w_argmin">w_argmin (lnpy.lnpienergy.wFreeEnergy property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.w_argmin">(lnpy.lnpienergy.wFreeEnergyCollection property)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.w_argmin">(lnpy.lnpienergy.wFreeEnergyPhases property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.w_argtran">w_argtran (lnpy.lnpienergy.wFreeEnergy property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.w_argtran">(lnpy.lnpienergy.wFreeEnergyCollection property)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.w_argtran">(lnpy.lnpienergy.wFreeEnergyPhases property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.w_min">w_min (lnpy.lnpienergy.wFreeEnergy property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.w_min">(lnpy.lnpienergy.wFreeEnergyCollection property)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.w_min">(lnpy.lnpienergy.wFreeEnergyPhases property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy.w_tran">w_tran (lnpy.lnpienergy.wFreeEnergy property)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection.w_tran">(lnpy.lnpienergy.wFreeEnergyCollection property)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases.w_tran">(lnpy.lnpienergy.wFreeEnergyPhases property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.segment.html#lnpy.segment.Segmenter.watershed">watershed() (lnpy.segment.Segmenter method)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.wfe">wfe (lnpy.lnpiseries.lnPiCollection attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.wfe_phases">wfe_phases (lnpy.lnpiseries.lnPiCollection attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergy">wFreeEnergy (class in lnpy.lnpienergy)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyCollection">wFreeEnergyCollection (class in lnpy.lnpienergy)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpienergy.html#lnpy.lnpienergy.wFreeEnergyPhases">wFreeEnergyPhases (class in lnpy.lnpienergy)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.wlnPi">wlnPi (lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.wlnPi_single">wlnPi_single (lnpy.lnpiseries.lnPiCollection property)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.wrap_list_results">wrap_list_results() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.xce">xce (lnpy.lnpidata.lnPiMasked attribute)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.xge">xge (lnpy.lnpidata.lnPiMasked attribute)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.xge">(lnpy.lnpiseries.lnPiCollection attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.xr_name">xr_name() (in module lnpy.ensembles)</a>
+</li>
+      <li><a href="reference/generated/lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection.xs">xs() (lnpy.lnpiseries.lnPiCollection method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.CanonicalEnsemble.Z">Z() (lnpy.ensembles.CanonicalEnsemble method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.ensembles.html#lnpy.ensembles.GrandCanonicalEnsemble.Z">(lnpy.ensembles.GrandCanonicalEnsemble method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/generated/lnPi.maskedlnpi_legacy.html#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.zeromax">zeromax() (lnPi.maskedlnpi_legacy.MaskedlnPiLegacy method)</a>
+
+      <ul>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiArray.zeromax">(lnpy.lnpidata.lnPiArray method)</a>
+</li>
+        <li><a href="reference/generated/lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked.zeromax">(lnpy.lnpidata.lnPiMasked method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By William P. Krekelberg
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2015, William P. Krekelberg.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2026-02-21.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,884 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Legacy lnPi array routines (maskedlnpi_legacy) &#8212; tmmc-lnpy 0.8.1.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=907d4a6a"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/generated/lnPi.maskedlnpi_legacy';</script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js"></script>
+    <script src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+    <script src="../../_static/js/leave_notice.js?v=133c5535"></script>
+    <script async="async" id="_fed_au_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="License" href="../../license.html" />
+    <link rel="prev" title="Legacy API" href="../api-legacy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2026-02-21"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tmmc-lnpy 0.8.1.dev0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    tmmc-lnpy
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/usage/Basic_usage.html">Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?</a></li>
+
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">API reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api-public.html">Top level API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpy</span></code>)</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api-modules.html">Modules</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpidata.html">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpienergy.html">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.segment.html">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.ensembles.html">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.combine.html">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.stability.html">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpiseries.html">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.examples.html">Examples (<code class="xref py py-mod docutils literal notranslate"><span class="pre">examples</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.utils.html">Utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.mask.html"><code class="docutils literal notranslate"><span class="pre">mask_change_convention()</span></code></a></li>
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.rootresults.html"><code class="docutils literal notranslate"><span class="pre">RootResultDictReq</span></code></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.options.html">Options (<code class="xref py py-mod docutils literal notranslate"><span class="pre">options</span></code>)</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-other.html">Base classes and other methods</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../api-legacy.html">Legacy API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../navigation.html">Indices and tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py-modindex.html">Module Index</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy/issues/new?title=Issue%20on%20page%20%2Freference/generated/lnPi.maskedlnpi_legacy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/generated/lnPi.maskedlnpi_legacy.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Legacy lnPi array routines (maskedlnpi_legacy)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.optinfo"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.optinfo</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.state_kws"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.state_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.extra_kws"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.extra_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.edge_distance_matrix"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.edge_distance_matrix</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.pad"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.pad()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.zeromax"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.zeromax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.adjust"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.adjust()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.reweight"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.reweight()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.smooth"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.smooth()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.copy_shallow"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.copy_shallow()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.or_mask"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.or_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.and_mask"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.and_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_table"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.from_table()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_dataarray"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.from_dataarray()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_masks"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.list_from_masks()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_labels"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.list_from_labels()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="legacy-lnpi-array-routines-maskedlnpi-legacy">
+<span id="module-lnPi.maskedlnpi_legacy"></span><h1>Legacy lnPi array routines (<a class="reference internal" href="#module-lnPi.maskedlnpi_legacy" title="lnPi.maskedlnpi_legacy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code></a>)<a class="headerlink" href="#legacy-lnpi-array-routines-maskedlnpi-legacy" title="Link to this heading">#</a></h1>
+</section>
+<p><strong>Classes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaskedlnPiLegacy</span></code></a>([data, lnz, state_kws, ...])</p></td>
+<td><p>Class to store masked version of <span class="math notranslate nohighlight">\(\ln\Pi(N)\)</span>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnPi.maskedlnpi_legacy.</span></span><span class="sig-name descname"><span class="pre">MaskedlnPiLegacy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L25-L503"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://numpy.org/doc/stable/reference/maskedarray.baseclass.html#numpy.ma.MaskedArray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskedArray</span></code></a>, <a class="reference internal" href="../api-other.html#lnpy.extensions.AccessorMixin" title="lnpy.extensions.AccessorMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccessorMixin</span></code></a></p>
+<p>Class to store masked version of <span class="math notranslate nohighlight">\(\ln\Pi(N)\)</span>.
+shape is (N0,N1,…) where Ni is the span of each dimension)</p>
+<p>Constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – data for lnPi</p></li>
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>, <em>optional</em>) – if None, set lnz=np.zeros(data.ndim)</p></li>
+<li><p><strong>state_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – dictionary of state values, such as <code class="docutils literal notranslate"><span class="pre">volume</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>.
+These parameters will be pushed to <code class="docutils literal notranslate"><span class="pre">self.xge</span></code> coordinates.</p></li>
+<li><p><strong>extra_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – this defines extra parameters to pass along.
+Note that for potential energy calculations, extra_kws should contain
+<cite>PE</cite> (total potential energy for each N vector).</p></li>
+<li><p><strong>zeromax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – if True, shift lnPi = lnPi - lnPi.max()</p></li>
+<li><p><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – if True, pad masked region by interpolation</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <a class="reference external" href="https://numpy.org/doc/stable/reference/maskedarray.baseclass.html#numpy.ma.MaskedArray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ma.MaskedArray</span></code></a>
+e.g., mask=…</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.optinfo" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.optinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optinfo</span></code></a></p></td>
+<td><p>All extra properties</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.state_kws" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.state_kws"><code class="xref py py-obj docutils literal notranslate"><span class="pre">state_kws</span></code></a></p></td>
+<td><p>State specific parameters</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.extra_kws" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.extra_kws"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extra_kws</span></code></a></p></td>
+<td><p>All extra parameters</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.edge_distance_matrix" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.edge_distance_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_distance_matrix</span></code></a></p></td>
+<td><p>Matrix of distance from upper bound</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.pad" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pad</span></code></a>([axes, ffill, bfill, limit, inplace])</p></td>
+<td><p>Pad nan values in underlying data to values</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.zeromax" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.zeromax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zeromax</span></code></a>([inplace])</p></td>
+<td><p>Shift so that lnpi.max() == 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.adjust" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.adjust"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjust</span></code></a>([zeromax, pad, inplace])</p></td>
+<td><p>Do multiple adjustments in one go</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.reweight" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.reweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reweight</span></code></a>(lnz[, zeromax, pad])</p></td>
+<td><p>Get lnpi at new lnz</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.smooth" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.smooth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">smooth</span></code></a>([sigma, mode, truncate, inplace])</p></td>
+<td><p>Apply gaussian filter smoothing to data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.copy_shallow" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.copy_shallow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy_shallow</span></code></a>([mask])</p></td>
+<td><p>Create shallow copy</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.or_mask" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.or_mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">or_mask</span></code></a>(mask, **kwargs)</p></td>
+<td><p>New object with logical or of self.mask and mask</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.and_mask" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.and_mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">and_mask</span></code></a>(mask, **kwargs)</p></td>
+<td><p>New object with logical and of self.mask and mask</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_table" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_table</span></code></a>(path, lnz[, state_kws, sep, ...])</p></td>
+<td><p>Create lnPi object from text file table with columns [n_0,...,n_ndim, lnpi]</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_dataarray" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_dataarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dataarray</span></code></a>(da[, state_as_attrs])</p></td>
+<td><p>Create a lnPi object from xarray.DataArray</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_masks" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_masks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_from_masks</span></code></a>(masks[, convention])</p></td>
+<td><p>Create list of lnpis corresponding to masks[i]</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_labels" title="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_from_labels</span></code></a>(labels[, features, ...])</p></td>
+<td><p>Create list of lnpis corresponding to labels</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.optinfo">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">optinfo</span></span><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.optinfo" title="Link to this definition">#</a></dt>
+<dd><p>All extra properties</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.state_kws">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">state_kws</span></span><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.state_kws" title="Link to this definition">#</a></dt>
+<dd><p>State specific parameters</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.extra_kws">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extra_kws</span></span><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.extra_kws" title="Link to this definition">#</a></dt>
+<dd><p>All extra parameters</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.edge_distance_matrix">
+<span class="sig-name descname"><span class="pre">edge_distance_matrix</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L182-L187"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.edge_distance_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Matrix of distance from upper bound</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.pad">
+<span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bfill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L196-L243"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.pad" title="Link to this definition">#</a></dt>
+<dd><p>Pad nan values in underlying data to values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffill</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – do forward filling</p></li>
+<li><p><strong>bfill</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – do back filling</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – The maximum number of consecutive NaN values to forward fill. In
+other words, if there is a gap with more than this number of
+consecutive NaNs, it will only be partially filled. Must be greater
+than 0 or None for no limit.</p></li>
+<li><p><strong>inplace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>) – padded object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.zeromax">
+<span class="sig-name descname"><span class="pre">zeromax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L245-L254"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.zeromax" title="Link to this definition">#</a></dt>
+<dd><p>Shift so that lnpi.max() == 0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.adjust">
+<span class="sig-name descname"><span class="pre">adjust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zeromax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L256-L264"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.adjust" title="Link to this definition">#</a></dt>
+<dd><p>Do multiple adjustments in one go</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.reweight">
+<span class="sig-name descname"><span class="pre">reweight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeromax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L266-L300"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.reweight" title="Link to this definition">#</a></dt>
+<dd><p>Get lnpi at new lnz</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – chem. pot. for new state point</p></li>
+<li><p><strong>zeromax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>)</p></li>
+<li><p><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.smooth">
+<span class="sig-name descname"><span class="pre">smooth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L302-L338"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.smooth" title="Link to this definition">#</a></dt>
+<dd><p>Apply gaussian filter smoothing to data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inplace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – if True, do inplace modification.</p></li>
+<li><p><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">'nearest'</span></code>) – Arguments to <code class="docutils literal notranslate"><span class="pre">gaussian_filter</span></code></p></li>
+<li><p><strong>truncate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>default</em> <code class="docutils literal notranslate"><span class="pre">4</span></code>) – Argument to <code class="docutils literal notranslate"><span class="pre">gaussian_filter</span></code></p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments to <code class="docutils literal notranslate"><span class="pre">gaussian_filter</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.gaussian_filter.html#scipy.ndimage.gaussian_filter" title="(in SciPy v1.17.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gaussian_filter</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.copy_shallow">
+<span class="sig-name descname"><span class="pre">copy_shallow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L340-L358"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.copy_shallow" title="Link to this definition">#</a></dt>
+<dd><p>Create shallow copy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mask</strong> (<strong>optional</strong>) – if specified, new object has this mask
+otherwise, at least copy old mask</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.or_mask">
+<span class="sig-name descname"><span class="pre">or_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L360-L362"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.or_mask" title="Link to this definition">#</a></dt>
+<dd><p>New object with logical or of self.mask and mask</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.and_mask">
+<span class="sig-name descname"><span class="pre">and_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L364-L366"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.and_mask" title="Link to this definition">#</a></dt>
+<dd><p>New object with logical and of self.mask and mask</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_table">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\s+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L378-L421"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_table" title="Link to this definition">#</a></dt>
+<dd><p>Create lnPi object from text file table with columns [n_0,…,n_ndim, lnpi]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-path-like-object" title="(in Python v3.14)"><span class="xref std std-term">path-like</span></a>) – file object to be read</p></li>
+<li><p><strong>lnz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – beta*(chemical potential) for each component</p></li>
+<li><p><strong>state_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – define state variables, like volume, beta</p></li>
+<li><p><strong>sep</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string</span></code></a>, <em>optional</em>) – separator for file read</p></li>
+<li><p><strong>names</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p><strong>csv_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <em>optional</em>) – optional arguments to <cite>pandas.read_csv</cite></p></li>
+<li><p><strong>**kwargs</strong> – Passed to lnPi constructor</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_dataarray">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dataarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_as_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L423-L455"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_dataarray" title="Link to this definition">#</a></dt>
+<dd><p>Create a lnPi object from xarray.DataArray</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_masks">
+<span class="sig-name descname"><span class="pre">list_from_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">masks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convention</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'image'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L457-L476"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_masks" title="Link to this definition">#</a></dt>
+<dd><p>Create list of lnpis corresponding to masks[i]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>masks</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – masks[i] is the mask for lnpi index <cite>i</cite>.</p></li>
+<li><p><strong>convention</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – convention of input masks</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>lnpis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list of lnpis corresponding to each mask</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_labels">
+<span class="sig-name descname"><span class="pre">list_from_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/../lnPi/maskedlnpi_legacy.py#L478-L495"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_labels" title="Link to this definition">#</a></dt>
+<dd><p>Create list of lnpis corresponding to labels</p>
+</dd></dl>
+
+</dd></dl>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../api-legacy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Legacy API</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../license.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">License</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.optinfo"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.optinfo</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.state_kws"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.state_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.extra_kws"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.extra_kws</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.edge_distance_matrix"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.edge_distance_matrix</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.pad"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.pad()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.zeromax"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.zeromax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.adjust"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.adjust()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.reweight"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.reweight()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.smooth"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.smooth()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.copy_shallow"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.copy_shallow()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.or_mask"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.or_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.and_mask"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.and_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_table"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.from_table()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.from_dataarray"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.from_dataarray()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_masks"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.list_from_masks()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnPi.maskedlnpi_legacy.MaskedlnPiLegacy.list_from_labels"><code class="docutils literal notranslate"><span class="pre">MaskedlnPiLegacy.list_from_labels()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By William P. Krekelberg
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2015, William P. Krekelberg.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2026-02-21.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

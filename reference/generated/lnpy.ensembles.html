@@ -1,0 +1,1512 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Ensemble averages (ensembles) &#8212; tmmc-lnpy 0.8.1.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css" />
+    <link rel="stylesheet" type="text/css" href="https://pages.nist.gov/leaveNotice/css/jquery.leaveNotice.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=907d4a6a"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/generated/lnpy.ensembles';</script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js"></script>
+    <script src="https://pages.nist.gov/leaveNotice/js/jquery.leaveNotice-nist.min.js"></script>
+    <script src="../../_static/js/leave_notice.js?v=133c5535"></script>
+    <script async="async" id="_fed_au_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Routines to combine \(\ln \Pi\) data (combine)" href="lnpy.combine.html" />
+    <link rel="prev" title="Segmentation of lnPi (segment)" href="lnpy.segment.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2026-02-21"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tmmc-lnpy 0.8.1.dev0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    tmmc-lnpy
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/usage/Basic_usage.html">Why <code class="docutils literal notranslate"><span class="pre">tmmc-lnpy</span></code>?</a></li>
+
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">API reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api-public.html">Top level API (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpy</span></code>)</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../api-modules.html">Modules</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpidata.html">lnPi data classes and routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpidata</span></code>)</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpienergy.html">Local free energy of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpienergy</span></code>)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.segment.html">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</a></li>
+
+
+
+
+
+
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.combine.html">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lnpy.stability.html">Thermodynamic stability (<code class="xref py py-mod docutils literal notranslate"><span class="pre">stability</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.lnpiseries.html">Collection of lnPi objects (<code class="xref py py-mod docutils literal notranslate"><span class="pre">lnpiseries</span></code>)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.examples.html">Examples (<code class="xref py py-mod docutils literal notranslate"><span class="pre">examples</span></code>)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.utils.html">Utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code>)</a></li>
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.mask.html"><code class="docutils literal notranslate"><span class="pre">mask_change_convention()</span></code></a></li>
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.core.rootresults.html"><code class="docutils literal notranslate"><span class="pre">RootResultDictReq</span></code></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="lnpy.options.html">Options (<code class="xref py py-mod docutils literal notranslate"><span class="pre">options</span></code>)</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-other.html">Base classes and other methods</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api-legacy.html">Legacy API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lnPi.maskedlnpi_legacy.html">Legacy lnPi array routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">maskedlnpi_legacy</span></code>)</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../navigation.html">Indices and tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py-modindex.html">Module Index</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/usnistgov/tmmc-lnpy/issues/new?title=Issue%20on%20page%20%2Freference/generated/lnpy.ensembles.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/generated/lnpy.ensembles.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Ensemble averages (ensembles)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.xr_name"><code class="docutils literal notranslate"><span class="pre">xr_name()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.LogPiWrapper"><code class="docutils literal notranslate"><span class="pre">LogPiWrapper</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ncoords</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords_tot"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ncoords_tot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_lnz"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_lnz</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_comp"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_comp</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_state"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_state</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_rec"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_rec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.beta"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.beta</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.volume"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.volume</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betamu"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betamu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnz"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnz</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnpi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pi_norm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_sum"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pi_sum</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_norm"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnpi_norm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.mean_pi"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.mean_pi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.var_pi"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.var_pi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pipe"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pipe()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.nvec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ntot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.molfrac"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.molfrac</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec_var"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.nvec_var</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot_var"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ntot_var</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dens</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens_tot"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dens_tot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.max"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_max"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnpi_max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm_max"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pi_norm_max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.edge_distance()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance_val"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.edge_distance_val()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaOmega()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.PE</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_alt"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaF_alt()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaOmega_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betapV"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betapV()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.mask_stable"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.mask_stable</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.Z"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.Z()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pressure"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pressure()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.PE_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.table"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.table()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaG</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaG_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaF()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaF_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaE()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaE_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.S"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.S()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.S_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.S_n()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.lnpi"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.lnpi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.ncoords"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.ncoords</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.nvec"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.nvec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.ntot"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.ntot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaF"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaF()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaF_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaF_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.PE"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.PE</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.PE_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.PE_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaE"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaE()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaE_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaE_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.S"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.S()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.S_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.S_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betamu"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betamu()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.dens"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.dens</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaOmega()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaOmega_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betapV"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betapV()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.Z"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.Z()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.pressure"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.pressure()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.table"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.table()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="ensemble-averages-ensembles">
+<span id="module-lnpy.ensembles"></span><h1>Ensemble averages (<a class="reference internal" href="#module-lnpy.ensembles" title="lnpy.ensembles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code></a>)<a class="headerlink" href="#ensemble-averages-ensembles" title="Link to this heading">#</a></h1>
+</section>
+<p><strong>Functions:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.xr_name" title="lnpy.ensembles.xr_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xr_name</span></code></a>([long_name, name, unstack])</p></td>
+<td><p>Decorator to add name, longname to xarray output</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Classes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.LogPiWrapper" title="lnpy.ensembles.LogPiWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogPiWrapper</span></code></a>(shape[, rec_name, n_name, ...])</p></td>
+<td><p>Wraps lnPi objects with xarray functionality</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble" title="lnpy.ensembles.GrandCanonicalEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble</span></code></a>(parent)</p></td>
+<td><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> accessor to Grand Canonical properties from lnPi</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble" title="lnpy.ensembles.CanonicalEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CanonicalEnsemble</span></code></a>(parent)</p></td>
+<td><p>Canonical ensemble properties</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="lnpy.ensembles.xr_name">
+<span class="sig-prename descclassname"><span class="pre">lnpy.ensembles.</span></span><span class="sig-name descname"><span class="pre">xr_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">long_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kws</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L66-L96"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.xr_name" title="Link to this definition">#</a></dt>
+<dd><p>Decorator to add name, longname to xarray output</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.ensembles.LogPiWrapper">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.ensembles.</span></span><span class="sig-name descname"><span class="pre">LogPiWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rec_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'n'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnz_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lnz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'component'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'phase'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L100-L197"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.LogPiWrapper" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Wraps lnPi objects with xarray functionality</p>
+<p>Most likely, this shouldn’t be accessed by the user.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.ensembles.</span></span><span class="sig-name descname"><span class="pre">GrandCanonicalEnsemble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L201-L891"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> accessor to Grand Canonical properties from lnPi</p>
+<p>This class is primarily interacted with through the attributes <code class="docutils literal notranslate"><span class="pre">xge</span></code> attached
+to <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> and <a class="reference internal" href="lnpy.lnpiseries.html#lnpy.lnpiseries.lnPiCollection" title="lnpy.lnpiseries.lnPiCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiCollection</span></code></a>.</p>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords" title="lnpy.ensembles.GrandCanonicalEnsemble.ncoords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ncoords</span></code></a></p></td>
+<td><p>Particle number coordinates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords_tot" title="lnpy.ensembles.GrandCanonicalEnsemble.ncoords_tot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ncoords_tot</span></code></a></p></td>
+<td><p>Total number of particles coordinates</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_n" title="lnpy.ensembles.GrandCanonicalEnsemble.dims_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dims_n</span></code></a></p></td>
+<td><p>Dimension(s) corresponding to  number of particles</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_lnz" title="lnpy.ensembles.GrandCanonicalEnsemble.dims_lnz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dims_lnz</span></code></a></p></td>
+<td><p>Dimension corresponding to values of <span class="math notranslate nohighlight">\(\ln z\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_comp" title="lnpy.ensembles.GrandCanonicalEnsemble.dims_comp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dims_comp</span></code></a></p></td>
+<td><p>Dimension of component number</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_state" title="lnpy.ensembles.GrandCanonicalEnsemble.dims_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dims_state</span></code></a></p></td>
+<td><p>Dimensions corresponding to 'state variables'</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_rec" title="lnpy.ensembles.GrandCanonicalEnsemble.dims_rec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dims_rec</span></code></a></p></td>
+<td><p>Dimensions for replicates</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.beta" title="lnpy.ensembles.GrandCanonicalEnsemble.beta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">beta</span></code></a></p></td>
+<td><p>Inverse temperature <span class="math notranslate nohighlight">\(\beta = 1 / (k_{\rm B} T)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.volume" title="lnpy.ensembles.GrandCanonicalEnsemble.volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">volume</span></code></a></p></td>
+<td><p>System volume <span class="math notranslate nohighlight">\(V\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betamu" title="lnpy.ensembles.GrandCanonicalEnsemble.betamu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betamu</span></code></a></p></td>
+<td><p>Scaled chemical potential <span class="math notranslate nohighlight">\(\beta \mu\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnz" title="lnpy.ensembles.GrandCanonicalEnsemble.lnz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnz</span></code></a></p></td>
+<td><p>Log of activity <span class="math notranslate nohighlight">\(\ln z`\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm" title="lnpy.ensembles.GrandCanonicalEnsemble.pi_norm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pi_norm</span></code></a></p></td>
+<td><p>Normalized value of <span class="math notranslate nohighlight">\(\Pi_{\rm norm}(N) = \Pi(N) / \sum_N \Pi(N)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_sum" title="lnpy.ensembles.GrandCanonicalEnsemble.pi_sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pi_sum</span></code></a></p></td>
+<td><p>Sum of unnormalized <span class="math notranslate nohighlight">\(\Pi(N)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_norm" title="lnpy.ensembles.GrandCanonicalEnsemble.lnpi_norm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpi_norm</span></code></a></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ln \Pi_{\rm norm}(N)\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec" title="lnpy.ensembles.GrandCanonicalEnsemble.nvec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nvec</span></code></a></p></td>
+<td><p>Average number of particles of each component <span class="math notranslate nohighlight">\(\overline{{\bf N}}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot" title="lnpy.ensembles.GrandCanonicalEnsemble.ntot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ntot</span></code></a></p></td>
+<td><p>Average total number of particles <span class="math notranslate nohighlight">\(\overline{N}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.molfrac" title="lnpy.ensembles.GrandCanonicalEnsemble.molfrac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">molfrac</span></code></a></p></td>
+<td><p>Average molfrac for each components <span class="math notranslate nohighlight">\({\bf x} = \overline{{\bf N}} / N\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec_var" title="lnpy.ensembles.GrandCanonicalEnsemble.nvec_var"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nvec_var</span></code></a></p></td>
+<td><p>Variance in particle number <span class="math notranslate nohighlight">\({\rm var}\, \bf{N}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot_var" title="lnpy.ensembles.GrandCanonicalEnsemble.ntot_var"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ntot_var</span></code></a></p></td>
+<td><p>Variance in total number of particles <span class="math notranslate nohighlight">\({\rm var}\, N\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens" title="lnpy.ensembles.GrandCanonicalEnsemble.dens"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dens</span></code></a></p></td>
+<td><p>Density of each component <span class="math notranslate nohighlight">\({\bf \rho} = \overline{{\bf N}} / V\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens_tot" title="lnpy.ensembles.GrandCanonicalEnsemble.dens_tot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dens_tot</span></code></a></p></td>
+<td><p>Total density <span class="math notranslate nohighlight">\(\overline{N} / V\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE" title="lnpy.ensembles.GrandCanonicalEnsemble.PE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PE</span></code></a></p></td>
+<td><p>Potential energy <span class="math notranslate nohighlight">\(\overline{PE}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.mask_stable" title="lnpy.ensembles.GrandCanonicalEnsemble.mask_stable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_stable</span></code></a></p></td>
+<td><p>Masks are True where values are stable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE_n" title="lnpy.ensembles.GrandCanonicalEnsemble.PE_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PE_n</span></code></a></p></td>
+<td><p>Potential energy per particle <span class="math notranslate nohighlight">\(\overline{PE}/\overline{N}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG" title="lnpy.ensembles.GrandCanonicalEnsemble.betaG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaG</span></code></a></p></td>
+<td><p>Scaled Gibbs free energy <span class="math notranslate nohighlight">\(\beta G = \sum_i \beta \mu_i \overline{N}_i\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG_n" title="lnpy.ensembles.GrandCanonicalEnsemble.betaG_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaG_n</span></code></a></p></td>
+<td><p>Scaled Gibbs free energy per particle <span class="math notranslate nohighlight">\(\beta G / \overline{N}\)</span>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi" title="lnpy.ensembles.GrandCanonicalEnsemble.lnpi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpi</span></code></a>([fill_value])</p></td>
+<td><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> view of <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.mean_pi" title="lnpy.ensembles.GrandCanonicalEnsemble.mean_pi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_pi</span></code></a>(x[, allow_extra_kws])</p></td>
+<td><p>Calculates <span class="math notranslate nohighlight">\(\overline{x} = \sum_N \Pi_{\rm norm}(N) x(N)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.var_pi" title="lnpy.ensembles.GrandCanonicalEnsemble.var_pi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">var_pi</span></code></a>(x[, y])</p></td>
+<td><p>Calculate Grand Canonical variance from canonical properties.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.pipe" title="lnpy.ensembles.GrandCanonicalEnsemble.pipe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pipe</span></code></a>(func, *args, **kwargs)</p></td>
+<td><p>Apply function to <cite>self</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.max" title="lnpy.ensembles.GrandCanonicalEnsemble.max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max</span></code></a>()</p></td>
+<td><p><span class="math notranslate nohighlight">\(\max_N \ln \Pi(N)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_max" title="lnpy.ensembles.GrandCanonicalEnsemble.lnpi_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpi_max</span></code></a>([fill_value, add_n_coords])</p></td>
+<td><p>Maximum value of <span class="math notranslate nohighlight">\(\max_N \ln \Pi(N, ...)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm_max" title="lnpy.ensembles.GrandCanonicalEnsemble.pi_norm_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pi_norm_max</span></code></a>([add_n_coords])</p></td>
+<td><p>Maximum value <span class="math notranslate nohighlight">\(\max_N \Pi_{\rm norm}(N, meta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance" title="lnpy.ensembles.GrandCanonicalEnsemble.edge_distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_distance</span></code></a>(ref)</p></td>
+<td><p>Distance from argmax(lnPi) to endpoint</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance_val" title="lnpy.ensembles.GrandCanonicalEnsemble.edge_distance_val"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_distance_val</span></code></a>(ref[, val, max_frac])</p></td>
+<td><p>Calculate min distance from where self.pi_norm &gt; val to edge</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega" title="lnpy.ensembles.GrandCanonicalEnsemble.betaOmega"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaOmega</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled grand potential <span class="math notranslate nohighlight">\(\beta \Omega\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_alt" title="lnpy.ensembles.GrandCanonicalEnsemble.betaF_alt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaF_alt</span></code></a>(betaF_can[, correction])</p></td>
+<td><p>Alternate scaled Helmholtz free energy <span class="math notranslate nohighlight">\(\beta \overline{F}\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega_n" title="lnpy.ensembles.GrandCanonicalEnsemble.betaOmega_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaOmega_n</span></code></a>([lnpi_zero])</p></td>
+<td><p>Grand potential per particle <span class="math notranslate nohighlight">\(\beta \Omega / \overline{N}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betapV" title="lnpy.ensembles.GrandCanonicalEnsemble.betapV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betapV</span></code></a>([lnpi_zero])</p></td>
+<td><p><span class="math notranslate nohighlight">\(\beta p V = - \beta \Omega\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.Z" title="lnpy.ensembles.GrandCanonicalEnsemble.Z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Z</span></code></a>([lnpi_zero])</p></td>
+<td><p>Compressibility factor <span class="math notranslate nohighlight">\(\beta p / \rho\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.pressure" title="lnpy.ensembles.GrandCanonicalEnsemble.pressure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pressure</span></code></a>([lnpi_zero])</p></td>
+<td><p>Pressure <span class="math notranslate nohighlight">\(p = -\Omega / V\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.table" title="lnpy.ensembles.GrandCanonicalEnsemble.table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">table</span></code></a>([keys, default_keys, ref, ...])</p></td>
+<td><p>Create <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> of calculated properties.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF" title="lnpy.ensembles.GrandCanonicalEnsemble.betaF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaF</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled Helmholtz free energy <span class="math notranslate nohighlight">\(\beta F = \beta \Omega + \beta G\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_n" title="lnpy.ensembles.GrandCanonicalEnsemble.betaF_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaF_n</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled Helmholtz free energy per particle <span class="math notranslate nohighlight">\(\beta F / \overline{N}\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE" title="lnpy.ensembles.GrandCanonicalEnsemble.betaE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaE</span></code></a>([ndim])</p></td>
+<td><p>Scaled total energy <span class="math notranslate nohighlight">\(\beta E = \beta \overline{PE} + \beta \overline{KE}\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE_n" title="lnpy.ensembles.GrandCanonicalEnsemble.betaE_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaE_n</span></code></a>([ndim])</p></td>
+<td><p>Scaled total energy per particle <span class="math notranslate nohighlight">\(\beta E / \overline{N}\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.S" title="lnpy.ensembles.GrandCanonicalEnsemble.S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">S</span></code></a>([lnpi_zero, ndim])</p></td>
+<td><p>Scaled entropy <span class="math notranslate nohighlight">\(S / k_{\rm B} = \beta E - \beta F\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.GrandCanonicalEnsemble.S_n" title="lnpy.ensembles.GrandCanonicalEnsemble.S_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">S_n</span></code></a>([lnpi_zero, ndim])</p></td>
+<td><p>Scaled entropy per particle <span class="math notranslate nohighlight">\(S / (N k_{\rm B})\)</span>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.ncoords">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ncoords</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords" title="Link to this definition">#</a></dt>
+<dd><p>Particle number coordinates.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.ncoords_tot">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ncoords_tot</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords_tot" title="Link to this definition">#</a></dt>
+<dd><p>Total number of particles coordinates</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.dims_n">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims_n</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_n" title="Link to this definition">#</a></dt>
+<dd><p>Dimension(s) corresponding to  number of particles</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.dims_lnz">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims_lnz</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_lnz" title="Link to this definition">#</a></dt>
+<dd><p>Dimension corresponding to values of <span class="math notranslate nohighlight">\(\ln z\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.dims_comp">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims_comp</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_comp" title="Link to this definition">#</a></dt>
+<dd><p>Dimension of component number</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.dims_state">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims_state</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_state" title="Link to this definition">#</a></dt>
+<dd><p>Dimensions corresponding to ‘state variables’</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.dims_rec">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims_rec</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_rec" title="Link to this definition">#</a></dt>
+<dd><p>Dimensions for replicates</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.beta">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">beta</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.beta" title="Link to this definition">#</a></dt>
+<dd><p>Inverse temperature <span class="math notranslate nohighlight">\(\beta = 1 / (k_{\rm B} T)\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.volume">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.volume" title="Link to this definition">#</a></dt>
+<dd><p>System volume <span class="math notranslate nohighlight">\(V\)</span>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betamu">
+<span class="sig-name descname"><span class="pre">betamu</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L307-L311"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betamu" title="Link to this definition">#</a></dt>
+<dd><p>Scaled chemical potential <span class="math notranslate nohighlight">\(\beta \mu\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.lnz">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lnz</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnz" title="Link to this definition">#</a></dt>
+<dd><p>Log of activity <span class="math notranslate nohighlight">\(\ln z`\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.lnpi">
+<span class="sig-name descname"><span class="pre">lnpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L319-L333"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi" title="Link to this definition">#</a></dt>
+<dd><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> view of <span class="math notranslate nohighlight">\(\ln \Pi(N)\)</span></p>
+<p class="rubric">Notes</p>
+<p>This value is always in ‘stacked’ form.
+You must manually unstack it.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.pi_norm">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pi_norm</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm" title="Link to this definition">#</a></dt>
+<dd><p>Normalized value of <span class="math notranslate nohighlight">\(\Pi_{\rm norm}(N) = \Pi(N) / \sum_N \Pi(N)\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.pi_sum">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pi_sum</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_sum" title="Link to this definition">#</a></dt>
+<dd><p>Sum of unnormalized <span class="math notranslate nohighlight">\(\Pi(N)\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.lnpi_norm">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lnpi_norm</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_norm" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\ln \Pi_{\rm norm}(N)\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.mean_pi">
+<span class="sig-name descname"><span class="pre">mean_pi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_extra_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L405-L439"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.mean_pi" title="Link to this definition">#</a></dt>
+<dd><p>Calculates <span class="math notranslate nohighlight">\(\overline{x} = \sum_N \Pi_{\rm norm}(N) x(N)\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">callable()</span></code></a>, or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – If callable, should have form <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x(self,</span> <span class="pre">**kwargs)</span></code>.
+If string, then set <cite>x = self.parent.extra_kws[x]</cite>.
+Otherwise, should be an array of same shape as single lnPi.
+If x (or result of callable) is not a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, try to
+convert it to one.</p></li>
+<li><p><strong>allow_extra_kws</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – If <cite>True</cite>, allow getting property from <cite>extra_kws</cite>.</p></li>
+<li><p><strong>*args, **kwargs</strong> – Extra arguments to <cite>x</cite> if passing callable</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ave</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>) – x can be an array or a callable of the form
+<code class="docutils literal notranslate"><span class="pre">f(self,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.var_pi">
+<span class="sig-name descname"><span class="pre">var_pi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L474-L507"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.var_pi" title="Link to this definition">#</a></dt>
+<dd><p>Calculate Grand Canonical variance from canonical properties.</p>
+<p>Given x(N) and y(N), calculate</p>
+<div class="math notranslate nohighlight">
+\[{\rm var}(x, y) = \overline{(x - \overline{x}) (y - \overline{y})}\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> can be arrays, or callables, in which case:
+<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x(self,</span> <span class="pre">**kwargs)</span></code></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="math notranslate nohighlight">\(mean_pi\)</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.pipe">
+<span class="sig-name descname"><span class="pre">pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L509-L511"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.pipe" title="Link to this definition">#</a></dt>
+<dd><p>Apply function to <cite>self</cite></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.nvec">
+<span class="sig-name descname"><span class="pre">nvec</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L513-L517"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec" title="Link to this definition">#</a></dt>
+<dd><p>Average number of particles of each component <span class="math notranslate nohighlight">\(\overline{{\bf N}}\)</span></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.ntot">
+<span class="sig-name descname"><span class="pre">ntot</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L519-L523"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot" title="Link to this definition">#</a></dt>
+<dd><p>Average total number of particles <span class="math notranslate nohighlight">\(\overline{N}\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.molfrac">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">molfrac</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.molfrac" title="Link to this definition">#</a></dt>
+<dd><p>Average molfrac for each components <span class="math notranslate nohighlight">\({\bf x} = \overline{{\bf N}} / N\)</span></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.nvec_var">
+<span class="sig-name descname"><span class="pre">nvec_var</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L532-L536"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec_var" title="Link to this definition">#</a></dt>
+<dd><p>Variance in particle number <span class="math notranslate nohighlight">\({\rm var}\, \bf{N}\)</span></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.ntot_var">
+<span class="sig-name descname"><span class="pre">ntot_var</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L538-L542"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot_var" title="Link to this definition">#</a></dt>
+<dd><p>Variance in total number of particles <span class="math notranslate nohighlight">\({\rm var}\, N\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.dens">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dens</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens" title="Link to this definition">#</a></dt>
+<dd><p>Density of each component <span class="math notranslate nohighlight">\({\bf \rho} = \overline{{\bf N}} / V\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.dens_tot">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dens_tot</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens_tot" title="Link to this definition">#</a></dt>
+<dd><p>Total density <span class="math notranslate nohighlight">\(\overline{N} / V\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.max">
+<span class="sig-name descname"><span class="pre">max</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L557-L559"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.max" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\max_N \ln \Pi(N)\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.lnpi_max">
+<span class="sig-name descname"><span class="pre">lnpi_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_n_coords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L595-L608"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_max" title="Link to this definition">#</a></dt>
+<dd><p>Maximum value of <span class="math notranslate nohighlight">\(\max_N \ln \Pi(N, ...)\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.pi_norm_max">
+<span class="sig-name descname"><span class="pre">pi_norm_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">add_n_coords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L610-L615"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm_max" title="Link to this definition">#</a></dt>
+<dd><p>Maximum value <span class="math notranslate nohighlight">\(\max_N \Pi_{\rm norm}(N, meta)\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.edge_distance">
+<span class="sig-name descname"><span class="pre">edge_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L621-L625"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance" title="Link to this definition">#</a></dt>
+<dd><p>Distance from argmax(lnPi) to endpoint</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.edge_distance_val">
+<span class="sig-name descname"><span class="pre">edge_distance_val</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L627-L657"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance_val" title="Link to this definition">#</a></dt>
+<dd><p>Calculate min distance from where self.pi_norm &gt; val to edge</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>) – reference object to consider.</p></li>
+<li><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>)</p></li>
+<li><p><strong>max_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – if not None, val = max_frac * self.pi_norm.max(self.dims_n)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaOmega">
+<span class="sig-name descname"><span class="pre">betaOmega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L666-L680"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega" title="Link to this definition">#</a></dt>
+<dd><p>Scaled grand potential <span class="math notranslate nohighlight">\(\beta \Omega\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lnpi_zero</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – if None, lnpi_zero = self.data.ravel()[0]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.PE">
+<span class="sig-name descname"><span class="pre">PE</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L682-L686"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE" title="Link to this definition">#</a></dt>
+<dd><p>Potential energy <span class="math notranslate nohighlight">\(\overline{PE}\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaF_alt">
+<span class="sig-name descname"><span class="pre">betaF_alt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">betaF_can</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L688-L710"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_alt" title="Link to this definition">#</a></dt>
+<dd><p>Alternate scaled Helmholtz free energy <span class="math notranslate nohighlight">\(\beta \overline{F}\)</span>.</p>
+<p>Calculated using</p>
+<div class="math notranslate nohighlight">
+\[\beta \overline{F} = \sum_N [\Pi(N) \beta F(N) + C(N)]\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>betaF_can</strong> (<a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v2.4)"><span class="xref std std-term">array-like</span></a>) – Value of <span class="math notranslate nohighlight">\(F(N)\)</span></p></li>
+<li><p><strong>correction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) – If True, <span class="math notranslate nohighlight">\(C(N) = \ln \Pi(N) `.  Otherwise, :math:`C=0\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaOmega_n">
+<span class="sig-name descname"><span class="pre">betaOmega_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L714-L717"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega_n" title="Link to this definition">#</a></dt>
+<dd><p>Grand potential per particle <span class="math notranslate nohighlight">\(\beta \Omega / \overline{N}\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betapV">
+<span class="sig-name descname"><span class="pre">betapV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L720-L723"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betapV" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\beta p V = - \beta \Omega\)</span></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.mask_stable">
+<span class="sig-name descname"><span class="pre">mask_stable</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L725-L744"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.mask_stable" title="Link to this definition">#</a></dt>
+<dd><p>Masks are True where values are stable. Only works for unstacked data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.Z">
+<span class="sig-name descname"><span class="pre">Z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L747-L750"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.Z" title="Link to this definition">#</a></dt>
+<dd><p>Compressibility factor <span class="math notranslate nohighlight">\(\beta p / \rho\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.pressure">
+<span class="sig-name descname"><span class="pre">pressure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L752-L755"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.pressure" title="Link to this definition">#</a></dt>
+<dd><p>Pressure <span class="math notranslate nohighlight">\(p = -\Omega / V\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.PE_n">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PE_n</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE_n" title="Link to this definition">#</a></dt>
+<dd><p>Potential energy per particle <span class="math notranslate nohighlight">\(\overline{PE}/\overline{N}\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.table">
+<span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('nvec',</span> <span class="pre">'betapV',</span> <span class="pre">'PE_n')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_stable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_to_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L763-L845"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.table" title="Link to this definition">#</a></dt>
+<dd><p>Create <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> of calculated properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – keys of attributes or methods of <cite>self</cite> to include in output</p></li>
+<li><p><strong>default_keys</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – Default keys to consider.</p></li>
+<li><p><strong>ref</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>, <em>optional</em>) – If calculating <cite>edge_distastance</cite>, need a reference <a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a> object.</p></li>
+<li><p><strong>mask_stable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>default</em> <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) – If True, remove any unstable values</p></li>
+<li><p><strong>dim_to_suffix</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/glossary.html#term-hashable" title="(in Python v3.14)"><span class="xref std std-term">hashable</span></a>, <em>optional</em>) – dimensions to remove from output.  These are instead added as suffix to variable names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>) – Containing all the calculated properties in a single object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The results can be easily convert to a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v3.0.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> using <code class="docutils literal notranslate"><span class="pre">ds.to_frame()</span></code></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaG">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">betaG</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Gibbs free energy <span class="math notranslate nohighlight">\(\beta G = \sum_i \beta \mu_i \overline{N}_i\)</span>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaG_n">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">betaG_n</span></span><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG_n" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Gibbs free energy per particle <span class="math notranslate nohighlight">\(\beta G / \overline{N}\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaF">
+<span class="sig-name descname"><span class="pre">betaF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L861-L864"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Helmholtz free energy <span class="math notranslate nohighlight">\(\beta F = \beta \Omega + \beta G\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaF_n">
+<span class="sig-name descname"><span class="pre">betaF_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L866-L871"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_n" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Helmholtz free energy per particle <span class="math notranslate nohighlight">\(\beta F / \overline{N}\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaE">
+<span class="sig-name descname"><span class="pre">betaE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L873-L876"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE" title="Link to this definition">#</a></dt>
+<dd><p>Scaled total energy <span class="math notranslate nohighlight">\(\beta E = \beta \overline{PE} + \beta \overline{KE}\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.betaE_n">
+<span class="sig-name descname"><span class="pre">betaE_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L878-L881"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE_n" title="Link to this definition">#</a></dt>
+<dd><p>Scaled total energy per particle <span class="math notranslate nohighlight">\(\beta E / \overline{N}\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.S">
+<span class="sig-name descname"><span class="pre">S</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L883-L886"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.S" title="Link to this definition">#</a></dt>
+<dd><p>Scaled entropy <span class="math notranslate nohighlight">\(S / k_{\rm B} = \beta E - \beta F\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.GrandCanonicalEnsemble.S_n">
+<span class="sig-name descname"><span class="pre">S_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L888-L891"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.GrandCanonicalEnsemble.S_n" title="Link to this definition">#</a></dt>
+<dd><p>Scaled entropy per particle <span class="math notranslate nohighlight">\(S / (N k_{\rm B})\)</span>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lnpy.ensembles.</span></span><span class="sig-name descname"><span class="pre">CanonicalEnsemble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L895-L1121"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Canonical ensemble properties</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> (<a class="reference internal" href="lnpy.lnpidata.html#lnpy.lnpidata.lnPiMasked" title="lnpy.lnpidata.lnPiMasked"><code class="xref py py-class docutils literal notranslate"><span class="pre">lnPiMasked</span></code></a>)</p>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.lnpi" title="lnpy.ensembles.CanonicalEnsemble.lnpi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lnpi</span></code></a>([fill_value])</p></td>
+<td><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> view of <span class="math notranslate nohighlight">\(\ln Pi(N)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betaF" title="lnpy.ensembles.CanonicalEnsemble.betaF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaF</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled Helmholtz free energy <span class="math notranslate nohighlight">\(\beta F\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betaF_n" title="lnpy.ensembles.CanonicalEnsemble.betaF_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaF_n</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled Helmholtz free energy per particle <span class="math notranslate nohighlight">\(\beta F / N\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betaE" title="lnpy.ensembles.CanonicalEnsemble.betaE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaE</span></code></a>([ndim])</p></td>
+<td><p>Scaled total energy <span class="math notranslate nohighlight">\(\beta E = \beta PE + \beta KE\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betaE_n" title="lnpy.ensembles.CanonicalEnsemble.betaE_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaE_n</span></code></a>([ndim])</p></td>
+<td><p>Scaled total energy per particle</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.S" title="lnpy.ensembles.CanonicalEnsemble.S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">S</span></code></a>([ndim, lnpi_zero])</p></td>
+<td><p>Entropy <span class="math notranslate nohighlight">\(S / k_{\rm B}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.S_n" title="lnpy.ensembles.CanonicalEnsemble.S_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">S_n</span></code></a>([ndim, lnpi_zero])</p></td>
+<td><p>Entropy per particle <span class="math notranslate nohighlight">\(S / (N k_{\rm B})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betamu" title="lnpy.ensembles.CanonicalEnsemble.betamu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betamu</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled chemical potential <span class="math notranslate nohighlight">\(\beta \mu\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega" title="lnpy.ensembles.CanonicalEnsemble.betaOmega"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaOmega</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled Grand Potential <span class="math notranslate nohighlight">\(\beta \Omega\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega_n" title="lnpy.ensembles.CanonicalEnsemble.betaOmega_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betaOmega_n</span></code></a>([lnpi_zero])</p></td>
+<td><p>Scaled Grand potential per particle, <span class="math notranslate nohighlight">\(\beta\Omega / N\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.betapV" title="lnpy.ensembles.CanonicalEnsemble.betapV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">betapV</span></code></a>([lnpi_zero])</p></td>
+<td><p><span class="math notranslate nohighlight">\(\beta p V = -\beta \Omega\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.Z" title="lnpy.ensembles.CanonicalEnsemble.Z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Z</span></code></a>([lnpi_zero])</p></td>
+<td><p>Compressibility <span class="math notranslate nohighlight">\(Z = \beta p / \rho = pV / (k_{\rm B} T)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.pressure" title="lnpy.ensembles.CanonicalEnsemble.pressure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pressure</span></code></a>([lnpi_zero])</p></td>
+<td><p>Pressure <span class="math notranslate nohighlight">\(p = -\Omega / V\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.table" title="lnpy.ensembles.CanonicalEnsemble.table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">table</span></code></a>([keys, default_keys, dim_to_suffix])</p></td>
+<td><p>Create Dataset from attributes/methods of <cite>self</cite></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Attributes:</strong></p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.ncoords" title="lnpy.ensembles.CanonicalEnsemble.ncoords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ncoords</span></code></a></p></td>
+<td><p>Coordinate vector <cite>dims_n</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.nvec" title="lnpy.ensembles.CanonicalEnsemble.nvec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nvec</span></code></a></p></td>
+<td><p>Number of particles for each components <span class="math notranslate nohighlight">\({\bf N}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.ntot" title="lnpy.ensembles.CanonicalEnsemble.ntot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ntot</span></code></a></p></td>
+<td><p>Total number of particles <span class="math notranslate nohighlight">\(N\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.PE" title="lnpy.ensembles.CanonicalEnsemble.PE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PE</span></code></a></p></td>
+<td><p>Internal Energy <span class="math notranslate nohighlight">\(PE\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.PE_n" title="lnpy.ensembles.CanonicalEnsemble.PE_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PE_n</span></code></a></p></td>
+<td><p>Internal energy per particle <span class="math notranslate nohighlight">\(PE / N\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnpy.ensembles.CanonicalEnsemble.dens" title="lnpy.ensembles.CanonicalEnsemble.dens"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dens</span></code></a></p></td>
+<td><p>Density <span class="math notranslate nohighlight">\(\rho = N / V\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.lnpi">
+<span class="sig-name descname"><span class="pre">lnpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L909-L911"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.lnpi" title="Link to this definition">#</a></dt>
+<dd><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> view of <span class="math notranslate nohighlight">\(\ln Pi(N)\)</span></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.ncoords">
+<span class="sig-name descname"><span class="pre">ncoords</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L917-L924"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.ncoords" title="Link to this definition">#</a></dt>
+<dd><p>Coordinate vector <cite>dims_n</cite></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.nvec">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nvec</span></span><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.nvec" title="Link to this definition">#</a></dt>
+<dd><p>Number of particles for each components <span class="math notranslate nohighlight">\({\bf N}\)</span></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.ntot">
+<span class="sig-name descname"><span class="pre">ntot</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L939-L942"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.ntot" title="Link to this definition">#</a></dt>
+<dd><p>Total number of particles <span class="math notranslate nohighlight">\(N\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betaF">
+<span class="sig-name descname"><span class="pre">betaF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L964-L966"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betaF" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Helmholtz free energy <span class="math notranslate nohighlight">\(\beta F\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betaF_n">
+<span class="sig-name descname"><span class="pre">betaF_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L968-L973"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betaF_n" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Helmholtz free energy per particle <span class="math notranslate nohighlight">\(\beta F / N\)</span></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.PE">
+<span class="sig-name descname"><span class="pre">PE</span></span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L975-L985"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.PE" title="Link to this definition">#</a></dt>
+<dd><p>Internal Energy <span class="math notranslate nohighlight">\(PE\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.PE_n">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PE_n</span></span><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.PE_n" title="Link to this definition">#</a></dt>
+<dd><p>Internal energy per particle <span class="math notranslate nohighlight">\(PE / N\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betaE">
+<span class="sig-name descname"><span class="pre">betaE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L995-L998"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betaE" title="Link to this definition">#</a></dt>
+<dd><p>Scaled total energy <span class="math notranslate nohighlight">\(\beta E = \beta PE + \beta KE\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betaE_n">
+<span class="sig-name descname"><span class="pre">betaE_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1000-L1003"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betaE_n" title="Link to this definition">#</a></dt>
+<dd><p>Scaled total energy per particle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.S">
+<span class="sig-name descname"><span class="pre">S</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1005-L1008"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.S" title="Link to this definition">#</a></dt>
+<dd><p>Entropy <span class="math notranslate nohighlight">\(S / k_{\rm B}\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.S_n">
+<span class="sig-name descname"><span class="pre">S_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1010-L1013"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.S_n" title="Link to this definition">#</a></dt>
+<dd><p>Entropy per particle <span class="math notranslate nohighlight">\(S / (N k_{\rm B})\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betamu">
+<span class="sig-name descname"><span class="pre">betamu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1023-L1025"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betamu" title="Link to this definition">#</a></dt>
+<dd><p>Scaled chemical potential <span class="math notranslate nohighlight">\(\beta \mu\)</span></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.dens">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dens</span></span><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.dens" title="Link to this definition">#</a></dt>
+<dd><p>Density <span class="math notranslate nohighlight">\(\rho = N / V\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betaOmega">
+<span class="sig-name descname"><span class="pre">betaOmega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1041-L1043"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Grand Potential <span class="math notranslate nohighlight">\(\beta \Omega\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betaOmega_n">
+<span class="sig-name descname"><span class="pre">betaOmega_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1045-L1048"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega_n" title="Link to this definition">#</a></dt>
+<dd><p>Scaled Grand potential per particle, <span class="math notranslate nohighlight">\(\beta\Omega / N\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.betapV">
+<span class="sig-name descname"><span class="pre">betapV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1050-L1053"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.betapV" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\beta p V = -\beta \Omega\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.Z">
+<span class="sig-name descname"><span class="pre">Z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1055-L1058"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.Z" title="Link to this definition">#</a></dt>
+<dd><p>Compressibility <span class="math notranslate nohighlight">\(Z = \beta p / \rho = pV / (k_{\rm B} T)\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.pressure">
+<span class="sig-name descname"><span class="pre">pressure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lnpi_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1060-L1063"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.pressure" title="Link to this definition">#</a></dt>
+<dd><p>Pressure <span class="math notranslate nohighlight">\(p = -\Omega / V\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lnpy.ensembles.CanonicalEnsemble.table">
+<span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('betamu',</span> <span class="pre">'betapV',</span> <span class="pre">'PE_n',</span> <span class="pre">'betaF_n')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_to_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/usnistgov/tmmc-lnpy/blob/main/src/lnpy/ensembles.py#L1065-L1121"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lnpy.ensembles.CanonicalEnsemble.table" title="Link to this definition">#</a></dt>
+<dd><p>Create Dataset from attributes/methods of <cite>self</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Names of attributes/methods to access</p></li>
+<li><p><strong>default_keys</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Default keys to access.</p></li>
+<li><p><strong>dim_to_suffix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.14)"><span class="xref std std-term">sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – If passed, convert dimensions in <cite>dim_to_suffix</cite> from dimensions in output to suffixes to variable names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>table</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2026.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lnpy.segment.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Segmentation of lnPi (<code class="xref py py-mod docutils literal notranslate"><span class="pre">segment</span></code>)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lnpy.combine.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Routines to combine <span class="math notranslate nohighlight">\(\ln \Pi\)</span> data (<code class="xref py py-mod docutils literal notranslate"><span class="pre">combine</span></code>)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Ensemble averages (<code class="xref py py-mod docutils literal notranslate"><span class="pre">ensembles</span></code>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.xr_name"><code class="docutils literal notranslate"><span class="pre">xr_name()</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.LogPiWrapper"><code class="docutils literal notranslate"><span class="pre">LogPiWrapper</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ncoords</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ncoords_tot"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ncoords_tot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_lnz"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_lnz</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_comp"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_comp</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_state"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_state</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dims_rec"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dims_rec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.beta"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.beta</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.volume"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.volume</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betamu"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betamu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnz"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnz</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnpi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pi_norm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_sum"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pi_sum</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_norm"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnpi_norm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.mean_pi"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.mean_pi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.var_pi"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.var_pi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pipe"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pipe()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.nvec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ntot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.molfrac"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.molfrac</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.nvec_var"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.nvec_var</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.ntot_var"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.ntot_var</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dens</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.dens_tot"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.dens_tot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.max"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.lnpi_max"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.lnpi_max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pi_norm_max"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pi_norm_max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.edge_distance()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.edge_distance_val"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.edge_distance_val()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaOmega()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.PE</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_alt"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaF_alt()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaOmega_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaOmega_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betapV"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betapV()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.mask_stable"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.mask_stable</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.Z"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.Z()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.pressure"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.pressure()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.PE_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.PE_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.table"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.table()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaG</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaG_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaG_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaF()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaF_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaF_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaE()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.betaE_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.betaE_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.S"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.S()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.GrandCanonicalEnsemble.S_n"><code class="docutils literal notranslate"><span class="pre">GrandCanonicalEnsemble.S_n()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.lnpi"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.lnpi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.ncoords"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.ncoords</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.nvec"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.nvec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.ntot"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.ntot</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaF"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaF()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaF_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaF_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.PE"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.PE</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.PE_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.PE_n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaE"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaE()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaE_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaE_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.S"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.S()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.S_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.S_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betamu"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betamu()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.dens"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.dens</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaOmega()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betaOmega_n"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betaOmega_n()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.betapV"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.betapV()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.Z"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.Z()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.pressure"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.pressure()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lnpy.ensembles.CanonicalEnsemble.table"><code class="docutils literal notranslate"><span class="pre">CanonicalEnsemble.table()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By William P. Krekelberg
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2015, William P. Krekelberg.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2026-02-21.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
