@@ -1,8 +1,3 @@
-# need this to pick up requires-python from pyproject.toml
-# extend = "./pyproject.toml"
-extend-include = [
-    "*.ipynb",
-]
 extend-exclude = [
     ".numba_cache",
     ".venv",
@@ -10,6 +5,9 @@ extend-exclude = [
     # "tests/",
     # "src/testpackage_book_nocli/tests",
     "examples/archived",
+]
+extend-include = [
+    "*.ipynb",
 ]
 fix = true
 # unsafe-fixes = true
@@ -22,6 +20,7 @@ preview = true
 select = [
     "ALL",
 ]
+# fixable/unfixable
 # fixable = ["ALL"]
 unfixable = [
     "ERA",
@@ -29,6 +28,7 @@ unfixable = [
     "PLR6104",
     "T",
 ]
+# ignores
 ignore = [
     "ANN401",  # - Any ok sometimes
     "COM",     # - flake8-commas, formatter should take care of this?
@@ -45,22 +45,29 @@ ignore = [
     "E501",    # - line too long - let formatter fix this
     "E731",    # - do not assign a lambda expression, use a def
     "FBT",     # - bools are ok
+    "PLC0415", # - import should be at top level (leads to issues with imports in func?)
     "S404",    # - Want to use subprocess sometimes
     "S603",    # - subprocess-without-shell-equals-true
     "S607",    # - start-process-with-partial-path
-    "PLC0415", # - import should be at top level (leads to issues with imports in func?)
     "TID252",  # - Allow relative imports
 ]
-# Use extend-ignore for project specific ignores. Prefer lint.extend-per-file-ignores."src/**/*.py" below
-# extend-ignore = [ ]
-isort.known-first-party = [
-    "lnpy",
+
+[lint.isort]
+known-first-party = [
     "lnPi",
+    "lnpy",
 ]
-pydocstyle.convention = "numpy"
-pylint.max-args = 15
-pylint.max-positional-args = 15
-pylint.max-public-methods = 30
+
+[lint.pydocstyle]
+convention = "numpy"
+
+[lint.pylint]
+max-args = 15
+max-positional-args = 15
+max-public-methods = 30
+
+[lint.ruff]
+strictly-empty-init-modules = false
 
 [lint.per-file-ignores]
 "docs/conf.py" = [
@@ -76,9 +83,7 @@ pylint.max-public-methods = 30
 ]
 
 # Project specific ignores (avoid changing per-file-ignores directly)
-# extend-per-file-ignores."path/to/file.py" = [ ... ]
 [lint.extend-per-file-ignores]
-"conftest.py" = [ "D103" ]
 "**/*.ipynb" = [
     "ANN",
     "D103",
@@ -91,37 +96,22 @@ pylint.max-public-methods = 30
     "S110",
     "T201",
 ]
+"**/conftest.py" = [
+    "ANN",
+    "PT",
+]
+"conftest.py" = [ "D103" ]
 "src/**/*.py" = [
     "C901",
     "D102",    # - Missing docstring in public method
     "D103",    # - Missing docstring in public function
     "FIX002",
     "N999",
-    "PLR2004",
     "PLR091",
+    "PLR2004",
     "SLF001",
     "TD003",
 
-]
-"tests/**/*.py" = [
-    "ANN",
-    "PLR2004",
-]
-"tests/test_lnPi.py" = [ "N999" ]
-"**/conftest.py" = [
-    "ANN",
-    "PT",
-]
-"src/lnpy/core/typing.py" = [
-    "A005",
-]
-"src/lnpy/ensembles.py" = [
-    "N802",
-    "N803",
-    "N806",
-]
-"src/lnpy/_lib/factory.py" = [
-    "D101",
 ]
 "src/lnPi/**/*.py" = [
     "ANN",
@@ -132,3 +122,19 @@ pylint.max-public-methods = 30
     "S101",
     "SIM",
 ]
+"src/lnpy/_lib/factory.py" = [
+    "D101",
+]
+"src/lnpy/core/typing.py" = [
+    "A005",
+]
+"src/lnpy/ensembles.py" = [
+    "N802",
+    "N803",
+    "N806",
+]
+"tests/**/*.py" = [
+    "ANN",
+    "PLR2004",
+]
+"tests/test_lnPi.py" = [ "N999" ]

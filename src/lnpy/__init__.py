@@ -16,4 +16,3 @@ except PackageNotFoundError:  # pragma: no cover
     __version__ = "999"
 
 __author__ = """William P. Krekelberg"""
-__email__ = "wpk@nist.gov"
