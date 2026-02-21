@@ -2,7 +2,7 @@
 Typing definitions for :mod:`lnpy`
 ==================================
 """
-
+# ruff: noqa: UP007
 # pylint: disable=consider-alternative-union-syntax
 
 from __future__ import annotations
@@ -86,8 +86,8 @@ NumbaType = Any
 
 
 # * Callables
-TagPhasesSignature: TypeAlias = Callable[
-    [Sequence["lnpy.lnpidata.lnPiMasked"]], Union[Sequence[int], NDArrayAny]
+TagPhasesSignature = Callable[
+    [Sequence["lnpy.lnpidata.lnPiMasked"]], "Sequence[int] | NDArrayAny"
 ]
 """Signature for tag_phases function."""
 

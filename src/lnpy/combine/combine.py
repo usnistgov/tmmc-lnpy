@@ -290,7 +290,7 @@ def concat_windows(
 
     To keep the supplied window value, use ``overwrite_window=False``
     >>> tables_with_window = [
-    ...     x.assign(window=name) for x, name in zip(tables, ["a", "b"])
+    ...     x.assign(window=name) for x, name in zip(tables, ["a", "b"], strict=True)
     ... ]
     >>> print(tables_with_window[0])
        state  rec  values window
@@ -358,7 +358,7 @@ def concat_windows(
     ...     x.assign(window=name)
     ...     .set_index(["rec", "window", "state"])
     ...     .to_xarray()["values"]
-    ...     for x, name in zip(tables, ["a", "b"])
+    ...     for x, name in zip(tables, ["a", "b"], strict=True)
     ... ]
     >>> data[0]
     <xarray.DataArray 'values' (rec: 1, window: 1, state: 3)> Size: 24B
@@ -390,7 +390,7 @@ def concat_windows(
     ...     x.assign(window=name)
     ...     .to_xarray()
     ...     .set_index(index=["rec", "window", "state"])
-    ...     for x, name in zip(tables, ["a", "b"])
+    ...     for x, name in zip(tables, ["a", "b"], strict=True)
     ... ]
     >>> data[0]
     <xarray.Dataset> Size: 120B
@@ -779,7 +779,7 @@ def _filter_min_max_keep_first(
     )
 
     if check_connected:
-        _create_overlap_table(
+        _ = _create_overlap_table(
             table,
             window_index_name=window_index_name,
             window_max=window_max,
@@ -1203,6 +1203,7 @@ def assign_updown_from_collectionmatrix(
             zip(
                 [weight_name, down_name, up_name],
                 updown_from_collectionmatrix(*(table[c] for c in matrix_names)),
+                strict=True,
             )
         )
     )
@@ -1245,7 +1246,7 @@ def delta_lnpi_from_updown(
         up_, down_, delta = (np.moveaxis(x, axis, -1) for x in (up_, down, delta))
 
         delta[..., 0] = 0.0
-        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # pyright: ignore[reportOperatorIssue]
+        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])
         return np.moveaxis(delta, -1, axis)  # pyright: ignore[reportReturnType]
 
     if is_dataarray(down):

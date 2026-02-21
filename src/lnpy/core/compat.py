@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-import sys
+from importlib import resources
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -13,12 +13,6 @@ if TYPE_CHECKING:
     from typing import Any
 
     from scipy.optimize import RootResults
-
-
-if sys.version_info >= (3, 10):
-    from importlib import resources
-else:
-    import importlib_resources as resources
 
 
 _COPY_IF_NEEDED = None if np.lib.NumpyVersion(np.__version__) >= "2.0.0" else False

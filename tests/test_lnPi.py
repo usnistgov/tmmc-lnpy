@@ -138,7 +138,7 @@ def test_nice_grid(obj, path_data) -> None:
     v0 = other_fine.lnz_0.to_numpy()
     v1 = test_fine.lnz_0.to_numpy()
 
-    np.testing.assert_allclose(v0, v1)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]
+    np.testing.assert_allclose(v0, v1)
 
     pd.testing.assert_frame_equal(other_course, test_course)
 

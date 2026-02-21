@@ -257,6 +257,6 @@ def masks_to_labels(
     labels = np.full(masks[0].shape, fill_value=0, dtype=dtype)
     masks = masks_change_convention(masks, convention, True)
 
-    for i, m in zip(features, masks):
+    for i, m in zip(features, masks, strict=True):
         labels[m] = i
     return labels

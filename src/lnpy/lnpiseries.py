@@ -50,7 +50,7 @@ if TYPE_CHECKING:
 # Accessors
 class _CallableResult:
     def __init__(self, parent: lnPiCollection, func: Callable[..., Any]) -> None:
-        functools.update_wrapper(self, func)
+        _ = functools.update_wrapper(self, func)
 
         self._parent = parent
         self._func = func
@@ -179,7 +179,9 @@ class _LocIndexer_unstack_zloc:  # noqa: N801
 
     def __getitem__(self, idx: Any) -> lnPiCollection:
         out = self._loc[idx]
-        out = out.stack(self._level) if isinstance(out, pd.DataFrame) else out.dropna()  # noqa: PD013
+        if isinstance(out, pd.DataFrame):
+            out = out.stack(self._level, future_stack=True)  # noqa: PD013
+        out = out.dropna()
 
         if isinstance(out, pd.Series):
             out = self._parent.new_like(out)
@@ -212,7 +214,7 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
             drop: list[Hashable] = list(self._index_names - set(idx.names))
             index = index.droplevel(drop)
             # reorder idx
-            idx = idx.reorder_levels(index.names)  # type: ignore[no-untyped-call]
+            idx = idx.reorder_levels(index.names)
         else:
             drop = list(set(index.names) - {idx.name})
             index = index.droplevel(drop)
@@ -308,6 +310,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         if not self._verify:
             return
 
+        series = series.dropna()
+
+        if series.empty:
+            msg = "No non null values in series"
+            raise ValueError(msg)
+
         base_class = self._base_class
         if isinstance(base_class, str) and base_class.lower() == "first":
             base_class = type(series.iloc[0])
@@ -316,7 +324,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
         for d in series:
             if not issubclass(type(d), base_class):
-                msg = f"all elements must be of type {base_class}"
+                # print("series", series)  # noqa: ERA001
+                # print("series.iloc[0]", series.dropna().iloc[0])  # noqa: ERA001
+                # print("series", d)  # noqa: ERA001
+                msg = f"all elements must be of type {base_class}.  found {type(d)}."
                 raise TypeError(msg)
 
         # lnpy
@@ -522,20 +533,6 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         group_keys: bool = ...,
         observed: bool = ...,
         dropna: bool = ...,
-        wrap: Literal[False] = ...,
-    ) -> SeriesGroupBy[Any, Any]: ...
-
-    @overload
-    def groupby(
-        self,
-        by: Hashable | Sequence[Hashable] = ...,
-        *,
-        level: int | Hashable | Sequence[int | Hashable] | None = ...,
-        as_index: bool = ...,
-        sort: bool = ...,
-        group_keys: bool = ...,
-        observed: bool = ...,
-        dropna: bool = ...,
         wrap: Literal[True],
     ) -> _Groupby: ...
 
@@ -577,9 +574,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         --------
         pandas.Series.groupby
         """
-        group = self.s.groupby(  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
-            by=by,
-            axis=0,
+        group = self.s.groupby(  # pyright: ignore[reportCallIssue]
+            by=by,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
             level=level,
             as_index=as_index,
             sort=sort,
@@ -590,7 +586,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
         if wrap:
             return _Groupby(self, group)
-        return group  # type: ignore[no-any-return]
+        return group
 
     @overload
     def groupby_allbut(
@@ -669,7 +665,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             if isinstance(first, cls):
                 objs = (x._series for x in objs)  # pyright: ignore[reportAttributeAccessIssue]
 
-        return pd.concat(objs, **concat_kws)  # type: ignore[return-value,arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]
+        return pd.concat(objs, **concat_kws)  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]
 
     def concat_like(
         self,
@@ -882,7 +878,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         lnPiCollection
         """
         table = pd.DataFrame(
-            [lnpi._index_dict(phase) for lnpi, phase in zip(items, index)]
+            [lnpi._index_dict(phase) for lnpi, phase in zip(items, index, strict=True)]
         )
         new_index = pd.MultiIndex.from_frame(table)
         return cls(data=items, index=new_index, **kwargs)
@@ -1032,7 +1028,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         items = []
         indexes = []
 
-        for label, lnz in zip(labels, lnzs):
+        for label, lnz in zip(labels, lnzs, strict=True):
             lnpi = ref.reweight(lnz)
 
             masks, features_tmp = labels_to_masks(

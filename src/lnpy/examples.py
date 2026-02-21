@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict, dataclass
 from functools import lru_cache
-from typing import TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING, TypedDict, cast
 
 import numpy as np
 import pooch
@@ -42,12 +42,12 @@ def _get_pooch() -> pooch.Pooch:
         env="TMMC_LNPY_DATA_DIR",
     )
 
-    obj.load_registry(resources.files("lnpy.data").joinpath("registry.txt"))
+    obj.load_registry(resources.files("lnpy.data").joinpath("registry.txt"))  # pyright: ignore[reportArgumentType]
     return obj
 
 
 def cache_path() -> Path:
-    return _get_pooch().path  # type: ignore[no-any-return]
+    return cast("Path", _get_pooch().path)
 
 
 def json_to_dict(basename: str) -> dict[str, Any]:

@@ -35,6 +35,10 @@ logger = logging.getLogger("lnpy.compile")
 
 class _Catchtime:
     # pylint: disable=attribute-defined-outside-init
+    def __init__(self) -> None:
+        self.start = 0.0
+        self.time = 0.0
+
     def __enter__(self) -> Self:
         self.start = perf_counter()
         return self
@@ -55,7 +59,7 @@ def _time_modules(
         for module in modules:
             logger.warning("loading mod %s", module)
             with _Catchtime() as t:
-                import_module(f"{prefix}{module}", package=package)
+                _ = import_module(f"{prefix}{module}", package=package)
             out.append((t.time, module))
     for time, module in sorted(out, key=itemgetter(0), reverse=True):
         logger.warning("%7.1E sec %s", time, module)
@@ -136,13 +140,13 @@ def _parser_args(args: Sequence[str] | None = None) -> argparse.Namespace:
     parser = ArgumentParser(description="Load numba modules.")
     msg = "Load or ignore {name} routines.  Default is to include if not `--no-all`. "
 
-    parser.add_argument(
+    _ = parser.add_argument(
         "--no-all",
         dest="include_all",
         action="store_false",
         help="Load all numba modules",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--parallel",
         "--no-parallel",
         dest="include_parallel",
@@ -150,7 +154,7 @@ def _parser_args(args: Sequence[str] | None = None) -> argparse.Namespace:
         default=None,
         help=msg.format(name="parallel"),
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--combine",
         "--no-combine",
         dest="include_combine",

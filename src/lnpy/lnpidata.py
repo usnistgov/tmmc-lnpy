@@ -42,7 +42,9 @@ def _get_shift(
     shape: tuple[int, ...], dlnz: tuple[float, ...], dtype: DTypeLike
 ) -> NDArrayAny:
     shift = np.zeros([], dtype=dtype)
-    for _i, (nr, m) in enumerate(zip(_get_n_ranges(shape=shape, dtype=dtype), dlnz)):
+    for _i, (nr, m) in enumerate(
+        zip(_get_n_ranges(shape=shape, dtype=dtype), dlnz, strict=True)
+    ):
         shift = np.add.outer(shift, nr * m)
     return shift
 

@@ -89,7 +89,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         self._clear_cache()
 
     def _clear_cache(self) -> None:
-        self._cache = {}  # type: ignore[var-annotated]
+        self._cache = {}  # type: ignore[var-annotated]  # pyright: ignore[reportUninitializedInstanceVariable]
 
     ##################################################
     # properties
@@ -258,7 +258,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         new = self if inplace else self.copy()
 
         if zeromax:
-            new.zeromax(inplace=True)
+            _ = new.zeromax(inplace=True)
         if pad:
             new = new.pad()
         return new
@@ -291,7 +291,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         dlnz = new.lnz - self.lnz
 
         shift = np.zeros([], dtype=float)
-        for _i, (s, m) in enumerate(zip(self.shape, dlnz)):
+        for _i, (s, m) in enumerate(zip(self.shape, dlnz, strict=False)):
             shift = np.add.outer(shift, np.arange(s) * m)
 
         new.data[...] += shift
