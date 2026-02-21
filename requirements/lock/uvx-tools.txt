@@ -8,17 +8,13 @@ conda-lock==4.0.0 \
     --hash=sha256:050305a490861baa98d6c3876ed7b394707a67587d939548aac5e20b91b41d36 \
     --hash=sha256:979aacb4f67eb375f5d84ffbc7afc93c881ab9a513558c7461ed955fe243a3f6
     # via -r requirements/uvx-tools.txt
-copier==9.11.3 \
-    --hash=sha256:ab4bc7e2944edc030b4c14ec84fffd6bf810b9b8fd56938e8ccbab1b169ea6ca \
-    --hash=sha256:f4da98c7f3dd2243480433541b3b4d9daa788bce13b7b6d43c0c6d84bd50e889
+copier==9.12.0 \
+    --hash=sha256:87986637205a0443dbf7e5946502e5c71962a559c25f436642a08203cf61ef54 \
+    --hash=sha256:a1bc84dfd2a4b85dbe034999026c0e24ca02a6bc1574f45df07fd76d935c2ea9
     # via -r requirements/uvx-tools.txt
 copier-template-extensions==0.3.3 \
     --hash=sha256:86bd5e2e89c94b6f9321e4078781b4456c5658b820bcae49ac60fd1e1dd23c10 \
     --hash=sha256:bf6bbdebada26132640d6e1128723fa1ff7eb59d008de07a7543c51e0facb0ea
-    # via -r requirements/uvx-tools.txt
-cruft==2.16.0 \
-    --hash=sha256:184662853fbc1c16c0137fe0e9444e0cbe95e40362f5ebb2d9fae33d9223e73f \
-    --hash=sha256:96adb81f814300a9db0fca690eaa063547f5d3c25f486ac0a366cf8da5cdfb79
     # via -r requirements/uvx-tools.txt
 grayskull==3.1.0 \
     --hash=sha256:625a60a7036eaedcc5e4e44ed68eec79aaade35f662729ec564b6120d2b3b7c5 \
