@@ -187,14 +187,14 @@ def peak_local_max_adaptive(
     out : array of int or list of array of bool
         Depending on the value of `indices`.
 
-    Notes
-    -----
-    The option `mask` is passed as the value `labels` in :func:`~skimage.feature.peak_local_max`
-
     See Also
     --------
     ~skimage.feature.peak_local_max
     ~skimage.morphology.label
+
+    Notes
+    -----
+    The option `mask` is passed as the value `labels` in :func:`~skimage.feature.peak_local_max`
     """
     import bottleneck
     from skimage.feature import peak_local_max  # pylint: disable=no-name-in-module
@@ -356,14 +356,13 @@ class Segmenter:
             If ``style=='marker'``, then return label array.  Otherwise,
             return indices of peaks.
 
-        Notes
-        -----
-        Any value not set will be inherited from `self.peak_kws`
-
-
         See Also
         --------
         peak_local_max_adaptive
+
+        Notes
+        -----
+        Any value not set will be inherited from `self.peak_kws`
 
         """
         if mask is not None:
