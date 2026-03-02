@@ -243,6 +243,10 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
     {mask_masked}
     {copy}
 
+    See Also
+    --------
+    numpy.ma.MaskedArray
+
     Notes
     -----
     Note that in most cases, :class:`lnPiMasked` should not be called directly.
@@ -259,10 +263,6 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
     * lnz : log of activity `= ln(z)`.
     * z : activity `= beta * mu`.
     * lnPi : log of macrostate distribution.
-
-    See Also
-    --------
-    numpy.ma.MaskedArray
     """
 
     _DataClass = lnPiArray

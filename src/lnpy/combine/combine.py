@@ -1057,11 +1057,6 @@ def updown_mean(
     This can be used to splice overlapping windows into a single window, combine across replicate
     simulations, or both.
 
-    Notes
-    -----
-    If any windows use expanded ensemble (i.e., non-integer ``state`` values),
-    then this method should not be used to splice across windows.  Instead, use :func:`keep_first`
-
     Parameters
     ----------
     table :
@@ -1083,6 +1078,12 @@ def updown_mean(
     -------
     DataFrame
         Combined transition matrix.
+
+    Notes
+    -----
+    If any windows use expanded ensemble (i.e., non-integer ``state`` values),
+    then this method should not be used to splice across windows.  Instead, use :func:`keep_first`
+
     """
     if use_running:
         columns = [weight_name, down_name, up_name]
