@@ -126,6 +126,7 @@ test-extras = [
     { include-group = "test" },
 ]
 test-notebook = [
+    "coverage<=7.13.0",
     "nbval",
     { include-group = "test" },
     { include-group = "viz" },
