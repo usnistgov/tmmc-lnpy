@@ -156,13 +156,6 @@ notebook.requires-python = ">=3.13"
 nox.requires-python = ">=3.13"
 
 # * Checks ---------------------------------------------------------------------
-<<<<<<< before updating
-
-[tool.nbqa]
-exclude.codespell = "^examples/archived"
-
-=======
->>>>>>> after updating
 [tool.repo-review]
 ignore = [
     "NOX103", # I prefer using "nox.options.sessions"
@@ -194,12 +187,9 @@ indent = 4
 keep_full_version = true
 
 [tool.typos.default]
-<<<<<<< before updating
 extend-ignore-identifiers-re = [ "NDArray.*" ]
-=======
 # nbqa generated
 extend-ignore-re = [ "# %%NBQA-.*" ]
->>>>>>> after updating
 
 [tool.typos.default.extend-identifiers]
 CPY = "CPY"
@@ -303,7 +293,6 @@ warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
 
-<<<<<<< before updating
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 module = [
@@ -331,16 +320,6 @@ module = [
     "tests.*",
 ]
 
-=======
-# [[tool.mypy.overrides]]
-# ignore_missing_imports = true
-# module = [  ]
-#
-# [[tool.mypy.overrides]]
-# ignore_errors = true
-# module = [  ]
-#
->>>>>>> after updating
 [tool.pyrefly]
 enabled-ignores = [ "pyrefly" ]
 project-includes = [ "src", "tests" ]

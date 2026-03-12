@@ -252,29 +252,17 @@ repos:
         alias: typos
         additional_dependencies: &typos-deps
           - typos==1.44.0
-<<<<<<< before updating
-        args: [typos, --nbqa-shell]
-        # this can lead to errors, so use with care
-        # args: [typos, --write-changes, --nbqa-shell]
-        exclude: &typos-exclude ^examples/archived
-=======
         args:
           - typos
           - --force-exclude
           - --no-check-filenames
           - --write-changes
           - --nbqa-shell
->>>>>>> after updating
+        exclude: &typos-exclude ^examples/archived
       - id: nbqa
         name: nbqa-typos-markdown
         alias: typos
         additional_dependencies: *typos-deps
-<<<<<<< before updating
-        args: [typos, --nbqa-shell, --nbqa-md]
-        # this can lead to errors, so use with care
-        # args: [typos, --write-changes, --nbqa-shell, --nbqa-md]
-        exclude: *typos-exclude
-=======
         args:
           - typos
           - --force-exclude
@@ -282,7 +270,7 @@ repos:
           - --write-changes
           - --nbqa-shell
           - --nbqa-md
->>>>>>> after updating
+        exclude: *typos-exclude
 
   # ** symlink in notebooks from example/usage to docs/example/usage
   - repo: local
