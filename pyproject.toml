@@ -203,66 +203,6 @@ datas = "datas"
 # only check file name for notebooks.  Use nbaq for contents.
 check-file = false
 
-# * Testing --------------------------------------------------------------------
-[tool.pytest.ini_options]
-addopts = [
-    "--cov-config=pyproject.toml",
-    "--doctest-glob=*.md",
-    "--doctest-modules",
-    "--pyargs",
-    "--strict-config",
-    "--strict-markers",
-    "-ra",
-    # xdist
-    "-n",
-    "4",
-]
-testpaths = [
-    # "README.md"
-    "lnPi",
-    "lnpy",
-    "tests",
-]
-# options
-filterwarnings = [
-    "error",
-    "ignore: FNV hashing is not implemented in Numba:UserWarning",
-    "ignore: Module lnpy was never imported:coverage.exceptions.CoverageWarning",
-    "ignore: No data was collected:coverage.exceptions.CoverageWarning",
-    "ignore: This process:DeprecationWarning",
-    "ignore: importing 'Const' from 'astroid':DeprecationWarning",
-    "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
-]
-log_cli_level = "INFO"
-log_level = "INFO"
-minversion = "8"
-strict_xfail = "true"
-
-[tool.coverage]
-run.branch = true
-run.source = [
-    "lnpy",
-]
-paths.source = [
-    "src/",
-    # needed for testing source if not editable install
-    ".nox/**/site-packages/",
-    "*/.nox/**/site-packages",
-    "*/src",
-]
-report.exclude_also = [
-    "@overload",
-    "if TYPE_CHECKING:",
-]
-report.include = [
-    "src/*",
-]
-report.omit = [
-    "*/core/typing.py",
-    "*/vendored/*",
-]
-report.show_missing = true
-
 # * typecheck ---------------------------------------------------------------------
 [tool.mypy]
 exclude = [
@@ -380,6 +320,66 @@ reportUnusedCallResult = false
 # Disable support for `type: ignore` comments
 analysis.respect-type-ignore-comments = false
 src.include = [ "src", "tests" ]
+
+# * Testing --------------------------------------------------------------------
+[tool.pytest.ini_options]
+addopts = [
+    "--cov-config=pyproject.toml",
+    "--doctest-glob=*.md",
+    "--doctest-modules",
+    "--pyargs",
+    "--strict-config",
+    "--strict-markers",
+    "-ra",
+    # xdist
+    "-n",
+    "4",
+]
+testpaths = [
+    # "README.md"
+    "lnPi",
+    "lnpy",
+    "tests",
+]
+# options
+filterwarnings = [
+    "error",
+    "ignore: FNV hashing is not implemented in Numba:UserWarning",
+    "ignore: Module lnpy was never imported:coverage.exceptions.CoverageWarning",
+    "ignore: No data was collected:coverage.exceptions.CoverageWarning",
+    "ignore: This process:DeprecationWarning",
+    "ignore: importing 'Const' from 'astroid':DeprecationWarning",
+    "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
+]
+log_cli_level = "INFO"
+log_level = "INFO"
+minversion = "8"
+strict_xfail = "true"
+
+[tool.coverage]
+run.branch = true
+run.source = [
+    "lnpy",
+]
+paths.source = [
+    "src/",
+    # needed for testing source if not editable install
+    ".nox/**/site-packages/",
+    "*/.nox/**/site-packages",
+    "*/src",
+]
+report.exclude_also = [
+    "@overload",
+    "if TYPE_CHECKING:",
+]
+report.include = [
+    "src/*",
+]
+report.omit = [
+    "*/core/typing.py",
+    "*/vendored/*",
+]
+report.show_missing = true
 
 # * Dependency creation --------------------------------------------------------
 [tool.pyproject2conda]
