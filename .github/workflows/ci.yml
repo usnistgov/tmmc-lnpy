@@ -201,29 +201,18 @@ jobs:
         os:
           - ubuntu-latest
         python-version:
-<<<<<<< before updating
           ${{ fromJson(needs.build-package.outputs.minmax-python-versions) }}
-        style:
-=======
-          ${{
-          fromJson(needs.build-package.outputs.minmax-default-python-versions)
-          }}
         session:
->>>>>>> after updating
           - test
         include:
           - os: ubuntu-latest
             python-version:
               ${{ needs.build-package.outputs.default-python-version }}
-            style: test-notebook
+            session: test-notebook
           - os: windows-latest
             python-version:
               ${{ needs.build-package.outputs.default-python-version }}
-<<<<<<< before updating
-            style: test
-=======
             session: test
->>>>>>> after updating
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -240,31 +229,19 @@ jobs:
       - name: Test with nox
         env:
           python_version: ${{ matrix.python-version }}
-<<<<<<< before updating
-          style: ${{ matrix.style }}
-        run: >-
-          $UVX_COMMAND nox -s "${style}-${python_version}" -- ++installpkg
-          dist/*.whl ++test-options -n auto
-        shell: bash
-=======
-          options: "++installpkg dist/*.whl"
+          options: "++installpkg dist/*.whl -n auto"
           session: ${{ matrix.session }}
         run: |
           # shellcheck disable=SC2086
           $NOX_COMMAND -s "${session}-${python_version}" -- $options
         shell: bash -euxo pipefail {0}
->>>>>>> after updating
 
       - name: Upload coverage data
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name:
             coverage-data-${{ matrix.os }}-${{ matrix.python-version }}-${{
-<<<<<<< before updating
-            matrix.style }}
-=======
             matrix.session }}
->>>>>>> after updating
           path: .nox/test-*/tmp/.coverage*
           include-hidden-files: true
           if-no-files-found: ignore
@@ -300,13 +277,8 @@ jobs:
           cat coverage.md
           cat coverage.md >> "$GITHUB_STEP_SUMMARY"
 
-<<<<<<< before updating
           # fail if under 60%
-          $UVX_COMMAND nox -s coverage -- ++coverage report ++coverage-options --fail-under=60
-=======
-          # fail if under 100%
-          $NOX_COMMAND -s coverage -- ++coverage report ++coverage-options --fail-under=100
->>>>>>> after updating
+          $NOX_COMMAND -s coverage -- ++coverage report ++coverage-options --fail-under=60
         shell: bash
       - name: Upload HTML report if check failed.
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
