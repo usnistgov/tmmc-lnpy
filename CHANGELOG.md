@@ -2,15 +2,31 @@
 
 <!-- markdownlint-disable-file -->
 
+
 Changelog for `tmmc-lnpy`
 
 See the fragment files in [changelog.d]
 
 <!-- prettier-ignore-end -->
 
+
 <!-- markdownlint-enable MD013 -->
 
+
 <!-- scriv-insert-here -->
+
+
+## 0.8.1
+
+Released on 2026-03-17.
+
+### Bug fixes
+
+- fix: pin coverage version in test-notebook ([#22](https://github.com/usnistgov/tmmc-lnpy/pull/22))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
 
 ## v0.8.0 — 2024-04-12
 
@@ -30,7 +46,7 @@ See the fragment files in [changelog.d]
 ### Added
 
 - Added type hints to most all code. Passing mypy (with strict) and pyright
-  (non-strict).
+(non-strict).
 - Clean up doc strings in several places.
 - Added nbval testing.
 - Ran linters across all code and notebooks.
@@ -40,7 +56,7 @@ See the fragment files in [changelog.d]
 ### Added
 
 - Now use [lazy_loader](https://github.com/scientific-python/lazy_loader) to
-  speed up initial load time.
+speed up initial load time.
 
 Full set of changes:
 [`v0.4.0...0.5.0`](https://github.com/usnistgov/tmmc-lnpy/compare/v0.4.0...v0.5.0)
@@ -50,19 +66,18 @@ Full set of changes:
 ### Added
 
 - Package now available on conda-forge Full set of changes:
-  [`v0.3.0...0.4.0`](https://github.com/usnistgov/tmmc-lnpy/compare/v0.3.0...v0.4.0)
+[`v0.3.0...0.4.0`](https://github.com/usnistgov/tmmc-lnpy/compare/v0.3.0...v0.4.0)
 
 ### Changed
 
 - Changed `examples.load_example_maskddata` to
-  `examples.load_example_lnpimasked` for consistency with other method names.
+`examples.load_example_lnpimasked` for consistency with other method names.
 
 ## v0.3.0 — 2023-05-02
 
 ### Added
 
 - Added support for python3.11
-
 - Moved `_docstrings` -> `docstrings` to make available
 - Moved from local docfiller to module_utilities.docfiller
 - Moved from local cached module to module-utilities.cached
