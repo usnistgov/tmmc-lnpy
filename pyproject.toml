@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "tmmc-lnpy"
-version = "0.8.1.dev0"
+version = "0.8.0"
 description = "Analysis of lnPi results from TMMC simulation"
 readme = "README.md"
 keywords = [
@@ -139,6 +139,7 @@ viz = [ "tmmc-lnpy[viz]" ]
 required-version = ">=0.7.15"
 default-groups = [ "dev" ]
 fork-strategy = "requires-python"
+exclude-newer = "7 days"
 managed = true
 build-backend.module-name = [ "lnPi", "lnpy" ]
 build-backend.source-include = [ "tests/**" ]
@@ -202,66 +203,6 @@ datas = "datas"
 [tool.typos.type.jupyter]
 # only check file name for notebooks.  Use nbaq for contents.
 check-file = false
-
-# * Testing --------------------------------------------------------------------
-[tool.pytest.ini_options]
-addopts = [
-    "--cov-config=pyproject.toml",
-    "--doctest-glob=*.md",
-    "--doctest-modules",
-    "--pyargs",
-    "--strict-config",
-    "--strict-markers",
-    "-ra",
-    # xdist
-    "-n",
-    "4",
-]
-testpaths = [
-    # "README.md"
-    "lnPi",
-    "lnpy",
-    "tests",
-]
-# options
-filterwarnings = [
-    "error",
-    "ignore: FNV hashing is not implemented in Numba:UserWarning",
-    "ignore: Module lnpy was never imported:coverage.exceptions.CoverageWarning",
-    "ignore: No data was collected:coverage.exceptions.CoverageWarning",
-    "ignore: This process:DeprecationWarning",
-    "ignore: importing 'Const' from 'astroid':DeprecationWarning",
-    "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
-]
-log_cli_level = "INFO"
-log_level = "INFO"
-minversion = "8"
-strict_xfail = "true"
-
-[tool.coverage]
-run.branch = true
-run.source = [
-    "lnpy",
-]
-paths.source = [
-    "src/",
-    # needed for testing source if not editable install
-    ".nox/**/site-packages/",
-    "*/.nox/**/site-packages",
-    "*/src",
-]
-report.exclude_also = [
-    "@overload",
-    "if TYPE_CHECKING:",
-]
-report.include = [
-    "src/*",
-]
-report.omit = [
-    "*/core/typing.py",
-    "*/vendored/*",
-]
-report.show_missing = true
 
 # * typecheck ---------------------------------------------------------------------
 [tool.mypy]
@@ -381,6 +322,66 @@ reportUnusedCallResult = false
 analysis.respect-type-ignore-comments = false
 src.include = [ "src", "tests" ]
 
+# * Testing --------------------------------------------------------------------
+[tool.pytest.ini_options]
+addopts = [
+    "--cov-config=pyproject.toml",
+    "--doctest-glob=*.md",
+    "--doctest-modules",
+    "--pyargs",
+    "--strict-config",
+    "--strict-markers",
+    "-ra",
+    # xdist
+    "-n",
+    "4",
+]
+testpaths = [
+    # "README.md"
+    "lnPi",
+    "lnpy",
+    "tests",
+]
+# options
+filterwarnings = [
+    "error",
+    "ignore: FNV hashing is not implemented in Numba:UserWarning",
+    "ignore: Module lnpy was never imported:coverage.exceptions.CoverageWarning",
+    "ignore: No data was collected:coverage.exceptions.CoverageWarning",
+    "ignore: This process:DeprecationWarning",
+    "ignore: importing 'Const' from 'astroid':DeprecationWarning",
+    "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
+]
+log_cli_level = "INFO"
+log_level = "INFO"
+minversion = "8"
+strict_xfail = "true"
+
+[tool.coverage]
+run.branch = true
+run.source = [
+    "lnpy",
+]
+paths.source = [
+    "src/",
+    # needed for testing source if not editable install
+    ".nox/**/site-packages/",
+    "*/.nox/**/site-packages",
+    "*/src",
+]
+report.exclude_also = [
+    "@overload",
+    "if TYPE_CHECKING:",
+]
+report.include = [
+    "src/*",
+]
+report.omit = [
+    "*/core/typing.py",
+    "*/vendored/*",
+]
+report.show_missing = true
+
 # * Dependency creation --------------------------------------------------------
 [tool.pyproject2conda]
 user-config = "config/userconfig.toml"
@@ -428,6 +429,7 @@ reqs = [
     "prek",
     "pyrefly>=0.37.0",
     "pyright>=1.1.396",
+    "rooster>=0.1.1",
     "scriv",
     "twine>=5.0.0",
     "ty>=0.0.14",
@@ -449,3 +451,22 @@ new_fragment_template = "file: changelog.d/templates/new_fragment.md.j2"
 
 [tool.commitizen]
 use_shortcuts = true
+
+[tool.rooster]
+changelog_contributors = true
+major-labels = [ "breaking" ]
+minor_labels = [ "enhancement" ]
+patch-labels = [ "bug", "documentation" ]
+# options
+ignore-labels = [ "internal", "testing" ]
+require-labels = [ "breaking", "bug", "documentation", "enhancement" ]
+version_files = [
+    "pyproject.toml",
+]
+# sections
+section-labels."Breaking changes" = [ "breaking" ]
+section-labels."Bug fixes" = [ "bug" ]
+section-labels.Documentation = [ "documentation" ]
+section-labels.Enhancements = [ "enhancement" ]
+section-labels.Internal = [ "internal" ]
+section-labels."Other changes" = [ "__unknown__" ]
