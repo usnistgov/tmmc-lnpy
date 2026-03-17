@@ -229,7 +229,7 @@ jobs:
       - name: Test with nox
         env:
           python_version: ${{ matrix.python-version }}
-          options: "++installpkg dist/*.whl -n auto"
+          options: "++installpkg dist/*.whl ++test-options -n auto"
           session: ${{ matrix.session }}
         run: |
           # shellcheck disable=SC2086
