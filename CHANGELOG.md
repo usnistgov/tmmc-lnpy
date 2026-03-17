@@ -1,3 +1,4 @@
+<<<<<<< before updating
 <!-- markdownlint-disable MD024 -->
 <!-- markdownlint-disable MD013 -->
 <!-- prettier-ignore-start -->
@@ -7,9 +8,14 @@
 Changelog for `lnpy`
 
 ## Unreleased
+=======
+# Changelog
 
-[changelog.d]: https://github.com/usnistgov/tmmc-lnpy/tree/main/changelog.d
+<!-- markdownlint-disable-file -->
+>>>>>>> after updating
 
+
+<<<<<<< before updating
 See the fragment files in [changelog.d]
 
 <!-- prettier-ignore-end -->
@@ -129,3 +135,8 @@ Full set of changes:
 [`v0.0.1...v0.1.0`](https://github.com/usnistgov/tmmc-lnpy/compare/v0.0.1...v0.1.0)
 
 ## v0.0.1 - 2022-09-13
+=======
+Changelog for `tmmc-lnpy`
+
+## Initial release
+>>>>>>> after updating
