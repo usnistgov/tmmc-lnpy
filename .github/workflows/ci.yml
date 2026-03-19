@@ -232,6 +232,10 @@ jobs:
           options: "++installpkg dist/*.whl ++test-options -n auto"
           session: ${{ matrix.session }}
         run: |
+          if [ "$session" = "test-notebook" ]; then
+            options="$options -n 0"
+          fi
+
           # shellcheck disable=SC2086
           $NOX_COMMAND -s "${session}-${python_version}" -- $options
         shell: bash -euxo pipefail {0}
