@@ -14,7 +14,6 @@ dependencies:
   - python=3.13
   - bottleneck
   - cmomy>=1.0.3
-  - coverage<=7.13.0
   - dask
   - ipykernel
   - ipywidgets
