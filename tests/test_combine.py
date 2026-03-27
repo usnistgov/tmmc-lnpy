@@ -430,8 +430,8 @@ def test_combine_keep_first_split_dataset(
     # using single table:
     stacked = xr.concat(
         (
-            x
-            .expand_dims("window")  # noqa: PD013
+            x  # noqa: PD013
+            .expand_dims("window")
             .assign_coords(window=("window", [i]))
             .stack(index=["window", "x"])
             for i, x in enumerate(table_dataset_sequence)

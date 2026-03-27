@@ -735,8 +735,8 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             pv = self.betapV()
             sample = self._parent._concat_dim
             return (  # type: ignore[no-any-return]
-                pv
-                .unstack(sample)  # noqa: PD010, PD013
+                pv  # noqa: PD010, PD013
+                .unstack(sample)
                 .pipe(lambda x: x.max("phase") == x)
                 .stack(sample=pv.indexes[sample].names)
                 .loc[pv.indexes["sample"]]
