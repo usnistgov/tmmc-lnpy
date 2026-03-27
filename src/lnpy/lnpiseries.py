@@ -750,13 +750,15 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         regardless of phase
         """
         sample_frame = (
-            self.index.droplevel("phase")
+            self.index
+            .droplevel("phase")
             .drop_duplicates()
             .to_frame()
             .assign(lnz_sample=lambda x: np.arange(len(x)))["lnz_sample"]
         )
         return (
-            self.index.to_frame()
+            self.index
+            .to_frame()
             .reset_index("phase", drop=True)[["phase"]]
             .assign(lnz_index=lambda x: sample_frame[x.index])
             .reset_index()
@@ -877,9 +879,9 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         -------
         lnPiCollection
         """
-        table = pd.DataFrame(
-            [lnpi._index_dict(phase) for lnpi, phase in zip(items, index, strict=True)]
-        )
+        table = pd.DataFrame([
+            lnpi._index_dict(phase) for lnpi, phase in zip(items, index, strict=True)
+        ])
         new_index = pd.MultiIndex.from_frame(table)
         return cls(data=items, index=new_index, **kwargs)
 
@@ -969,7 +971,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         data = np.stack(labels)
 
         out = (
-            xr.DataArray(
+            xr
+            .DataArray(
                 data,
                 dims=self.xge.dims_rec + self.xge.dims_n,
                 name="labels",

@@ -64,7 +64,8 @@ def ref(request):
 
 def get_test_table(o, ref):
     return (
-        o.xge.table(
+        o.xge
+        .table(
             keys=[
                 "betaOmega",
                 "nvec",

@@ -15,12 +15,10 @@ def rng() -> np.random.Generator:
 
 def test_check_windows_overlap() -> None:
     # no overlaps:
-    overlap = pd.DataFrame(
-        {
-            "n": [],
-            "window": [],
-        }
-    )
+    overlap = pd.DataFrame({
+        "n": [],
+        "window": [],
+    })
 
     with pytest.raises(combine.OverlapError):
         combine.check_windows_overlap(
@@ -51,12 +49,10 @@ def test_check_windows_overlap() -> None:
             verbose=True,
         )
     # two graphs
-    overlap = pd.DataFrame(
-        {
-            "n": [0, 0, 1, 1],
-            "window": [0, 1, 2, 3],
-        }
-    )
+    overlap = pd.DataFrame({
+        "n": [0, 0, 1, 1],
+        "window": [0, 1, 2, 3],
+    })
 
     with pytest.raises(combine.OverlapError):
         combine.check_windows_overlap(
@@ -71,13 +67,11 @@ def test_check_windows_overlap() -> None:
 @pytest.fixture(scope="module")
 def table() -> pd.DataFrame:
     x = np.linspace(0, 10)
-    return pd.DataFrame(
-        {
-            "x": x,
-            "y": np.sin(x),
-            "z": np.cos(x),
-        }
-    )
+    return pd.DataFrame({
+        "x": x,
+        "y": np.sin(x),
+        "z": np.cos(x),
+    })
 
 
 @pytest.fixture(params=[1, 2, 4, 5])
@@ -142,7 +136,8 @@ def test_shift_lnpi_windows_single_table(table: pd.DataFrame) -> None:
     # single table
     table_sequence = [table]
     new = (
-        combine.shift_lnpi_windows(
+        combine
+        .shift_lnpi_windows(
             combine.concat_windows(table_sequence),
             macrostate_names="x",
             lnpi_name="y",
@@ -166,7 +161,8 @@ def test_shift_lnpi_windows_split(
     use_sparse: bool,
 ) -> None:
     new = (
-        combine.shift_lnpi_windows(
+        combine
+        .shift_lnpi_windows(
             combine.concat_windows(table_sequence),
             macrostate_names="x",
             lnpi_name="y",
@@ -191,13 +187,12 @@ def test_shift_lnpi_windows_split_other(
 ) -> None:
     # with window name already there
     new = (
-        combine.shift_lnpi_windows(
-            combine.concat_windows(
-                [
-                    x.assign(window="hello", other=1, _window_index="there")
-                    for x in table_sequence
-                ]
-            ),
+        combine
+        .shift_lnpi_windows(
+            combine.concat_windows([
+                x.assign(window="hello", other=1, _window_index="there")
+                for x in table_sequence
+            ]),
             macrostate_names="x",
             lnpi_name="y",
             use_sparse=use_sparse,
@@ -221,7 +216,8 @@ def test_shift_lnpi_windows_split_single_table(
 ) -> None:
     # already formed single table:
     new = (
-        combine.shift_lnpi_windows(
+        combine
+        .shift_lnpi_windows(
             pd.concat((x.assign(window=i) for i, x in enumerate(table_sequence))),
             macrostate_names="x",
             lnpi_name="y",
@@ -434,7 +430,8 @@ def test_combine_keep_first_split_dataset(
     # using single table:
     stacked = xr.concat(
         (
-            x.expand_dims("window")  # noqa: PD013
+            x  # noqa: PD013
+            .expand_dims("window")
             .assign_coords(window=("window", [i]))
             .stack(index=["window", "x"])
             for i, x in enumerate(table_dataset_sequence)
@@ -467,28 +464,24 @@ def test_updown_mean(
     nwindow = 2
     weight, down, up = rng.random((3, nwindow, nstate))
 
-    df_updown = pd.DataFrame(
-        {
-            "window": np.repeat(range(nwindow), nstate),
-            "state": np.tile(range(nstate), nwindow),
-            "n_trials": weight.reshape(-1),
-            "prob_down": down.reshape(-1),
-            "prob_up": up.reshape(-1),
-        }
-    )
+    df_updown = pd.DataFrame({
+        "window": np.repeat(range(nwindow), nstate),
+        "state": np.tile(range(nstate), nwindow),
+        "n_trials": weight.reshape(-1),
+        "prob_down": down.reshape(-1),
+        "prob_up": up.reshape(-1),
+    })
 
     # add a single value
-    df_add = pd.DataFrame(
-        [
-            {
-                "window": nwindow,
-                "state": nstate,
-                "n_trials": rng.random(),
-                "prob_down": rng.random(),
-                "prob_up": rng.random(),
-            }
-        ]
-    )
+    df_add = pd.DataFrame([
+        {
+            "window": nwindow,
+            "state": nstate,
+            "n_trials": rng.random(),
+            "prob_down": rng.random(),
+            "prob_up": rng.random(),
+        }
+    ])
     df_total = pd.concat((df_updown, df_add))
 
     out = combine.updown_mean(
@@ -512,13 +505,11 @@ def test_updown_mean(
 def test_updown_from_collectionmatrix(rng: np.random.Generator) -> None:
     c = rng.random((10, 3))
 
-    table = pd.DataFrame(
-        {
-            "n_trials": c.sum(-1),
-            "prob_down": c[:, 0] / c.sum(-1),
-            "prob_up": c[:, -1] / c.sum(-1),
-        }
-    )
+    table = pd.DataFrame({
+        "n_trials": c.sum(-1),
+        "prob_down": c[:, 0] / c.sum(-1),
+        "prob_up": c[:, -1] / c.sum(-1),
+    })
 
     out = combine.assign_updown_from_collectionmatrix(
         pd.DataFrame(c, columns=["c0", "c1", "c2"])
@@ -629,7 +620,8 @@ def test_assign_delta_assign_lnpi_from_updown(table_updown: pd.DataFrame) -> Non
 
 def test_assign_lnpi_from_updown(table_updown: pd.DataFrame) -> None:
     table = (
-        combine.assign_delta_lnpi_from_updown_indexed(table_updown)
+        combine
+        .assign_delta_lnpi_from_updown_indexed(table_updown)
         .assign(ln_prob=lambda x: x["delta_lnpi"].cumsum())
         .assign(ln_prob=lambda x: x["ln_prob"] - x["ln_prob"].max())
     )

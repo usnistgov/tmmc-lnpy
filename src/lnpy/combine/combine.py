@@ -124,9 +124,8 @@ def check_windows_overlap(
     overlap_table = overlap_table[[window_index_name, *macrostate_names]]
 
     x: pd.DataFrame = (
-        overlap_table.merge(
-            overlap_table, on=macrostate_names, how="outer", suffixes=("", "_nebr")
-        )
+        overlap_table
+        .merge(overlap_table, on=macrostate_names, how="outer", suffixes=("", "_nebr"))
         .drop(macrostate_names, axis=1)
         .query(f"{window_index_name} < {window_index_name}_nebr")
         .drop_duplicates()
@@ -181,13 +180,13 @@ def _concat_windows_xarray(
         # if wait until end, dtype might change because of missing values during concat and stack...
         def _process_object(obj: DataT, window: int) -> DataT:
             if window_name not in obj.dims:
-                return obj.expand_dims(window_name).assign_coords(
-                    {window_name: (window_name, [window])}
-                )
+                return obj.expand_dims(window_name).assign_coords({
+                    window_name: (window_name, [window])
+                })
             if overwrite_window:
-                return obj.assign_coords(
-                    {window_name: xr.full_like(obj[window_name], fill_value=window)}
-                )
+                return obj.assign_coords({
+                    window_name: xr.full_like(obj[window_name], fill_value=window)
+                })
             return obj
 
         out = xr.concat(  # pyright: ignore[reportCallIssue]
@@ -355,7 +354,8 @@ def concat_windows(
 
     This also works for multiple coordinates and assigned windows
     >>> data = [
-    ...     x.assign(window=name)
+    ...     x
+    ...     .assign(window=name)
     ...     .set_index(["rec", "window", "state"])
     ...     .to_xarray()["values"]
     ...     for x, name in zip(tables, ["a", "b"], strict=True)
@@ -387,7 +387,8 @@ def concat_windows(
     Things work as expected if data is already stacked. This simply calls
     :func:`xarray.concat` with ``dim=index_name``.
     >>> data = [
-    ...     x.assign(window=name)
+    ...     x
+    ...     .assign(window=name)
     ...     .to_xarray()
     ...     .set_index(index=["rec", "window", "state"])
     ...     for x, name in zip(tables, ["a", "b"], strict=True)
@@ -515,7 +516,8 @@ def _create_overlap_total_table(
 ) -> pd.DataFrame:
     group = overlap_table.groupby(macrostate_names, as_index=False)[lnpi_name]
     return (
-        overlap_table.assign(
+        overlap_table
+        .assign(
             total=group.transform("sum"),
             count=group.transform("count"),
         )
@@ -545,12 +547,10 @@ def _create_lhs_matrix_sparse(
     window_index_name: str,
     window_max: int,
 ) -> coo_array:
-    coeff_table = pd.concat(
-        (
-            overlap_total_table[["eq_idx", window_index_name, "count"]],
-            overlap_outer_table[["eq_idx", window_index_name]].assign(count=-1),
-        )
-    )
+    coeff_table = pd.concat((
+        overlap_total_table[["eq_idx", window_index_name, "count"]],
+        overlap_outer_table[["eq_idx", window_index_name]].assign(count=-1),
+    ))
 
     return coo_array(
         (
@@ -649,12 +649,10 @@ def shift_lnpi_windows(
     Examples
     --------
     >>> states = pd.DataFrame(range(5), columns=["state"])
-    >>> table = concat_windows(
-    ...     [
-    ...         table.assign(lnpi=lambda x: x["state"] + i * 10)
-    ...         for i, table in enumerate([states.iloc[:3], states.iloc[2:]])
-    ...     ]
-    ... )
+    >>> table = concat_windows([
+    ...     table.assign(lnpi=lambda x: x["state"] + i * 10)
+    ...     for i, table in enumerate([states.iloc[:3], states.iloc[2:]])
+    ... ])
     >>> table
        window  state  lnpi
     0       0      0     0
@@ -750,9 +748,9 @@ def shift_lnpi_windows(
     shift[:-1] = np.linalg.solve(lhs, rhs)
     shift -= shift[0]
 
-    return table.assign(
-        **{lnpi_name: table[lnpi_name] + shift[table[window_index_name].to_numpy()]}
-    ).drop(window_index_name, axis=1)
+    return table.assign(**{
+        lnpi_name: table[lnpi_name] + shift[table[window_index_name].to_numpy()]
+    }).drop(window_index_name, axis=1)
 
 
 # * keep_first
@@ -774,9 +772,9 @@ def _filter_min_max_keep_first(
     if not (window_max := window_map.iloc[-1]):
         return table
 
-    table = table.assign(
-        **{window_index_name: window_map[table[window_name]].to_numpy()}
-    )
+    table = table.assign(**{
+        window_index_name: window_map[table[window_name]].to_numpy()
+    })
 
     if check_connected:
         _ = _create_overlap_table(
@@ -789,15 +787,17 @@ def _filter_min_max_keep_first(
         )
 
     # remove overlap from beginning of each window
-    min_max = table.groupby(window_index_name, as_index=False)[state_name].agg(
-        ["min", "max"]
-    )
+    min_max = table.groupby(window_index_name, as_index=False)[state_name].agg([
+        "min",
+        "max",
+    ])
     keep_min = min_max["max"].shift(1, fill_value=-100)
     keep_max = min_max["max"]
     query = f"_keep_min < {state_name} <= _keep_max"
 
     return (
-        table.assign(
+        table
+        .assign(
             _keep_min=lambda x: keep_min[x[window_index_name]].to_numpy(),
             _keep_max=lambda x: keep_max[x[window_index_name]].to_numpy(),
         )
@@ -1092,7 +1092,8 @@ def updown_mean(
         )
 
     return (  # type: ignore[no-any-return,unused-ignore]
-        table.assign(  # type: ignore[call-overload,unused-ignore]  # pyright: ignore[reportCallIssue]
+        table
+        .assign(  # type: ignore[call-overload,unused-ignore]  # pyright: ignore[reportCallIssue]
             **{
                 down_name: lambda x: x[down_name] * x[weight_name],
                 up_name: lambda x: x[up_name] * x[weight_name],
@@ -1100,12 +1101,10 @@ def updown_mean(
         )
         .groupby(by, as_index=as_index, **kwargs)[[weight_name, down_name, up_name]]  # type: ignore[arg-type,unused-ignore] # pyright: ignore[reportArgumentType]
         .sum()
-        .assign(
-            **{
-                down_name: lambda x: x[down_name] / x[weight_name],
-                up_name: lambda x: x[up_name] / x[weight_name],
-            }
-        )
+        .assign(**{
+            down_name: lambda x: x[down_name] / x[weight_name],
+            up_name: lambda x: x[up_name] / x[weight_name],
+        })
     )
 
 
@@ -1276,9 +1275,7 @@ def delta_lnpi_from_updown(
             index=down.index,
         )
 
-    msg = (
-        f"Unknown {type(up)=}"  # pragma: no cover  # pyright: ignore[reportUnreachable]
-    )
+    msg = f"Unknown {type(up)=}"  # pragma: no cover  # pyright: ignore[reportUnreachable]
     raise TypeError(msg)  # pragma: no cover
 
 

@@ -645,7 +645,8 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
             csv_kws = {}
 
         da = (
-            pd.read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
+            pd
+            .read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
             .set_index(names[:-1])["lnpi"]
             .to_xarray()
         )
