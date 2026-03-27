@@ -112,9 +112,8 @@ def check_windows_overlap(
     overlap_table = overlap_table[[window_index_name, *macrostate_names]]
 
     x: pd.DataFrame = (
-        overlap_table.merge(
-            overlap_table, on=macrostate_names, how="outer", suffixes=("", "_nebr")
-        )
+        overlap_table
+        .merge(overlap_table, on=macrostate_names, how="outer", suffixes=("", "_nebr"))
         .drop(macrostate_names, axis=1)
         .query(f"{window_index_name} < {window_index_name}_nebr")
         .drop_duplicates()
@@ -168,7 +167,8 @@ def _create_overlap_total_table(
 ) -> pd.DataFrame:
     group = overlap_table.groupby(macrostate_names, as_index=False)[lnpi_name]
     return (
-        overlap_table.assign(
+        overlap_table
+        .assign(
             total=group.transform("sum"),
             count=group.transform("count"),
         )
@@ -198,12 +198,10 @@ def _create_lhs_matrix_sparse(
     window_index_name: str,
     window_max: int,
 ) -> coo_array:
-    coeff_table = pd.concat(
-        (
-            overlap_total_table[["eq_idx", window_index_name, "count"]],
-            overlap_outer_table[["eq_idx", window_index_name]].assign(count=-1),
-        )
-    )
+    coeff_table = pd.concat((
+        overlap_total_table[["eq_idx", window_index_name, "count"]],
+        overlap_outer_table[["eq_idx", window_index_name]].assign(count=-1),
+    ))
 
     return coo_array(
         (
@@ -259,12 +257,10 @@ def _shift_lnpi_windows(
     window_index_name = "_window_index"
     lnpi_name = "lnpi"
 
-    table = pd.DataFrame(
-        {
-            lnpi_name: lnpi,
-            window_index_name: window_codes,
-        }
-    )
+    table = pd.DataFrame({
+        lnpi_name: lnpi,
+        window_index_name: window_codes,
+    })
     table[macrostate_names] = macrostate
 
     overlap_total_table = _create_overlap_total_table(
@@ -514,9 +510,11 @@ def keep_first_indexer(
     )
 
     if check_connected:
-        for _, g in pd.DataFrame(
-            {"rec": rec, "window": window, "state": state}
-        ).groupby("rec"):
+        for _, g in pd.DataFrame({
+            "rec": rec,
+            "window": window,
+            "state": state,
+        }).groupby("rec"):
             _ = _create_overlap_table(
                 g,
                 window_index_name="window",

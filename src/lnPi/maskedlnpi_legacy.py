@@ -151,13 +151,11 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
 
     def __repr__(self) -> str:
         L: list[str] = []
-        L.extend(
-            (
-                f"lnz={self.lnz!r}",
-                f"state_kws={self.state_kws!r}",
-                f"data={super().__repr__()}",
-            )
-        )
+        L.extend((
+            f"lnz={self.lnz!r}",
+            f"state_kws={self.state_kws!r}",
+            f"data={super().__repr__()}",
+        ))
         if len(self.extra_kws) > 0:
             L.append(f"extra_kws={self.extra_kws!r}")
 
@@ -408,7 +406,8 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
             csv_kws = {}
 
         da = (
-            pd.read_csv(path, sep=sep, names=names, **csv_kws)
+            pd
+            .read_csv(path, sep=sep, names=names, **csv_kws)
             .set_index(names[:-1])["lnpi"]
             .to_xarray()
         )

@@ -547,7 +547,8 @@ class _SolveBinodal:
     def objective(self, x: float) -> float:
         self.collection = self.build_phases(x, ref=self.ref, **self.build_kws)
         out = (
-            self.collection.xge.betaOmega()
+            self.collection.xge
+            .betaOmega()
             .reindex(phase=self.ids)
             .diff("phase")
             .squeeze()

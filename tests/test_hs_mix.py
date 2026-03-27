@@ -30,7 +30,8 @@ def tag_phases2(x: Sequence[lnPiMasked]) -> np.ndarray[Any, np.dtype[Any]]:
 @pytest.fixture
 def ref():
     return (
-        lnpy.lnPiMasked.from_table(
+        lnpy.lnPiMasked
+        .from_table(
             path_data / "nahs_asym_mix.07_07_07.r1.lnpi_o.dat",
             lnz=np.array([0.5, 0.5]),
             state_kws={"beta": 1.0, "volume": 1.0},
@@ -77,7 +78,8 @@ def build_phases(obj, lnz2):
 
 def get_test_table(o, ref):
     return (
-        o.xge.table(
+        o.xge
+        .table(
             keys=[
                 "betaOmega",
                 "nvec",

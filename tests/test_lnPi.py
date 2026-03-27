@@ -59,7 +59,8 @@ def test_table(path_data):
 
 def get_test_table(o, ref):
     return (
-        o.xge.table(
+        o.xge
+        .table(
             keys=[
                 "betaOmega",
                 "nvec",
@@ -100,9 +101,8 @@ def test_table_can(path_data):
 
 def get_test_table_can(ref):
     return (
-        ref.xce.table(
-            keys=["S", "Z", "betaE", "betaF", "betaOmega", "betamu", "dens", "ntot"]
-        )
+        ref.xce
+        .table(keys=["S", "Z", "betaE", "betaF", "betaOmega", "betamu", "dens", "ntot"])
         .to_dataframe()
         .reset_index()
     )

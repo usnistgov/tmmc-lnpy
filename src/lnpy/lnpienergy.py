@@ -616,7 +616,8 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     w_argmin = pd.Series(w.w_argmin, index=w_min.index, name="w_argmin")
 
     w_tran: pd.Series[Any] = (  # pyright: ignore[reportAssignmentType]
-        pd.DataFrame(  # type: ignore[call-overload]  # noqa: PD013
+        pd
+        .DataFrame(  # type: ignore[call-overload]  # noqa: PD013
             w.w_tran,
             index=index,
             columns=index.get_level_values("phase").rename("phase_nebr"),

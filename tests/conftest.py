@@ -57,7 +57,8 @@ def get_ref(
     )["e"].to_numpy()
 
     return (
-        lnPiMasked.from_table(
+        lnPiMasked
+        .from_table(
             path_data / lnpi_name,
             fill_value=np.nan,
             lnz=lnz,
@@ -95,7 +96,8 @@ def ref_lnPi(path_data_lnPi):  # noqa: N802,N803
     )["e"].to_numpy()
 
     return (
-        lnPi.MaskedlnPiDelayed.from_table(
+        lnPi.MaskedlnPiDelayed
+        .from_table(
             path_data / "ljsf.t150.bulk.v512.r1.lnpi.dat",
             fill_value=np.nan,
             lnz=lnz,
