@@ -225,6 +225,7 @@ enable_error_code = [
 ]
 untyped_calls_exclude = [
     "IPython",
+    "numpy.ma",
     "skimage",
 ]
 warn_return_any = true
@@ -343,6 +344,7 @@ src.include = [
 [[tool.ty.overrides]]
 analysis.allowed-unresolved-imports = [ "matplotlib.*" ]
 include = [ "examples/**" ]
+rules = { missing-argument = "ignore" }
 
 # * Testing --------------------------------------------------------------------
 [tool.pytest.ini_options]

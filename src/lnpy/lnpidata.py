@@ -59,7 +59,7 @@ def _get_data(base: lnPiArray, dlnz: tuple[float, ...]) -> NDArrayAny:
 def _get_maskedarray(
     base: lnPiArray, self: lnPiMasked, dlnz: tuple[float, ...]
 ) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
-    return np.ma.MaskedArray(  # type: ignore[no-untyped-call]
+    return np.ma.MaskedArray(
         _get_data(base, dlnz),
         mask=self._mask,
         fill_value=base.fill_value,
@@ -224,7 +224,7 @@ class lnPiArray:  # noqa: N801
             Optional mask to apply to data.  Where `mask` is True,
             data is excluded from calculating maximum.
         """
-        data = self.data - np.ma.MaskedArray(self.data, mask).max()  # type: ignore[no-untyped-call]
+        data = self.data - np.ma.MaskedArray(self.data, mask).max()
         return self.new_like(data=data)
 
 
