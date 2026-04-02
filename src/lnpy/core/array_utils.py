@@ -23,21 +23,21 @@ def select_dtype(
     x: xr.Dataset,
     *,
     out: NDArrayAny | xr.DataArray | None,
-    dtype: DTypeLike,
+    dtype: DTypeLike | None,
 ) -> np.dtype[np.float32] | np.dtype[np.float64] | None: ...
 @overload
 def select_dtype(
     x: xr.DataArray | ArrayLike,
     *,
     out: NDArrayAny | xr.DataArray | None,
-    dtype: DTypeLike,
+    dtype: DTypeLike | None,
 ) -> np.dtype[np.float32] | np.dtype[np.float64]: ...
 @overload
 def select_dtype(
     x: xr.Dataset | xr.DataArray | ArrayLike,
     *,
     out: NDArrayAny | xr.DataArray | None,
-    dtype: DTypeLike,
+    dtype: DTypeLike | None,
 ) -> np.dtype[np.float32] | np.dtype[np.float64] | None: ...
 
 
@@ -45,7 +45,7 @@ def select_dtype(
     x: ArrayLike | xr.DataArray | xr.Dataset,
     *,
     out: NDArrayAny | xr.DataArray | None,
-    dtype: DTypeLike,
+    dtype: DTypeLike | None,
 ) -> np.dtype[np.float32] | np.dtype[np.float64] | None:  # DTypeLikeArg[Any]:
     """
     Select a dtype from, in order, out, dtype, or passed array.
@@ -71,7 +71,7 @@ def select_dtype(
 
 
 def asarray_maybe_recast(
-    data: ArrayLike, dtype: DTypeLike = None, recast: bool = False
+    data: ArrayLike, dtype: DTypeLike | None = None, recast: bool = False
 ) -> NDArrayAny:
     """Perform asarray with optional recast to `dtype` if not already an array."""
     if is_ndarray(data):

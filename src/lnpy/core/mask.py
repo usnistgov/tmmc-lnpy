@@ -224,7 +224,7 @@ def masks_to_labels(
     masks: Iterable[NDArrayAny],
     features: Iterable[int] | None = None,
     convention: MaskConvention = "image",
-    dtype: DTypeLike = np.int64,
+    dtype: DTypeLike | None = np.int64,
 ) -> NDArrayAny:
     """
     Convert list of masks to labels

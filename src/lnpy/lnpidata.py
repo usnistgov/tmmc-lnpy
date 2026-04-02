@@ -33,13 +33,13 @@ if TYPE_CHECKING:
 
 
 # * Utilities -----------------------------------------------------------------
-def _get_n_ranges(shape: tuple[int, ...], dtype: DTypeLike) -> list[NDArrayAny]:
+def _get_n_ranges(shape: tuple[int, ...], dtype: DTypeLike | None) -> list[NDArrayAny]:
     return [np.arange(s, dtype=dtype) for s in shape]
 
 
 @lru_cache(maxsize=20)
 def _get_shift(
-    shape: tuple[int, ...], dlnz: tuple[float, ...], dtype: DTypeLike
+    shape: tuple[int, ...], dlnz: tuple[float, ...], dtype: DTypeLike | None
 ) -> NDArrayAny:
     shift = np.zeros([], dtype=dtype)
     for _i, (nr, m) in enumerate(
