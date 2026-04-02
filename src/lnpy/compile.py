@@ -34,7 +34,6 @@ logger = logging.getLogger("lnpy.compile")
 
 
 class _Catchtime:
-    # pylint: disable=attribute-defined-outside-init
     def __init__(self) -> None:
         self.start = 0.0
         self.time = 0.0
@@ -118,9 +117,9 @@ def _parser_args(args: Sequence[str] | None = None) -> argparse.Namespace:
             self,
             option_strings: str,
             dest: str,
-            **kwargs: str | None,
+            **kwargs: Any,
         ) -> None:
-            super().__init__(option_strings, dest, nargs=0, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+            super().__init__(option_strings, dest, nargs=0, **kwargs)
 
         def __call__(
             self,

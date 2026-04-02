@@ -253,7 +253,6 @@ def _refine_bracket_spinodal_right(
 
         ########
         # converged?
-        # pylint: disable=redefined-variable-type
         if np.allclose(left._get_lnz(), right._get_lnz(), **close_kws):
             # we've reached a breaking point
             if left_done:

@@ -296,7 +296,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self._base_class = base_class
         self._verify = self._base_class is not None
 
-        series: pd.Series[Any] = pd.Series(  # type: ignore[misc]  # pyright: ignore[reportCallIssue]
+        series: pd.Series[Any] = pd.Series(  # type: ignore[misc]  # pyright: ignore[reportCallIssue]  # ty: ignore[no-matching-overload]
             data=data,  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]
             index=index,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
             dtype=dtype,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
@@ -405,8 +405,37 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     def copy(self) -> Self:
         return type(self)(data=self.s, base_class=self._base_class)
 
+    @overload
     def _wrapped_pandas_method(
-        self, mtd: str, *args: Any, wrap: bool = False, **kwargs: Any
+        self,
+        mtd: str,
+        *args: Any,
+        wrap: Literal[True],
+        **kwargs: Any,
+    ) -> lnPiMasked | Self: ...
+    @overload
+    def _wrapped_pandas_method(
+        self,
+        mtd: str,
+        *args: Any,
+        wrap: Literal[False] = ...,
+        **kwargs: Any,
+    ) -> lnPiMasked | pd.Series[Any] | Self: ...
+    @overload
+    def _wrapped_pandas_method(
+        self,
+        mtd: str,
+        *args: Any,
+        wrap: bool,
+        **kwargs: Any,
+    ) -> lnPiMasked | pd.Series[Any] | Self: ...
+
+    def _wrapped_pandas_method(
+        self,
+        mtd: str,
+        *args: Any,
+        wrap: bool = False,
+        **kwargs: Any,
     ) -> lnPiMasked | pd.Series[Any] | Self:
         """Wrap a generic pandas method to ensure it returns a GeoSeries"""
         val = getattr(self._series, mtd)(*args, **kwargs)
@@ -429,7 +458,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     def __getitem__(self, key: Any) -> Self | lnPiMasked:
         """Interface to :meth:`pandas.Series.__getitem__`"""
-        return self._wrapped_pandas_method("__getitem__", wrap=True, key=key)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+        return self._wrapped_pandas_method("__getitem__", wrap=True, key=key)
 
     def __setitem__(
         self, idx: Any, values: lnPiMasked | Sequence[lnPiMasked] | pd.Series[Any]
@@ -442,7 +471,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     def append(
         self,
-        to_append: pd.Series[Any] | Self,
+        to_append: pd.Series[Any] | lnPiCollection | Self,
         ignore_index: bool = False,
         verify_integrity: bool = True,
         concat_kws: Mapping[str, Any] | None = None,
@@ -509,7 +538,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         **kwds: Any,
     ) -> Self | pd.Series[Any]:
         """Interface to :meth:`pandas.Series.apply`"""
-        return self._wrapped_pandas_method(  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+        return self._wrapped_pandas_method(  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
             "apply",
             wrap=wrap,
             func=func,
@@ -574,7 +603,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         --------
         pandas.Series.groupby
         """
-        group = self.s.groupby(  # pyright: ignore[reportCallIssue]
+        group = self.s.groupby(  # pyright: ignore[reportCallIssue]  # ty: ignore[no-matching-overload]
             by=by,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
             level=level,
             as_index=as_index,
@@ -652,14 +681,14 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             out = {}
             remap = None
             for k in objs:
-                v = objs[k]  # pyright: ignore[reportArgumentType]
+                v = objs[k]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
                 if remap is None:
                     remap = bool(isinstance(v, cls))
-                if remap:
+                if remap and hasattr(v, "_series"):
                     out[k] = v._series
                 else:
                     out[k] = v
-            objs = out  # pylint: disable=redefined-variable-type
+            objs = out
         else:
             first, objs = peek_at(objs)  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
             if isinstance(first, cls):
@@ -1083,7 +1112,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         labels = []
         lnzs = []
 
-        for _, g in da.groupby(grouper):  # type: ignore[arg-type, unused-ignore]  # pyright: ignore[reportArgumentType]
+        for _, g in da.groupby(grouper):  # type: ignore[arg-type, unused-ignore]  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
             lnzs.append(np.array([g.coords[k] for k in da.attrs["dims_lnz"]]))
             labels.append(g.values)
 
@@ -1175,8 +1204,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             other = self
         spin = other.spinodal
         bino = other.binodal
+
+        new: Self
         if append:
-            new = self.append(spin.appender).append(bino.appender)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+            new = self.append(spin.appender).append(bino.appender)
             if sort:
                 new = new.sort_index()
         else:

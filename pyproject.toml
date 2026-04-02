@@ -85,13 +85,10 @@ test = [
     { include-group = "pytest" },
 ]
 type = [
-<<<<<<< before updating
     "pandas-stubs",
     "scipy-stubs",
     "types-tqdm",
-=======
     { include-group = "nox" },
->>>>>>> after updating
     { include-group = "pylint" },
     { include-group = "pytest" },
     { include-group = "typecheck-runner" },
@@ -225,6 +222,7 @@ enable_error_code = [
     "truthy-bool",
 ]
 untyped_calls_exclude = [
+    "IPython",
     "skimage",
 ]
 warn_return_any = true

@@ -402,7 +402,7 @@ class Segmenter:
         --------
         ~skimage.segmentation.watershed
         """
-        from skimage.segmentation import watershed
+        from skimage.segmentation import watershed  # pylint: disable=no-name-in-module
 
         if connectivity is None:
             connectivity = data.ndim

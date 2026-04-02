@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from lnpy import lnPiMasked
+from lnpy import lnPiMasked  # pylint: disable=no-name-in-module
 
 
 def get_lnz(path):

@@ -72,8 +72,8 @@ def _get_filled(
     self: lnPiMasked,
     dlnz: tuple[float, ...],
     fill_value: float | None = None,
-) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
-    return _get_maskedarray(base, self, dlnz).filled(fill_value)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+) -> NDArray[Any]:
+    return _get_maskedarray(base, self, dlnz).filled(fill_value)
 
 
 # * lnPiArray -----------------------------------------------------------------
@@ -646,7 +646,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         da = (
             pd
-            .read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
+            .read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty: ignore[no-matching-overload]
             .set_index(names[:-1])["lnpi"]
             .to_xarray()
         )

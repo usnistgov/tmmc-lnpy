@@ -20,7 +20,7 @@ pyright-notebook *files=NOTEBOOKS: (_nbqa_typecheck "-cpyright" files)
 
 [group("notebook")]
 [group("typecheck")]
-basedpyright-notebook *files=NOTEBOOKS: (_nbqa_typecheck "-cbasedpyright" files)
+basedpyright-notebook *files=NOTEBOOKS: (_nbqa_typecheck "-c'basedpyright'" files)
 
 [group("notebook")]
 [group("typecheck")]

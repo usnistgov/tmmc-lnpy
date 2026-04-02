@@ -4,14 +4,14 @@
 from __future__ import annotations
 
 from functools import lru_cache
+from importlib.util import find_spec
 from typing import TYPE_CHECKING, cast
 
 from lnpy.options import OPTIONS
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
-    from types import ModuleType
-    from typing import Any
+    from typing import Any, Literal
 
     from .typing_compat import TypeVar
 
@@ -19,25 +19,20 @@ if TYPE_CHECKING:
 
 
 # * TQDM setup ----------------------------------------------------------------
-@lru_cache
-def _get_tqdm() -> ModuleType | None:
-    try:
-        import tqdm
-    except ImportError:
-        return None
-
-    return tqdm
+HAS_TQDM = find_spec("tqdm")
 
 
 @lru_cache
 def _get_tqdm_default() -> Callable[..., Any]:
-    if tqdm_ := _get_tqdm():
+    if HAS_TQDM:
+        import tqdm as tqdm_
+
         try:
             from IPython.core.getipython import (
                 get_ipython,
             )
 
-            p = get_ipython()  # type: ignore[no-untyped-call, unused-ignore]
+            p = get_ipython()
             if p is not None and p.has_trait("kernel"):
                 from tqdm.notebook import tqdm as tqdm_default
 
@@ -55,7 +50,10 @@ def _get_tqdm_default() -> Callable[..., Any]:
 
 def tqdm(seq: Iterable[T], *args: Any, **kwargs: Any) -> Iterable[T]:
     opt = OPTIONS["tqdm_bar"]
-    if tqdm_ := _get_tqdm():
+    if HAS_TQDM:
+        import tqdm as tqdm_
+
+        func: Any
         if opt == "text":
             func = tqdm_.tqdm
         elif opt == "notebook":
@@ -68,23 +66,20 @@ def tqdm(seq: Iterable[T], *args: Any, **kwargs: Any) -> Iterable[T]:
 
 
 def get_tqdm(
-    seq: Iterable[T], len_min: str | int, leave: bool | None = None, **kwargs: Any
+    seq: Iterable[T],
+    len_min: int | Literal["tqdm_len_calc", "tqdm_len_build"],
+    leave: bool | None = None,
+    **kwargs: Any,
 ) -> Iterable[T]:
     n = kwargs.get("total")
-    tqdm_ = _get_tqdm()
-
     if isinstance(len_min, str):
-        len_min = OPTIONS[len_min]  # type: ignore[literal-required]
-
-        if not isinstance(len_min, int):
-            msg = f"{type(len_min)=} must be an int or a string in options."
-            raise TypeError(msg)
+        len_min = OPTIONS[len_min]
 
     if n is None:
         seq = tuple(seq)
         n = len(seq)
 
-    if tqdm_ and OPTIONS["tqdm_use"] and n >= len_min:
+    if HAS_TQDM and OPTIONS["tqdm_use"] and n >= len_min:
         if leave is None:
             leave = OPTIONS["tqdm_leave"]
         seq = tqdm(seq, leave=leave, **kwargs)

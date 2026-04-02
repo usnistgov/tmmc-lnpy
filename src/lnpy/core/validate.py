@@ -67,9 +67,9 @@ def validate_str_or_iterable(x: str | Iterable[str]) -> list[str]:
 
 
 def validate_sequence(iterable: Iterable[T]) -> Sequence[T]:
-    if not isinstance(iterable, Sequence):
-        return list(iterable)
-    return iterable
+    if isinstance(iterable, Sequence):
+        return iterable  # ty: ignore[invalid-return-type]
+    return list(iterable)
 
 
 def validate_list(iterable: Iterable[T]) -> list[T]:
