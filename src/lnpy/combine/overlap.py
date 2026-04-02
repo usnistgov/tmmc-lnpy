@@ -475,7 +475,7 @@ def _keep_first_indexer(
     ]
     state_min[grouper_grouper_rec.index[grouper_grouper_rec.start]] = -1
 
-    indexer, count = factory_keep_first_indexer(parallel)(  # pylint: disable=unpacking-non-sequence,unexpected-keyword-arg,no-value-for-parameter
+    indexer, count = factory_keep_first_indexer(parallel)(  # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
         state,
         state_min,
         grouper_rec_window.index,

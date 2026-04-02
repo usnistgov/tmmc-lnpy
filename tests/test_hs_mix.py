@@ -101,8 +101,8 @@ def test_collection(obj, build_phases, lnzs) -> None:
     ref = obj.ref
 
     c = lnpy.lnPiCollection.from_builder(lnzs, build_phases)
-    c.spinodal(2, build_phases, inplace=True, unstack=True)  # pylint: disable=too-many-function-args,unexpected-keyword-arg
-    c.binodal(2, build_phases, inplace=True, unstack=True)  # pylint: disable=too-many-function-args,unexpected-keyword-arg
+    c.spinodal(2, build_phases, inplace=True, unstack=True)
+    c.binodal(2, build_phases, inplace=True, unstack=True)
 
     for path, y in (
         ("data_0", c),

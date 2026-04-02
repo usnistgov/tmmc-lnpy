@@ -1,5 +1,6 @@
 # pylint: disable=file-ignored
 # pylint: skip-file
+# pyright:reportUnnecessaryTypeIgnoreComment=false
 """
 Legacy lnPi array routines (:mod:`~lnPi.maskedlnpi_legacy`)
 ===========================================================
@@ -59,8 +60,8 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
 
         obj = np.ma.array(data, **kwargs).view(cls)
         # make sure to broadcast mask if it is just False
-        if obj.mask is False:
-            obj.mask = False
+        if obj.mask is False:  # type: ignore[comparison-overlap, unused-ignore]
+            obj.mask = False  # type: ignore[unreachable, unused-ignore]
 
         # set mu value:
         if lnz is None:
@@ -75,7 +76,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         if extra_kws is None:
             extra_kws = {}
 
-        obj._optinfo.update(
+        obj._optinfo.update(  # type: ignore[attr-defined, unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]
             lnz=lnz,
             state_kws=state_kws,
             extra_kws=extra_kws,
@@ -293,7 +294,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
             shift = np.add.outer(shift, np.arange(s) * m)
 
         new.data[...] += shift
-        new.adjust(zeromax=zeromax, pad=pad, inplace=True)
+        _ = new.adjust(zeromax=zeromax, pad=pad, inplace=True)
 
         return new
 

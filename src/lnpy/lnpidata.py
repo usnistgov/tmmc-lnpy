@@ -33,13 +33,13 @@ if TYPE_CHECKING:
 
 
 # * Utilities -----------------------------------------------------------------
-def _get_n_ranges(shape: tuple[int, ...], dtype: DTypeLike) -> list[NDArrayAny]:
+def _get_n_ranges(shape: tuple[int, ...], dtype: DTypeLike | None) -> list[NDArrayAny]:
     return [np.arange(s, dtype=dtype) for s in shape]
 
 
 @lru_cache(maxsize=20)
 def _get_shift(
-    shape: tuple[int, ...], dlnz: tuple[float, ...], dtype: DTypeLike
+    shape: tuple[int, ...], dlnz: tuple[float, ...], dtype: DTypeLike | None
 ) -> NDArrayAny:
     shift = np.zeros([], dtype=dtype)
     for _i, (nr, m) in enumerate(
@@ -59,7 +59,7 @@ def _get_data(base: lnPiArray, dlnz: tuple[float, ...]) -> NDArrayAny:
 def _get_maskedarray(
     base: lnPiArray, self: lnPiMasked, dlnz: tuple[float, ...]
 ) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
-    return np.ma.MaskedArray(  # type: ignore[no-untyped-call]
+    return np.ma.MaskedArray(
         _get_data(base, dlnz),
         mask=self._mask,
         fill_value=base.fill_value,
@@ -72,8 +72,8 @@ def _get_filled(
     self: lnPiMasked,
     dlnz: tuple[float, ...],
     fill_value: float | None = None,
-) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
-    return _get_maskedarray(base, self, dlnz).filled(fill_value)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+) -> NDArray[Any]:
+    return _get_maskedarray(base, self, dlnz).filled(fill_value)
 
 
 # * lnPiArray -----------------------------------------------------------------
@@ -224,7 +224,7 @@ class lnPiArray:  # noqa: N801
             Optional mask to apply to data.  Where `mask` is True,
             data is excluded from calculating maximum.
         """
-        data = self.data - np.ma.MaskedArray(self.data, mask).max()  # type: ignore[no-untyped-call]
+        data = self.data - np.ma.MaskedArray(self.data, mask).max()
         return self.new_like(data=data)
 
 
@@ -646,7 +646,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         da = (
             pd
-            .read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
+            .read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty: ignore[no-matching-overload]
             .set_index(names[:-1])["lnpi"]
             .to_xarray()
         )

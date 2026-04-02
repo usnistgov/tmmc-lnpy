@@ -23,7 +23,7 @@ def copy_if_needed(
 ) -> bool:  # Lie here so can support both versions...
     """Callable to return copy if needed convention..."""
     if not copy:
-        return _COPY_IF_NEEDED  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+        return _COPY_IF_NEEDED  # type: ignore[return-value]  # pyright: ignore[reportReturnType] # ty: ignore[invalid-return-type]
     return copy
 
 
@@ -44,7 +44,7 @@ def xr_dot(
     import xarray as xr
 
     try:
-        return xr.dot(*arrays, dim=dim, **kwargs)  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]
+        return xr.dot(*arrays, dim=dim, **kwargs)  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
     except TypeError:
         return xr.dot(*arrays, dims=dim, **kwargs)  # type: ignore[arg-type,unused-ignore]
 
@@ -69,13 +69,13 @@ def rootresults(
             root=root,
             iterations=iterations,
             function_calls=function_calls,
-            flag=flag,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
-            method=method,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+            flag=flag,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
+            method=method,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
         )
     except TypeError:
-        return RootResults(  # type: ignore[call-arg] # pyright: ignore[reportCallIssue]  # pylint: disable=no-value-for-parameter
+        return RootResults(  # type: ignore[call-arg] # pyright: ignore[reportCallIssue]  # pylint: disable=no-value-for-parameter # ty: ignore[missing-argument]
             root=root,
             iterations=iterations,
             function_calls=function_calls,
-            flag=flag,  # type: ignore[arg-type]
+            flag=flag,  # type: ignore[arg-type]  # ty: ignore[invalid-argument-type]
         )

@@ -6,7 +6,12 @@ Legacy interface to :mod:`lnpy` (:mod:`lnPi`)
 
 from warnings import warn
 
-from lnpy import __version__, options, segment, set_options
+from lnpy import (  # pylint: disable=no-name-in-module
+    __version__,
+    options,
+    segment,
+    set_options,
+)
 from lnpy.lnpidata import lnPiMasked as MaskedlnPiDelayed
 from lnpy.lnpiseries import lnPiCollection as CollectionlnPi
 

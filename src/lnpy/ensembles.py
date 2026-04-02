@@ -1119,5 +1119,5 @@ class CanonicalEnsemble:
             if isinstance(dim_to_suffix, str):
                 dim_to_suffix = [dim_to_suffix]
             for dim in dim_to_suffix:
-                ds = ds.pipe(dim_to_suffix_dataset, dim=dim)  # pylint: disable=redefined-variable-type
+                ds = ds.pipe(dim_to_suffix_dataset, dim=dim)
         return ds

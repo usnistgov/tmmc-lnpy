@@ -1,4 +1,3 @@
-# pylint: disable=redefined-builtin
 # pyright: reportUnreachable=false
 """
 Light weight argparser from a dataclass.
