@@ -180,12 +180,12 @@ def _concat_windows_xarray(
         # if wait until end, dtype might change because of missing values during concat and stack...
         def _process_object(obj: DataT, window: int) -> DataT:
             if window_name not in obj.dims:
-                return obj.expand_dims(window_name).assign_coords({
+                return obj.expand_dims(window_name).assign_coords({  # ty: ignore[invalid-argument-type]
                     window_name: (window_name, [window])
                 })
             if overwrite_window:
                 return obj.assign_coords({
-                    window_name: xr.full_like(obj[window_name], fill_value=window)
+                    window_name: xr.full_like(obj[window_name], fill_value=window)  # ty: ignore[invalid-argument-type]
                 })
             return obj
 
@@ -986,7 +986,7 @@ def keep_first(
 
         # indexing dataframe
         frame = (
-            data[index_name]
+            data[index_name]  # ty: ignore[invalid-argument-type]
             .pipe(lambda x: x.copy(data=range(len(x))))  # pyright: ignore[reportArgumentType]
             .to_dataframe()[index_name]
             .reset_index()
@@ -999,7 +999,7 @@ def keep_first(
             )
         )
         # select relevant indices
-        data = data.isel({index_name: frame[index_name].to_numpy()})
+        data = data.isel({index_name: frame[index_name].to_numpy()})  # ty: ignore[invalid-argument-type]
         # optionally reset window_name
         if reset_window:
             data = data.reset_index(window_name)
@@ -1010,8 +1010,8 @@ def keep_first(
 
     # Do calculation
     if is_dataframe(table):
-        return _process_dataframe(table)
-    return _process_xarray(table)
+        return _process_dataframe(table)  # ty: ignore[invalid-return-type]
+    return _process_xarray(table)  # ty: ignore[invalid-argument-type]
 
 
 # combine on mean
@@ -1087,12 +1087,12 @@ def updown_mean(
     """
     if use_running:
         columns = [weight_name, down_name, up_name]
-        return table.groupby(by, as_index=as_index, **kwargs)[columns].apply(  # type: ignore[no-any-return,call-overload,arg-type,unused-ignore]  # no clue why this is throwing an error  # pyright: ignore[reportCallIssue, reportArgumentType]
+        return table.groupby(by, as_index=as_index, **kwargs)[columns].apply(  # type: ignore[no-any-return,call-overload,arg-type,unused-ignore]  # no clue why this is throwing an error  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty: ignore[no-matching-overload]
             _factory_average_updown(*columns)
         )
 
     return (  # type: ignore[no-any-return,unused-ignore]
-        table
+        table  # ty: ignore[no-matching-overload]
         .assign(  # type: ignore[call-overload,unused-ignore]  # pyright: ignore[reportCallIssue]
             **{
                 down_name: lambda x: x[down_name] * x[weight_name],
@@ -1170,7 +1170,7 @@ def updown_from_collectionmatrix(
     weight = c0 + c1 + c2
     down = c0 / weight
     up = c2 / weight
-    return weight, down, up  # pyright: ignore[reportReturnType]
+    return weight, down, up  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
 
 
 @docfiller_local
@@ -1198,11 +1198,11 @@ def assign_updown_from_collectionmatrix(
     DataFrame
         New dataframe with assigned columns.
     """
-    return table.assign(
+    return table.assign(  # ty: ignore[invalid-argument-type]
         **dict(  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
             zip(
                 [weight_name, down_name, up_name],
-                updown_from_collectionmatrix(*(table[c] for c in matrix_names)),
+                updown_from_collectionmatrix(*(table[c] for c in matrix_names)),  # ty: ignore[invalid-argument-type]
                 strict=True,
             )
         )
@@ -1246,8 +1246,8 @@ def delta_lnpi_from_updown(
         up_, down_, delta = (np.moveaxis(x, axis, -1) for x in (up_, down, delta))
 
         delta[..., 0] = 0.0
-        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])
-        return np.moveaxis(delta, -1, axis)  # pyright: ignore[reportReturnType]
+        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # ty: ignore[invalid-argument-type]
+        return np.moveaxis(delta, -1, axis)  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
 
     if is_dataarray(down):
         axis, dim = select_axis_dim(down, axis, dim)
@@ -1269,7 +1269,7 @@ def delta_lnpi_from_updown(
         return out.rename(name)  # pyright: ignore[reportReturnType]
 
     if is_series(down):
-        return pd.Series(
+        return pd.Series(  # ty: ignore[invalid-return-type]
             delta_lnpi_from_updown(down=down.to_numpy(), up=up),  # type: ignore[arg-type]
             name=name,
             index=down.index,
@@ -1311,7 +1311,7 @@ def lnpi_from_updown(
         ln_prob = delta_lnpi_from_updown(down=down, up=up, axis=axis).cumsum(axis=axis)
         # subtract maximum
         ln_prob -= ln_prob.max(axis=axis, keepdims=True)
-        return normalize_lnpi(ln_prob, axis=axis) if norm else ln_prob
+        return normalize_lnpi(ln_prob, axis=axis) if norm else ln_prob  # ty: ignore[invalid-return-type]
 
     if is_dataarray(down):
         axis, dim = select_axis_dim(down, axis, dim)
@@ -1329,7 +1329,7 @@ def lnpi_from_updown(
         return out.rename(name)  # pyright: ignore[reportReturnType]
 
     if is_series(down):
-        return pd.Series(
+        return pd.Series(  # ty: ignore[invalid-return-type]
             lnpi_from_updown(down=down.to_numpy(), up=up, norm=norm),  # type: ignore[arg-type]
             name=name,
             index=down.index,
@@ -1385,8 +1385,8 @@ def assign_lnpi_from_updown(
         New dataframe with assigned :math:`\ln \Pi`.
     """
     ln_prob = lnpi_from_updown(
-        down=table[down_name],
-        up=table[up_name],
+        down=table[down_name],  # ty:ignore[invalid-argument-type]
+        up=table[up_name],  # ty:ignore[invalid-argument-type]
         norm=norm,
         name=lnpi_name,
         axis=axis,
@@ -1420,7 +1420,7 @@ def _apply_indexed_function(
     if is_series(first):
         return pd.Series(
             _apply_indexed_function(
-                *(a.to_numpy() for a in args),  # pyright: ignore[reportAttributeAccessIssue]
+                *(a.to_numpy() for a in args),  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload]
                 factory_gufunc=factory_gufunc,
                 axis=-1,
                 grouper=grouper,
@@ -1430,7 +1430,7 @@ def _apply_indexed_function(
                 parallel=parallel,
             ),
             index=first.index,
-        )
+        )  # ty:ignore[invalid-return-type]
 
     if is_dataarray(first):
         dtype = select_dtype(first, out=out, dtype=dtype)
@@ -1472,7 +1472,7 @@ def _apply_indexed_function(
         axes=axes,
         casting=casting,
         signature=tuple(signature),
-    )
+    )  # ty:ignore[invalid-return-type]
 
 
 @docfiller_local
@@ -1720,7 +1720,7 @@ def _assign_indexed_function_result(
         apply_ufunc_kwargs=apply_ufunc_kwargs,
         **kwargs,
     )
-    return table.assign(**{name: result})
+    return table.assign(**{name: result})  # ty:ignore[invalid-argument-type]
 
 
 @docfiller_local

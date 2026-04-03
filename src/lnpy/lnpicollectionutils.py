@@ -185,17 +185,19 @@ def get_lnz_min(
         msg = "could not find right bounds"
         raise RuntimeError(msg)
 
+    shared: dict[str, Any] = {}
+
     def f(x: float) -> float:
         lnz_new = x
         p = build_phases(lnz_new, ref=ref, **build_kws)
-        f.lnpi = p  # type: ignore[attr-defined]  # pyright: ignore[reportFunctionMemberAccess]
+        shared["lnpi"] = p
         return array_to_scalar(getter(p).values) - target
 
     a, b = sorted([x._get_lnz(lnz_idx) for x in (left, right)])
 
     xx, r = brentq(f, a, b, full_output=True, **(solve_kws or {}))
 
-    return f.lnpi, rootresults_to_rootresultdict(r, residual=f(xx))  # type: ignore[attr-defined]  # pyright: ignore[reportFunctionMemberAccess]
+    return shared["lnpi"], rootresults_to_rootresultdict(r, residual=f(xx))
 
 
 def get_lnz_max(
@@ -226,8 +228,8 @@ def get_lnz_max(
     right: lnPiCollection | None = None
     lnz_left: float | None = None
     lnz_right: float | None = None
-    n_left: int | None = None
-    n_right: int | None = None
+    n_left: int = -1
+    n_right: int = -1
 
     def getter(p: lnPiCollection) -> xr.DataArray:
         v = p.xge.edge_distance(ref)
@@ -296,7 +298,7 @@ def get_lnz_max(
         raise RuntimeError(msg)
 
     # not do bisection
-    bracket = [left, right]
+    bracket: list[lnPiCollection] = [left, right]
     values = [getter(x).to_numpy() for x in bracket]
 
     for i in range(ntry):

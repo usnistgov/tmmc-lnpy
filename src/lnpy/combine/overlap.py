@@ -371,7 +371,7 @@ def shift_lnpi_windows(
                 check_connected=check_connected,
             ),
             index=lnpi.index,
-        )
+        )  # ty:ignore[invalid-return-type]
 
     if is_dataarray(lnpi):
         _, dim = select_axis_dim(lnpi, -1, dim)
@@ -393,14 +393,14 @@ def shift_lnpi_windows(
 
     return _shift_lnpi_windows_indexed(
         lnpi,
-        window,  # pyright: ignore[reportArgumentType]
+        window,  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
         np.stack(macrostate, axis=-1),
         grouper.index,
         grouper.start,
         grouper.end,
         use_sparse,
         check_connected,
-    )
+    )  # ty:ignore[invalid-return-type]
 
 
 def assign_shift_lnpi_windows(
@@ -420,9 +420,9 @@ def assign_shift_lnpi_windows(
     grouper = factory_indexed_grouper(grouper, data=table, dim=dim, axis=-1)
 
     out = shift_lnpi_windows(
-        table if is_dataarray(table) else table[lnpi_name],  # type: ignore[redundant-expr]
-        table[window_name],
-        *(table[k] for k in validate_str_or_iterable(macrostate_names)),
+        table if is_dataarray(table) else table[lnpi_name],  # type: ignore[redundant-expr]  # ty:ignore[invalid-argument-type]
+        table[window_name],  # ty:ignore[invalid-argument-type]
+        *(table[k] for k in validate_str_or_iterable(macrostate_names)),  # ty:ignore[invalid-argument-type]
         grouper=grouper,
         use_sparse=use_sparse,
         check_connected=check_connected,
@@ -432,8 +432,8 @@ def assign_shift_lnpi_windows(
     )
 
     if is_dataarray(table):
-        return out  # pyright: ignore[reportReturnType]
-    return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        return out  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
+    return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
 
 # * Keep first combine --------------------------------------------------------
@@ -499,11 +499,11 @@ def keep_first_indexer(
     check_connected: bool = False,
 ) -> NDArrayInt:
     def _factorize(*x: str | ArrayLike, sort: bool = False) -> NDArrayInt:
-        args = [table[k] if isinstance(k, str) else k for k in x]
-        idx = args[0] if len(args) == 1 else pd.MultiIndex.from_arrays(args)  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]
-        return pd.factorize(idx, sort=sort)[0]  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]
+        args = [table[k] if isinstance(k, str) else k for k in x]  # ty:ignore[invalid-argument-type]
+        idx = args[0] if len(args) == 1 else pd.MultiIndex.from_arrays(args)  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        return pd.factorize(idx, sort=sort)[0]  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
 
-    state = np.array(table[state] if isinstance(state, str) else state)
+    state = np.array(table[state] if isinstance(state, str) else state)  # ty:ignore[invalid-argument-type]
     window = _factorize(window)
     rec = (
         _factorize(*group) if len(group) > 0 else np.zeros(len(window), dtype=np.int64)
@@ -555,5 +555,5 @@ def keep_first(
     if is_dataframe(table):
         return table.iloc[indexer]
 
-    axis, dim = select_axis_dim(table, axis, dim)
-    return table.isel({dim: indexer})
+    axis, dim = select_axis_dim(table, axis, dim)  # ty:ignore[invalid-argument-type]
+    return table.isel({dim: indexer})  # ty:ignore[invalid-argument-type]

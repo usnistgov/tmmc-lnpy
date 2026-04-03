@@ -76,7 +76,7 @@ def xr_name(
     def decorator(
         func: C_Ensemble[EnsembleT, P, xr.DataArray],
     ) -> C_Ensemble[EnsembleT, P, xr.DataArray]:
-        name_ = func.__name__.lstrip("_") if name is None else name
+        name_ = func.__name__.lstrip("_") if name is None else name  # ty: ignore[unresolved-attribute]
 
         @wraps(func)
         def wrapper(
@@ -387,7 +387,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
         **kwargs: Any,
     ) -> xr.DataArray:
         if callable(func_or_array):
-            x = func_or_array(self, **kwargs)
+            x = func_or_array(self, **kwargs)  # ty: ignore[call-top-callable]
         elif allow_extra_kws:
             x = self._get_prop_from_extra_kws(func_or_array)
         else:
@@ -661,7 +661,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     def _betaOmega(self, lnpi_zero: XArrayLike | None = None) -> xr.DataArray:
         if lnpi_zero is None:
             lnpi_zero = self._lnpi_zero
-        return lnpi_zero - np.log(self.pi_sum)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+        return lnpi_zero - np.log(self.pi_sum)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
 
     def betaOmega(self, lnpi_zero: XArrayLike | None = None) -> xr.DataArray:
         r"""

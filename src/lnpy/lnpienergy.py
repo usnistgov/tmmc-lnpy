@@ -27,7 +27,7 @@ from .core.validate import validate_sequence
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Sequence
-    from typing import Any, Literal
+    from typing import Any, Literal, SupportsIndex
 
     from .core.typing import MaskConvention, NDArrayAny, NDArrayInt
     from .core.typing_compat import IndexAny, Self, TypeAlias
@@ -322,7 +322,7 @@ def merge_regions(
     w_min = np.array(w_min, copy=True)
 
     # keep track of keep/kill
-    mapping = dict(enumerate(masks))
+    mapping: dict[SupportsIndex, NDArrayAny] = dict(enumerate(masks))
     for _cnt in range(nfeature):
         # number of finite minima
         nfeature = len(mapping)
@@ -357,12 +357,12 @@ def merge_regions(
         w_tran[idx_kill, :] = w_tran[:, idx_kill] = np.inf
 
         # new mask
-        mapping[idx_keep] |= mapping[idx_kill]  # type: ignore[index]  # pyright: ignore[reportArgumentType]
-        del mapping[idx_kill]  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        mapping[idx_keep] |= mapping[idx_kill]
+        del mapping[idx_kill]
 
     # from mapping create some new stuff
-    # new w/de
-    idx_min = list(mapping.keys())
+    # new w/d
+    idx_min = [int(_) for _ in mapping]
     w_min = w_min[idx_min]
 
     idx_tran = np.ix_(*(idx_min,) * 2)
@@ -623,7 +623,7 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
             columns=index.get_level_values("phase").rename("phase_nebr"),
         )
         .stack()
-        .rename("w_tran")  # pyright: ignore[reportArgumentType]
+        .rename("w_tran")  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
     )
 
     # get argtrans values for each index
@@ -812,7 +812,8 @@ class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
         """Series representation of delta_w"""
         return self.dwx.to_series()
 
-    def get_dw(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    # FIX(wpk): fix this
+    def get_dw(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]  # ty: ignore[invalid-method-override]
         self, idx: int, idx_nebr: int | Iterable[int] | None = None
     ) -> float | NDArrayAny:
         dw = self.dwx
