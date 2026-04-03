@@ -13,7 +13,7 @@ from lnpy.core.xr_utils import select_axis_dim
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Iterable, Sequence
-    from typing import Any
+    from typing import Any, SupportsInt
 
     import xarray as xr
 
@@ -209,9 +209,9 @@ class IndexedGrouper:
 
     def __init__(
         self,
-        index: Sequence[int],
-        start: Sequence[int],
-        end: Sequence[int],
+        index: Sequence[SupportsInt] | NDArrayInt,
+        start: Sequence[SupportsInt] | NDArrayInt,
+        end: Sequence[SupportsInt] | NDArrayInt,
         groups: Any = None,
     ) -> None:
         self.index: NDArrayInt = np.asarray(index, dtype=np.int64)
@@ -224,7 +224,7 @@ class IndexedGrouper:
         """Create object from single `group` array"""
         kwargs.setdefault("kind", "stable")
         groups, index, start, end = factor_by_to_index(group, sort=sort, **kwargs)
-        return cls(index=index, start=start, end=end, groups=groups)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        return cls(index=index, start=start, end=end, groups=groups)
 
     @classmethod
     def from_groups(
@@ -238,7 +238,7 @@ class IndexedGrouper:
         idx = (
             pd.Index(groups[0], name=names)
             if len(groups) == 1
-            else pd.MultiIndex.from_arrays(groups, names=names)  # type: ignore[arg-type, unused-ignore]  # pyright: ignore[reportArgumentType]
+            else pd.MultiIndex.from_arrays(groups, names=names)  # type: ignore[arg-type, unused-ignore]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
         )
 
         return cls.from_group(idx, sort=sort, **kwargs)
@@ -254,7 +254,7 @@ class IndexedGrouper:
         """Create object from data object and group variables/columns"""
         if isinstance(keys, str):
             keys = [keys]
-        return cls.from_groups(*(data[k] for k in keys), sort=sort, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        return cls.from_groups(*(data[k] for k in keys), sort=sort, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
 
     @classmethod
     def from_size(
@@ -356,7 +356,11 @@ def factory_indexed_grouper(
 
     if isinstance(grouper, Mapping):
         return factory_indexed_grouper(
-            data=data, axis=axis, dim=dim, **grouper, **kwargs
+            data=data,
+            axis=axis,
+            dim=dim,
+            **grouper,  # ty: ignore[invalid-argument-type]
+            **kwargs,
         )
     return factory_indexed_grouper(
         data=data, axis=axis, dim=dim, keys=grouper, **kwargs

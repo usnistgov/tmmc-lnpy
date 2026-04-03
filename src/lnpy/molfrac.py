@@ -191,9 +191,11 @@ def _solve_lnz_molfrac(
         def getter(x: lnPiCollection) -> xr.DataArray:
             return x.xge.molfrac.sel(component=component, phase=phase_id)
 
+    shared: dict[str, lnPiCollection] = {}
+
     def f(x: float) -> float:
         p = build_phases(x, ref=ref, **build_kws)
-        f.lnpi = p  # type: ignore[attr-defined]  # pyright: ignore[reportFunctionMemberAccess]
+        shared["lnpi"] = p
 
         # by not using the ListAccessor,
         # can parallelize
@@ -212,7 +214,7 @@ def _solve_lnz_molfrac(
         msg = "something went wrong with solve"
         raise RuntimeError(msg)
 
-    return f.lnpi, rootresults_to_rootresultdict(r, residual=residual)  # type: ignore[attr-defined]  # pyright: ignore[reportFunctionMemberAccess]
+    return shared["lnpi"], rootresults_to_rootresultdict(r, residual=residual)
 
 
 def find_lnz_molfrac(

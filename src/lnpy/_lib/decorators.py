@@ -37,7 +37,7 @@ def _thread_backend() -> str | None:
     # Note that `importlib.util.find_spec` doesn't work for these; it will falsely return True
     try:
         from numba.np.ufunc import (
-            tbbpool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]
+            tbbpool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
         )
     except ImportError:
         pass
@@ -46,7 +46,7 @@ def _thread_backend() -> str | None:
 
     try:
         from numba.np.ufunc import (
-            omppool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]
+            omppool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
         )
     except ImportError:
         pass
@@ -87,7 +87,7 @@ def myguvectorize(
             (writable,) if isinstance(writable, str) else tuple(writable)
         )
 
-    return cast(
+    return cast(  # ty: ignore[invalid-return-type]
         "Callable[[FuncT], FuncT]",
         guvectorize(
             *args,
@@ -123,7 +123,7 @@ def myjit(
     if inline is not None:
         kwargs["inline"] = "always" if inline else "never"
 
-    return cast(
+    return cast(  # ty: ignore[invalid-return-type]
         "Callable[[FuncT], FuncT]",
         njit(*args, fastmath=fastmath, cache=cache, parallel=parallel, **kwargs),
     )

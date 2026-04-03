@@ -257,8 +257,9 @@ def _refine_bracket_spinodal_right(
             # we've reached a breaking point
             if left_done:
                 # can't find a lower bound to efac, just return where we're at
+                root = left._get_lnz()
                 r = rootresults(
-                    root=left._get_lnz(),  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+                    root=root,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
                     iterations=i + 1,
                     function_calls=i,
                     flag=0,
@@ -649,7 +650,8 @@ class StabilityBase:
         concat_kws = {"names": [self._NAME], **concat_kws}
         kwargs = dict(self.access_kws, **kwargs)
 
-        return self._parent.concat(items, concat_kws=concat_kws, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        # FIX(wpk): fix typing on items
+        return self._parent.concat(items, concat_kws=concat_kws, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
 
     @cached.prop
     def access(self) -> lnPiCollection:

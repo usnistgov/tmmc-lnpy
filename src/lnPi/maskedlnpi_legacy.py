@@ -76,7 +76,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         if extra_kws is None:
             extra_kws = {}
 
-        obj._optinfo.update(  # type: ignore[attr-defined, unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]
+        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-attribute]
             lnz=lnz,
             state_kws=state_kws,
             extra_kws=extra_kws,
@@ -97,7 +97,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     @property
     def optinfo(self):
         """All extra properties"""
-        return self._optinfo  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
+        return self._optinfo  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
 
     @property
     def state_kws(self):
@@ -188,7 +188,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def edge_distance(self, ref, *args, **kwargs):
         return ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)]
 
-    def __setitem__(self, index, value) -> None:
+    def __setitem__(self, index, value) -> None:  # ty:ignore[invalid-method-override]
         self._clear_cache()
         super().__setitem__(index, value)
 
@@ -372,7 +372,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def __setstate__(self, state):
         ma, opt = state
         super().__setstate__(ma)
-        self._optinfo.update(opt)  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
+        self._optinfo.update(opt)  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
 
     @classmethod
     def from_table(
@@ -496,8 +496,8 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
 
     @cached.prop
     def xge(self) -> GrandCanonicalEnsemble:
-        return GrandCanonicalEnsemble(self)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        return GrandCanonicalEnsemble(self)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     @cached.prop
     def xce(self) -> CanonicalEnsemble:
-        return CanonicalEnsemble(self)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        return CanonicalEnsemble(self)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
