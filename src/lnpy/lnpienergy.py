@@ -361,8 +361,8 @@ def merge_regions(
         del mapping[idx_kill]
 
     # from mapping create some new stuff
-    # new w/de
-    idx_min = list(map(int, mapping.keys()))
+    # new w/d
+    idx_min = [int(_) for _ in mapping]
     w_min = w_min[idx_min]
 
     idx_tran = np.ix_(*(idx_min,) * 2)

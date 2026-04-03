@@ -1246,7 +1246,7 @@ def delta_lnpi_from_updown(
         up_, down_, delta = (np.moveaxis(x, axis, -1) for x in (up_, down, delta))
 
         delta[..., 0] = 0.0
-        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # ty: ignore[invalid-argument-type,unused-ignore-comment]
+        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # ty: ignore[invalid-argument-type]
         return np.moveaxis(delta, -1, axis)  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
 
     if is_dataarray(down):

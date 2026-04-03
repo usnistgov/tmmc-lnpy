@@ -188,7 +188,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def edge_distance(self, ref, *args, **kwargs):
         return ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)]
 
-    def __setitem__(self, index, value) -> None:  # ty:ignore[invalid-method-override]
+    def __setitem__(self, index, value) -> None:
         self._clear_cache()
         super().__setitem__(index, value)
 
