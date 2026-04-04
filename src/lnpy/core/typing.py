@@ -20,29 +20,22 @@ import pandas as pd
 import xarray as xr
 from numpy.typing import ArrayLike, NDArray
 
-from .typing_compat import Concatenate, ParamSpec, TypeAlias, TypeVar
+from .typing_compat import TypeAlias, TypeVar
 
 if TYPE_CHECKING:
     # Note: use fully qualified names
     import lnpy.lnpidata
     import lnpy.lnpiseries
     from lnpy.combine.grouper import IndexedGrouper
-    from lnpy.ensembles import CanonicalEnsemble, GrandCanonicalEnsemble  # noqa: F401
 
 
 __all__ = [
-    "C_Ensemble",
-    "EnsembleT",
-    "FuncT",
     "IndexingInt",
     "MaskConvention",
     "NDArrayAny",
-    "P",
     "PeakError",
     "PeakStyle",
     "PhasesFactorySignature",
-    "R",
-    "T",
     "TagPhasesSignature",
     "XArrayLike",
 ]
@@ -55,8 +48,6 @@ NDArrayBool: TypeAlias = NDArray[np.bool_]
 
 
 # * TypeVars
-EnsembleT = TypeVar("EnsembleT", "GrandCanonicalEnsemble", "CanonicalEnsemble")
-"""TypeVar for Ensemble."""
 FloatT = TypeVar("FloatT", np.float32, np.float64, default=Any)  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
 GenArrayT = TypeVar("GenArrayT", NDArray[Any], xr.DataArray)
 GenArrayOrSeriesT = TypeVar(
@@ -74,16 +65,6 @@ DataAnyT = TypeVar(
     xr.DataArray,
     xr.Dataset,
 )
-
-# * Decorating
-P = ParamSpec("P")
-R = TypeVar("R")
-T = TypeVar("T")
-C_Ensemble: TypeAlias = Callable[Concatenate[EnsembleT, P], R]
-
-FuncT = TypeVar("FuncT", bound=Callable[..., Any])
-NumbaType = Any
-
 
 # * Callables
 TagPhasesSignature = Callable[

@@ -32,12 +32,13 @@ import nox
 from nox.virtualenv import CondaEnv
 
 sys.path.insert(0, ".")
-from tools.dataclass_parser import (
+# NOTE: see pyproject.toml:tool.pyrefly
+from tools.dataclass_parser import (  # pyrefly: ignore[missing-import]
     DataclassParser,
     add_option,
     option,
 )
-from tools.noxtools import (
+from tools.noxtools import (  # pyrefly: ignore[missing-import]
     check_for_change_manager,
     combine_list_str,
     infer_requirement_path,
@@ -806,11 +807,10 @@ def typecheck(  # noqa: PLR0912
 
     if "all" in cmd:
         cmd = [
+            "pyrefly",
+            "ty",
             "mypy",
             "basedpyright",
-            # TODO(wpk): add these checkers. See https://github.com/usnistgov/tmmc-lnpy/issues/51  # noqa: FIX002
-            # "pyrefly",
-            "ty",
             "pylint",
             "typecheck-notebook",
         ]

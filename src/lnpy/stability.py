@@ -259,6 +259,7 @@ def _refine_bracket_spinodal_right(
                 # can't find a lower bound to efac, just return where we're at
                 root = left._get_lnz()
                 r = rootresults(
+                    # pyrefly: ignore [bad-argument-type]
                     root=root,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
                     iterations=i + 1,
                     function_calls=i,
@@ -651,6 +652,7 @@ class StabilityBase:
         kwargs = dict(self.access_kws, **kwargs)
 
         # FIX(wpk): fix typing on items
+        # pyrefly: ignore [bad-argument-type]
         return self._parent.concat(items, concat_kws=concat_kws, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
 
     @cached.prop
@@ -861,6 +863,7 @@ class Binodals(StabilityBase):
     """Routines to calculate binodal."""
 
     _NAME = "binodal"
+    # pyrefly: ignore [bad-override]
     _items: dict[int, lnPiCollection]  # type: ignore[assignment]
 
     def get_pair(
@@ -1002,6 +1005,7 @@ class Binodals(StabilityBase):
             if inplace:
                 return self
 
+            # pyrefly: ignore [bad-assignment]
             out = self._items if as_dict else self.access  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
             return out, self._info
 

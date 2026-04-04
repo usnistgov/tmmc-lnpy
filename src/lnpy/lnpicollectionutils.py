@@ -232,7 +232,7 @@ def get_lnz_max(
     n_right: int = -1
 
     def getter(p: lnPiCollection) -> xr.DataArray:
-        v = p.xge.edge_distance(ref)
+        v = p.xge.edge_distance(ref)  # pyrefly: ignore[bad-argument-type] # bug
         if not p._xarray_unstack:
             v = v.unstack(p._concat_dim)
         return v.min("phase")

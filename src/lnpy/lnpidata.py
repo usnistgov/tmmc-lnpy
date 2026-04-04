@@ -467,6 +467,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         numpy.ma.MaskedArray.argmax
         numpy.unravel_index
         """
+        # pyrefly: ignore [bad-return]
         return np.unravel_index(self.ma.argmax(*args, **kwargs), self.shape)  # pyright: ignore[reportReturnType]
 
     # @cached.meth
@@ -646,6 +647,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         da = (
             pd
+            # pyrefly: ignore [no-matching-overload]
             .read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty: ignore[no-matching-overload]
             .set_index(names[:-1])["lnpi"]
             .to_xarray()

@@ -365,6 +365,7 @@ def shift_lnpi_windows(
     if is_series(lnpi):
         return pd.Series(
             shift_lnpi_windows(
+                # pyrefly: ignore [missing-attribute]
                 *(a.to_numpy() for a in chain((lnpi, window), macrostate)),  # type: ignore[arg-type]  # pyright: ignore[reportAttributeAccessIssue]
                 grouper=grouper,
                 use_sparse=use_sparse,
@@ -392,7 +393,9 @@ def shift_lnpi_windows(
         )
 
     return _shift_lnpi_windows_indexed(
+        # pyrefly: ignore [bad-argument-type]
         lnpi,
+        # pyrefly: ignore [bad-argument-type]
         window,  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
         np.stack(macrostate, axis=-1),
         grouper.index,
@@ -432,7 +435,9 @@ def assign_shift_lnpi_windows(
     )
 
     if is_dataarray(table):
+        # pyrefly: ignore [bad-return]
         return out  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
+    # pyrefly: ignore [bad-argument-type]
     return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
 
@@ -500,7 +505,9 @@ def keep_first_indexer(
 ) -> NDArrayInt:
     def _factorize(*x: str | ArrayLike, sort: bool = False) -> NDArrayInt:
         args = [table[k] if isinstance(k, str) else k for k in x]  # ty:ignore[invalid-argument-type]
+        # pyrefly: ignore [bad-argument-type]
         idx = args[0] if len(args) == 1 else pd.MultiIndex.from_arrays(args)  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        # pyrefly: ignore [no-matching-overload]
         return pd.factorize(idx, sort=sort)[0]  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
 
     state = np.array(table[state] if isinstance(state, str) else state)  # ty:ignore[invalid-argument-type]
@@ -555,5 +562,7 @@ def keep_first(
     if is_dataframe(table):
         return table.iloc[indexer]
 
+    # pyrefly: ignore [bad-argument-type]
     axis, dim = select_axis_dim(table, axis, dim)  # ty:ignore[invalid-argument-type]
+    # pyrefly: ignore [not-callable]
     return table.isel({dim: indexer})  # ty:ignore[invalid-argument-type]

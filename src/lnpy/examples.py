@@ -42,7 +42,7 @@ def _get_pooch() -> pooch.Pooch:
         env="TMMC_LNPY_DATA_DIR",
     )
 
-    obj.load_registry(resources.files("lnpy.data").joinpath("registry.txt"))  # pyright: ignore[reportArgumentType]
+    obj.load_registry(resources.files("lnpy.data").joinpath("registry.txt"))  # pyright: ignore[reportArgumentType]  # pyrefly: ignore[bad-argument-type]
     return obj
 
 

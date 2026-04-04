@@ -291,6 +291,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
 
     ds_stack = ds.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
     ds_out = combine.keep_first(ds_stack, state_name="x")
+    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     ds_out = combine.keep_first(ds_stack, state_name="x", reset_window=False)
@@ -299,6 +300,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     ds_out = combine.keep_first(
         combine.concat_windows([ds_stack], coord_names="x"), state_name="x"
     )
+    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     # dataarray
@@ -319,6 +321,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
 
     da_stack = da.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
     da_out = combine.keep_first(da_stack, state_name="x")
+    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(da, da_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     da_out = combine.keep_first(da_stack, state_name="x", reset_window=False)
@@ -327,6 +330,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     da_out = combine.keep_first(
         combine.concat_windows([da_stack], coord_names="x"), state_name="x"
     )
+    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(da, da_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     # multiple variables in index
@@ -346,6 +350,7 @@ def test_combine_keep_first_xarray_routines(table_dataset: xr.Dataset) -> None:
         combine.keep_first(table_dataset)
 
     with pytest.raises(TypeError, match=r"Unknown .*"):
+        # pyrefly: ignore [no-matching-overload]
         combine.concat_windows(["hello"])  # type: ignore[list-item]  # on purpose error  # pyright: ignore[reportCallIssue,reportArgumentType]  # ty:ignore[no-matching-overload]
 
 
@@ -413,6 +418,7 @@ def test_combine_keep_first_split_dataset(
     # test odd window names:
     _test_output(
         combine.keep_first(
+            # pyrefly: ignore [no-matching-overload]
             combine.concat_windows(
                 [  # pyright: ignore[reportCallIssue, reportArgumentType]
                     x.expand_dims("window").assign_coords(
@@ -439,6 +445,7 @@ def test_combine_keep_first_split_dataset(
         dim="index",
     )
     _test_output(
+        # pyrefly: ignore [bad-argument-type, bad-specialization]
         combine.keep_first(
             stacked,
             state_name="x",
@@ -447,6 +454,7 @@ def test_combine_keep_first_split_dataset(
 
     # wrong name
     with pytest.raises(ValueError, match=r".*names"):
+        # pyrefly: ignore [bad-specialization]
         combine.keep_first(
             stacked,
             state_name="x",
@@ -575,6 +583,7 @@ def table_updown(rng: np.random.Generator) -> pd.DataFrame:
 
 
 def test_assign_delta_assign_lnpi_from_updown(table_updown: pd.DataFrame) -> None:
+    # pyrefly: ignore [missing-attribute]
     delta_lnpi = np.log(  # type: ignore[attr-defined]
         table_updown["prob_up"].shift(1) / table_updown["prob_down"]
     ).fillna(0.0)  # pyright: ignore[reportAttributeAccessIssue]
