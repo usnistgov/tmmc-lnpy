@@ -264,7 +264,6 @@ module = [
 ]
 
 [tool.pyrefly]
-disable-search-path-heuristics = true
 enabled-ignores = [ "pyrefly" ]
 project-includes = [
     "src",
@@ -273,8 +272,10 @@ project-includes = [
     "noxfile.py",
     "tools",
 ]
-search-path = [ ".", "src", "tests", "tools" ]
 
+# NOTE: this messes up typechecking under src, but is needed
+# to import tools in dataclass.  Suppress errors in noxfile for now.
+# search-path = [ "." ]
 [tool.pyrefly.errors]
 
 # implicit-abstract-class = "error"
