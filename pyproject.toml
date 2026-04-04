@@ -264,6 +264,7 @@ module = [
 ]
 
 [tool.pyrefly]
+disable-search-path-heuristics = true
 enabled-ignores = [ "pyrefly" ]
 project-includes = [
     "src",
@@ -272,6 +273,7 @@ project-includes = [
     "noxfile.py",
     "tools",
 ]
+search-path = [ "src", "tests", "tools" ]
 
 [tool.pyrefly.errors]
 

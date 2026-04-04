@@ -806,10 +806,10 @@ def typecheck(  # noqa: PLR0912
 
     if "all" in cmd:
         cmd = [
-            "mypy",
-            "basedpyright",
             "pyrefly",
             "ty",
+            "mypy",
+            "basedpyright",
             "pylint",
             "typecheck-notebook",
         ]
