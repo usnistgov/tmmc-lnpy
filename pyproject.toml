@@ -273,7 +273,7 @@ project-includes = [
     "noxfile.py",
     "tools",
 ]
-search-path = [ "src", "tests", "tools" ]
+search-path = [ ".", "src", "tests", "tools" ]
 
 [tool.pyrefly.errors]
 
