@@ -61,7 +61,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         obj = np.ma.array(data, **kwargs).view(cls)
         # make sure to broadcast mask if it is just False
         if obj.mask is False:  # type: ignore[comparison-overlap, unused-ignore]
-            obj.mask = False  # type: ignore[unreachable, unused-ignore]
+            obj.mask = False  # type: ignore[unreachable, unused-ignore]  # pyrefly: ignore[bad-assignment]
 
         # set mu value:
         if lnz is None:
@@ -76,7 +76,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         if extra_kws is None:
             extra_kws = {}
 
-        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-attribute]
+        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-attribute,unused-ignore-comment]  # pyrefly: ignore[missing-attribute]
             lnz=lnz,
             state_kws=state_kws,
             extra_kws=extra_kws,
@@ -97,6 +97,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     @property
     def optinfo(self):
         """All extra properties"""
+        # pyrefly: ignore [missing-attribute]
         return self._optinfo  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
 
     @property
@@ -188,7 +189,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def edge_distance(self, ref, *args, **kwargs):
         return ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)]
 
-    def __setitem__(self, index, value) -> None:
+    def __setitem__(self, index, value) -> None:  # pyrefly: ignore [bad-param-name-override]  # ty: ignore[invalid-method-override]
         self._clear_cache()
         super().__setitem__(index, value)
 
@@ -224,8 +225,10 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         data = self.data
         datas = []
 
+        # pyrefly: ignore [redundant-condition]
         if ffill:
             datas += [ffill(data, axis=axis, limit=limit) for axis in axes]
+        # pyrefly: ignore [redundant-condition]
         if bfill:
             datas += [bfill(data, axis=axis, limit=limit) for axis in axes]
 
@@ -326,6 +329,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         else:
             new = self.copy()
 
+        # pyrefly: ignore [no-matching-overload]
         gaussian_filter(  # pyright: ignore[reportCallIssue]
             new.data,
             output=new.data,
@@ -372,6 +376,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def __setstate__(self, state):
         ma, opt = state
         super().__setstate__(ma)
+        # pyrefly: ignore [missing-attribute]
         self._optinfo.update(opt)  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
 
     @classmethod
@@ -472,6 +477,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         """
         return [
             self.or_mask(m)
+            # pyrefly: ignore [no-matching-overload]
             for m in masks_change_convention(masks, convention, False)  # pyright: ignore[reportCallIssue,reportArgumentType]
         ]
 
@@ -496,8 +502,10 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
 
     @cached.prop
     def xge(self) -> GrandCanonicalEnsemble:
+        # pyrefly: ignore [bad-argument-type]
         return GrandCanonicalEnsemble(self)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     @cached.prop
     def xce(self) -> CanonicalEnsemble:
+        # pyrefly: ignore [bad-argument-type]
         return CanonicalEnsemble(self)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]

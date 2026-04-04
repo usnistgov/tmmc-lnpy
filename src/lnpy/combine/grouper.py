@@ -104,6 +104,7 @@ def factor_by(
         )
     )
 
+    # pyrefly: ignore [no-matching-overload]
     codes, groups = factorize(by_, sort=sort)  # type: ignore[arg-type]
 
     codes = codes.astype(np.int64)
@@ -238,6 +239,7 @@ class IndexedGrouper:
         idx = (
             pd.Index(groups[0], name=names)
             if len(groups) == 1
+            # pyrefly: ignore [bad-argument-type]
             else pd.MultiIndex.from_arrays(groups, names=names)  # type: ignore[arg-type, unused-ignore]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
         )
 
@@ -254,6 +256,7 @@ class IndexedGrouper:
         """Create object from data object and group variables/columns"""
         if isinstance(keys, str):
             keys = [keys]
+        # pyrefly: ignore [bad-argument-type]
         return cls.from_groups(*(data[k] for k in keys), sort=sort, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
 
     @classmethod

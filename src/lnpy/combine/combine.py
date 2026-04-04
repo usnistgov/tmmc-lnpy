@@ -206,7 +206,9 @@ def _concat_windows_xarray(
             dim=index_name,
         )
     else:
+        # pyrefly: ignore [no-matching-overload]
         out = xr.concat(tables, dim=index_name)  # pyright: ignore[reportCallIssue, reportArgumentType]
+    # pyrefly: ignore [bad-return]
     return out  # type: ignore[no-any-return, unused-ignore]
 
 
@@ -1011,6 +1013,7 @@ def keep_first(
     # Do calculation
     if is_dataframe(table):
         return _process_dataframe(table)  # ty: ignore[invalid-return-type]
+    # pyrefly: ignore [bad-specialization]
     return _process_xarray(table)  # ty: ignore[invalid-argument-type]
 
 
@@ -1087,6 +1090,7 @@ def updown_mean(
     """
     if use_running:
         columns = [weight_name, down_name, up_name]
+        # pyrefly: ignore [no-matching-overload]
         return table.groupby(by, as_index=as_index, **kwargs)[columns].apply(  # type: ignore[no-any-return,call-overload,arg-type,unused-ignore]  # no clue why this is throwing an error  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty: ignore[no-matching-overload]
             _factory_average_updown(*columns)
         )
@@ -1099,6 +1103,7 @@ def updown_mean(
                 up_name: lambda x: x[up_name] * x[weight_name],
             }
         )
+        # pyrefly: ignore [no-matching-overload]
         .groupby(by, as_index=as_index, **kwargs)[[weight_name, down_name, up_name]]  # type: ignore[arg-type,unused-ignore] # pyright: ignore[reportArgumentType]
         .sum()
         .assign(**{
@@ -1199,6 +1204,7 @@ def assign_updown_from_collectionmatrix(
         New dataframe with assigned columns.
     """
     return table.assign(  # ty: ignore[invalid-argument-type]
+        # pyrefly: ignore [bad-argument-type]
         **dict(  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
             zip(
                 [weight_name, down_name, up_name],
@@ -1246,7 +1252,7 @@ def delta_lnpi_from_updown(
         up_, down_, delta = (np.moveaxis(x, axis, -1) for x in (up_, down, delta))
 
         delta[..., 0] = 0.0
-        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # ty: ignore[invalid-argument-type]
+        delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # ty: ignore[invalid-argument-type,unused-ignore-comment]
         return np.moveaxis(delta, -1, axis)  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
 
     if is_dataarray(down):
@@ -1394,7 +1400,9 @@ def assign_lnpi_from_updown(
     )
 
     if is_dataframe(table):
+        # pyrefly: ignore [bad-argument-type]
         return table.assign(**{lnpi_name: ln_prob})  # pyright: ignore[reportArgumentType]
+    # pyrefly: ignore [bad-argument-count, unexpected-keyword]
     return table.assign({lnpi_name: table[down_name].copy(data=ln_prob)})
 
 
@@ -1420,6 +1428,7 @@ def _apply_indexed_function(
     if is_series(first):
         return pd.Series(
             _apply_indexed_function(
+                # pyrefly: ignore [missing-attribute]
                 *(a.to_numpy() for a in args),  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload]
                 factory_gufunc=factory_gufunc,
                 axis=-1,
@@ -1699,6 +1708,7 @@ def _assign_indexed_function_result(
     **kwargs: Any,
 ) -> FrameOrDatasetT:
     args: Iterator[NDArrayAny | xr.DataArray] = (
+        # pyrefly: ignore [bad-assignment]
         (table[key].to_numpy() for key in keys)
         if is_dataframe(table)  # type: ignore[redundant-expr]
         else (table[key] for key in keys)

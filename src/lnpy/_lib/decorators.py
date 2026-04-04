@@ -16,7 +16,10 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Sequence
     from typing import Any
 
-    from lnpy.core.typing import FuncT, NumbaType
+    from lnpy.core.typing_compat import TypeAlias, TypeVar
+
+    NumbaType: TypeAlias = Any
+    FuncT = TypeVar("FuncT", bound=Callable[..., Any])
 
 
 # * Threading
@@ -37,6 +40,7 @@ def _thread_backend() -> str | None:
     # Note that `importlib.util.find_spec` doesn't work for these; it will falsely return True
     try:
         from numba.np.ufunc import (
+            # pyrefly: ignore [missing-module-attribute]
             tbbpool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
         )
     except ImportError:
@@ -46,6 +50,7 @@ def _thread_backend() -> str | None:
 
     try:
         from numba.np.ufunc import (
+            # pyrefly: ignore [missing-module-attribute]
             omppool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
         )
     except ImportError:

@@ -25,8 +25,13 @@ if TYPE_CHECKING:
     import pandas as pd
     from numpy.typing import ArrayLike, NDArray
 
-    from .core.typing import C_Ensemble, EnsembleT, NDArrayAny, P, R, XArrayLike
-    from .core.typing_compat import IndexAny
+    from .core.typing import NDArrayAny, XArrayLike
+    from .core.typing_compat import Concatenate, IndexAny, ParamSpec, TypeAlias, TypeVar
+
+    P = ParamSpec("P")
+    R = TypeVar("R")
+    EnsembleT = TypeVar("EnsembleT", "GrandCanonicalEnsemble", "CanonicalEnsemble")
+    C_Ensemble: TypeAlias = Callable[Concatenate[EnsembleT, P], R]
 
 # always check_use_cache here.
 cached_prop = cached.prop(check_use_cache=True)
@@ -661,7 +666,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     def _betaOmega(self, lnpi_zero: XArrayLike | None = None) -> xr.DataArray:
         if lnpi_zero is None:
             lnpi_zero = self._lnpi_zero
-        return lnpi_zero - np.log(self.pi_sum)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
+        return lnpi_zero - np.log(self.pi_sum)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type] # pyrefly: ignore [bad-return]
 
     def betaOmega(self, lnpi_zero: XArrayLike | None = None) -> xr.DataArray:
         r"""

@@ -164,6 +164,7 @@ class set_options:  # noqa: N801
             if k in _VALIDATORS and not _VALIDATORS[k](v):  # type: ignore[literal-required]  # ty: ignore[invalid-key]
                 msg = f"option {k!r} given an invalid value: {v!r}"
                 raise ValueError(msg)
+            # pyrefly: ignore [bad-typed-dict-key]
             self.old[k] = OPTIONS[k]  # type: ignore[literal-required]  # ty: ignore[invalid-key]
         _apply_update(cast("Options", kwargs))
 

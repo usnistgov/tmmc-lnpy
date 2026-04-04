@@ -296,6 +296,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self._base_class = base_class
         self._verify = self._base_class is not None
 
+        # pyrefly: ignore [no-matching-overload]
         series: pd.Series[Any] = pd.Series(  # type: ignore[misc]  # pyright: ignore[reportCallIssue]  # ty: ignore[no-matching-overload]
             data=data,  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]
             index=index,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
@@ -538,6 +539,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         **kwds: Any,
     ) -> Self | pd.Series[Any]:
         """Interface to :meth:`pandas.Series.apply`"""
+        # pyrefly: ignore [bad-return]
         return self._wrapped_pandas_method(  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
             "apply",
             wrap=wrap,
@@ -549,6 +551,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     def sort_index(self, *args: Any, **kwargs: Any) -> Self:
         """Interface to :meth:`pandas.Series.sort_index`"""
+        # pyrefly: ignore [bad-return]
         return self._wrapped_pandas_method("sort_index", *args, wrap=True, **kwargs)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
 
     @overload
@@ -603,6 +606,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         --------
         pandas.Series.groupby
         """
+        # pyrefly: ignore [no-matching-overload]
         group = self.s.groupby(  # pyright: ignore[reportCallIssue]  # ty: ignore[no-matching-overload]
             by=by,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
             level=level,
@@ -681,6 +685,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             out = {}
             remap = None
             for k in objs:
+                # pyrefly: ignore [bad-index]
                 v = objs[k]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
                 if remap is None:
                     remap = bool(isinstance(v, cls))
@@ -688,12 +693,16 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
                     out[k] = v._series
                 else:
                     out[k] = v
+            # pyrefly: ignore [bad-assignment]
             objs = out
         else:
+            # pyrefly: ignore [bad-assignment]
             first, objs = peek_at(objs)  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
             if isinstance(first, cls):
+                # pyrefly: ignore [missing-attribute]
                 objs = (x._series for x in objs)  # pyright: ignore[reportAttributeAccessIssue]
 
+        # pyrefly: ignore [no-matching-overload]
         return pd.concat(objs, **concat_kws)  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]
 
     def concat_like(
@@ -1006,6 +1015,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
                 dims=self.xge.dims_rec + self.xge.dims_n,
                 name="labels",
             )
+            # pyrefly: ignore [bad-argument-type]
             .assign_coords(**{self._concat_dim: index, **self.state_kws})
             .assign_attrs(**self.xge._standard_attrs)
         )
@@ -1112,6 +1122,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         labels = []
         lnzs = []
 
+        # pyrefly: ignore [bad-argument-type]
         for _, g in da.groupby(grouper):  # type: ignore[arg-type, unused-ignore]  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
             lnzs.append(np.array([g.coords[k] for k in da.attrs["dims_lnz"]]))
             labels.append(g.values)

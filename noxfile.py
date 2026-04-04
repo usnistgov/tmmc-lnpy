@@ -808,8 +808,7 @@ def typecheck(  # noqa: PLR0912
         cmd = [
             "mypy",
             "basedpyright",
-            # TODO(wpk): add these checkers. See https://github.com/usnistgov/tmmc-lnpy/issues/51  # noqa: FIX002
-            # "pyrefly",
+            "pyrefly",
             "ty",
             "pylint",
             "typecheck-notebook",

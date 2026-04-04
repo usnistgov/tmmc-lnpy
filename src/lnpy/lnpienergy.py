@@ -252,7 +252,7 @@ def find_masked_extrema(
         else:
             mask_flat = mask.reshape(-1)
             arg = positions_flat[mask_flat][func(data_flat[mask_flat])]
-            val = data_flat[arg]  # pyright: ignore[reportAssignmentType]
+            val = data_flat[arg]  # pyright: ignore[reportAssignmentType]  # pyrefly: ignore[bad-assignment]
 
             if unravel:
                 arg = np.unravel_index(arg, data.shape)  # type: ignore[assignment]  # pyright: ignore[reportCallIssue, reportArgumentType]
@@ -530,7 +530,9 @@ class wFreeEnergy:  # noqa: N801
                     out_arg[i, j] = None
                 else:
                     idx_min = np.nanargmin(vals)
+                    # pyrefly: ignore [bad-index]
                     out_arg[i, j] = argmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]
+                    # pyrefly: ignore [bad-index]
                     out_max[i, j] = out_max[j, i] = valmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]
         return out_arg, out_max
 
@@ -616,6 +618,7 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     w_argmin = pd.Series(w.w_argmin, index=w_min.index, name="w_argmin")
 
     w_tran: pd.Series[Any] = (  # pyright: ignore[reportAssignmentType]
+        # pyrefly: ignore [bad-assignment]
         pd  # noqa: PD013
         .DataFrame(  # type: ignore[call-overload]
             w.w_tran,
@@ -623,6 +626,7 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
             columns=index.get_level_values("phase").rename("phase_nebr"),
         )
         .stack()
+        # pyrefly: ignore [bad-argument-type]
         .rename("w_tran")  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
     )
 
@@ -813,6 +817,7 @@ class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
         return self.dwx.to_series()
 
     # FIX(wpk): fix this
+    # pyrefly: ignore [bad-override]
     def get_dw(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]  # ty: ignore[invalid-method-override]
         self, idx: int, idx_nebr: int | Iterable[int] | None = None
     ) -> float | NDArrayAny:

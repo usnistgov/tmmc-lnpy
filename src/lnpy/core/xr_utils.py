@@ -67,6 +67,7 @@ def dim_to_suffix_dataset(
     out = table
     for k, v in table.items():
         if dim in v.dims:
+            # pyrefly: ignore [bad-argument-type]
             out = out.drop_vars(k)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
             out.update(dim_to_suffix_dataarray(v, dim=dim, join=join))
     return out

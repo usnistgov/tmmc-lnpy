@@ -64,6 +64,7 @@ def select_dtype(
         dtype = getattr(x, "dtype", np.dtype(np.float64))
 
     if dtype in _ALLOWED_FLOAT_DTYPES:
+        # pyrefly: ignore [bad-return]
         return dtype  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
 
     msg = f"{dtype=} not supported.  dtype must be conformable to float32 or float64."
