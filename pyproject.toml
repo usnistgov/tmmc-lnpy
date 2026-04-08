@@ -200,6 +200,7 @@ extend-ignore-re = [ "# %%NBQA-.*" ]
 [tool.typos.default.extend-identifiers]
 CPY = "CPY"
 fileprefix_inh = "fileprefix_inh"
+writeable = "writeable"
 
 [tool.typos.default.extend-words]
 STABL = "STABL"

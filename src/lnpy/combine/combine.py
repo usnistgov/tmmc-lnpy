@@ -1401,9 +1401,9 @@ def assign_lnpi_from_updown(
 
     if is_dataframe(table):
         # pyrefly: ignore [bad-argument-type]
-        return table.assign(**{lnpi_name: ln_prob})  # pyright: ignore[reportArgumentType]
+        return table.assign(**{lnpi_name: ln_prob})  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-return-type]
     # pyrefly: ignore [bad-argument-count, unexpected-keyword]
-    return table.assign({lnpi_name: table[down_name].copy(data=ln_prob)})
+    return table.assign({lnpi_name: table[down_name].copy(data=ln_prob)})  # ty: ignore[invalid-return-type]
 
 
 # * Indexed routines ----------------------------------------------------------

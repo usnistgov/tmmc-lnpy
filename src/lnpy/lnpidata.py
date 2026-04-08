@@ -121,7 +121,7 @@ class lnPiArray:  # noqa: N801
 
         self.data = data
         # make data read only
-        self.data.flags.writable = False
+        self.data.flags.writeable = False
 
         self.state_kws = state_kws
         self.extra_kws = extra_kws
@@ -291,7 +291,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
             raise ValueError(msg)
         self._mask = mask
         # make mask read-only
-        self._mask.flags.writable = False
+        self._mask.flags.writeable = False
 
         self._base = base
         self._lnz: NDArray[np.float64] = lnz
