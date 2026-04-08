@@ -467,7 +467,6 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         numpy.ma.MaskedArray.argmax
         numpy.unravel_index
         """
-        # pyrefly: ignore [bad-return]
         return np.unravel_index(self.ma.argmax(*args, **kwargs), self.shape)  # pyright: ignore[reportReturnType]
 
     # @cached.meth
