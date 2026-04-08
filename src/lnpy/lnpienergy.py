@@ -252,7 +252,7 @@ def find_masked_extrema(
         else:
             mask_flat = mask.reshape(-1)
             arg = positions_flat[mask_flat][func(data_flat[mask_flat])]
-            val = data_flat[arg]  # pyright: ignore[reportAssignmentType]  # pyrefly: ignore[bad-assignment]
+            val = data_flat[arg]  # pyright: ignore[reportAssignmentType]
 
             if unravel:
                 arg = np.unravel_index(arg, data.shape)  # type: ignore[assignment]  # pyright: ignore[reportCallIssue, reportArgumentType]
