@@ -26,7 +26,7 @@ dependencies:
   - nbval
   - netcdf4
   - nox>=2025.5.1
-  - numba<0.63,>=0.58
+  - numba>=0.58
   - numpy
   - pandas-stubs
   - pandas>=2.3.0
