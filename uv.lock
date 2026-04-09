@@ -30,7 +30,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-04-01T17:20:18.297756Z"
+exclude-newer = "2026-04-02T18:45:38.961149Z"
 exclude-newer-span = "P7D"
 
 [[package]]
@@ -1220,7 +1220,7 @@ name = "importlib-metadata"
 version = "9.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp" },
+    { name = "zipp", marker = "python_full_version != '3.12.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a9/01/15bb152d77b21318514a96f43af312635eb2500c96b55398d020c93d86ea/importlib_metadata-9.0.0.tar.gz", hash = "sha256:a4f57ab599e6a2e3016d7595cfd72eb4661a5106e787a95bcc90c7105b831efc", size = 56405, upload-time = "2026-03-20T06:42:56.999Z" }
 wheels = [
@@ -4670,7 +4670,7 @@ dev = [
     { name = "scipy-stubs", marker = "python_full_version >= '3.13'" },
     { name = "tmmc-lnpy", extras = ["all"], marker = "python_full_version >= '3.13'" },
     { name = "tmmc-lnpy", extras = ["viz"], marker = "python_full_version >= '3.13'" },
-    { name = "typecheck-runner", marker = "python_full_version >= '3.13'", specifier = ">=0.1.0" },
+    { name = "typecheck-runner", marker = "python_full_version >= '3.13'", specifier = ">=0.1.6" },
     { name = "types-tqdm", marker = "python_full_version >= '3.13'" },
 ]
 docs = [
@@ -4744,10 +4744,10 @@ type = [
     { name = "pylint" },
     { name = "pytest" },
     { name = "scipy-stubs" },
-    { name = "typecheck-runner", specifier = ">=0.1.0" },
+    { name = "typecheck-runner", marker = "python_full_version >= '3.10'", specifier = ">=0.1.6" },
     { name = "types-tqdm" },
 ]
-typecheck-runner = [{ name = "typecheck-runner", specifier = ">=0.1.0" }]
+typecheck-runner = [{ name = "typecheck-runner", marker = "python_full_version >= '3.10'", specifier = ">=0.1.6" }]
 viz = [{ name = "tmmc-lnpy", extras = ["viz"] }]
 
 [[package]]

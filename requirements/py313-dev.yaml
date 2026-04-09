@@ -41,7 +41,7 @@ dependencies:
   - scipy
   - scipy-stubs
   - tqdm
-  - typecheck-runner>=0.1.0
+  - typecheck-runner>=0.1.6
   - types-tqdm
   - xarray
   - pip

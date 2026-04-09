@@ -134,12 +134,8 @@ test-notebook = [
     { include-group = "test" },
     { include-group = "viz" },
 ]
-<<<<<<< before updating
-typecheck-runner = [ "typecheck-runner>=0.1.0" ]
-viz = [ "tmmc-lnpy[viz]" ]
-=======
 typecheck-runner = [ "typecheck-runner>=0.1.6; python_version>'3.9'" ]
->>>>>>> after updating
+viz = [ "tmmc-lnpy[viz]" ]
 
 # * uv -------------------------------------------------------------------------
 [tool.uv]
