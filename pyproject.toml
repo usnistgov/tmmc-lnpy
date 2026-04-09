@@ -134,7 +134,7 @@ test-notebook = [
     { include-group = "test" },
     { include-group = "viz" },
 ]
-typecheck-runner = [ "typecheck-runner>=0.1.0" ]
+typecheck-runner = [ "typecheck-runner>=0.1.6; python_version>'3.9'" ]
 viz = [ "tmmc-lnpy[viz]" ]
 
 # * uv -------------------------------------------------------------------------
