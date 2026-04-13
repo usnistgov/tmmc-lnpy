@@ -219,7 +219,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
         first: lnPiMasked
         if isinstance(parent, lnPiCollection):
             self._rec_name = parent._concat_dim
-            first = parent._series.iloc[0]
+            first = parent._series.iloc[0]  # ty:ignore[invalid-assignment]
         else:
             self._rec_name = None
             first = parent
