@@ -75,10 +75,10 @@ def rootresults(
             flag=flag,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
             # pyrefly: ignore [bad-argument-type]
             method=method,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
-        )
+        )  # ty:ignore[invalid-return-type]
     except TypeError:
         # pyrefly: ignore [missing-argument]
-        return RootResults(  # type: ignore[call-arg] # pyright: ignore[reportCallIssue]  # pylint: disable=no-value-for-parameter # ty: ignore[missing-argument]
+        return RootResults(  # type: ignore[call-arg] # pyright: ignore[reportCallIssue]  # pylint: disable=no-value-for-parameter # ty: ignore[missing-argument, invalid-return-type]
             root=root,
             iterations=iterations,
             function_calls=function_calls,

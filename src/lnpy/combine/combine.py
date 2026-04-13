@@ -1205,7 +1205,7 @@ def assign_updown_from_collectionmatrix(
     """
     return table.assign(  # ty: ignore[invalid-argument-type]
         # pyrefly: ignore [bad-argument-type]
-        **dict(  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+        **dict(  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
             zip(
                 [weight_name, down_name, up_name],
                 updown_from_collectionmatrix(*(table[c] for c in matrix_names)),  # ty: ignore[invalid-argument-type]

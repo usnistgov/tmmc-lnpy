@@ -111,7 +111,7 @@ class _LocIndexer:
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
     ) -> None:
-        self._parent._series.loc[idx] = values
+        self._parent._series.loc[idx] = values  # ty:ignore[invalid-assignment]
 
 
 # @SeriesWrapper.decorate_accessor("iloc")
@@ -144,7 +144,7 @@ class _iLocIndexer:  # noqa: N801
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
     ) -> None:
-        self._parent._series.iloc[idx] = values
+        self._parent._series.iloc[idx] = values  # ty:ignore[invalid-assignment]
 
 
 # @SeriesWrapper.decorate_accessor("query")
@@ -465,7 +465,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self, idx: Any, values: lnPiMasked | Sequence[lnPiMasked] | pd.Series[Any]
     ) -> None:
         """Interface to :meth:`pandas.Series.__setitem__`"""
-        self._series[idx] = values
+        self._series[idx] = values  # ty:ignore[invalid-assignment]
 
     def __len__(self) -> int:
         return len(self.s)
@@ -821,7 +821,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         """
         v: lnPiMasked = (
             self.zloc[zloc]._series if zloc is not None else self._series
-        ).iloc[iloc]
+        ).iloc[iloc]  # ty:ignore[invalid-assignment]
         lnz = v.lnz
         if component is not None:
             lnz = lnz[component]
