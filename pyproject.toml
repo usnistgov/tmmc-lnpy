@@ -121,12 +121,8 @@ docs-spelling = [
 ipython = [ "ipython" ]
 mypy = [ "mypy[faster-cache]>=1.20.1" ]
 notebook = [ "ipykernel", "nbclient" ]
-<<<<<<< before updating
-nox = [ "nox>=2025.5.1" ]
-optional = [ "tmmc-lnpy[all]" ]
-=======
 nox = [ "nox>=2026.4.10" ]
->>>>>>> after updating
+optional = [ "tmmc-lnpy[all]" ]
 pylint = [ "pylint" ]
 pytest = [ "pytest" ]
 pytest-accept = [ "pytest-accept" ]
@@ -138,12 +134,8 @@ test-notebook = [
     { include-group = "test" },
     { include-group = "viz" },
 ]
-<<<<<<< before updating
-typecheck-runner = [ "typecheck-runner>=0.1.6; python_version>'3.9'" ]
-viz = [ "tmmc-lnpy[viz]" ]
-=======
 typecheck-runner = [ "typecheck-runner>=0.2.0; python_version>'3.9'" ]
->>>>>>> after updating
+viz = [ "tmmc-lnpy[viz]" ]
 
 # * uv -------------------------------------------------------------------------
 [tool.uv]

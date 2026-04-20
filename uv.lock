@@ -30,7 +30,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-04-13T03:13:22.812425158Z"
+exclude-newer = "2026-04-13T17:41:04.416423Z"
 exclude-newer-span = "P7D"
 
 [[package]]
@@ -4101,7 +4101,7 @@ wheels = [
 
 [[package]]
 name = "scipy-stubs"
-version = "1.17.1.3"
+version = "1.17.1.4"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "python_full_version >= '3.14' and platform_machine == 'ARM64' and sys_platform == 'win32'",
@@ -4130,9 +4130,9 @@ resolution-markers = [
 dependencies = [
     { name = "optype", version = "0.17.0", source = { registry = "https://pypi.org/simple" }, extra = ["numpy"], marker = "python_full_version >= '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a7/59/59c6cc3f9970154b9ed6b1aff42a0185cdd60cef54adc0404b9e77972221/scipy_stubs-1.17.1.3.tar.gz", hash = "sha256:5eb87a8d23d726706259b012ebe76a4a96a9ae9e141fc59bf55fc8eac2ed9e0f", size = 392185, upload-time = "2026-03-22T22:11:58.34Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d1/75/d944a11fca64aa84fbb4bfcf613b758319c6103cb30a304a0e9727009d62/scipy_stubs-1.17.1.4.tar.gz", hash = "sha256:cae00c5207aa62ceb4bcadea202d9fbbf002e958f9e4de981720436b8d5c1802", size = 396980, upload-time = "2026-04-13T11:46:54.528Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2c/d4/94304532c0a75a55526119043dd44a9bd1541a21e14483cbb54261c527d2/scipy_stubs-1.17.1.3-py3-none-any.whl", hash = "sha256:7b91d3f05aa47da06fbca14eb6c5bb4c28994e9245fd250cc847e375bab31297", size = 597933, upload-time = "2026-03-22T22:11:56.525Z" },
+    { url = "https://files.pythonhosted.org/packages/92/f8/334aa5a7a482ea89cb14d92f6a4d9ffa1e193e733144d4d14c7ffcb33583/scipy_stubs-1.17.1.4-py3-none-any.whl", hash = "sha256:e6e5c390fb864745bc3d5f591de81f5cb4f84403857d4f660acb5b6339956f5b", size = 604752, upload-time = "2026-04-13T11:46:53.135Z" },
 ]
 
 [[package]]
@@ -4538,7 +4538,7 @@ dev = [
     { name = "pytest-env", marker = "python_full_version >= '3.13'" },
     { name = "pytest-sugar", marker = "python_full_version >= '3.13'" },
     { name = "pytest-xdist", marker = "python_full_version >= '3.13'" },
-    { name = "scipy-stubs", version = "1.17.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "scipy-stubs", version = "1.17.1.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
     { name = "tmmc-lnpy", extra = ["all", "viz"], marker = "python_full_version >= '3.13'" },
     { name = "typecheck-runner", marker = "python_full_version >= '3.13'" },
     { name = "types-tqdm", marker = "python_full_version >= '3.13'" },
@@ -4629,7 +4629,7 @@ type = [
     { name = "pylint" },
     { name = "pytest" },
     { name = "scipy-stubs", version = "1.15.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "scipy-stubs", version = "1.17.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "scipy-stubs", version = "1.17.1.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "typecheck-runner" },
     { name = "types-tqdm" },
 ]
@@ -4671,10 +4671,10 @@ provides-extras = ["all", "resample", "viz"]
 basedpyright = [{ name = "basedpyright", specifier = ">=1.31.3" }]
 dev = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
-    { name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=1.20.0" },
+    { name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=1.20.1" },
     { name = "nbclient", marker = "python_full_version >= '3.13'" },
     { name = "nbval", marker = "python_full_version >= '3.13'" },
-    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2025.5.1" },
+    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.4.10" },
     { name = "pandas-stubs", marker = "python_full_version >= '3.13'" },
     { name = "pylint", marker = "python_full_version >= '3.13'" },
     { name = "pytest", marker = "python_full_version >= '3.13'" },
@@ -4686,7 +4686,7 @@ dev = [
     { name = "scipy-stubs", marker = "python_full_version >= '3.13'" },
     { name = "tmmc-lnpy", extras = ["all"], marker = "python_full_version >= '3.13'" },
     { name = "tmmc-lnpy", extras = ["viz"], marker = "python_full_version >= '3.13'" },
-    { name = "typecheck-runner", marker = "python_full_version >= '3.13'", specifier = ">=0.1.6" },
+    { name = "typecheck-runner", marker = "python_full_version >= '3.13'", specifier = ">=0.2.0" },
     { name = "types-tqdm", marker = "python_full_version >= '3.13'" },
 ]
 docs = [
@@ -4721,12 +4721,12 @@ docs-spelling = [
     { name = "tmmc-lnpy", extras = ["viz"], marker = "python_full_version >= '3.13'" },
 ]
 ipython = [{ name = "ipython", marker = "python_full_version >= '3.13'" }]
-mypy = [{ name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=1.20.0" }]
+mypy = [{ name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=1.20.1" }]
 notebook = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
     { name = "nbclient", marker = "python_full_version >= '3.13'" },
 ]
-nox = [{ name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2025.5.1" }]
+nox = [{ name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.4.10" }]
 optional = [{ name = "tmmc-lnpy", extras = ["all"] }]
 pylint = [{ name = "pylint" }]
 pytest = [{ name = "pytest" }]
@@ -4755,15 +4755,15 @@ test-notebook = [
     { name = "tmmc-lnpy", extras = ["viz"] },
 ]
 type = [
-    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2025.5.1" },
+    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.4.10" },
     { name = "pandas-stubs" },
     { name = "pylint" },
     { name = "pytest" },
     { name = "scipy-stubs" },
-    { name = "typecheck-runner", marker = "python_full_version >= '3.10'", specifier = ">=0.1.6" },
+    { name = "typecheck-runner", marker = "python_full_version >= '3.10'", specifier = ">=0.2.0" },
     { name = "types-tqdm" },
 ]
-typecheck-runner = [{ name = "typecheck-runner", marker = "python_full_version >= '3.10'", specifier = ">=0.1.6" }]
+typecheck-runner = [{ name = "typecheck-runner", marker = "python_full_version >= '3.10'", specifier = ">=0.2.0" }]
 viz = [{ name = "tmmc-lnpy", extras = ["viz"] }]
 
 [[package]]
