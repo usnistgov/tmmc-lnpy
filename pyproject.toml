@@ -442,6 +442,7 @@ deps = "pip"
 pytest-accept = { pip = true }
 matplotlib = { skip = true, packages = "matplotlib-base" }
 lazy-loader = { skip = true, packages = "lazy_loader" }
+numba = { skip = true, packages = "numba>=0.58" }
 
 [tool.pyproject2conda.envs.dev]
 groups = "dev"
