@@ -821,7 +821,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
                 if (v := getattr(self, key, None)) is not None:
                     if callable(v):
                         v = v()
-                    out.append(v)
+                    out.append(v)  # pyright: ignore[reportArgumentType]
             except Exception:  # noqa: PERF203, BLE001, S110  # pylint: disable=broad-exception-caught
                 pass
 
