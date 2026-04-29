@@ -6,11 +6,7 @@ requires = [
 
 [project]
 name = "tmmc-lnpy"
-<<<<<<< before updating
 version = "0.8.1"
-=======
-version = "0.1.0"
->>>>>>> after updating
 description = "Analysis of lnPi results from TMMC simulation"
 readme = "README.md"
 keywords = [
@@ -462,20 +458,11 @@ skip-package = true
 
 [tool.pyproject2conda.envs.uvx-tools]
 reqs = [
-<<<<<<< before updating
-    # these used solely for specking tools to be used with uvx ...
-    "basedpyright>=1.31.3",
-    "conda-lock>=2.5.5",
-    "copier",
-    "copier-template-extensions>=0.3.1",
-    "grayskull>=2.5.3",
-=======
     # these used solely for specking tools to be run via uvx ...
     "conda-lock>=4.0.0",
     "copier-template-extensions>=0.3.3",
     "copier>=9.14.3",
     "grayskull>=3.1.0",
->>>>>>> after updating
     "nbqa>=1.8.4",
     "prek>=0.3.10",
     "pyrefly>=0.61.1",
