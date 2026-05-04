@@ -4756,7 +4756,7 @@ requires-dist = [
 provides-extras = ["all", "resample", "viz"]
 
 [package.metadata.requires-dev]
-basedpyright = [{ name = "basedpyright", specifier = ">=1.31.3" }]
+basedpyright = [{ name = "basedpyright", specifier = ">=1.39.3" }]
 dev = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
     { name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=1.20.2" },
