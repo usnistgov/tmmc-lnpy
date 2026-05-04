@@ -7,7 +7,7 @@
 # You should not manually edit this file.
 # Instead edit the corresponding pyproject.toml file.
 #
-basedpyright>=1.31.3
+basedpyright>=1.39.3
 conda-lock>=4.0.0
 copier-template-extensions>=0.3.3
 copier>=9.14.3
