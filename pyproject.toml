@@ -119,7 +119,7 @@ docs-spelling = [
     { include-group = "docs" },
 ]
 ipython = [ "ipython" ]
-mypy = [ "mypy[faster-cache]>=1.20.1" ]
+mypy = [ "mypy[faster-cache]>=1.20.2" ]
 notebook = [ "ipykernel", "nbclient" ]
 nox = [ "nox>=2026.4.10" ]
 optional = [ "tmmc-lnpy[all]" ]
