@@ -531,9 +531,9 @@ class wFreeEnergy:  # noqa: N801
                 else:
                     idx_min = np.nanargmin(vals)
                     # pyrefly: ignore [bad-index]
-                    out_arg[i, j] = argmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]
+                    out_arg[i, j] = argmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
                     # pyrefly: ignore [bad-index]
-                    out_max[i, j] = out_max[j, i] = valmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]
+                    out_max[i, j] = out_max[j, i] = valmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
         return out_arg, out_max
 
     @property

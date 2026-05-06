@@ -366,7 +366,7 @@ def shift_lnpi_windows(
         return pd.Series(
             shift_lnpi_windows(
                 # pyrefly: ignore [missing-attribute]
-                *(a.to_numpy() for a in chain((lnpi, window), macrostate)),  # type: ignore[arg-type]  # pyright: ignore[reportAttributeAccessIssue]
+                *(a.to_numpy() for a in chain((lnpi, window), macrostate)),  # type: ignore[arg-type]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload]
                 grouper=grouper,
                 use_sparse=use_sparse,
                 check_connected=check_connected,
@@ -563,6 +563,6 @@ def keep_first(
         return table.iloc[indexer]
 
     # pyrefly: ignore [bad-argument-type]
-    axis, dim = select_axis_dim(table, axis, dim)  # ty:ignore[invalid-argument-type]
+    axis, dim = select_axis_dim(table, axis, dim)
     # pyrefly: ignore [not-callable]
     return table.isel({dim: indexer})  # ty:ignore[invalid-argument-type]

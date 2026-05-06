@@ -111,7 +111,7 @@ class _LocIndexer:
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
     ) -> None:
-        self._parent._series.loc[idx] = values  # ty:ignore[invalid-assignment]
+        self._parent._series.loc[idx] = values
 
 
 # @SeriesWrapper.decorate_accessor("iloc")
@@ -144,7 +144,7 @@ class _iLocIndexer:  # noqa: N801
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
     ) -> None:
-        self._parent._series.iloc[idx] = values  # ty:ignore[invalid-assignment]
+        self._parent._series.iloc[idx] = values
 
 
 # @SeriesWrapper.decorate_accessor("query")
@@ -465,7 +465,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self, idx: Any, values: lnPiMasked | Sequence[lnPiMasked] | pd.Series[Any]
     ) -> None:
         """Interface to :meth:`pandas.Series.__setitem__`"""
-        self._series[idx] = values  # ty:ignore[invalid-assignment]
+        self._series[idx] = values
 
     def __len__(self) -> int:
         return len(self.s)
@@ -552,7 +552,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     def sort_index(self, *args: Any, **kwargs: Any) -> Self:
         """Interface to :meth:`pandas.Series.sort_index`"""
         # pyrefly: ignore [bad-return]
-        return self._wrapped_pandas_method("sort_index", *args, wrap=True, **kwargs)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+        return self._wrapped_pandas_method("sort_index", *args, wrap=True, **kwargs)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     @overload
     def groupby(
@@ -697,13 +697,13 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             objs = out
         else:
             # pyrefly: ignore [bad-assignment]
-            first, objs = peek_at(objs)  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+            first, objs = peek_at(objs)  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]  # ty:ignore[invalid-assignment]
             if isinstance(first, cls):
                 # pyrefly: ignore [missing-attribute]
-                objs = (x._series for x in objs)  # pyright: ignore[reportAttributeAccessIssue]
+                objs = (x._series for x in objs)  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
 
         # pyrefly: ignore [no-matching-overload]
-        return pd.concat(objs, **concat_kws)  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]
+        return pd.concat(objs, **concat_kws)  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
 
     def concat_like(
         self,
@@ -821,7 +821,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         """
         v: lnPiMasked = (
             self.zloc[zloc]._series if zloc is not None else self._series
-        ).iloc[iloc]  # ty:ignore[invalid-assignment]
+        ).iloc[iloc]
         lnz = v.lnz
         if component is not None:
             lnz = lnz[component]

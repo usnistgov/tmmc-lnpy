@@ -428,7 +428,7 @@ def test_combine_keep_first_split_dataset(
                     for i, x in enumerate(seq)
                 ],
                 coord_names="x",
-            ),
+            ),  # ty:ignore[no-matching-overload]
             state_name="x",
         )  # ty:ignore[invalid-argument-type]
     )
