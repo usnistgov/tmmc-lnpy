@@ -1272,7 +1272,7 @@ def delta_lnpi_from_updown(
             ),
         ).transpose(*down.dims)
 
-        return out.rename(name)  # pyright: ignore[reportReturnType]
+        return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     if is_series(down):
         return pd.Series(  # ty: ignore[invalid-return-type]
@@ -1332,7 +1332,7 @@ def lnpi_from_updown(
             keep_attrs=True,
         ).transpose(*down.dims)
 
-        return out.rename(name)  # pyright: ignore[reportReturnType]
+        return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     if is_series(down):
         return pd.Series(  # ty: ignore[invalid-return-type]
@@ -1464,7 +1464,7 @@ def _apply_indexed_function(
                 output_dtypes=dtype if dtype is not None else np.float64,  # type: ignore[redundant-expr]
             ),
         ).transpose(*first.dims)
-        return xout  # pyright: ignore[reportReturnType]
+        return xout  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     dtype = select_dtype(first, out=out, dtype=dtype)
     first = asarray_maybe_recast(first, dtype)
