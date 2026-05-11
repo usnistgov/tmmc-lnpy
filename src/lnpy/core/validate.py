@@ -41,11 +41,6 @@ def is_xarray(x: object) -> TypeIs[xr.Dataset | xr.DataArray]:
     return isinstance(x, (xr.DataArray, xr.Dataset))
 
 
-# def is_xarray_typevar(x: ArrayLike | DataT) -> TypeIs[DataT]:
-#     """Typeguard ``DataT`` typevar against array-like."""
-#     return isinstance(x, (xr.DataArray, xr.Dataset))  # noqa: ERA001
-
-
 def is_series(x: object) -> TypeIs[pd.Series[Any]]:
     """Typeguard pd.Series."""
     return isinstance(x, pd.Series)

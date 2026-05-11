@@ -296,8 +296,6 @@ def _refine_bracket_spinodal_right(
         )
 
         mid = build_phases(lnz_mid, ref=ref, **build_kws)
-        dw = mid.wfe_phases.get_dw(idx, idx_nebr)
-
         if (idx in mid._get_level("phase")) and (
             mid.wfe_phases.get_dw(idx, idx_nebr) >= efac
         ):
@@ -1000,14 +998,8 @@ class Binodals(StabilityBase):
             if inplace, return self
             if not inplace, and as dict, return dict, else return lnPiCollection with phase_id in index
         """
-        out: dict[int, lnPiCollection] = {}
         if inplace and hasattr(self, "_items") and not force:
-            if inplace:
-                return self
-
-            # pyrefly: ignore [bad-assignment]
-            out = self._items if as_dict else self.access  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
-            return out, self._info
+            return self
 
         self._solver = _SolveBinodal(  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
             ref=ref, build_phases=build_phases, build_kws=build_kws
@@ -1017,6 +1009,7 @@ class Binodals(StabilityBase):
 
         info: dict[int, RootResultTotal] = {}
         index = {}
+        out: dict[int, lnPiCollection] = {}
         for idx, ids in enumerate(itertools.combinations(phase_ids, 2)):
             s, r = self.get_pair(
                 ids=ids,

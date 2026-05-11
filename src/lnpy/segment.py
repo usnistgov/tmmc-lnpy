@@ -471,10 +471,12 @@ class Segmenter:
             msg = f"{type(markers)=} must be int or np.ndarray"
             raise TypeError(msg)
 
-        if watershed_kws is None:
-            watershed_kws = {}
         return self.watershed(
-            -lnpi.data, markers=markers, mask=~lnpi.mask, connectivity=connectivity
+            -lnpi.data,
+            markers=markers,
+            mask=~lnpi.mask,
+            connectivity=connectivity,
+            **(watershed_kws or {}),
         )
 
 
