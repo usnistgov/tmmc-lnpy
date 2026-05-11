@@ -815,7 +815,7 @@ class Spinodals(StabilityBase):
         if not isinstance(build_phases, BuildPhasesBase):
             msg = (  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
                 "`build_phases` should be an instance of `BuildPhasesBase`."
-                "Its likely an instance of `PhaseCreator.builphases`."
+                "Its likely an instance of `PhaseCreator.buildphases`."
                 "Instead, use an instance of `PhaseCreator.buildphases_mu`."
             )
             raise TypeError(msg)
