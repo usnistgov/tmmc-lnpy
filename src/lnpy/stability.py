@@ -437,7 +437,8 @@ def get_spinodal(
 
     """
     if len(collection) < 2:
-        raise ValueError("collection must contain at least 2 items")
+        msg = "collection must contain at least 2 items"
+        raise ValueError(msg)
     build_kws = build_kws or {}
     close_kws = close_kws or {}
     solve_kws = solve_kws or {}
