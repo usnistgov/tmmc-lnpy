@@ -437,7 +437,8 @@ def get_spinodal(
 
     """
     if len(collection) < 2:
-        raise ValueError
+        msg = "collection must contain at least 2 items"
+        raise ValueError(msg)
     build_kws = build_kws or {}
     close_kws = close_kws or {}
     solve_kws = solve_kws or {}
@@ -815,7 +816,7 @@ class Spinodals(StabilityBase):
         if not isinstance(build_phases, BuildPhasesBase):
             msg = (  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
                 "`build_phases` should be an instance of `BuildPhasesBase`."
-                "Its likely an instance of `PhaseCreator.builphases`."
+                "Its likely an instance of `PhaseCreator.buildphases`."
                 "Instead, use an instance of `PhaseCreator.buildphases_mu`."
             )
             raise TypeError(msg)
@@ -878,7 +879,10 @@ class Binodals(StabilityBase):
 
         def _get_lnz(idx: int) -> float:
             if spinodals is None:
-                raise ValueError
+                msg = (
+                    "spinodals cannot be None when lnz_min or lnz_max are not provided."
+                )
+                raise ValueError(msg)
             if (s := spinodals[idx]) is None:
                 msg = f"spinodal with index={idx} is None"
                 raise ValueError(msg)
