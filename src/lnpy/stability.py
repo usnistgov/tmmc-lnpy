@@ -878,7 +878,10 @@ class Binodals(StabilityBase):
 
         def _get_lnz(idx: int) -> float:
             if spinodals is None:
-                raise ValueError
+                msg = (
+                    "spinodals cannot be None when lnz_min or lnz_max are not provided."
+                )
+                raise ValueError(msg)
             if (s := spinodals[idx]) is None:
                 msg = f"spinodal with index={idx} is None"
                 raise ValueError(msg)
