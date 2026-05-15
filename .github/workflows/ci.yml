@@ -132,7 +132,7 @@ jobs:
 
       - name: Run prek
         env:
-          SKIP: "typecheck,pyproject2conda-project"
+          SKIP: "typecheck"
         run: >-
           prek run --show-diff-on-failure --color=always --all-files
           --hook-stage=manual -v
