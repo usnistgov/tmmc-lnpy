@@ -14,7 +14,7 @@ dependencies:
   - python=3.12
   - bottleneck
   - joblib
-  - lazy_loader
+  - lazy-loader
   - module-utilities>=0.9.0
   - numba>=0.58
   - numpy
