@@ -4798,7 +4798,7 @@ provides-extras = ["all", "resample", "viz"]
 basedpyright = [{ name = "basedpyright", specifier = ">=1.39.3" }]
 dev = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
-    { name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=1.20.2" },
+    { name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=2.1.0" },
     { name = "nbclient", marker = "python_full_version >= '3.13'" },
     { name = "nbval", marker = "python_full_version >= '3.13'" },
     { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.4.10" },
@@ -4848,7 +4848,7 @@ docs-spelling = [
     { name = "tmmc-lnpy", extras = ["viz"], marker = "python_full_version >= '3.13'" },
 ]
 ipython = [{ name = "ipython", marker = "python_full_version >= '3.13'" }]
-mypy = [{ name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=1.20.2" }]
+mypy = [{ name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=2.1.0" }]
 notebook = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
     { name = "nbclient", marker = "python_full_version >= '3.13'" },
