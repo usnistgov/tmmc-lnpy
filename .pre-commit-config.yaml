@@ -162,7 +162,8 @@ repos:
     hooks:
       - id: pooch-registry
         name: pooch-registry
-        entry: python -c  "import pooch; pooch.make_registry('examples/data', 
+        entry:
+          python -c  "import pooch; pooch.make_registry('examples/data',
           'src/lnpy/data/registry.txt')"
         language: python
         additional_dependencies:
