@@ -694,7 +694,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
                 else:
                     out[k] = v
             # pyrefly: ignore [bad-assignment]
-            objs = out
+            objs = out  # ty: ignore[invalid-assignment]
         else:
             # pyrefly: ignore [bad-assignment]
             first, objs = peek_at(objs)  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]  # ty:ignore[invalid-assignment]
