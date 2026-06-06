@@ -8,7 +8,7 @@ reorder_keys = true
 
 [[rule]]
 include = [ "**/pyproject.toml" ]
-keys = [ "project", "tool.coverage" ]
+keys = [ "project", "tool.coverage", "tool.mypy.overrides" ]
 
 [rule.formatting]
 reorder_arrays = false
@@ -20,8 +20,11 @@ keys = [
     "dependency-groups",
     "project",
     "tool.coverage",
-    "tool.mypy.overrides",
+    "tool.mypy",
     "tool.pyproject2conda",
+    "tool.pyrefly",
+    "tool.pyright",
+    "tool.ty",
     "tool.uv",
 ]
 
