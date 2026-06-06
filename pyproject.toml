@@ -220,7 +220,11 @@ files = [
     "tests",
     "tools",
 ]
-# options
+untyped_calls_exclude = [
+    "IPython",
+    "numpy.ma",
+    "skimage",
+]
 check_untyped_defs = true
 warn_unused_ignores = true
 warn_return_any = true
@@ -230,25 +234,13 @@ enable_error_code = [
     "redundant-expr",
     "truthy-bool",
 ]
-<<<<<<< before updating
-untyped_calls_exclude = [
-    "IPython",
-    "numpy.ma",
-    "skimage",
-]
-warn_return_any = true
-warn_unreachable = true
-=======
 strict = true
->>>>>>> after updating
 warn_unused_configs = true
 
-<<<<<<< before updating
 [[tool.mypy.overrides]]
-ignore_missing_imports = true
 module = [
-    "IPython.*",
     "bottleneck.*",
+    "IPython.*",
     "joblib.*",
     "lnPi.*",
     "matplotlib.*",
@@ -260,27 +252,18 @@ module = [
     "scipy.spatial.*",
     "skimage.*",
 ]
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-strict = false
-disallow_untyped_defs = false
-disallow_untyped_calls = false
-disallow_incomplete_defs = false
 module = [
     "lnPi.maskedlnpi_legacy.*",
     "tests.*",
 ]
+disallow_untyped_calls = false
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+strict = false
 
-=======
-# [[tool.mypy.overrides]]
-# module = [  ]
-# ignore_missing_imports = true
-#
-# [[tool.mypy.overrides]]
-# module = [  ]
-# ignore_errors = true
-#
->>>>>>> after updating
 [tool.pyrefly]
 enabled-ignores = [ "pyrefly" ]
 project-includes = [
@@ -312,8 +295,15 @@ ignore-missing-imports = [ "matplotlib.*" ]
 matches = "examples/**"
 
 [tool.pyright]
-typeCheckingMode = "strict"
-# typeCheckingMode= "standard"
+typeCheckingMode = "standard"
+strict = [
+    # "src",
+    # "tests",
+    "noxfile.py",
+    "tools/*.py",
+    # "src/lnpy/*.py",
+    # "src/lnpy/core/*.py",
+]
 include = [
     "noxfile.py",
     "src",
@@ -328,44 +318,14 @@ exclude = [
     ".tox/**",
     ".venv/**",
 ]
-<<<<<<< before updating
-include = [
-    "src",
-    "tests",
-    # tools
-    "noxfile.py",
-    "tools",
-]
-strict = [
-    # "src",
-    # "tests",
-    "noxfile.py",
-    "tools/*.py",
-    # "src/lnpy/*.py",
-    # "src/lnpy/core/*.py",
-]
-typeCheckingMode = "standard"
-=======
 enableTypeIgnoreComments = false
-# strict = [
-#     "src",
-#     "tests",
-#     "noxfile.py",
-#     "tools/*.py",
-# ]
->>>>>>> after updating
 # options
 # reportMissingSuperCall = true
 deprecateTypingAliases = true
 reportCallInDefaultInitializer = true
-<<<<<<< before updating
-# reportImplicitOverride = true  # TODO(wpk): enable
-# reportImportCycles = true  # TODO(wpk): enable
-=======
-reportImplicitOverride = true
 reportImplicitStringConcatenation = false
-reportImportCycles = true
->>>>>>> after updating
+# reportImplicitOverride = false  # TODO(wpk): enable
+# reportImportCycles = false  # TODO(wpk): enable
 reportOverlappingOverload = true
 reportPrivateImportUsage = false
 reportPrivateUsage = false
@@ -389,11 +349,13 @@ reportUnusedCallResult = false
 
 [tool.ty]
 src.include = [
+    # tools
     "noxfile.py",
     "src",
     "tests",
     "tools",
 ]
+# Disable support for `type: ignore` comments
 analysis.respect-type-ignore-comments = false
 
 [[tool.ty.overrides]]
@@ -461,6 +423,7 @@ report.omit = [
 ]
 report.show_missing = true
 
+# * Other tools ----------------------------------------------------------------
 [tool.commitizen]
 use_shortcuts = true
 
@@ -516,7 +479,6 @@ groups = [
 skip-package = true
 style = "requirements"
 
-# * Other tools ----------------------------------------------------------------
 [tool.rooster]
 changelog_contributors = true
 major-labels = [ "breaking" ]
