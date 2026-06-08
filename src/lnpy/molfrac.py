@@ -64,7 +64,11 @@ def _initial_bracket_molfrac(
     if len(ss) > 0:
         left = collection.mloc[ss.index[[-1]]]
     else:
-        index = s.index[[0]] if len(s) > 0 else collection.index[[0]].droplevel("phase")
+        index = (
+            s.index[[0]]
+            if len(s) > 0
+            else collection._multiindex[[0]].droplevel("phase")
+        )
         new_lnz = collection.mloc[index]._get_lnz(lnz_idx)
         dlnz_ = dlnz
         for i in range(ntry):
@@ -92,7 +96,9 @@ def _initial_bracket_molfrac(
         right = collection.mloc[ss.index[[0]]]
     else:
         index = (
-            s.index[[-1]] if len(s) > 0 else collection.index[[-1]].droplevel("phase")
+            s.index[[-1]]
+            if len(s) > 0
+            else collection._multiindex[[-1]].droplevel("phase")
         )
         new_lnz = collection.mloc[index]._get_lnz(lnz_idx)
         dlnz_ = dlnz
