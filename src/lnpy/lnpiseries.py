@@ -202,22 +202,21 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
     ) -> None:
         self._parent = parent
         self._level = level
-        self._index = self._parent.index
+        self._index = self._parent._multiindex
 
         self._index_names = set(self._index.names)
         self._loc = self._parent._series.iloc
 
     def _get_loc_idx(self, idx: pd.MultiIndex | IndexAny) -> Any:
-        index = self._index
         if isinstance(idx, pd.MultiIndex):
             # names in idx and
             drop: list[Hashable] = list(self._index_names - set(idx.names))
-            index = index.droplevel(drop)
+            index = self._index.droplevel(drop)
             # reorder idx
             idx = idx.reorder_levels(index.names)
         else:
-            drop = list(set(index.names) - {idx.name})
-            index = index.droplevel(drop)
+            drop = list(self._index_names - {idx.name})
+            index = self._index.droplevel(drop)
         return index.get_indexer_for(idx)
 
     def __getitem__(self, idx: pd.MultiIndex | IndexAny) -> lnPiCollection:
@@ -397,6 +396,14 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     def index(self) -> IndexAny:
         """Series index"""
         return self._series.index
+
+    @property
+    def _multiindex(self) -> pd.MultiIndex:
+        if isinstance(self._series.index, pd.MultiIndex):
+            return self._series.index
+
+        msg = "self.index is not a MultiIndex"
+        raise TypeError(msg)
 
     @property
     def name(self) -> Hashable:
@@ -703,7 +710,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
                 objs = (x._series for x in objs)  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
 
         # pyrefly: ignore [no-matching-overload]
-        return pd.concat(objs, **concat_kws)  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        return pd.concat(objs, **concat_kws)  # type: ignore[no-any-return] # pyright: ignore[reportCallIssue, reportArgumentType]
 
     def concat_like(
         self,
@@ -777,7 +784,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     @property
     def nlnz(self) -> int:
         """Number of unique lnzs"""
-        return len(self.index.droplevel("phase").drop_duplicates())
+        return len(self._multiindex.droplevel("phase").drop_duplicates())
 
     @cached.prop
     def index_frame(self) -> pd.DataFrame:
@@ -788,7 +795,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         regardless of phase
         """
         sample_frame = (
-            self.index
+            self._multiindex
             .droplevel("phase")
             .drop_duplicates()
             .to_frame()
