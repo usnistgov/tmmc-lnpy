@@ -479,10 +479,7 @@ groups = [
 skip-package = true
 style = "requirements"
 
-<<<<<<< before updating
-=======
 [tool.uv-locker]
-pip-compile-config-file = "requirements/uv.toml"
 requirements = [
     { path = "requirements/uvx-tools.txt", python = "min", output-file = "requirements/lock/uvx-tools.txt", options = [
         "--no-deps",
@@ -497,7 +494,6 @@ scripts = [
 ]
 
 # * Other tools ----------------------------------------------------------------
->>>>>>> after updating
 [tool.rooster]
 changelog_contributors = true
 major-labels = [ "breaking" ]
