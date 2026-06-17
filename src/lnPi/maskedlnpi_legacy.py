@@ -76,7 +76,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         if extra_kws is None:
             extra_kws = {}
 
-        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]
+        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]  # pyrefly: ignore[missing-attribute]
             lnz=lnz,
             state_kws=state_kws,
             extra_kws=extra_kws,
