@@ -8,7 +8,7 @@ lnPi data classes and routines (:mod:`~lnpy.lnpidata`)
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -17,6 +17,7 @@ from module_utilities import cached
 from .core.compat import copy_if_needed
 from .core.docstrings import docfiller
 from .core.mask import labels_to_masks, masks_change_convention
+from .core.typing_compat import override
 from .extensions import AccessorMixin
 
 if TYPE_CHECKING:

@@ -15,6 +15,12 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
 if sys.version_info >= (3, 13):  # pragma: no cover
     from typing import TypeIs, TypeVar
 else:
@@ -34,4 +40,5 @@ __all__ = [
     "TypeAlias",
     "TypeIs",
     "TypeVar",
+    "override",
 ]

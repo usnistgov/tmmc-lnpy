@@ -6,7 +6,7 @@ Collection of lnPi objects (:mod:`~lnpy.lnpiseries`)
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, overload, override
+from typing import TYPE_CHECKING, overload
 from warnings import warn
 
 import numpy as np
@@ -20,6 +20,7 @@ from .core.mask import labels_to_masks, masks_to_labels
 
 # lazy loads
 from .core.progress import get_tqdm_build as get_tqdm
+from .core.typing_compat import override
 from .core.utils import peek_at
 from .extensions import AccessorMixin
 

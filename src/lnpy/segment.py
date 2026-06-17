@@ -15,12 +15,13 @@ from __future__ import annotations
 import warnings
 from collections.abc import Iterable
 from functools import lru_cache
-from typing import TYPE_CHECKING, cast, overload, override  # , TypedDict
+from typing import TYPE_CHECKING, cast, overload
 
 import numpy as np
 from module_utilities.docfiller import DocFiller
 
 from .core.docstrings import docfiller
+from .core.typing_compat import override
 from .lnpienergy import wFreeEnergy
 from .lnpiseries import lnPiCollection, validate_is_lnpicollection
 

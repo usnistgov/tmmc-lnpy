@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import itertools
 import warnings
-from typing import TYPE_CHECKING, cast, overload, override
+from typing import TYPE_CHECKING, cast, overload
 
 import numpy as np
 import pandas as pd
@@ -23,6 +23,7 @@ from .core.mask import (
     masks_change_convention,
 )
 from .core.progress import get_tqdm_calc as get_tqdm
+from .core.typing_compat import override
 from .core.validate import validate_sequence
 
 if TYPE_CHECKING:
