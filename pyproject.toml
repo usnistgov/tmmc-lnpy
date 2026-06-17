@@ -282,6 +282,10 @@ ignore-missing-imports = [ "IPython.*" ]
 matches = "src/lnpy/core/progress.py"
 
 [[tool.pyrefly.sub-config]]
+ignore-missing-imports = [ "requirements.*" ]
+matches = "tools/sync_pyproject_min_versions.py"
+
+[[tool.pyrefly.sub-config]]
 matches = "src/lnpy/**"
 
 [tool.pyrefly.sub-config.errors]
