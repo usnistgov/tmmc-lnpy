@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import itertools
 import warnings
-from typing import TYPE_CHECKING, cast, overload
+from typing import TYPE_CHECKING, cast, overload, override
 
 import numpy as np
 import pandas as pd
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
     _Extrema = Literal["min", "max"]
 
     _FillArg: TypeAlias = "int | None"
-    _FillVal: TypeAlias = "_FillArg | float"
+    _FillVal: TypeAlias = "float | None"
     _ExtremaArg: TypeAlias = "int | tuple[int, ...] | None"
 
 
@@ -251,11 +251,11 @@ def find_masked_extrema(
             val = fill_val
         else:
             mask_flat = mask.reshape(-1)
-            arg = positions_flat[mask_flat][func(data_flat[mask_flat])]
-            val = data_flat[arg]  # pyright: ignore[reportAssignmentType]
+            arg = cast("int", positions_flat[mask_flat][func(data_flat[mask_flat])])
+            val = data_flat[arg]
 
             if unravel:
-                arg = np.unravel_index(arg, data.shape)  # type: ignore[assignment]  # pyright: ignore[reportCallIssue, reportArgumentType]
+                arg = tuple(int(x) for x in np.unravel_index(arg, data.shape))
 
         out_arg.append(arg)
         out_val.append(val)
@@ -799,6 +799,7 @@ class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
     """
 
     @property
+    @override
     @cached.meth
     def dwx(self) -> xr.DataArray:
         index = list(self._parent.index.get_level_values("phase"))
@@ -811,14 +812,15 @@ class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
         return xr.DataArray(dw, dims=dims, coords=coords)
 
     @property
+    @override
     @cached.meth
     def dw(self) -> pd.Series[Any]:
         """Series representation of delta_w"""
         return self.dwx.to_series()
 
     # FIX(wpk): fix this
-    # pyrefly: ignore [bad-override]
-    def get_dw(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]  # ty: ignore[invalid-method-override]
+    @override
+    def get_dw(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]  # ty: ignore[invalid-method-override]  # pyrefly: ignore[bad-override]
         self, idx: int, idx_nebr: int | Iterable[int] | None = None
     ) -> float | NDArrayAny:
         dw = self.dwx

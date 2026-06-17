@@ -8,7 +8,7 @@ lnPi data classes and routines (:mod:`~lnpy.lnpidata`)
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 import numpy as np
 import pandas as pd
@@ -416,9 +416,11 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         """Accessor to self.state_kws['beta']."""
         return self.state_kws.get("beta", None)
 
+    @override
     def __repr__(self) -> str:
         return f"<lnPi(lnz={self._lnz})>"
 
+    @override
     def __str__(self) -> str:
         return repr(self)
 

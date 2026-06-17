@@ -144,7 +144,7 @@ default-groups = [ "dev" ]
 fork-strategy = "requires-python"
 exclude-newer = "7 days"
 managed = true
-build-backend.module-name = [ "lnPi", "lnpy" ]
+build-backend.module-name = [ "lnpy" ]
 build-backend.source-include = [ "tests/**" ]
 pip.annotation-style = "line"
 pip.generate-hashes = true
@@ -171,7 +171,7 @@ ignore = [
 
 [tool.check-wheel-contents]
 src_dir = [ "src" ]
-toplevel = [ "lnPi", "lnpy" ]
+toplevel = [ "lnpy" ]
 
 [tool.pyproject-fmt]
 # max_supported_python = "3.13"
@@ -271,27 +271,33 @@ project-includes = [
     "tests",
     "tools",
 ]
+search-path = [ "src" ]
 
-# NOTE: this messes up typechecking under src, but is needed
-# to import tools in dataclass.  Suppress errors in noxfile for now.
-# search-path = [ "." ]
-# [tool.pyrefly.errors]
-# implicit-abstract-class = "error"
-# implicit-any = "error"
-# implicitly-defined-attribute = "error"
-# missing-override-decorator = "error"
-# missing-source = "ignore"
-# not-required-key-access = "error"
-# open-unpacking = "error"
-# unannotated-attribute = "error"
-# unannotated-parameter = "error"
-# unannotated-return = "error"
-# untyped-import = "error"
-# unused-ignore = "error"
-# variance-mismatch = "error"
+[[tool.pyrefly.sub-config]]
+matches = "src/lnpy/**"
+
 [[tool.pyrefly.sub-config]]
 ignore-missing-imports = [ "matplotlib.*" ]
 matches = "examples/**"
+
+[[tool.pyrefly.sub-config]]
+ignore-missing-imports = [ "IPython.*" ]
+matches = "src/lnpy/core/progress.py"
+
+[tool.pyrefly.sub-config.errors]
+implicit-abstract-class = "error"
+implicit-any = "error"
+implicitly-defined-attribute = "error"
+missing-override-decorator = "error"
+missing-source = "ignore"
+not-required-key-access = "error"
+open-unpacking = "error"
+unannotated-attribute = "error"
+unannotated-parameter = "error"
+unannotated-return = "error"
+untyped-import = "error"
+unused-ignore = "error"
+variance-mismatch = "error"
 
 [tool.pyright]
 typeCheckingMode = "standard"

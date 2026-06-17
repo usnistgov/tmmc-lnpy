@@ -733,7 +733,7 @@ def shift_lnpi_windows(
         # There's a bug with multiplying a shape=(1,1) a into b.
         # The result will be a scalar.
         # so make sure its a vector
-        rhs = np.atleast_1d(asp.T @ b)
+        rhs = np.atleast_1d(asp.T @ b)  # pyrefly: ignore[no-matching-overload]
 
     else:
         a = _create_lhs_matrix_numpy(

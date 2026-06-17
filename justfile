@@ -239,7 +239,7 @@ pylint:
 
 # Run all checkers (with optional directories)
 [group("typecheck")]
-typecheck *options: (_typecheck "-cmypy[faster-cache] -cbasedpyright -cty" options)
+typecheck *options: (_typecheck "-cmypy[faster-cache] -cbasedpyright -cty -cpyrefly" options)
 
 # Run checkers on tools
 [group("tools")]

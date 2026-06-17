@@ -6,7 +6,7 @@ Collection of lnPi objects (:mod:`~lnpy.lnpiseries`)
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, overload
+from typing import TYPE_CHECKING, overload, override
 from warnings import warn
 
 import numpy as np
@@ -161,7 +161,7 @@ class _Query:
 
     def __call__(self, expr: str, **kwargs: Any) -> lnPiCollection:
         idx = self._frame.query(expr, **kwargs).index
-        return self._parent.iloc[idx]  # type: ignore[no-any-return]
+        return validate_is_lnpicollection(self._parent.iloc[idx])
 
 
 # @SeriesWrapper.decorate_accessor("zloc")
@@ -770,9 +770,11 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     def _lnz_series(self) -> pd.Series[Any]:
         return self._series.apply(lambda x: x.lnz)  # type: ignore[no-any-return]
 
+    @override
     def __repr__(self) -> str:
         return f"<class {self.__class__.__name__}>\n{self._lnz_series!r}"
 
+    @override
     def __str__(self) -> str:
         return str(self._lnz_series)
 
@@ -1074,8 +1076,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         if len(labels) != len(lnzs):
             raise ValueError
 
-        items = []
-        indexes = []
+        items: list[lnPiMasked] = []
+        indexes: list[int] = []
 
         for label, lnz in zip(labels, lnzs, strict=True):
             lnpi = ref.reweight(lnz)
@@ -1090,8 +1092,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             )
 
             index = list(np.array(features_tmp) - 1)
-            items += lnpi.list_from_masks(masks, convention=False)
-            indexes += index
+            items.extend(lnpi.list_from_masks(masks, convention=False))
+            indexes.extend(index)
 
         return cls.from_list(items=items, index=indexes, **kwargs)
 
@@ -1235,3 +1237,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             new._cache["spinodal"] = spin
             new._cache["binodal"] = bino
         return new
+
+
+def validate_is_lnpicollection(x: Any) -> lnPiCollection:
+    if not isinstance(x, lnPiCollection):
+        msg = f"Passed {type(x)=} != lnPiCollection"
+        raise TypeError(msg)
+    return x

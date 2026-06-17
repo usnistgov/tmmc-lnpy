@@ -9,7 +9,7 @@ Calculation of spinodal and binodal
 from __future__ import annotations
 
 import itertools
-from typing import TYPE_CHECKING, overload
+from typing import TYPE_CHECKING, cast, overload
 
 import numpy as np
 from module_utilities import cached
@@ -19,7 +19,7 @@ from .core.compat import rootresults
 from .core.rootresults import RootResultDict, rootresults_to_rootresultdict
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Mapping, Sequence
+    from collections.abc import Hashable, Iterable, Mapping, Sequence
     from typing import Any, Literal
 
     from scipy.optimize import RootResults
@@ -147,7 +147,9 @@ def _initial_bracket_spinodal_right(
         new_lnz = collection.mloc[s_idx.index[[0]]]._get_lnz(build_phases.index)
         for _i in range(ntry):
             new_lnz -= step * dlnz
-            t = build_phases(new_lnz, ref=ref, **build_kws)
+            t = build_phases._call_and_validate_is_lnpicollection(
+                new_lnz, ref=ref, **build_kws
+            )
             if (
                 idx in t._get_level("phase")
                 and t.wfe_phases.get_dw(idx, idx_nebr) > efac
@@ -169,7 +171,9 @@ def _initial_bracket_spinodal_right(
         dlnz_ = dlnz
         for _i in range(ntry):
             new_lnz += step * dlnz_
-            t = build_phases(new_lnz, ref=ref, **build_kws)
+            t = build_phases._call_and_validate_is_lnpicollection(
+                new_lnz, ref=ref, **build_kws
+            )
             if (
                 idx not in t._get_level("phase")
                 or t.wfe_phases.get_dw(idx, idx_nebr) < efac
@@ -257,10 +261,9 @@ def _refine_bracket_spinodal_right(
             # we've reached a breaking point
             if left_done:
                 # can't find a lower bound to efac, just return where we're at
-                root = left._get_lnz()
+                root = float(left._get_lnz())
                 r = rootresults(
-                    # pyrefly: ignore [bad-argument-type]
-                    root=root,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
+                    root=root,
                     iterations=i + 1,
                     function_calls=i,
                     flag=0,
@@ -295,7 +298,9 @@ def _refine_bracket_spinodal_right(
             left._get_lnz(build_phases.index) + right._get_lnz(build_phases.index)
         )
 
-        mid = build_phases(lnz_mid, ref=ref, **build_kws)
+        mid = build_phases._call_and_validate_is_lnpicollection(
+            lnz_mid, ref=ref, **build_kws
+        )
         if (idx in mid._get_level("phase")) and (
             mid.wfe_phases.get_dw(idx, idx_nebr) >= efac
         ):
@@ -338,8 +343,6 @@ def _get_step(collection: lnPiCollection, idx: int, idx_nebr: int | None) -> int
 class _SolveSpinodal:
     """Spinodal solve base."""
 
-    collection: lnPiCollection  # pyright: ignore[reportUninitializedInstanceVariable]
-
     def __init__(
         self,
         build_phases: BuildPhasesBase,
@@ -355,10 +358,20 @@ class _SolveSpinodal:
         self.efac = efac
         self.ref = ref
         self.build_kws = build_kws or {}
+        self._collection: lnPiCollection | None = None
+
+    @property
+    def collection(self) -> lnPiCollection:
+        if self._collection is None:
+            msg = "collection not set"
+            raise ValueError(msg)
+        return self._collection
 
     def objective(self, x: float) -> float:
-        self.collection = self.build_phases(x, ref=self.ref, **self.build_kws)
-        dw = self.collection.wfe_phases.get_dw(self.idx, self.idx_nebr)
+        self._collection = self.build_phases._call_and_validate_is_lnpicollection(
+            x, ref=self.ref, **self.build_kws
+        )
+        dw = self._collection.wfe_phases.get_dw(self.idx, self.idx_nebr)
 
         return array_to_scalar(dw) - self.efac
 
@@ -532,8 +545,6 @@ class _SolveBinodal:
         optional arguments to build_phases
     """
 
-    collection: lnPiCollection  # pyright: ignore[reportUninitializedInstanceVariable]
-
     def __init__(
         self,
         build_phases: BuildPhasesBase,
@@ -543,18 +554,35 @@ class _SolveBinodal:
         self.build_phases = build_phases
         self.ref = ref
         self.build_kws = build_kws or {}
+        self._ids: tuple[int, int] | None = None
+        self._collection: lnPiCollection | None = None
+
+    @property
+    def ids(self) -> tuple[int, int]:
+        if self._ids is None:
+            msg = "ids not set"
+            raise ValueError(msg)
+        return self._ids
+
+    @property
+    def collection(self) -> lnPiCollection:
+        if self._collection is None:
+            msg = "collection not set"
+            raise ValueError(msg)
+        return self._collection
 
     def objective(self, x: float) -> float:
-        self.collection = self.build_phases(x, ref=self.ref, **self.build_kws)
+        self._collection = self.build_phases._call_and_validate_is_lnpicollection(
+            x, ref=self.ref, **self.build_kws
+        )
         out = (
-            self.collection.xge
+            self._collection.xge
             .betaOmega()
             .reindex(phase=self.ids)
             .diff("phase")
             .squeeze()
             .to_numpy()
         )
-
         return array_to_scalar(out)
 
     def solve(
@@ -589,7 +617,7 @@ class _SolveBinodal:
             msg = f"{ids=} must have length 2."
             raise ValueError(msg)
 
-        self.ids = ids  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
+        self._ids = (ids[0], ids[1])
 
         a, b = min(lnz_min, lnz_max), max(lnz_min, lnz_max)
 
@@ -616,13 +644,12 @@ class StabilityBase:
 
     _NAME = "base"
 
-    _items: dict[int, lnPiCollection | None]  # pyright: ignore[reportUninitializedInstanceVariable]
-    _info: dict[int, RootResultTotal]  # pyright: ignore[reportUninitializedInstanceVariable]
-
     def __init__(self, collection: lnPiCollection) -> None:
         self._parent = collection
         self.access_kws: dict[str, Any] = {}
         self._cache: dict[str, Any] = {}
+        self._items: dict[int, lnPiCollection | None] | None = None
+        self._info: dict[int, RootResultTotal] | None = None
 
     @property
     def parent(self) -> lnPiCollection:
@@ -636,7 +663,17 @@ class StabilityBase:
     @property
     def items(self) -> dict[int, lnPiCollection | None]:
         """Access to the underlying data"""
+        if self._items is None:
+            msg = "Items not set"
+            raise ValueError(msg)
         return self._items
+
+    @property
+    def info(self) -> dict[int, RootResultTotal]:
+        if self._info is None:
+            msg = "Info not set"
+            raise ValueError(msg)
+        return self._info
 
     def _get_access(
         self,
@@ -644,15 +681,21 @@ class StabilityBase:
         concat_kws: Mapping[str, Any] | None = None,
         **kwargs: Any,
     ) -> lnPiCollection:
-        items = items or self._items
+        items = items or self.items
         concat_kws = concat_kws or {}
 
         concat_kws = {"names": [self._NAME], **concat_kws}
         kwargs = dict(self.access_kws, **kwargs)
 
-        # FIX(wpk): fix typing on items
-        # pyrefly: ignore [bad-argument-type]
-        return self._parent.concat(items, concat_kws=concat_kws, **kwargs)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
+        if any(_ is None for _ in items.values()):
+            msg = "items has None value"
+            raise ValueError(msg)
+
+        return self._parent.concat(
+            cast("dict[Hashable, lnPiCollection]", items),
+            concat_kws=concat_kws,
+            **kwargs,
+        )
 
     @cached.prop
     def access(self) -> lnPiCollection:
@@ -660,7 +703,7 @@ class StabilityBase:
         return self._get_access()
 
     def __getitem__(self, idx: int) -> lnPiCollection | None:
-        return self._items[idx]
+        return self.items[idx]
 
     def _get_appender(self, s: lnPiCollection | None = None) -> lnPiCollection:
         if s is None:
@@ -691,9 +734,6 @@ class Spinodals(StabilityBase):
     """Methods for calculation locations of spinodal"""
 
     _NAME = "spinodal"
-
-    _items: dict[int, lnPiCollection | None]
-    _info: dict[int, RootResultTotal]
 
     @overload
     def __call__(
@@ -804,12 +844,12 @@ class Spinodals(StabilityBase):
             if inplace, return self.
             if not inplace, and as dict, return dict, else return :class:`lnpy.lnpiseries.lnPiCollection` with phase_id in index
         """
-        if hasattr(self, "_items") and not force:
+        if self._items is not None and not force:
             if inplace:
                 return self
             if as_dict:
-                return self._items, self._info
-            return self.access, self._info
+                return self.items, self.info
+            return self.access, self.info
 
         from .segment import BuildPhasesBase
 
@@ -862,8 +902,13 @@ class Binodals(StabilityBase):
     """Routines to calculate binodal."""
 
     _NAME = "binodal"
-    # pyrefly: ignore [bad-override]
-    _items: dict[int, lnPiCollection]  # type: ignore[assignment]
+
+    _items: dict[int, lnPiCollection] | None  # type: ignore[assignment]  # pyrefly: ignore[bad-override-mutable-attribute]]
+
+    def __init__(self, collection: lnPiCollection) -> None:
+        super().__init__(collection)
+        self._solver: _SolveBinodal | None = None
+        self._index: dict[int, tuple[int, int]] | None = None
 
     def get_pair(
         self,
@@ -1002,17 +1047,17 @@ class Binodals(StabilityBase):
             if inplace, return self
             if not inplace, and as dict, return dict, else return lnPiCollection with phase_id in index
         """
-        if inplace and hasattr(self, "_items") and not force:
+        if inplace and self._items is not None and not force:
             return self
 
-        self._solver = _SolveBinodal(  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
+        self._solver = _SolveBinodal(
             ref=ref, build_phases=build_phases, build_kws=build_kws
         )
 
         phase_ids = list(range(phase_ids) if isinstance(phase_ids, int) else phase_ids)
 
         info: dict[int, RootResultTotal] = {}
-        index = {}
+        index: dict[int, tuple[int, int]] = {}
         out: dict[int, lnPiCollection] = {}
         for idx, ids in enumerate(itertools.combinations(phase_ids, 2)):
             s, r = self.get_pair(
@@ -1038,7 +1083,7 @@ class Binodals(StabilityBase):
         if inplace:
             self._items = out  # pyright: ignore[reportIncompatibleVariableOverride]
             self._info = info
-            self._index = index  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
+            self._index = index
             return self
 
         if not as_dict and converged:

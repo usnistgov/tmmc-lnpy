@@ -74,7 +74,9 @@ def _initial_bracket_molfrac(
         for i in range(ntry):
             new_lnz -= dlnz_
             dlnz_ *= dfac
-            p = build_phases(new_lnz, ref=ref, **build_kws)
+            p = build_phases._call_and_validate_is_lnpicollection(
+                new_lnz, ref=ref, **build_kws
+            )
             if (skip_phase_id or phase_id in p._get_level("phase")) and getter(
                 p
             ).to_numpy() < target:
@@ -105,7 +107,9 @@ def _initial_bracket_molfrac(
 
         for i in range(ntry):
             new_lnz += dlnz_
-            p = build_phases(new_lnz, ref=ref, **build_kws)
+            p = build_phases._call_and_validate_is_lnpicollection(
+                new_lnz, ref=ref, **build_kws
+            )
             if (not skip_phase_id) and (phase_id not in p._get_level("phase")):
                 # went to far
                 new_lnz -= dlnz_
@@ -200,7 +204,7 @@ def _solve_lnz_molfrac(
     shared: dict[str, lnPiCollection] = {}
 
     def f(x: float) -> float:
-        p = build_phases(x, ref=ref, **build_kws)
+        p = build_phases._call_and_validate_is_lnpicollection(x, ref=ref, **build_kws)
         shared["lnpi"] = p
 
         # by not using the ListAccessor,
