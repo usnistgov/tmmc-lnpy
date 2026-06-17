@@ -76,7 +76,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         if extra_kws is None:
             extra_kws = {}
 
-        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-attribute,unused-ignore-comment]  # pyrefly: ignore[missing-attribute]
+        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]
             lnz=lnz,
             state_kws=state_kws,
             extra_kws=extra_kws,
@@ -98,7 +98,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def optinfo(self):
         """All extra properties"""
         # pyrefly: ignore [missing-attribute]
-        return self._optinfo  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
+        return self._optinfo  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
 
     @property
     def state_kws(self):
@@ -189,7 +189,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def edge_distance(self, ref, *args, **kwargs):
         return ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)]
 
-    def __setitem__(self, index, value) -> None:  # pyrefly: ignore [bad-param-name-override]  # ty: ignore[invalid-method-override]
+    def __setitem__(self, index, value) -> None:  # pyrefly: ignore [bad-param-name-override]
         self._clear_cache()
         super().__setitem__(index, value)
 
@@ -377,7 +377,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         ma, opt = state
         super().__setstate__(ma)
         # pyrefly: ignore [missing-attribute]
-        self._optinfo.update(opt)  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
+        self._optinfo.update(opt)  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
 
     @classmethod
     def from_table(

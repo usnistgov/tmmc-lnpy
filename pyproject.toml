@@ -372,6 +372,14 @@ analysis.allowed-unresolved-imports = [ "matplotlib.*" ]
 include = [ "examples/**" ]
 rules = { missing-argument = "ignore" }
 
+[[tool.ty.overrides]]
+include = [ "src/lnpy/core/progress.py" ]
+analysis.allowed-unresolved-imports = [ "IPython.*" ]
+
+[[tool.ty.overrides]]
+include = [ "src/lnPi/maskedlnpi_legacy.py" ]
+rules = { unresolved-attribute = "ignore", invalid-method-override = "ignore" }
+
 # * Testing --------------------------------------------------------------------
 [tool.pytest.ini_options]
 addopts = [
