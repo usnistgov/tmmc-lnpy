@@ -1,5 +1,5 @@
 """Vectorized pushers."""
-# pylint: disable=consider-using-enumerate,import-error
+# pylint: disable=consider-using-enumerate
 # pyright: reportMissingImports=false, reportUnnecessaryTypeIgnoreComment=false
 
 from __future__ import annotations
