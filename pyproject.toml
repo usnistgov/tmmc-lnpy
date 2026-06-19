@@ -46,7 +46,7 @@ dependencies = [
     "scikit-image>=0.21",
     "scipy",
     "tqdm",
-    "typing-extensions>=4.10.0; python_version<'3.13'",
+    "typing-extensions>=4.10.0; python_version<'3.15'",
     "xarray",
 ]
 

@@ -4909,7 +4909,7 @@ dependencies = [
     { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "tqdm" },
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.15'" },
     { name = "xarray", version = "2025.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "xarray", version = "2026.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
@@ -5078,7 +5078,7 @@ requires-dist = [
     { name = "scipy" },
     { name = "tmmc-lnpy", extras = ["resample", "viz"], marker = "extra == 'all'" },
     { name = "tqdm" },
-    { name = "typing-extensions", marker = "python_full_version < '3.13'", specifier = ">=4.10.0" },
+    { name = "typing-extensions", marker = "python_full_version < '3.15'", specifier = ">=4.10.0" },
     { name = "xarray" },
 ]
 provides-extras = ["all", "resample", "viz"]
