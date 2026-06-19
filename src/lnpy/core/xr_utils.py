@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, overload
+from typing import TYPE_CHECKING, cast, overload
 
 from lnpy.core.validate import is_dataarray, is_dataset
 
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from .typing import (
         ApplyUFuncKwargs,
         AxisReduce,
-        DimsReduce,
+        DimReduce,
         MissingCoreDimOptions,
     )
 
@@ -67,8 +67,7 @@ def dim_to_suffix_dataset(
     out = table
     for k, v in table.items():
         if dim in v.dims:
-            # pyrefly: ignore [bad-argument-type]
-            out = out.drop_vars(k)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
+            out = out.drop_vars(cast("str", k))
             out.update(dim_to_suffix_dataarray(v, dim=dim, join=join))
     return out
 
@@ -95,8 +94,8 @@ def dim_to_suffix(
 
 # * Select Axis ---------------------------------------------------------------
 def select_axis_dim(
-    target: xr.DataArray | xr.Dataset, axis: AxisReduce, dim: DimsReduce | None
-) -> tuple[int, DimsReduce]:
+    target: xr.DataArray | xr.Dataset, axis: AxisReduce, dim: DimReduce | None
+) -> tuple[int, DimReduce]:
     if is_dataset(target):
         if dim is None:
             msg = "Must specify `dim` with dataset"
@@ -104,7 +103,7 @@ def select_axis_dim(
         return -1, dim
 
     if dim is not None:
-        axis = target.get_axis_num(dim)  # type: ignore[assignment]
+        axis = target.get_axis_num(dim)
     else:
         dim = target.dims[axis]
     return axis, dim

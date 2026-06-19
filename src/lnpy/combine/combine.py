@@ -48,7 +48,7 @@ if TYPE_CHECKING:
         Casting,
         DataAnyT,
         DataT,
-        DimsReduce,
+        DimReduce,
         FactoryIndexedGrouperTypes,
         FrameOrDatasetT,
         FrameOrDataT,
@@ -1221,7 +1221,7 @@ def delta_lnpi_from_updown(
     up: NDArray[Any] | pd.Series[Any] | xr.DataArray,
     name: str | None = None,
     axis: int = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     keep_attrs: KeepAttrs = None,
     apply_ufunc_kwargs: ApplyUFuncKwargs | None = None,
 ) -> GenArrayOrSeriesT:
@@ -1293,7 +1293,7 @@ def lnpi_from_updown(
     name: str | None = None,
     norm: bool = False,
     axis: int = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
 ) -> GenArrayOrSeriesT:
     r"""
     Calculate :math:`\ln \Pi(N)` from down/up sorted probabilities.
@@ -1346,7 +1346,7 @@ def lnpi_from_updown(
 
 
 def normalize_lnpi(
-    lnpi: GenArrayOrSeriesT, axis: AxisReduce = -1, dim: DimsReduce | None = None
+    lnpi: GenArrayOrSeriesT, axis: AxisReduce = -1, dim: DimReduce | None = None
 ) -> GenArrayOrSeriesT:
     r"""Normalize :math:`\ln\Pi` series or array."""
     kws: dict[str, Any]
@@ -1369,7 +1369,7 @@ def assign_lnpi_from_updown(
     up_name: str = "prob_up",
     norm: bool = True,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
 ) -> FrameOrDatasetT:
     r"""
     Assign :math:`\ln \Pi(N)` from up/down sorted probabilities.
@@ -1411,7 +1411,7 @@ def _apply_indexed_function(
     *args: GenArrayOrSeriesT,
     factory_gufunc: Callable[[bool], Callable[..., NDArrayAny]],
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1490,7 +1490,7 @@ def delta_lnpi_from_updown_indexed(
     up: GenArrayOrSeriesT,
     *,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1541,7 +1541,7 @@ def normalize_lnpi_indexed(
     lnpi: GenArrayOrSeriesT,
     *,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1572,7 +1572,7 @@ def lnpi_from_delta_lnpi_indexed(
     *,
     normalize: bool = False,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1637,7 +1637,7 @@ def lnpi_from_updown_indexed(
     *,
     normalize: bool = False,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1697,7 +1697,7 @@ def _assign_indexed_function_result(
     func: Callable[..., Any],
     keys: Iterable[str],
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1741,7 +1741,7 @@ def assign_delta_lnpi_from_updown_indexed(
     up_name: str = "prob_up",
     delta_lnpi_name: str = "delta_lnpi",
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1803,7 +1803,7 @@ def assign_lnpi_from_delta_lnpi_indexed(
     lnpi_name: str = "ln_prob",
     normalize: bool = False,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,
@@ -1867,7 +1867,7 @@ def assign_lnpi_from_updown_indexed(
     lnpi_name: str = "ln_prob",
     normalize: bool = False,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     grouper: FactoryIndexedGrouperTypes | None = None,
     out: NDArrayAny | None = None,
     dtype: DTypeLike | None = None,

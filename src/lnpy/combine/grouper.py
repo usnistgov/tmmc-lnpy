@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
     from lnpy.core.typing import (
         AxisReduce,
-        DimsReduce,
+        DimReduce,
         FactoryIndexedGrouperTypes,
         Groups,
         IndexAny,
@@ -263,13 +263,13 @@ class IndexedGrouper:
     def from_size(
         cls,
         data: NDArrayAny | pd.Series[Any] | pd.DataFrame | xr.DataArray | xr.Dataset,
-        dim: DimsReduce | None = None,
+        dim: DimReduce | None = None,
         axis: AxisReduce = -1,
     ) -> Self:
         """Create a grouper for whole object"""
         if is_xarray(data):
             axis, dim = select_axis_dim(data, axis, dim)
-            size = data.sizes[dim]  # type: ignore[index]
+            size = data.sizes[dim]
         elif is_dataframe(data):
             size = len(data)
         else:
@@ -288,7 +288,7 @@ def factory_indexed_grouper(
     # From data and keys
     data: NDArrayAny | pd.Series[Any] | pd.DataFrame | xr.DataArray | xr.Dataset,
     keys: str | Iterable[str] | None = None,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     axis: AxisReduce = -1,
     # From groups
     group: Groups | None = None,

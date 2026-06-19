@@ -35,7 +35,7 @@ if TYPE_CHECKING:
     from lnpy.core.typing import (
         ApplyUFuncKwargs,
         AxisReduce,
-        DimsReduce,
+        DimReduce,
         FactoryIndexedGrouperTypes,
         FrameOrDataT,
         GenArrayOrSeriesT,
@@ -356,7 +356,7 @@ def shift_lnpi_windows(
     grouper: FactoryIndexedGrouperTypes | None = None,
     use_sparse: bool = False,
     check_connected: bool = False,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     keep_attrs: KeepAttrs = None,
     apply_ufunc_kwargs: ApplyUFuncKwargs | None = None,
 ) -> GenArrayOrSeriesT:
@@ -415,7 +415,7 @@ def assign_shift_lnpi_windows(
     grouper: FactoryIndexedGrouperTypes | None = None,
     use_sparse: bool = False,
     check_connected: bool = False,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
     keep_attrs: KeepAttrs = None,
     apply_ufunc_kwargs: ApplyUFuncKwargs | None = None,
 ) -> FrameOrDataT:
@@ -549,7 +549,7 @@ def keep_first(
     parallel: bool | None = None,
     check_connected: bool = False,
     axis: AxisReduce = -1,
-    dim: DimsReduce | None = None,
+    dim: DimReduce | None = None,
 ) -> FrameOrDataT:
     indexer = keep_first_indexer(
         table,

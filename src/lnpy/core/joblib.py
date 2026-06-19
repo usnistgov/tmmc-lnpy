@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from importlib.util import find_spec
 from itertools import starmap
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from lnpy.options import OPTIONS
 
@@ -36,11 +36,14 @@ def _use_joblib(
 def _parallel(seq: Iterable[Any]) -> list[Any]:
     import joblib
 
-    return joblib.Parallel(  # type: ignore[no-any-return]  # pyright: ignore[reportReturnType]
-        n_jobs=OPTIONS["joblib_n_jobs"],
-        backend=OPTIONS["joblib_backend"],
-        **OPTIONS["joblib_kws"],
-    )(seq)
+    return cast(
+        "list[Any]",
+        joblib.Parallel(
+            n_jobs=OPTIONS["joblib_n_jobs"],
+            backend=OPTIONS["joblib_backend"],
+            **OPTIONS["joblib_kws"],
+        )(seq),
+    )
 
 
 def parallel_map_build(

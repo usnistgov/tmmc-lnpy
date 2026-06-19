@@ -22,13 +22,7 @@ if TYPE_CHECKING:
 def _convention_to_bool(convention: MaskConvention) -> bool:
     if isinstance(convention, bool):
         return convention
-    if convention == "image":
-        return True
-    if convention == "masked":
-        return False
-
-    msg = f"Bad value {convention} sent to _convention_to_bool"  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
-    raise ValueError(msg)
+    return convention.lower() == "image"
 
 
 @overload

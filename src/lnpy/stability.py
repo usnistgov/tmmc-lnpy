@@ -9,7 +9,7 @@ Calculation of spinodal and binodal
 from __future__ import annotations
 
 import itertools
-from typing import TYPE_CHECKING, cast, overload
+from typing import TYPE_CHECKING, Generic, cast, overload
 
 import numpy as np
 from module_utilities import cached
@@ -17,6 +17,7 @@ from module_utilities import cached
 from .core.array_utils import array_to_scalar
 from .core.compat import rootresults
 from .core.rootresults import RootResultDict, rootresults_to_rootresultdict
+from .core.typing_compat import TypeVar
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Iterable, Mapping, Sequence
@@ -28,6 +29,9 @@ if TYPE_CHECKING:
     from .lnpidata import lnPiMasked
     from .lnpiseries import lnPiCollection
     from .segment import BuildPhasesBase
+
+
+CollectionOrNoneT = TypeVar("CollectionOrNoneT", bound="lnPiCollection | None")
 
 
 class RootResultTotal(RootResultDict, total=False):
@@ -631,7 +635,7 @@ class _SolveBinodal:
 
 ################################################################################
 # Accessor classes/routines
-class StabilityBase:
+class StabilityBase(Generic[CollectionOrNoneT]):
     """
     Base class for stability
 
@@ -648,7 +652,7 @@ class StabilityBase:
         self._parent = collection
         self.access_kws: dict[str, Any] = {}
         self._cache: dict[str, Any] = {}
-        self._items: dict[int, lnPiCollection | None] | None = None
+        self._items: dict[int, CollectionOrNoneT] | None = None
         self._info: dict[int, RootResultTotal] | None = None
 
     @property
@@ -661,7 +665,7 @@ class StabilityBase:
             self.access_kws[k] = v
 
     @property
-    def items(self) -> dict[int, lnPiCollection | None]:
+    def items(self) -> dict[int, CollectionOrNoneT]:
         """Access to the underlying data"""
         if self._items is None:
             msg = "Items not set"
@@ -677,7 +681,7 @@ class StabilityBase:
 
     def _get_access(
         self,
-        items: Mapping[int, lnPiCollection | None] | None = None,
+        items: Mapping[int, CollectionOrNoneT] | None = None,
         concat_kws: Mapping[str, Any] | None = None,
         **kwargs: Any,
     ) -> lnPiCollection:
@@ -702,7 +706,7 @@ class StabilityBase:
         """View (:class:`lnpy.lnpiseries.lnPiCollection`) of stability"""
         return self._get_access()
 
-    def __getitem__(self, idx: int) -> lnPiCollection | None:
+    def __getitem__(self, idx: int) -> CollectionOrNoneT:
         return self.items[idx]
 
     def _get_appender(self, s: lnPiCollection | None = None) -> lnPiCollection:
@@ -730,7 +734,7 @@ class StabilityBase:
 
 # NOTE : single create means this is only created once
 # @lnPiCollection.decorate_accessor("spinodal", single_create=False)
-class Spinodals(StabilityBase):
+class Spinodals(StabilityBase["lnPiCollection | None"]):
     """Methods for calculation locations of spinodal"""
 
     _NAME = "spinodal"
@@ -898,12 +902,10 @@ class Spinodals(StabilityBase):
 
 
 # @lnPiCollection.decorate_accessor("binodal", single_create=False)
-class Binodals(StabilityBase):
+class Binodals(StabilityBase["lnPiCollection"]):
     """Routines to calculate binodal."""
 
     _NAME = "binodal"
-
-    _items: dict[int, lnPiCollection] | None  # type: ignore[assignment]  # pyrefly: ignore[bad-override-mutable-attribute]]
 
     def __init__(self, collection: lnPiCollection) -> None:
         super().__init__(collection)
@@ -1081,7 +1083,7 @@ class Binodals(StabilityBase):
 
         # either build output or inplace
         if inplace:
-            self._items = out  # pyright: ignore[reportIncompatibleVariableOverride]
+            self._items = out
             self._info = info
             self._index = index
             return self

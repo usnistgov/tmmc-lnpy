@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, overload
+from typing import TYPE_CHECKING, TypeGuard, cast, overload
 
 import numpy as np
 
@@ -15,7 +15,10 @@ if TYPE_CHECKING:
     from .typing import NDArrayAny
 
 
-_ALLOWED_FLOAT_DTYPES = {np.dtype(np.float32), np.dtype(np.float64)}
+def _is_allowed_dtype(
+    dtype: object,
+) -> TypeGuard[np.dtype[np.float32] | np.dtype[np.float64]]:
+    return dtype in {np.dtype(np.float32), np.dtype(np.float64)}
 
 
 @overload
@@ -46,7 +49,7 @@ def select_dtype(
     *,
     out: NDArrayAny | xr.DataArray | None,
     dtype: DTypeLike | None,
-) -> np.dtype[np.float32] | np.dtype[np.float64] | None:  # DTypeLikeArg[Any]:
+) -> np.dtype[np.float32] | np.dtype[np.float64] | None:
     """
     Select a dtype from, in order, out, dtype, or passed array.
 
@@ -63,9 +66,8 @@ def select_dtype(
     else:
         dtype = getattr(x, "dtype", np.dtype(np.float64))
 
-    if dtype in _ALLOWED_FLOAT_DTYPES:
-        # pyrefly: ignore [bad-return]
-        return dtype  # type: ignore[return-value]  # pyright: ignore[reportReturnType]
+    if _is_allowed_dtype(dtype):
+        return dtype
 
     msg = f"{dtype=} not supported.  dtype must be conformable to float32 or float64."
     raise ValueError(msg)
@@ -87,7 +89,7 @@ def ffill(arr: NDArrayAny, axis: int = -1, limit: int | None = None) -> NDArrayA
     import bottleneck
 
     limit_ = limit if limit is not None else arr.shape[axis]
-    return bottleneck.push(arr, n=limit_, axis=axis)  # type: ignore[no-any-return]
+    return cast("NDArrayAny", bottleneck.push(arr, n=limit_, axis=axis))
 
 
 def bfill(arr: NDArrayAny, axis: int = -1, limit: int | None = None) -> NDArrayAny:
@@ -114,5 +116,5 @@ def array_to_scalar(x: float | NDArrayAny) -> float:
     if N-d.
     """
     if isinstance(x, np.ndarray):
-        return x.flat[0]  # type: ignore[no-any-return]
+        return float(x.flat[0])
     return x

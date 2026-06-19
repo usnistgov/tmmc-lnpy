@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import numpy as np
 import pandas as pd
@@ -54,6 +54,13 @@ def is_dataframe(x: object) -> TypeIs[pd.DataFrame]:
 # * Validations ---------------------------------------------------------------
 
 
+def validate_is_series(x: object) -> pd.Series[Any]:
+    if isinstance(x, pd.Series):
+        return x
+    msg = f"{type(x)=} != pd.Series"
+    raise TypeError(msg)
+
+
 def validate_str_or_iterable(x: str | Iterable[str]) -> list[str]:
     """Convert str or iterable of string to list of str"""
     if isinstance(x, str):
@@ -63,7 +70,7 @@ def validate_str_or_iterable(x: str | Iterable[str]) -> list[str]:
 
 def validate_sequence(iterable: Iterable[T]) -> Sequence[T]:
     if isinstance(iterable, Sequence):
-        return iterable  # ty: ignore[invalid-return-type]
+        return cast("Sequence[T]", iterable)
     return list(iterable)
 
 

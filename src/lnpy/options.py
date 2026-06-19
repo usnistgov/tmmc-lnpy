@@ -5,7 +5,9 @@ Options (:mod:`~lnpy.options`)
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, TypedDict, cast
+from typing import TYPE_CHECKING, cast
+
+from .core.typing_compat import TypedDict
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -14,8 +16,10 @@ if TYPE_CHECKING:
 
     ValidatorFunc = Callable[[Any], bool]
 
+    from .core.typing_compat import Unpack
 
-class Options(TypedDict, total=False):
+
+class Options(TypedDict, total=False, closed=True):  # type: ignore[call-arg]
     """Options."""
 
     tqdm_use: bool
@@ -32,7 +36,7 @@ class Options(TypedDict, total=False):
     joblib_len_build: int
 
 
-class OptionsReq(TypedDict, total=True):
+class OptionsReq(TypedDict, total=True, closed=True):  # type: ignore[call-arg]
     """Options with required parameters."""
 
     tqdm_use: bool
@@ -49,7 +53,7 @@ class OptionsReq(TypedDict, total=True):
     joblib_len_build: int
 
 
-class Validators(TypedDict):
+class Validators(TypedDict, closed=True):  # type: ignore[call-arg]
     """Validators."""
 
     tqdm_use: ValidatorFunc
@@ -118,13 +122,6 @@ _VALIDATORS: Validators = {
 _SETTERS: dict[str, Any] = {}
 
 
-def _apply_update(options_dict: Options) -> None:
-    for k, v in options_dict.items():
-        if k in _SETTERS:
-            _SETTERS[k](v)
-    OPTIONS.update(options_dict)
-
-
 class set_options:  # noqa: N801
     """
     Set options for xarray in a controlled context.
@@ -155,18 +152,21 @@ class set_options:  # noqa: N801
     >>> _ = lnpy.set_options(tqdm_len_calc=50)
     """
 
-    def __init__(self, **kwargs: Any) -> None:
-        self.old: Options = {}
-        for k, v in cast("Options", kwargs).items():
+    def __init__(self, **kwargs: Unpack[Options]) -> None:
+
+        old: Any = {}
+        for k, v in kwargs.items():
             if k not in OPTIONS:
                 msg = f"argument name {k!r} is not in the set of valid options {set(OPTIONS)!r}"
                 raise ValueError(msg)
             if k in _VALIDATORS and not _VALIDATORS[k](v):  # type: ignore[literal-required]  # ty: ignore[invalid-key]
                 msg = f"option {k!r} given an invalid value: {v!r}"
                 raise ValueError(msg)
-            # pyrefly: ignore [bad-typed-dict-key]
-            self.old[k] = OPTIONS[k]  # type: ignore[literal-required]  # ty: ignore[invalid-key]
-        _apply_update(cast("Options", kwargs))
+
+            old[k] = OPTIONS.get(k)
+
+        self.old = cast("Options", old)
+        self._apply_update(kwargs)
 
     def __enter__(self) -> None:
         return
@@ -177,4 +177,11 @@ class set_options:  # noqa: N801
         value: BaseException | None,
         traceback: TracebackType | None,
     ) -> None:
-        _apply_update(self.old)
+        self._apply_update(self.old)
+
+    @staticmethod
+    def _apply_update(options_dict: Options) -> None:
+        for k, v in options_dict.items():
+            if k in _SETTERS:
+                _SETTERS[k](v)
+        OPTIONS.update(options_dict)
