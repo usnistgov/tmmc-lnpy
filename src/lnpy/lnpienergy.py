@@ -651,7 +651,9 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     }  # [index_map, w.w_argtran]}
 
 
-class _wFreeEnergyCollectionBase:  # noqa: N801
+class wFreeEnergyCollectionBase:  # noqa: N801
+    """Base class for Free energy collection calculations."""
+
     def __init__(self, parent: lnPiCollection) -> None:
         self._parent = parent
         self._use_joblib = getattr(self._parent, "_use_joblib", False)
@@ -753,7 +755,7 @@ class _wFreeEnergyCollectionBase:  # noqa: N801
         return delta_w.min("phase_nebr").fillna(0.0)
 
 
-class wFreeEnergyCollection(_wFreeEnergyCollectionBase):  # noqa: N801
+class wFreeEnergyCollection(wFreeEnergyCollectionBase):  # noqa: N801
     r"""
     Calculate the transition free energies for a :class:`lnpy.lnpiseries.lnPiCollection`.
 
@@ -776,7 +778,7 @@ class wFreeEnergyCollection(_wFreeEnergyCollectionBase):  # noqa: N801
 
 
 # @lnPiCollection.decorate_accessor("wfe_phases")
-class wFreeEnergyPhases(_wFreeEnergyCollectionBase):  # noqa: N801
+class wFreeEnergyPhases(wFreeEnergyCollectionBase):  # noqa: N801
     """
     Stripped down version of :class:`wFreeEnergyCollection` for single phase grouping.
 

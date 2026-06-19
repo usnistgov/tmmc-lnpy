@@ -32,6 +32,7 @@ if TYPE_CHECKING:
 
 
 CollectionOrNoneT = TypeVar("CollectionOrNoneT", bound="lnPiCollection | None")
+"""Type variable for output of Stability class (spinodal or binodal)"""
 
 
 class RootResultTotal(RootResultDict, total=False):

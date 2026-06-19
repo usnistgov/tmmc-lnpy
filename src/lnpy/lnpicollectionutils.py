@@ -424,7 +424,7 @@ def build_grid(
     if bounds is not None:
         x = x[(bounds[0] <= x) & (x <= bounds[1])]
 
-    return x  # type: ignore[return-value]
+    return cast("NDArrayAny", x)
 
 
 def limited_collection(

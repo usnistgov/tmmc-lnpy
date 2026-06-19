@@ -313,6 +313,8 @@ strict = [
     # "src/lnpy/*.py",
     # "src/lnpy/core/*.py",
 ]
+# basedpyright
+failOnWarnings = true
 include = [
     "noxfile.py",
     "src",
@@ -327,18 +329,26 @@ exclude = [
     ".tox/**",
     ".venv/**",
 ]
+# Needed for pep728 support for TypeDict(closed=...)
+enableExperimentalFeatures = true
 enableTypeIgnoreComments = false
 # options
 # reportMissingSuperCall = true
 deprecateTypingAliases = true
 reportCallInDefaultInitializer = true
+reportIgnoreCommentWithoutRule = true
+reportImplicitAbstractClass = false
+reportImplicitRelativeImport = true
 reportImplicitStringConcatenation = false
+reportInvalidCast = true
 # reportImplicitOverride = false  # TODO(wpk): enable
 # reportImportCycles = false  # TODO(wpk): enable
 reportOverlappingOverload = true
 reportPrivateImportUsage = false
+reportPrivateLocalImportUsage = true
 reportPrivateUsage = false
 reportPropertyTypeMismatch = true
+reportUnannotatedClassAttribute = false
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnreachable = "warning"
@@ -348,6 +358,7 @@ reportUnusedCallResult = true
 reportUnusedImport = false
 reportUnusedVariable = false
 enableReachabilityAnalysis = false
+strictGenericNarrowing = false
 
 [[tool.pyright.executionEnvironments]]
 root = "tests"
@@ -364,6 +375,11 @@ src.include = [
     "tests",
     "tools",
 ]
+rules.division-by-zero = "error"
+rules.possibly-missing-import = "error"
+rules.possibly-unresolved-reference = "error"
+rules.unsupported-dynamic-base = "error"
+rules.unused-ignore-comment = "error"
 # Disable support for `type: ignore` comments
 analysis.respect-type-ignore-comments = false
 
@@ -371,6 +387,10 @@ analysis.respect-type-ignore-comments = false
 analysis.allowed-unresolved-imports = [ "matplotlib.*" ]
 include = [ "examples/**" ]
 rules = { missing-argument = "ignore" }
+
+[[tool.ty.overrides]]
+include = [ "src/lnpy/combine/combine.py" ]  # numpy versions disagreement
+rules = { unused-ignore-comment = "ignore" }
 
 [[tool.ty.overrides]]
 include = [ "src/lnpy/core/progress.py" ]
