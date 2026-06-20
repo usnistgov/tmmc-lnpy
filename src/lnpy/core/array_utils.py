@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, TypeGuard, cast, overload
+from typing import TYPE_CHECKING, TypeGuard, overload
 
 import numpy as np
 
-from .validate import is_dataset, is_ndarray
+from .validate import validate
 
 if TYPE_CHECKING:
     import xarray as xr
@@ -55,7 +55,7 @@ def select_dtype(
 
     If pass in a Dataset, return dtype
     """
-    if is_dataset(x):
+    if validate.dataset.typeis(x):
         if dtype is None:
             return dtype
         dtype = np.dtype(dtype)
@@ -77,7 +77,7 @@ def asarray_maybe_recast(
     data: ArrayLike, dtype: DTypeLike | None = None, recast: bool = False
 ) -> NDArrayAny:
     """Perform asarray with optional recast to `dtype` if not already an array."""
-    if is_ndarray(data):
+    if validate.ndarray.typeis(data):  # pylint: disable=no-member
         if recast and dtype is not None:
             return np.asarray(data, dtype=dtype)
         return data
@@ -89,7 +89,7 @@ def ffill(arr: NDArrayAny, axis: int = -1, limit: int | None = None) -> NDArrayA
     import bottleneck
 
     limit_ = limit if limit is not None else arr.shape[axis]
-    return cast("NDArrayAny", bottleneck.push(arr, n=limit_, axis=axis))
+    return validate.ndarray(bottleneck.push(arr, n=limit_, axis=axis))
 
 
 def bfill(arr: NDArrayAny, axis: int = -1, limit: int | None = None) -> NDArrayAny:

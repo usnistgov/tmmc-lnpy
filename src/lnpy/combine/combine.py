@@ -1,4 +1,5 @@
 # pyright: reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownVariableType=false
+# pylint: disable=no-member
 r"""
 Routines to combine :math:`\ln \Pi` data (:mod:`~lnpy.combine`)
 ===============================================================
@@ -23,14 +24,7 @@ from lnpy._lib.factory import (
 )
 from lnpy.core.array_utils import asarray_maybe_recast, select_dtype
 from lnpy.core.utils import peek_at
-from lnpy.core.validate import (
-    is_dataarray,
-    is_dataframe,
-    is_dataset,
-    is_ndarray,
-    is_series,
-    validate_str_or_iterable,
-)
+from lnpy.core.validate import validate
 from lnpy.core.xr_utils import factory_apply_ufunc_kwargs, select_axis_dim
 
 from ._docfiller import docfiller_local
@@ -120,7 +114,7 @@ def check_windows_overlap(
     OverlapError
         If the overlaps do not form a connected graph, then raise a ``OverlapError``.
     """
-    macrostate_names = validate_str_or_iterable(macrostate_names)
+    macrostate_names = validate.as_str_or_iterable(macrostate_names)
     overlap_table = overlap_table[[window_index_name, *macrostate_names]]
 
     x: pd.DataFrame = (
@@ -196,7 +190,7 @@ def _concat_windows_xarray(
                         {
                             index_name: [
                                 window_name,
-                                *validate_str_or_iterable(coord_names),
+                                *validate.as_str_or_iterable(coord_names),
                             ]
                         }
                     )  # pyright: ignore[reportArgumentType]
@@ -429,7 +423,7 @@ def concat_windows(
     """
     first, tables_iter = peek_at(tables)
 
-    if is_dataset(first):
+    if validate.dataset.typeis(first):
         return _concat_windows_xarray(
             first=first,
             tables=cast("Iterator[xr.Dataset]", tables_iter),
@@ -439,7 +433,7 @@ def concat_windows(
             overwrite_window=overwrite_window,
         )
 
-    if is_dataarray(first):
+    if validate.dataarray.typeis(first):
         return _concat_windows_xarray(
             first=first,
             tables=cast("Iterator[xr.DataArray]", tables_iter),
@@ -449,7 +443,7 @@ def concat_windows(
             overwrite_window=overwrite_window,
         )
 
-    if is_dataframe(first):  # progma: no branch
+    if validate.dataframe.typeis(first):  # progma: no branch
         return _concat_windows_dataframe(
             first=first,
             tables=cast("Iterator[pd.DataFrame]", tables_iter),
@@ -695,7 +689,7 @@ def shift_lnpi_windows(
     if not (window_max := cast("int", table[window_index_name].iloc[-1])):
         return table
 
-    macrostate_names = validate_str_or_iterable(macrostate_names)
+    macrostate_names = validate.as_str_or_iterable(macrostate_names)
     overlap_total_table = _create_overlap_total_table(
         overlap_table=_create_overlap_table(
             table,
@@ -1011,7 +1005,7 @@ def keep_first(
         return data
 
     # Do calculation
-    if is_dataframe(table):
+    if validate.dataframe.typeis(table):
         return _process_dataframe(table)  # ty: ignore[invalid-return-type]
     # pyrefly: ignore [bad-specialization]
     return _process_xarray(table)  # ty: ignore[invalid-argument-type]
@@ -1147,9 +1141,11 @@ def stack_weight_and_average(
 
     Output to be used with cmomy for example
     """
-    weight, average = (x.to_xarray() if is_series(x) else x for x in (weight, average))
+    weight, average = (
+        x.to_xarray() if validate.series.typeis(x) else x for x in (weight, average)
+    )
 
-    if is_dataarray(weight):
+    if validate.dataarray.typeis(weight):
         xout: xr.DataArray = xr.apply_ufunc(
             stack_weight_and_average,
             weight,
@@ -1245,7 +1241,7 @@ def delta_lnpi_from_updown(
     Series or DataArray or ndarray
         Calculated value of same type as ``up``.
     """
-    if is_ndarray(down):  # pragma: no branch
+    if validate.ndarray.typeis(down):  # pragma: no branch
         up_ = up.to_numpy() if isinstance(up, (pd.Series, xr.DataArray)) else up
 
         delta = np.empty_like(up)
@@ -1255,14 +1251,14 @@ def delta_lnpi_from_updown(
         delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # ty: ignore[invalid-argument-type]  # needed for ci typecheck
         return np.moveaxis(delta, -1, axis)  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
 
-    if is_dataarray(down):
+    if validate.dataarray.typeis(down):
         axis, dim = select_axis_dim(down, axis, dim)
 
         out: xr.DataArray = xr.apply_ufunc(
             delta_lnpi_from_updown,
             down,
             # if down is an array, move axis to end
-            np.moveaxis(up, axis, -1) if is_ndarray(up) else up,
+            np.moveaxis(up, axis, -1) if validate.ndarray.typeis(up) else up,
             input_core_dims=[[dim], [dim]],
             output_core_dims=[[dim]],
             kwargs={"axis": -1},
@@ -1274,7 +1270,7 @@ def delta_lnpi_from_updown(
 
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
-    if is_series(down):
+    if validate.series.typeis(down):
         return pd.Series(  # ty: ignore[invalid-return-type]
             delta_lnpi_from_updown(down=down.to_numpy(), up=up),  # type: ignore[arg-type]
             name=name,
@@ -1313,19 +1309,19 @@ def lnpi_from_updown(
     Series or DataArray or ndarray
         Calculated value of same type as ``up``.
     """
-    if is_ndarray(down):
+    if validate.ndarray.typeis(down):
         ln_prob = delta_lnpi_from_updown(down=down, up=up, axis=axis).cumsum(axis=axis)
         # subtract maximum
         ln_prob -= ln_prob.max(axis=axis, keepdims=True)
         return normalize_lnpi(ln_prob, axis=axis) if norm else ln_prob  # ty: ignore[invalid-return-type]
 
-    if is_dataarray(down):
+    if validate.dataarray.typeis(down):
         axis, dim = select_axis_dim(down, axis, dim)
 
         out: xr.DataArray = xr.apply_ufunc(
             lnpi_from_updown,
             down,
-            np.moveaxis(up, axis, -1) if is_ndarray(up) else up,
+            np.moveaxis(up, axis, -1) if validate.ndarray.typeis(up) else up,
             input_core_dims=[[dim], [dim]],
             output_core_dims=[[dim]],
             kwargs={"axis": -1, "norm": norm},
@@ -1334,7 +1330,7 @@ def lnpi_from_updown(
 
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
-    if is_series(down):
+    if validate.series.typeis(down):
         return pd.Series(  # ty: ignore[invalid-return-type]
             lnpi_from_updown(down=down.to_numpy(), up=up, norm=norm),  # type: ignore[arg-type]
             name=name,
@@ -1350,10 +1346,10 @@ def normalize_lnpi(
 ) -> GenArrayOrSeriesT:
     r"""Normalize :math:`\ln\Pi` series or array."""
     kws: dict[str, Any]
-    if is_ndarray(lnpi):
+    if validate.ndarray.typeis(lnpi):
         kws = {"axis": axis, "keepdims": True}
 
-    elif is_dataarray(lnpi):
+    elif validate.dataarray.typeis(lnpi):
         axis, dim = select_axis_dim(lnpi, axis, dim)
         kws = {"dim": dim}
     else:
@@ -1399,7 +1395,7 @@ def assign_lnpi_from_updown(
         dim=dim,
     )
 
-    if is_dataframe(table):
+    if validate.dataframe.typeis(table):
         # pyrefly: ignore [bad-argument-type]
         return table.assign(**{lnpi_name: ln_prob})  # pyright: ignore[reportArgumentType]
     # pyrefly: ignore [bad-argument-count, unexpected-keyword]
@@ -1425,7 +1421,7 @@ def _apply_indexed_function(
 
     grouper = factory_indexed_grouper(grouper, data=first, dim=dim, axis=axis)
 
-    if is_series(first):
+    if validate.series.typeis(first):
         return pd.Series(
             _apply_indexed_function(
                 # pyrefly: ignore [missing-attribute]
@@ -1441,7 +1437,7 @@ def _apply_indexed_function(
             index=first.index,
         )  # ty:ignore[invalid-return-type]
 
-    if is_dataarray(first):
+    if validate.dataarray.typeis(first):
         dtype = select_dtype(first, out=out, dtype=dtype)
         axis, dim = select_axis_dim(first, axis, dim)
 
@@ -1710,7 +1706,7 @@ def _assign_indexed_function_result(
     args: Iterator[NDArrayAny | xr.DataArray] = (
         # pyrefly: ignore [bad-assignment]
         (table[key].to_numpy() for key in keys)
-        if is_dataframe(table)  # type: ignore[redundant-expr]
+        if validate.dataframe.typeis(table)  # type: ignore[redundant-expr]
         else (table[key] for key in keys)
     )
 

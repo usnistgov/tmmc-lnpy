@@ -22,8 +22,9 @@ from module_utilities.docfiller import DocFiller
 
 from .core.docstrings import docfiller
 from .core.typing_compat import override
+from .core.validate import validate
 from .lnpienergy import wFreeEnergy
-from .lnpiseries import lnPiCollection, validate_is_lnpicollection
+from .lnpiseries import lnPiCollection, validate_lnpicollection
 
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
@@ -254,8 +255,8 @@ def peak_local_max_adaptive(
     out[idx] = True
 
     if style == "marker":
-        out = morphology_label(out, connectivity=connectivity)
-    return out  # pyright: ignore[reportReturnType]
+        out = validate.ndarray(morphology_label(out, connectivity=connectivity))
+    return out
 
 
 @docfiller_local
@@ -372,7 +373,10 @@ class Segmenter:
             kwargs["num_peaks_max"] = num_peaks_max
         kwargs["style"] = style
         kwargs = dict(self.peak_kws, **kwargs)
-        return peak_local_max_adaptive(data, **kwargs)  # type: ignore[no-any-return]
+        return cast(
+            "NDArrayAny | tuple[NDArrayAny, ...]",
+            peak_local_max_adaptive(data, **kwargs),
+        )
 
     @docfiller_local
     def watershed(
@@ -409,7 +413,7 @@ class Segmenter:
             connectivity = data.ndim
 
         kwargs = dict(self.watershed_kws, connectivity=connectivity, **kwargs)
-        return watershed(data, markers=markers, mask=mask, **kwargs)  # type: ignore[no-any-return]
+        return validate.ndarray(watershed(data, markers=markers, mask=mask, **kwargs))
 
     @docfiller_local
     def segment_lnpi(
@@ -969,7 +973,7 @@ class BuildPhasesBase:
         phases_factory: PhasesFactorySignature | bool = True,
         **kwargs: Any,
     ) -> lnPiCollection:
-        return validate_is_lnpicollection(
+        return validate_lnpicollection(
             self(lnz_index=lnz_index, phases_factory=phases_factory, **kwargs)
         )
 

@@ -20,9 +20,10 @@ from .core.mask import labels_to_masks, masks_to_labels
 
 # lazy loads
 from .core.progress import get_tqdm_build as get_tqdm
-from .core.typing_compat import override
-from .core.validate import validate_is_series
+from .core.typing_compat import Self, override
+from .core.validate import Validator, validate
 from .extensions import AccessorMixin
+from .lnpidata import lnPiMasked
 
 if TYPE_CHECKING:
     from collections.abc import (
@@ -44,8 +45,7 @@ if TYPE_CHECKING:
 
     from . import ensembles, lnpienergy, stability
     from .core.typing import IndexingInt, NDArrayAny, Scalar
-    from .core.typing_compat import IndexAny, Self
-    from .lnpidata import lnPiMasked
+    from .core.typing_compat import IndexAny
 
 
 # Accessors
@@ -106,8 +106,8 @@ class _LocIndexer:
     def __getitem__(self, idx: Any) -> lnPiMasked | lnPiCollection:
         out = self._loc[idx]
         if isinstance(out, pd.Series):
-            out = self._parent.new_like(out)
-        return out  # type: ignore[no-any-return]
+            return self._parent.new_like(out)
+        return validate_lnpimasked_or_lnpicollection(out)
 
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
@@ -139,8 +139,8 @@ class _iLocIndexer:  # noqa: N801
     def __getitem__(self, idx: Any) -> lnPiMasked | lnPiCollection:
         out = self._iloc[idx]
         if isinstance(out, pd.Series):
-            out = self._parent.new_like(out)
-        return out  # type: ignore[no-any-return]
+            return self._parent.new_like(out)
+        return validate_lnpimasked_or_lnpicollection(out)
 
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
@@ -162,7 +162,7 @@ class _Query:
 
     def __call__(self, expr: str, **kwargs: Any) -> lnPiCollection:
         idx = self._frame.query(expr, **kwargs).index
-        return validate_is_lnpicollection(self._parent.iloc[idx])
+        return validate_lnpicollection(self._parent.iloc[idx])
 
 
 # @SeriesWrapper.decorate_accessor("zloc")
@@ -343,12 +343,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             # assert lnpi._base is _base
 
     @classmethod
-    def validate_isinstance(cls, obj: object) -> Self:
-        if isinstance(obj, cls):
-            return obj
+    def validate(cls, obj: object) -> Self:
+        return Validator[Self](cls).validate(obj)
 
-        msg = f"{type(obj)=} != {type(cls)}"
-        raise TypeError(msg)
+    @classmethod
+    def _validate_lnpimasked_or_self(cls, obj: object) -> lnPiMasked | Self:
+        return Validator[lnPiMasked | Self](lnPiMasked | cls).validate(obj)
 
     def new_like(
         self,
@@ -454,13 +454,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         **kwargs: Any,
     ) -> lnPiMasked | pd.Series[Any] | Self:
         """Wrap a generic pandas method to ensure it returns a GeoSeries"""
-        val = cast(
-            "lnPiMasked | pd.Series[Any] | Self",
-            getattr(self._series, mtd)(*args, **kwargs),
-        )
-        if wrap and isinstance(val, pd.Series):
-            val = self.new_like(val)
-        return val
+        val: object = (getattr(self._series, mtd)(*args, **kwargs),)
+        if validate.series.typeis(val):
+            if wrap:
+                return self.new_like(val)
+            return val
+        return self._validate_lnpimasked_or_self(val)
 
     def xs(
         self,
@@ -568,7 +567,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     def sort_index(self, *args: Any, **kwargs: Any) -> Self:
         """Interface to :meth:`pandas.Series.sort_index`"""
-        return self.validate_isinstance(
+        return self.validate(
             self._wrapped_pandas_method("sort_index", *args, wrap=True, **kwargs)
         )
 
@@ -702,18 +701,11 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             out: dict[Hashable, pd.Series[Any]] = {}
             for k in objs:
                 v = objs[k]
-                if isinstance(v, cls):
-                    out[k] = v._series
-                else:
-                    out[k] = cast("pd.Series", v)
+                out[k] = validate.series(v._series if isinstance(v, cls) else v)
+            return validate.series(pd.concat(out, **concat_kws))
 
-            return cast("pd.Series", pd.concat(out, **concat_kws))
-
-        gen = cast(
-            "Iterable[pd.Series[Any]]",
-            (o._series if isinstance(o, cls) else o for o in objs),
-        )
-        return cast("pd.Series", pd.concat(gen, **concat_kws))
+        gen = (validate.series(o._series if isinstance(o, cls) else o) for o in objs)
+        return validate.series(pd.concat(gen, **concat_kws))
 
     def concat_like(
         self,
@@ -767,7 +759,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     # ** lnPi Specific
     @cached.prop
     def _lnz_series(self) -> pd.Series[Any]:
-        return validate_is_series(self._series.apply(lambda x: x.lnz))
+        return validate.series(self._series.apply(lambda x: x.lnz))
 
     @override
     def __repr__(self) -> str:
@@ -1236,8 +1228,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         return new
 
 
-def validate_is_lnpicollection(x: Any) -> lnPiCollection:
-    if not isinstance(x, lnPiCollection):
-        msg = f"Passed {type(x)=} != lnPiCollection"
-        raise TypeError(msg)
-    return x
+validate_lnpicollection = Validator[lnPiCollection](lnPiCollection)
+validate_lnpimasked_or_lnpicollection = Validator[lnPiMasked | lnPiCollection](
+    lnPiMasked | lnPiCollection
+)

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, cast, overload
 import numpy as np
 
 from .docstrings import docfiller
-from .validate import validate_list, validate_sequence
+from .validate import validate
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -187,7 +187,7 @@ def labels_to_masks(
     if features is None:
         features = [i for i in np.unique(labels) if i > 0]
     else:
-        features = validate_list(features)
+        features = validate.as_list(features)
         if check_features:
             vals = np.unique(labels)
             if not np.all([x in vals for x in features]):
@@ -240,11 +240,11 @@ def masks_to_labels(
     --------
     labels_to_masks
     """
-    masks = validate_sequence(masks)
+    masks = validate.as_sequence(masks)
     if features is None:
         features = range(1, len(masks) + 1)
     else:
-        features = validate_sequence(features)
+        features = validate.as_sequence(features)
         if len(features) != len(masks):
             raise ValueError
 

@@ -18,6 +18,7 @@ from .core.compat import copy_if_needed
 from .core.docstrings import docfiller
 from .core.mask import labels_to_masks, masks_change_convention
 from .core.typing_compat import override
+from .core.validate import validate
 from .extensions import AccessorMixin
 
 if TYPE_CHECKING:
@@ -493,8 +494,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         --------
         numpy.ma.MaskedArray.max
         """
-        return cast(
-            "np.ma.MaskedArray[Any, np.dtype[Any]]",
+        return validate.maskedarray(
             self.ma[self.local_argmax(*args, **kwargs)],
         )
 
@@ -503,8 +503,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         self, *args: Any, **kwargs: Any
     ) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
         """Calculate mask where ``self.ma == self.local_max()``"""
-        return cast(
-            "np.ma.MaskedArray[Any, np.dtype[Any]]",
+        return validate.maskedarray(
             self.ma == self.local_max(*args, **kwargs),
         )
 

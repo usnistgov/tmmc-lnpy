@@ -23,7 +23,7 @@ from .core.mask import (
 from .core.progress import get_tqdm_calc as get_tqdm
 from .core.typing_compat import assert_never, override
 from .core.utils import peek_at
-from .core.validate import validate_is_series, validate_sequence
+from .core.validate import validate
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Sequence
@@ -145,7 +145,7 @@ def find_boundaries_overlap(
     --------
     find_boundaries
     """
-    masks = validate_sequence(masks)
+    masks = validate.as_sequence(masks)
     n = len(masks)
     possible_methods = {"approx", "exact"}
 
@@ -250,7 +250,7 @@ def find_masked_extrema(
             val = fill_val
         else:
             mask_flat = mask.reshape(-1)
-            arg = cast("int", positions_flat[mask_flat][func(data_flat[mask_flat])])
+            arg = int(positions_flat[mask_flat][func(data_flat[mask_flat])])
             val = data_flat[arg]
 
             if unravel:
@@ -614,7 +614,7 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     w_min = pd.Series(w.w_min[:, 0], index=index, name="w_min")
     w_argmin = pd.Series(w.w_argmin, index=w_min.index, name="w_argmin")
 
-    w_tran = validate_is_series(
+    w_tran = validate.series(
         pd.DataFrame(  # noqa: PD013
             w.w_tran,
             index=index,

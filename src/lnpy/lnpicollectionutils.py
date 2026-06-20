@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 from .core.array_utils import array_to_scalar
 from .core.rootresults import RootResultDict, rootresults_to_rootresultdict
+from .core.validate import validate
 from .lnpiseries import lnPiCollection
 
 if TYPE_CHECKING:
@@ -225,7 +226,7 @@ def get_lnz_max(
         raise ValueError(msg)
 
     lnz_idx = build_phases.index
-    lnz_start = cast("float", lnz_start or ref.lnz[lnz_idx])
+    lnz_start = float(lnz_start or ref.lnz[lnz_idx])
 
     # need left/right bounds
     # left is greatest lnz point with edge_distance > edge_distance_min
@@ -424,7 +425,7 @@ def build_grid(
     if bounds is not None:
         x = x[(bounds[0] <= x) & (x <= bounds[1])]
 
-    return cast("NDArrayAny", x)
+    return validate.ndarray(x)
 
 
 def limited_collection(

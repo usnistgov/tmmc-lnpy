@@ -159,7 +159,7 @@ class set_options:  # noqa: N801
             if k not in OPTIONS:
                 msg = f"argument name {k!r} is not in the set of valid options {set(OPTIONS)!r}"
                 raise ValueError(msg)
-            if k in _VALIDATORS and not _VALIDATORS[k](v):  # type: ignore[literal-required]  # ty: ignore[invalid-key]
+            if callable(func := _VALIDATORS.get(k)) and not func(v):
                 msg = f"option {k!r} given an invalid value: {v!r}"
                 raise ValueError(msg)
 

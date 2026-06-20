@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 import pandas as pd
 
-from lnpy.core.validate import is_dataframe, is_xarray
+from lnpy.core.validate import validate
 from lnpy.core.xr_utils import select_axis_dim
 
 if TYPE_CHECKING:
@@ -267,10 +267,10 @@ class IndexedGrouper:
         axis: AxisReduce = -1,
     ) -> Self:
         """Create a grouper for whole object"""
-        if is_xarray(data):
+        if validate.xarray.typeis(data):
             axis, dim = select_axis_dim(data, axis, dim)
             size = data.sizes[dim]
-        elif is_dataframe(data):
+        elif validate.dataframe.typeis(data):
             size = len(data)
         else:
             size = data.shape[axis]
@@ -348,7 +348,9 @@ def factory_indexed_grouper(
         if groups is not None:
             return IndexedGrouper.from_groups(*groups, **kwargs)
 
-        if (is_xarray(data) or is_dataframe(data)) and keys is not None:
+        if (
+            validate.xarray.typeis(data) or validate.dataframe.typeis(data)
+        ) and keys is not None:
             return IndexedGrouper.from_data(data=data, keys=keys, **kwargs)
 
         return IndexedGrouper.from_size(data=data, axis=axis, dim=dim)

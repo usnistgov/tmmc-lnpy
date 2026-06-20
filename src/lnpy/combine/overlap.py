@@ -15,12 +15,7 @@ from lnpy._lib.factory import (
     factory_state_max,
     parallel_heuristic,
 )
-from lnpy.core.validate import (
-    is_dataarray,
-    is_dataframe,
-    is_series,
-    validate_str_or_iterable,
-)
+from lnpy.core.validate import validate
 from lnpy.core.xr_utils import factory_apply_ufunc_kwargs, select_axis_dim
 
 from ._docfiller import docfiller_local
@@ -108,7 +103,7 @@ def check_windows_overlap(
     OverlapError
         If the overlaps do not form a connected graph, then raise a ``OverlapError``.
     """
-    macrostate_names = validate_str_or_iterable(macrostate_names)
+    macrostate_names = validate.as_str_or_iterable(macrostate_names)
     overlap_table = overlap_table[[window_index_name, *macrostate_names]]
 
     x: pd.DataFrame = (
@@ -362,7 +357,7 @@ def shift_lnpi_windows(
 ) -> GenArrayOrSeriesT:
     grouper = factory_indexed_grouper(grouper, data=lnpi, dim=dim, axis=-1)
 
-    if is_series(lnpi):
+    if validate.series.typeis(lnpi):
         return pd.Series(
             shift_lnpi_windows(
                 # pyrefly: ignore [missing-attribute]
@@ -374,7 +369,7 @@ def shift_lnpi_windows(
             index=lnpi.index,
         )  # ty:ignore[invalid-return-type]
 
-    if is_dataarray(lnpi):
+    if validate.dataarray.typeis(lnpi):
         _, dim = select_axis_dim(lnpi, -1, dim)
         return xr.apply_ufunc(  # type: ignore[no-any-return]
             shift_lnpi_windows,
@@ -423,9 +418,9 @@ def assign_shift_lnpi_windows(
     grouper = factory_indexed_grouper(grouper, data=table, dim=dim, axis=-1)
 
     out = shift_lnpi_windows(
-        table if is_dataarray(table) else table[lnpi_name],  # type: ignore[redundant-expr]  # ty:ignore[invalid-argument-type]
+        table if validate.dataarray.typeis(table) else table[lnpi_name],  # type: ignore[redundant-expr]  # ty:ignore[invalid-argument-type]
         table[window_name],  # ty:ignore[invalid-argument-type]
-        *(table[k] for k in validate_str_or_iterable(macrostate_names)),  # ty:ignore[invalid-argument-type]
+        *(table[k] for k in validate.as_str_or_iterable(macrostate_names)),  # ty:ignore[invalid-argument-type]
         grouper=grouper,
         use_sparse=use_sparse,
         check_connected=check_connected,
@@ -434,7 +429,7 @@ def assign_shift_lnpi_windows(
         apply_ufunc_kwargs=apply_ufunc_kwargs,
     )
 
-    if is_dataarray(table):
+    if validate.dataarray.typeis(table):
         # pyrefly: ignore [bad-return]
         return out  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
     # pyrefly: ignore [bad-argument-type]
@@ -559,7 +554,7 @@ def keep_first(
         parallel=parallel,
         check_connected=check_connected,
     )
-    if is_dataframe(table):
+    if validate.dataframe.typeis(table):
         return table.iloc[indexer]
 
     # pyrefly: ignore [bad-argument-type]
