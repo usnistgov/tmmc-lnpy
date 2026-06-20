@@ -454,7 +454,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         **kwargs: Any,
     ) -> lnPiMasked | pd.Series[Any] | Self:
         """Wrap a generic pandas method to ensure it returns a GeoSeries"""
-        val: object = (getattr(self._series, mtd)(*args, **kwargs),)
+        val: object = getattr(self._series, mtd)(*args, **kwargs)
         if validate.series.typeis(val):
             if wrap:
                 return self.new_like(val)
