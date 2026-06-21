@@ -14,11 +14,11 @@ import numpy as np
 import pandas as pd
 from module_utilities import cached
 
+from .core import validate
 from .core.compat import copy_if_needed
 from .core.docstrings import docfiller
 from .core.mask import labels_to_masks, masks_change_convention
 from .core.typing_compat import override
-from .core.validate import validate
 from .extensions import AccessorMixin
 
 if TYPE_CHECKING:

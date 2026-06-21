@@ -14,6 +14,7 @@ import pandas as pd
 import xarray as xr
 from module_utilities import cached
 
+from .core import validate
 from .core.docstrings import docfiller
 from .core.joblib import parallel_map_build as parallel_map
 from .core.mask import labels_to_masks, masks_to_labels
@@ -21,7 +22,7 @@ from .core.mask import labels_to_masks, masks_to_labels
 # lazy loads
 from .core.progress import get_tqdm_build as get_tqdm
 from .core.typing_compat import Self, override
-from .core.validate import Validator, validate
+from .core.validate import Validator
 from .extensions import AccessorMixin
 from .lnpidata import lnPiMasked
 

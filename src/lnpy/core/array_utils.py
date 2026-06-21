@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, TypeGuard, overload
 
 import numpy as np
 
-from .validate import validate
+from . import validate
 
 if TYPE_CHECKING:
     import xarray as xr

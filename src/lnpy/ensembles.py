@@ -13,8 +13,8 @@ import numpy as np
 import xarray as xr
 from module_utilities import cached
 
+from .core import validate
 from .core.compat import xr_dot
-from .core.validate import validate
 from .core.xr_utils import dim_to_suffix_dataset
 from .lnpidata import lnPiMasked
 from .lnpiseries import lnPiCollection

@@ -51,33 +51,29 @@ class Validator(Generic[R]):
     __call__ = validate
 
 
-class _Validators:
-    ndarrayany = Validator[NDArrayAny](np.ndarray)
-    dataarray = Validator(xr.DataArray)
-    dataset = Validator(xr.Dataset)
-    xarray = Validator[xr.DataArray | xr.Dataset](xr.DataArray | xr.Dataset)
-    series = Validator(pd.Series)
-    dataframe = Validator(pd.DataFrame)
-    maskedarray = Validator[np.ma.MaskedArray[Any, np.dtype[Any]]](np.ma.MaskedArray)
+ndarrayany = Validator[NDArrayAny](np.ndarray)
+dataarray = Validator(xr.DataArray)
+dataset = Validator(xr.Dataset)
+xarray = Validator[xr.DataArray | xr.Dataset](xr.DataArray | xr.Dataset)
+series = Validator(pd.Series)
+dataframe = Validator(pd.DataFrame)
+maskedarray = Validator[np.ma.MaskedArray[Any, np.dtype[Any]]](np.ma.MaskedArray)
 
-    @staticmethod
-    def as_str_or_iterable(x: str | Iterable[str]) -> list[str]:
-        """Convert str or iterable of string to list of str"""
-        if isinstance(x, str):
-            return [x]
-        return list(x)
 
-    @staticmethod
-    def as_sequence(iterable: Iterable[T]) -> Sequence[T]:
-        if isinstance(iterable, Sequence):
-            return cast("Sequence[T]", iterable)
+def as_str_or_iterable(x: str | Iterable[str]) -> list[str]:
+    """Convert str or iterable of string to list of str"""
+    if isinstance(x, str):
+        return [x]
+    return list(x)
+
+
+def as_sequence(iterable: Iterable[T]) -> Sequence[T]:
+    if isinstance(iterable, Sequence):
+        return cast("Sequence[T]", iterable)
+    return list(iterable)
+
+
+def as_list(iterable: Iterable[T]) -> list[T]:
+    if not isinstance(iterable, list):
         return list(iterable)
-
-    @staticmethod
-    def as_list(iterable: Iterable[T]) -> list[T]:
-        if not isinstance(iterable, list):
-            return list(iterable)
-        return iterable
-
-
-validate = _Validators()
+    return iterable

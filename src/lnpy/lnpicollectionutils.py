@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
+from .core import validate
 from .core.array_utils import array_to_scalar
 from .core.rootresults import RootResultDict, rootresults_to_rootresultdict
-from .core.validate import validate
 from .lnpiseries import lnPiCollection
 
 if TYPE_CHECKING:

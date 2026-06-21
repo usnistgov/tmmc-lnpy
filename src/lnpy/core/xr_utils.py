@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, cast, overload
 
-from .validate import validate
+from . import validate
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Mapping

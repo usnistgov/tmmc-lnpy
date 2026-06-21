@@ -14,6 +14,7 @@ import pandas as pd
 import xarray as xr
 from module_utilities import cached
 
+from .core import validate
 from .core.docstrings import docfiller
 from .core.joblib import parallel_map_func_starargs
 from .core.mask import (
@@ -23,7 +24,6 @@ from .core.mask import (
 from .core.progress import get_tqdm_calc as get_tqdm
 from .core.typing_compat import assert_never, override
 from .core.utils import peek_at
-from .core.validate import validate
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Sequence

@@ -15,7 +15,7 @@ from lnpy._lib.factory import (
     factory_state_max,
     parallel_heuristic,
 )
-from lnpy.core.validate import validate
+from lnpy.core import validate
 from lnpy.core.xr_utils import factory_apply_ufunc_kwargs, select_axis_dim
 
 from ._docfiller import docfiller_local

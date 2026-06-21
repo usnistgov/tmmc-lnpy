@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, cast, overload
 
 import numpy as np
 
+from . import validate
 from .docstrings import docfiller
-from .validate import validate
 
 if TYPE_CHECKING:
     from collections.abc import Iterable

@@ -20,9 +20,9 @@ from typing import TYPE_CHECKING, cast, overload
 import numpy as np
 from module_utilities.docfiller import DocFiller
 
+from .core import validate
 from .core.docstrings import docfiller
 from .core.typing_compat import override
-from .core.validate import validate
 from .lnpienergy import wFreeEnergy
 from .lnpiseries import lnPiCollection, validate_lnpicollection
 

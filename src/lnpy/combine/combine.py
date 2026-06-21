@@ -21,9 +21,9 @@ from lnpy._lib.factory import (
     factory_normalize_lnpi,
     parallel_heuristic,
 )
+from lnpy.core import validate
 from lnpy.core.array_utils import asarray_maybe_recast, select_dtype
 from lnpy.core.utils import peek_at
-from lnpy.core.validate import validate
 from lnpy.core.xr_utils import factory_apply_ufunc_kwargs, select_axis_dim
 
 from ._docfiller import docfiller_local

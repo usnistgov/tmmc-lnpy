@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 import pandas as pd
 
-from lnpy.core.validate import validate
+from lnpy.core import validate
 from lnpy.core.xr_utils import select_axis_dim
 
 if TYPE_CHECKING:
