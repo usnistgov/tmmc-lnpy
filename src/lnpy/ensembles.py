@@ -82,7 +82,13 @@ def xr_name(
     def decorator(
         func: C_Ensemble[EnsembleT, P, xr.DataArray],
     ) -> C_Ensemble[EnsembleT, P, xr.DataArray]:
-        name_ = func.__name__.lstrip("_") if name is None else name  # ty: ignore[unresolved-attribute]
+        if name is None:
+            if (name_ := getattr(func, "__name__", None)) is None:
+                msg = "Must specify name or func must have __name__ attribute"
+                raise ValueError(msg)
+            name_ = name_.lstrip("_")
+        else:
+            name_ = name
 
         @wraps(func)
         def wrapper(

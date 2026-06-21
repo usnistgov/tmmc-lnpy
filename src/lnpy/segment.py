@@ -255,7 +255,7 @@ def peak_local_max_adaptive(
     out[idx] = True
 
     if style == "marker":
-        out = validate.ndarray(morphology_label(out, connectivity=connectivity))
+        out = validate.ndarrayany(morphology_label(out, connectivity=connectivity))
     return out
 
 
@@ -413,7 +413,9 @@ class Segmenter:
             connectivity = data.ndim
 
         kwargs = dict(self.watershed_kws, connectivity=connectivity, **kwargs)
-        return validate.ndarray(watershed(data, markers=markers, mask=mask, **kwargs))
+        return validate.ndarrayany(
+            watershed(data, markers=markers, mask=mask, **kwargs)
+        )
 
     @docfiller_local
     def segment_lnpi(

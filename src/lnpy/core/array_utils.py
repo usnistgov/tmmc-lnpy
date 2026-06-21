@@ -77,7 +77,7 @@ def asarray_maybe_recast(
     data: ArrayLike, dtype: DTypeLike | None = None, recast: bool = False
 ) -> NDArrayAny:
     """Perform asarray with optional recast to `dtype` if not already an array."""
-    if validate.ndarray.typeis(data):  # pylint: disable=no-member
+    if validate.ndarrayany.typeis(data):
         if recast and dtype is not None:
             return np.asarray(data, dtype=dtype)
         return data
@@ -89,7 +89,7 @@ def ffill(arr: NDArrayAny, axis: int = -1, limit: int | None = None) -> NDArrayA
     import bottleneck
 
     limit_ = limit if limit is not None else arr.shape[axis]
-    return validate.ndarray(bottleneck.push(arr, n=limit_, axis=axis))
+    return validate.ndarrayany(bottleneck.push(arr, n=limit_, axis=axis))
 
 
 def bfill(arr: NDArrayAny, axis: int = -1, limit: int | None = None) -> NDArrayAny:

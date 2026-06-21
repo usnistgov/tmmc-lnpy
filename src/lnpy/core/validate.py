@@ -20,13 +20,14 @@ if TYPE_CHECKING:
     from .typing_compat import TypeIs
 
 T = TypeVar("T")
+R = TypeVar("R")
 
 
-class Validator(Generic[T]):
+class Validator(Generic[R]):
     """Generic validator"""
 
     def __init__(
-        self, type_: type[T] | UnionType, type_name: str | None = None
+        self, type_: type[R] | UnionType, type_name: str | None = None
     ) -> None:
         self.type_ = type_
 
@@ -34,13 +35,13 @@ class Validator(Generic[T]):
             type_name = getattr(type_, "__name__", str(self.type_))
         self.type_name = type_name
 
-    def typeis(self, val: object) -> TypeIs[T]:
+    def typeis(self, val: object) -> TypeIs[R]:
         return isinstance(val, self.type_)
 
-    def typeguard(self, val: object) -> TypeGuard[T]:
+    def typeguard(self, val: object) -> TypeGuard[R]:
         return isinstance(val, self.type_)
 
-    def validate(self, val: object) -> T:
+    def validate(self, val: object) -> R:
         if self.typeis(val):
             return val
 
@@ -51,7 +52,7 @@ class Validator(Generic[T]):
 
 
 class _Validators:
-    ndarray = Validator[NDArrayAny](np.ndarray)
+    ndarrayany = Validator[NDArrayAny](np.ndarray)
     dataarray = Validator(xr.DataArray)
     dataset = Validator(xr.Dataset)
     xarray = Validator[xr.DataArray | xr.Dataset](xr.DataArray | xr.Dataset)

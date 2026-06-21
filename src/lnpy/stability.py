@@ -59,7 +59,10 @@ def _rootresults_to_rootresulttotal(
     from_solve: bool | None = None,
     residual: float | np.floating[Any] = np.nan,
 ) -> RootResultTotal:
-    output = RootResultTotal(**rootresults_to_rootresultdict(r, residual=residual))  # type: ignore[typeddict-item]
+
+    output: RootResultTotal = cast(
+        "RootResultTotal", rootresults_to_rootresultdict(r, residual=residual)
+    )
 
     if left is not None:
         output["left"] = left
@@ -855,16 +858,6 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
             if as_dict:
                 return self.items, self.info
             return self.access, self.info
-
-        from .segment import BuildPhasesBase
-
-        if not isinstance(build_phases, BuildPhasesBase):
-            msg = (  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
-                "`build_phases` should be an instance of `BuildPhasesBase`."
-                "Its likely an instance of `PhaseCreator.buildphases`."
-                "Instead, use an instance of `PhaseCreator.buildphases_mu`."
-            )
-            raise TypeError(msg)
 
         phase_ids = list(range(phase_ids) if isinstance(phase_ids, int) else phase_ids)
 

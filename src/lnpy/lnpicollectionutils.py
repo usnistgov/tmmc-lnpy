@@ -425,7 +425,7 @@ def build_grid(
     if bounds is not None:
         x = x[(bounds[0] <= x) & (x <= bounds[1])]
 
-    return validate.ndarray(x)
+    return validate.ndarrayany(x)
 
 
 def limited_collection(

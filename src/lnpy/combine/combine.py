@@ -1,5 +1,4 @@
 # pyright: reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownVariableType=false
-# pylint: disable=no-member
 r"""
 Routines to combine :math:`\ln \Pi` data (:mod:`~lnpy.combine`)
 ===============================================================
@@ -1241,7 +1240,7 @@ def delta_lnpi_from_updown(
     Series or DataArray or ndarray
         Calculated value of same type as ``up``.
     """
-    if validate.ndarray.typeis(down):  # pragma: no branch
+    if validate.ndarrayany.typeis(down):  # pragma: no branch
         up_ = up.to_numpy() if isinstance(up, (pd.Series, xr.DataArray)) else up
 
         delta = np.empty_like(up)
@@ -1258,7 +1257,7 @@ def delta_lnpi_from_updown(
             delta_lnpi_from_updown,
             down,
             # if down is an array, move axis to end
-            np.moveaxis(up, axis, -1) if validate.ndarray.typeis(up) else up,
+            np.moveaxis(up, axis, -1) if validate.ndarrayany.typeis(up) else up,
             input_core_dims=[[dim], [dim]],
             output_core_dims=[[dim]],
             kwargs={"axis": -1},
@@ -1309,7 +1308,7 @@ def lnpi_from_updown(
     Series or DataArray or ndarray
         Calculated value of same type as ``up``.
     """
-    if validate.ndarray.typeis(down):
+    if validate.ndarrayany.typeis(down):
         ln_prob = delta_lnpi_from_updown(down=down, up=up, axis=axis).cumsum(axis=axis)
         # subtract maximum
         ln_prob -= ln_prob.max(axis=axis, keepdims=True)
@@ -1321,7 +1320,7 @@ def lnpi_from_updown(
         out: xr.DataArray = xr.apply_ufunc(
             lnpi_from_updown,
             down,
-            np.moveaxis(up, axis, -1) if validate.ndarray.typeis(up) else up,
+            np.moveaxis(up, axis, -1) if validate.ndarrayany.typeis(up) else up,
             input_core_dims=[[dim], [dim]],
             output_core_dims=[[dim]],
             kwargs={"axis": -1, "norm": norm},
@@ -1346,7 +1345,7 @@ def normalize_lnpi(
 ) -> GenArrayOrSeriesT:
     r"""Normalize :math:`\ln\Pi` series or array."""
     kws: dict[str, Any]
-    if validate.ndarray.typeis(lnpi):
+    if validate.ndarrayany.typeis(lnpi):
         kws = {"axis": axis, "keepdims": True}
 
     elif validate.dataarray.typeis(lnpi):
