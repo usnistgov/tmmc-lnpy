@@ -16,6 +16,18 @@ See the fragment files in [changelog.d]
 <!-- scriv-insert-here -->
 
 
+## 0.8.2
+
+Released on 2026-06-22.
+
+### Bug fixes
+
+- fix: apply minor fixes ([#159](https://github.com/usnistgov/tmmc-lnpy/pull/159))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
+
 ## 0.8.1
 
 Released on 2026-03-17.
