@@ -6,7 +6,7 @@ Collection of lnPi objects (:mod:`~lnpy.lnpiseries`)
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, overload
+from typing import TYPE_CHECKING, cast, overload
 from warnings import warn
 
 import numpy as np
@@ -14,14 +14,17 @@ import pandas as pd
 import xarray as xr
 from module_utilities import cached
 
+from .core import validate
 from .core.docstrings import docfiller
 from .core.joblib import parallel_map_build as parallel_map
 from .core.mask import labels_to_masks, masks_to_labels
 
 # lazy loads
 from .core.progress import get_tqdm_build as get_tqdm
-from .core.utils import peek_at
+from .core.typing_compat import Self, override
+from .core.validate import Validator
 from .extensions import AccessorMixin
+from .lnpidata import lnPiMasked
 
 if TYPE_CHECKING:
     from collections.abc import (
@@ -43,8 +46,7 @@ if TYPE_CHECKING:
 
     from . import ensembles, lnpienergy, stability
     from .core.typing import IndexingInt, NDArrayAny, Scalar
-    from .core.typing_compat import IndexAny, Self
-    from .lnpidata import lnPiMasked
+    from .core.typing_compat import IndexAny
 
 
 # Accessors
@@ -105,8 +107,8 @@ class _LocIndexer:
     def __getitem__(self, idx: Any) -> lnPiMasked | lnPiCollection:
         out = self._loc[idx]
         if isinstance(out, pd.Series):
-            out = self._parent.new_like(out)
-        return out  # type: ignore[no-any-return]
+            return self._parent.new_like(out)
+        return validate_lnpimasked_or_lnpicollection(out)
 
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
@@ -138,8 +140,8 @@ class _iLocIndexer:  # noqa: N801
     def __getitem__(self, idx: Any) -> lnPiMasked | lnPiCollection:
         out = self._iloc[idx]
         if isinstance(out, pd.Series):
-            out = self._parent.new_like(out)
-        return out  # type: ignore[no-any-return]
+            return self._parent.new_like(out)
+        return validate_lnpimasked_or_lnpicollection(out)
 
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
@@ -161,7 +163,7 @@ class _Query:
 
     def __call__(self, expr: str, **kwargs: Any) -> lnPiCollection:
         idx = self._frame.query(expr, **kwargs).index
-        return self._parent.iloc[idx]  # type: ignore[no-any-return]
+        return validate_lnpicollection(self._parent.iloc[idx])
 
 
 # @SeriesWrapper.decorate_accessor("zloc")
@@ -295,13 +297,15 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self._base_class = base_class
         self._verify = self._base_class is not None
 
-        # pyrefly: ignore [no-matching-overload]
-        series: pd.Series[Any] = pd.Series(  # type: ignore[misc]  # pyright: ignore[reportCallIssue]  # ty: ignore[no-matching-overload]
-            data=data,  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]
-            index=index,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-            dtype=dtype,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-            name=name,
-        )
+        # NOTE: this avoids typing issues
+        kws: dict[str, Any] = {
+            "data": data,
+            "index": index,
+            "dtype": dtype,
+            "name": name,
+        }
+        series: pd.Series[Any] = pd.Series(**kws)
+
         self._verify_series(series)
         self._series = series
         self._cache: dict[str, Any] = {}
@@ -324,9 +328,6 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
         for d in series:
             if not issubclass(type(d), base_class):
-                # print("series", series)  # noqa: ERA001
-                # print("series.iloc[0]", series.dropna().iloc[0])  # noqa: ERA001
-                # print("series", d)  # noqa: ERA001
                 msg = f"all elements must be of type {base_class}.  found {type(d)}."
                 raise TypeError(msg)
 
@@ -341,6 +342,14 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             # would like to do this, but
             # fails for parallel builds
             # assert lnpi._base is _base
+
+    @classmethod
+    def validate(cls, obj: object) -> Self:
+        return Validator[Self](cls).validate(obj)
+
+    @classmethod
+    def _validate_lnpimasked_or_self(cls, obj: object) -> lnPiMasked | Self:
+        return Validator[lnPiMasked | Self](lnPiMasked | cls).validate(obj)
 
     def new_like(
         self,
@@ -446,10 +455,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         **kwargs: Any,
     ) -> lnPiMasked | pd.Series[Any] | Self:
         """Wrap a generic pandas method to ensure it returns a GeoSeries"""
-        val = getattr(self._series, mtd)(*args, **kwargs)
-        if wrap and isinstance(val, pd.Series):
-            val = self.new_like(val)
-        return val  # type: ignore[no-any-return]
+        val: object = getattr(self._series, mtd)(*args, **kwargs)
+        if validate.series.typeis(val):
+            if wrap:
+                return self.new_like(val)
+            return val
+        return self._validate_lnpimasked_or_self(val)
 
     def xs(
         self,
@@ -535,7 +546,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         --------
         pandas.Series.droplevel
         """
-        return self.new_like(self._series.droplevel(level=level, axis=0))  # type: ignore[arg-type,unused-ignore]
+        return self.new_like(self._series.droplevel(level=level, axis=0))
 
     def apply(
         self,
@@ -544,10 +555,9 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         args: tuple[Any, ...] = (),
         wrap: bool = False,
         **kwds: Any,
-    ) -> Self | pd.Series[Any]:
+    ) -> lnPiMasked | pd.Series[Any] | Self:
         """Interface to :meth:`pandas.Series.apply`"""
-        # pyrefly: ignore [bad-return]
-        return self._wrapped_pandas_method(  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
+        return self._wrapped_pandas_method(
             "apply",
             wrap=wrap,
             func=func,
@@ -558,8 +568,9 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     def sort_index(self, *args: Any, **kwargs: Any) -> Self:
         """Interface to :meth:`pandas.Series.sort_index`"""
-        # pyrefly: ignore [bad-return]
-        return self._wrapped_pandas_method("sort_index", *args, wrap=True, **kwargs)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
+        return self.validate(
+            self._wrapped_pandas_method("sort_index", *args, wrap=True, **kwargs)
+        )
 
     @overload
     def groupby(
@@ -613,16 +624,16 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         --------
         pandas.Series.groupby
         """
-        # pyrefly: ignore [no-matching-overload]
-        group = self.s.groupby(  # pyright: ignore[reportCallIssue]  # ty: ignore[no-matching-overload]
-            by=by,  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-            level=level,
-            as_index=as_index,
-            sort=sort,
-            group_keys=group_keys,
-            observed=observed,
-            dropna=dropna,
-        )
+        kws: dict[str, Any] = {
+            "by": by,
+            "level": level,
+            "as_index": as_index,
+            "sort": sort,
+            "group_keys": group_keys,
+            "observed": observed,
+            "dropna": dropna,
+        }
+        group = self.s.groupby(**kws)
 
         if wrap:
             return _Groupby(self, group)
@@ -680,44 +691,27 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     @classmethod
     def _concat_to_series(
         cls,
-        objs: Iterable[Self]
-        | Iterable[pd.Series[Any]]
-        | Mapping[Hashable, Self]
-        | Mapping[Hashable, pd.Series[Any]],
+        objs: Mapping[Hashable, Self | pd.Series[Any]]
+        | Iterable[Self | pd.Series[Any]],
         **concat_kws: Any,
     ) -> pd.Series[Any]:
         from collections.abc import Mapping
 
         if isinstance(objs, Mapping):
-            out = {}
-            remap = None
+            objs = cast("Mapping[Hashable, Self | pd.Series[Any]]", objs)
+            out: dict[Hashable, pd.Series[Any]] = {}
             for k in objs:
-                # pyrefly: ignore [bad-index]
-                v = objs[k]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
-                if remap is None:
-                    remap = bool(isinstance(v, cls))
-                if remap and hasattr(v, "_series"):
-                    out[k] = v._series
-                else:
-                    out[k] = v
-            # pyrefly: ignore [bad-assignment]
-            objs = out  # ty: ignore[invalid-assignment]
-        else:
-            # pyrefly: ignore [bad-assignment]
-            first, objs = peek_at(objs)  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]  # ty:ignore[invalid-assignment]
-            if isinstance(first, cls):
-                # pyrefly: ignore [missing-attribute]
-                objs = (x._series for x in objs)  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[unresolved-attribute]
+                v = objs[k]
+                out[k] = validate.series(v._series if isinstance(v, cls) else v)
+            return validate.series(pd.concat(out, **concat_kws))
 
-        # pyrefly: ignore [no-matching-overload]
-        return pd.concat(objs, **concat_kws)  # type: ignore[no-any-return] # pyright: ignore[reportCallIssue, reportArgumentType]
+        gen = (validate.series(o._series if isinstance(o, cls) else o) for o in objs)
+        return validate.series(pd.concat(gen, **concat_kws))
 
     def concat_like(
         self,
-        objs: Sequence[Self]
-        | Sequence[pd.Series[Any]]
-        | Mapping[Hashable, Self]
-        | Mapping[Hashable, pd.Series[Any]],
+        objs: Iterable[Self | pd.Series[Any]]
+        | Mapping[Hashable, Self | pd.Series[Any]],
         **concat_kws: Any,
     ) -> Self:
         """Concat a sequence of objects like `self`"""
@@ -727,10 +721,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     @classmethod
     def concat(
         cls,
-        objs: Sequence[Self]
-        | Sequence[pd.Series[Any]]
-        | Mapping[Hashable, Self]
-        | Mapping[Hashable, pd.Series[Any]],
+        objs: Sequence[Self | pd.Series[Any]]
+        | Mapping[Hashable, Self | pd.Series[Any]],
         *args: Any,
         concat_kws: Mapping[str, Any] | None = None,
         **kwargs: Any,
@@ -768,11 +760,13 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     # ** lnPi Specific
     @cached.prop
     def _lnz_series(self) -> pd.Series[Any]:
-        return self._series.apply(lambda x: x.lnz)  # type: ignore[no-any-return]
+        return validate.series(self._series.apply(lambda x: x.lnz))
 
+    @override
     def __repr__(self) -> str:
         return f"<class {self.__class__.__name__}>\n{self._lnz_series!r}"
 
+    @override
     def __str__(self) -> str:
         return str(self._lnz_series)
 
@@ -1022,9 +1016,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
                 dims=self.xge.dims_rec + self.xge.dims_n,
                 name="labels",
             )
-            # pyrefly: ignore [bad-argument-type]
-            .assign_coords(**{self._concat_dim: index, **self.state_kws})
-            .assign_attrs(**self.xge._standard_attrs)
+            .assign_coords({self._concat_dim: index, **self.state_kws})
+            .assign_attrs(self.xge._standard_attrs)
         )
 
         if reset_index:
@@ -1074,8 +1067,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         if len(labels) != len(lnzs):
             raise ValueError
 
-        items = []
-        indexes = []
+        items: list[lnPiMasked] = []
+        indexes: list[int] = []
 
         for label, lnz in zip(labels, lnzs, strict=True):
             lnpi = ref.reweight(lnz)
@@ -1090,8 +1083,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             )
 
             index = list(np.array(features_tmp) - 1)
-            items += lnpi.list_from_masks(masks, convention=False)
-            indexes += index
+            items.extend(lnpi.list_from_masks(masks, convention=False))
+            indexes.extend(index)
 
         return cls.from_list(items=items, index=indexes, **kwargs)
 
@@ -1129,8 +1122,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         labels = []
         lnzs = []
 
-        # pyrefly: ignore [bad-argument-type]
-        for _, g in da.groupby(grouper):  # type: ignore[arg-type, unused-ignore]  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
+        for _, g in da.groupby(cast("Any", grouper)):
             lnzs.append(np.array([g.coords[k] for k in da.attrs["dims_lnz"]]))
             labels.append(g.values)
 
@@ -1143,7 +1135,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             include_boundary=include_boundary,
             check_features=check_features,
             **kwargs,
-        )  # yapf: disable
+        )
 
     @cached.prop
     @docfiller.decorate
@@ -1235,3 +1227,9 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             new._cache["spinodal"] = spin
             new._cache["binodal"] = bino
         return new
+
+
+validate_lnpicollection = Validator[lnPiCollection](lnPiCollection)
+validate_lnpimasked_or_lnpicollection = Validator[lnPiMasked | lnPiCollection](
+    lnPiMasked | lnPiCollection
+)

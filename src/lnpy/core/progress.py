@@ -28,7 +28,7 @@ def _get_tqdm_default() -> Callable[..., Any]:
         import tqdm as tqdm_
 
         try:
-            from IPython.core.getipython import (  # ty: ignore[unresolved-import,unused-ignore-comment]  # pyrefly: ignore[missing-import]
+            from IPython.core.getipython import (
                 get_ipython,
             )
 

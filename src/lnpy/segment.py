@@ -15,14 +15,16 @@ from __future__ import annotations
 import warnings
 from collections.abc import Iterable
 from functools import lru_cache
-from typing import TYPE_CHECKING, cast, overload  # , TypedDict
+from typing import TYPE_CHECKING, cast, overload
 
 import numpy as np
 from module_utilities.docfiller import DocFiller
 
+from .core import validate
 from .core.docstrings import docfiller
+from .core.typing_compat import override
 from .lnpienergy import wFreeEnergy
-from .lnpiseries import lnPiCollection
+from .lnpiseries import lnPiCollection, validate_lnpicollection
 
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
@@ -253,8 +255,8 @@ def peak_local_max_adaptive(
     out[idx] = True
 
     if style == "marker":
-        out = morphology_label(out, connectivity=connectivity)
-    return out  # pyright: ignore[reportReturnType]
+        out = validate.ndarrayany(morphology_label(out, connectivity=connectivity))
+    return out
 
 
 @docfiller_local
@@ -371,7 +373,10 @@ class Segmenter:
             kwargs["num_peaks_max"] = num_peaks_max
         kwargs["style"] = style
         kwargs = dict(self.peak_kws, **kwargs)
-        return peak_local_max_adaptive(data, **kwargs)  # type: ignore[no-any-return]
+        return cast(
+            "NDArrayAny | tuple[NDArrayAny, ...]",
+            peak_local_max_adaptive(data, **kwargs),
+        )
 
     @docfiller_local
     def watershed(
@@ -408,7 +413,9 @@ class Segmenter:
             connectivity = data.ndim
 
         kwargs = dict(self.watershed_kws, connectivity=connectivity, **kwargs)
-        return watershed(data, markers=markers, mask=mask, **kwargs)  # type: ignore[no-any-return]
+        return validate.ndarrayany(
+            watershed(data, markers=markers, mask=mask, **kwargs)
+        )
 
     @docfiller_local
     def segment_lnpi(
@@ -877,36 +884,26 @@ class BuildPhasesBase:
 
     def __init__(self, x: list[float | None], phase_creator: PhaseCreator) -> None:
         self._phase_creator = phase_creator
-        self._set_x(x)
-
-    @property
-    def x(self) -> list[float | None]:
-        return self._x
-
-    @x.setter
-    def x(self, x: list[float | None]) -> None:
-        self._set_x(x)
-
-    @property
-    def phase_creator(self) -> PhaseCreator:
-        return self._phase_creator
-
-    def _set_x(self, x: list[float | None]) -> None:
+        # initial x
         if sum(x is None for x in x) != 1:
             msg = f"{x=} must have a single element which is None.  This will be the dimension varied."
             raise ValueError(msg)
         self._x = x
         self._ncomp = len(self._x)
         self._index = self._x.index(None)
-        self._set_params()
+
+    @property
+    def x(self) -> list[float | None]:
+        return self._x
+
+    @property
+    def phase_creator(self) -> PhaseCreator:
+        return self._phase_creator
 
     @property
     def index(self) -> int:
         """Index number which varies"""
         return self._index
-
-    def _set_params(self) -> None:
-        pass
 
     def _get_lnz(self, lnz_index: float) -> NDArrayAny:
         raise NotImplementedError
@@ -971,6 +968,17 @@ class BuildPhasesBase:
             lnz=lnz, phases_factory=phases_factory, **kwargs
         )
 
+    def _call_and_validate_is_lnpicollection(
+        self,
+        lnz_index: float,
+        *,
+        phases_factory: PhasesFactorySignature | bool = True,
+        **kwargs: Any,
+    ) -> lnPiCollection:
+        return validate_lnpicollection(
+            self(lnz_index=lnz_index, phases_factory=phases_factory, **kwargs)
+        )
+
 
 @docfiller_local
 class BuildPhases_mu(BuildPhasesBase):  # noqa: N801
@@ -986,6 +994,7 @@ class BuildPhases_mu(BuildPhasesBase):  # noqa: N801
     def __init__(self, lnz: list[float | None], phase_creator: PhaseCreator) -> None:
         super().__init__(x=lnz, phase_creator=phase_creator)
 
+    @override
     def _get_lnz(self, lnz_index: float) -> NDArrayAny:
         lnz = self.x.copy()
         lnz[self.index] = lnz_index
@@ -1005,10 +1014,9 @@ class BuildPhases_dmu(BuildPhasesBase):  # noqa: N801
 
     def __init__(self, dlnz: list[float | None], phase_creator: PhaseCreator) -> None:
         super().__init__(x=dlnz, phase_creator=phase_creator)
+        self._dlnz = np.array([x if x is not None else 0.0 for x in self.x])
 
-    def _set_params(self) -> None:
-        self._dlnz: NDArrayAny = np.array([x if x is not None else 0.0 for x in self.x])  # pylint: disable=attribute-defined-outside-init  # pyright: ignore[reportUninitializedInstanceVariable]
-
+    @override
     def _get_lnz(self, lnz_index: float) -> NDArrayAny:
         return self._dlnz + lnz_index
 

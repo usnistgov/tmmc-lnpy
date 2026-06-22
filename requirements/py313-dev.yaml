@@ -43,6 +43,7 @@ dependencies:
   - tqdm
   - typecheck-runner>=0.2.0
   - types-tqdm
+  - typing-extensions>=4.10.0
   - xarray
   - pip
   - pip:

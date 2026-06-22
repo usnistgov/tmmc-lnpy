@@ -102,6 +102,7 @@ IndexIterScalar: TypeAlias = Union[str, bytes, bool, int, float]
 Scalar: TypeAlias = IndexIterScalar
 
 AxisReduce: TypeAlias = int
+DimReduce: TypeAlias = Hashable
 DimsReduce: TypeAlias = Union[Hashable, Collection[Hashable]]
 
 ApplyUFuncKwargs: TypeAlias = Mapping[str, Any]

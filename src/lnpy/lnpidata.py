@@ -8,19 +8,21 @@ lnPi data classes and routines (:mod:`~lnpy.lnpidata`)
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import numpy as np
 import pandas as pd
 from module_utilities import cached
 
+from .core import validate
 from .core.compat import copy_if_needed
 from .core.docstrings import docfiller
 from .core.mask import labels_to_masks, masks_change_convention
+from .core.typing_compat import override
 from .extensions import AccessorMixin
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Mapping, Sequence
+    from collections.abc import Hashable, Iterable, Mapping, Sequence
     from pathlib import Path
     from typing import Any
 
@@ -131,7 +133,7 @@ class lnPiArray:  # noqa: N801
 
     @property
     def shape(self) -> tuple[int, ...]:
-        return self.data.shape  # type: ignore[no-any-return, unused-ignore]
+        return cast("tuple[int, ...]", self.data.shape)
 
     def new_like(
         self,
@@ -387,10 +389,10 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
     @property
     def shape(self) -> tuple[int, ...]:
         """Shape of lnPiArray"""
-        return self._data.shape  # type: ignore[no-any-return,unused-ignore]
+        return cast("tuple[int, ...]", self._data.shape)
 
     def __len__(self) -> int:
-        return len(self._data)  # type: ignore[no-any-return, unused-ignore]
+        return len(self._data)
 
     @property
     def ndim(self) -> int:
@@ -416,9 +418,11 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         """Accessor to self.state_kws['beta']."""
         return self.state_kws.get("beta", None)
 
+    @override
     def __repr__(self) -> str:
         return f"<lnPi(lnz={self._lnz})>"
 
+    @override
     def __str__(self) -> str:
         return repr(self)
 
@@ -467,7 +471,10 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         numpy.ma.MaskedArray.argmax
         numpy.unravel_index
         """
-        return np.unravel_index(self.ma.argmax(*args, **kwargs), self.shape)  # pyright: ignore[reportReturnType]
+        return tuple(
+            int(x)
+            for x in np.unravel_index(self.ma.argmax(*args, **kwargs), self.shape)
+        )
 
     # @cached.meth
     def local_max(
@@ -487,14 +494,18 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         --------
         numpy.ma.MaskedArray.max
         """
-        return self.ma[self.local_argmax(*args, **kwargs)]  # type: ignore[no-any-return]
+        return validate.maskedarray(
+            self.ma[self.local_argmax(*args, **kwargs)],
+        )
 
     # @cached.meth
     def local_maxmask(
         self, *args: Any, **kwargs: Any
     ) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
         """Calculate mask where ``self.ma == self.local_max()``"""
-        return self.ma == self.local_max(*args, **kwargs)  # type: ignore[no-any-return]
+        return validate.maskedarray(
+            self.ma == self.local_max(*args, **kwargs),
+        )
 
     @cached.prop
     def edge_distance_matrix(self) -> NDArray[np.float64]:
@@ -523,7 +534,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         edge_distance_matrix
         lnpy.core.utils.distance_matrix
         """
-        return ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)]  # type: ignore[no-any-return]
+        return float(ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)])
 
     @docfiller.decorate
     def new_like(
@@ -612,7 +623,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         lnz: float | ArrayLike,
         state_kws: dict[str, Any] | None = None,
         sep: str = r"\s+",
-        names: Sequence[str] | None = None,
+        names: Sequence[Hashable] | None = None,
         csv_kws: Mapping[str, Any] | None = None,
         **kwargs: Any,
     ) -> Self:
@@ -641,16 +652,11 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         if names is None:
             names = [f"n_{i}" for i in range(ndim)] + ["lnpi"]
 
-        if csv_kws is None:
-            csv_kws = {}
+        kws: dict[str, Any] = {"sep": sep, "names": names}
+        if csv_kws:
+            kws.update(csv_kws)
 
-        da = (
-            pd
-            # pyrefly: ignore [no-matching-overload]
-            .read_csv(path, sep=sep, names=names, **csv_kws)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty: ignore[no-matching-overload]
-            .set_index(names[:-1])["lnpi"]
-            .to_xarray()
-        )
+        da = pd.read_csv(path, **kws).set_index(names[:-1])["lnpi"].to_xarray()
         return cls.from_data(
             data=da.values,
             mask=da.isnull().to_numpy(),  # noqa: PD003

@@ -54,6 +54,9 @@ extensions = [
 nitpicky = True
 nitpick_ignore = [
     ("py:class", "lnpy.core.rootresults.RootResultDict"),
+    ("py:class", "lnPiCollection"),
+    ("py:class", "typing_extensions.TypedDict"),
+    ("py:class", "lnPiCollection | None"),
 ]
 
 

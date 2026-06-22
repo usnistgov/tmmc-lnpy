@@ -7,12 +7,13 @@ Ensemble averages (:mod:`~lnpy.ensembles`)
 from __future__ import annotations
 
 from functools import lru_cache, wraps
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import numpy as np
 import xarray as xr
 from module_utilities import cached
 
+from .core import validate
 from .core.compat import xr_dot
 from .core.xr_utils import dim_to_suffix_dataset
 from .lnpidata import lnPiMasked
@@ -81,7 +82,13 @@ def xr_name(
     def decorator(
         func: C_Ensemble[EnsembleT, P, xr.DataArray],
     ) -> C_Ensemble[EnsembleT, P, xr.DataArray]:
-        name_ = func.__name__.lstrip("_") if name is None else name  # ty: ignore[unresolved-attribute]
+        if name is None:
+            if (name_ := getattr(func, "__name__", None)) is None:
+                msg = "Must specify name or func must have __name__ attribute"
+                raise ValueError(msg)
+            name_ = name_.lstrip("_")
+        else:
+            name_ = name
 
         @wraps(func)
         def wrapper(
@@ -288,7 +295,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     @property
     def dims_state(self) -> list[str]:
         """Dimensions corresponding to 'state variables'"""
-        return self.pi_norm.attrs["dims_state"]  # type: ignore[no-any-return]
+        return cast("list[str]", self.pi_norm.attrs["dims_state"])
 
     @property
     def dims_rec(self) -> list[str]:
@@ -298,12 +305,12 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     @property
     def beta(self) -> float:
         r"""Inverse temperature :math:`\beta = 1 / (k_{\rm B} T)`"""
-        return self._parent.state_kws["beta"]  # type: ignore[no-any-return]
+        return cast("float", self._parent.state_kws["beta"])
 
     @property
     def volume(self) -> float:
         """System volume :math:`V`."""
-        return self._parent.state_kws["volume"]  # type: ignore[no-any-return]
+        return cast("float", self._parent.state_kws["volume"])
 
     @cached_prop
     def coords_state(self) -> dict[str, xr.DataArray]:
@@ -369,7 +376,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     def lnpi_norm(self) -> xr.DataArray:
         r""":math:`\ln \Pi_{\rm norm}(N)`."""
         pi = self.pi_norm
-        return np.log(xr.where(pi > 0, pi, np.nan))  # type: ignore[no-untyped-call,no-any-return]
+        return np.log(xr.where(pi > 0, pi, np.nan))  # type: ignore[no-untyped-call, no-any-return]
 
     def _get_prop_from_extra_kws(
         self, prop: str | ArrayLike | xr.DataArray
@@ -405,7 +412,9 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
         return x
 
     def _mean_pi(self, x: xr.DataArray, **kwargs: Any) -> xr.DataArray:  # noqa: ARG002
-        return xr_dot(self.pi_norm, x, dim=self.dims_n, **self._xarray_dot_kws)  # type: ignore[no-any-return]
+        return validate.dataarray(
+            xr_dot(self.pi_norm, x, dim=self.dims_n, **self._xarray_dot_kws),
+        )
 
     @xr_name()
     def mean_pi(
@@ -509,7 +518,9 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             y = self._array_or_callable_to_xarray(x, **kwargs)
             yy = y - self._mean_pi(y)
 
-        return xr_dot(self.pi_norm, xx, yy, dim=self.dims_n, **self._xarray_dot_kws)  # type: ignore[no-any-return]
+        return validate.dataarray(
+            xr_dot(self.pi_norm, xx, yy, dim=self.dims_n, **self._xarray_dot_kws),
+        )
 
     def pipe(self, func: Callable[..., R], *args: Any, **kwargs: Any) -> R:
         """Apply function to `self`"""
@@ -666,7 +677,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     def _betaOmega(self, lnpi_zero: XArrayLike | None = None) -> xr.DataArray:
         if lnpi_zero is None:
             lnpi_zero = self._lnpi_zero
-        return lnpi_zero - np.log(self.pi_sum)  # type: ignore[return-value]  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type] # pyrefly: ignore [bad-return]
+        return validate.dataarray(lnpi_zero - np.log(self.pi_sum))
 
     def betaOmega(self, lnpi_zero: XArrayLike | None = None) -> xr.DataArray:
         r"""
@@ -739,7 +750,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             # raise Value'only mask with unstack')
             pv = self.betapV()
             sample = self._parent._concat_dim
-            return (  # type: ignore[no-any-return]
+            return validate.dataarray(
                 pv  # noqa: PD010, PD013
                 .unstack(sample)
                 .pipe(lambda x: x.max("phase") == x)
@@ -747,7 +758,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
                 .loc[pv.indexes["sample"]]
             )
 
-        return self.betapV().pipe(lambda x: x.max("phase") == x)  # type: ignore[no-any-return,unused-ignore]
+        return validate.dataarray(self.betapV().pipe(lambda x: x.max("phase") == x))
 
     # @cached_meth
     @xr_name(r"$\beta p(\mu,V,T)/\rho$", standard_name="compressibility_factor")
@@ -821,7 +832,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
                 if (v := getattr(self, key, None)) is not None:
                     if callable(v):
                         v = v()
-                    out.append(v)  # pyright: ignore[reportArgumentType]
+                    out.append(validate.dataarray(v))
             except Exception:  # noqa: PERF203, BLE001, S110  # pylint: disable=broad-exception-caught
                 pass
 
@@ -855,8 +866,8 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     @xr_name(r"$\beta G(\mu,V,T)$", standard_name="Gibbs_free_energy")
     def betaG(self) -> xr.DataArray:
         r"""Scaled Gibbs free energy :math:`\beta G = \sum_i \beta \mu_i \overline{N}_i`."""
-        return xr_dot(  # type: ignore[no-any-return]
-            self.betamu, self.nvec, dim=self.dims_comp, **self._xarray_dot_kws
+        return validate.dataarray(
+            xr_dot(self.betamu, self.nvec, dim=self.dims_comp, **self._xarray_dot_kws)
         )
 
     @property
@@ -1114,7 +1125,7 @@ class CanonicalEnsemble:
                 v = getattr(self, key)
                 if callable(v):
                     v = v()
-                out.append(v)  # pyright: ignore[reportArgumentType]
+                out.append(validate.dataarray(v))
             except Exception:  # noqa: PERF203, BLE001, S110  # pylint: disable=broad-exception-caught
                 pass
 

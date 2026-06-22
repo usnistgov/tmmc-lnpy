@@ -42,7 +42,9 @@ def _get_pooch() -> pooch.Pooch:
         env="TMMC_LNPY_DATA_DIR",
     )
 
-    obj.load_registry(resources.files("lnpy.data").joinpath("registry.txt"))  # pyright: ignore[reportArgumentType]  # pyrefly: ignore[bad-argument-type]
+    obj.load_registry(
+        cast("Path", resources.files("lnpy.data").joinpath("registry.txt"))
+    )
     return obj
 
 
@@ -64,17 +66,18 @@ def json_to_dict(basename: str) -> dict[str, Any]:
     output : dict
 
     """
+    fopen: Any
     if basename.endswith(".gz"):
         import gzip
 
         fopen = gzip.open
     else:
-        fopen = open  # type: ignore[assignment]
+        fopen = open
 
     path = _get_pooch().fetch(basename)
 
     with fopen(path, "r") as f:
-        return json.load(f)  # type: ignore[no-any-return]
+        return cast("dict[str, Any]", json.load(f))
 
 
 class ExampleDict(TypedDict):

@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
 import numpy as np
 
+from .core import validate
 from .core.array_utils import array_to_scalar
 from .core.rootresults import RootResultDict, rootresults_to_rootresultdict
 from .lnpiseries import lnPiCollection
@@ -147,7 +148,9 @@ def get_lnz_min(
         dlnz_left = dlnz
         for _i in range(ntry):
             new_lnz -= dlnz_left
-            p = build_phases(new_lnz, ref=ref, **build_kws)
+            p = build_phases._call_and_validate_is_lnpicollection(
+                new_lnz, ref=ref, **build_kws
+            )
             if phase_id in p._get_level("phase") and getter(p).to_numpy() < target:
                 left = p
                 break
@@ -168,7 +171,9 @@ def get_lnz_min(
 
         for _i in range(ntry):
             new_lnz += dlnz_right
-            p = build_phases(new_lnz, ref=ref, **build_kws)
+            p = build_phases._call_and_validate_is_lnpicollection(
+                new_lnz, ref=ref, **build_kws
+            )
 
             if phase_id not in p._get_level("phase"):
                 # went to far
@@ -189,7 +194,9 @@ def get_lnz_min(
 
     def f(x: float) -> float:
         lnz_new = x
-        p = build_phases(lnz_new, ref=ref, **build_kws)
+        p = build_phases._call_and_validate_is_lnpicollection(
+            lnz_new, ref=ref, **build_kws
+        )
         shared["lnpi"] = p
         return array_to_scalar(getter(p).values) - target
 
@@ -219,7 +226,7 @@ def get_lnz_max(
         raise ValueError(msg)
 
     lnz_idx = build_phases.index
-    lnz_start = cast("float", lnz_start or ref.lnz[lnz_idx])
+    lnz_start = float(lnz_start or ref.lnz[lnz_idx])
 
     # need left/right bounds
     # left is greatest lnz point with edge_distance > edge_distance_min
@@ -264,7 +271,9 @@ def get_lnz_max(
         dlnz_loc = dlnz
         for i in range(ntry):
             lnz_left -= dlnz_loc
-            p = build_phases(lnz_left, ref=ref, **build_kws)
+            p = build_phases._call_and_validate_is_lnpicollection(
+                lnz_left, ref=ref, **build_kws
+            )
             if getter(p).to_numpy() >= edge_distance_min:
                 left = p
                 n_left = i
@@ -284,7 +293,9 @@ def get_lnz_max(
         dlnz_loc = dlnz
         for i in range(ntry):
             lnz_right += dlnz_loc
-            p = build_phases(lnz_right, ref=ref, **build_kws)
+            p = build_phases._call_and_validate_is_lnpicollection(
+                lnz_right, ref=ref, **build_kws
+            )
 
             if getter(p).to_numpy() < edge_distance_min:
                 right = p
@@ -307,7 +318,9 @@ def get_lnz_max(
             tried = i
             break
         lnz_mid = 0.5 * (lnz[0] + lnz[1])
-        mid = build_phases(lnz_mid, ref=ref, **build_kws)
+        mid = build_phases._call_and_validate_is_lnpicollection(
+            lnz_mid, ref=ref, **build_kws
+        )
         y_mid = getter(mid).to_numpy()
 
         index = 0 if y_mid >= edge_distance_min else 1
@@ -412,7 +425,7 @@ def build_grid(
     if bounds is not None:
         x = x[(bounds[0] <= x) & (x <= bounds[1])]
 
-    return x  # type: ignore[return-value]
+    return validate.ndarrayany(x)
 
 
 def limited_collection(

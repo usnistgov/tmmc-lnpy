@@ -14,8 +14,7 @@ import pandas as pd
 import xarray as xr
 from module_utilities import cached
 
-from lnpy.core.utils import peek_at
-
+from .core import validate
 from .core.docstrings import docfiller
 from .core.joblib import parallel_map_func_starargs
 from .core.mask import (
@@ -23,7 +22,8 @@ from .core.mask import (
     masks_change_convention,
 )
 from .core.progress import get_tqdm_calc as get_tqdm
-from .core.validate import validate_sequence
+from .core.typing_compat import assert_never, override
+from .core.utils import peek_at
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Sequence
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
     _Extrema = Literal["min", "max"]
 
     _FillArg: TypeAlias = "int | None"
-    _FillVal: TypeAlias = "_FillArg | float"
+    _FillVal: TypeAlias = "float | None"
     _ExtremaArg: TypeAlias = "int | tuple[int, ...] | None"
 
 
@@ -145,7 +145,7 @@ def find_boundaries_overlap(
     --------
     find_boundaries
     """
-    masks = validate_sequence(masks)
+    masks = validate.as_sequence(masks)
     n = len(masks)
     possible_methods = {"approx", "exact"}
 
@@ -231,8 +231,7 @@ def find_masked_extrema(
     elif extrema == "min":
         func = np.argmin
     else:
-        msg = 'extrema must be on of {"min", "max}'  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
-        raise ValueError(msg)
+        assert_never(extrema)
 
     masks = masks_change_convention(masks, convention, "image")
 
@@ -251,11 +250,11 @@ def find_masked_extrema(
             val = fill_val
         else:
             mask_flat = mask.reshape(-1)
-            arg = positions_flat[mask_flat][func(data_flat[mask_flat])]
-            val = data_flat[arg]  # pyright: ignore[reportAssignmentType]
+            arg = int(positions_flat[mask_flat][func(data_flat[mask_flat])])
+            val = data_flat[arg]
 
             if unravel:
-                arg = np.unravel_index(arg, data.shape)  # type: ignore[assignment]  # pyright: ignore[reportCallIssue, reportArgumentType]
+                arg = tuple(int(x) for x in np.unravel_index(arg, data.shape))
 
         out_arg.append(arg)
         out_val.append(val)
@@ -529,11 +528,9 @@ class wFreeEnergy:  # noqa: N801
                 if np.all(np.isnan(vals)):
                     out_arg[i, j] = None
                 else:
-                    idx_min = np.nanargmin(vals)
-                    # pyrefly: ignore [bad-index]
-                    out_arg[i, j] = argmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
-                    # pyrefly: ignore [bad-index]
-                    out_max[i, j] = out_max[j, i] = valmax_dict[i, j, idx_min]  # type: ignore[index]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+                    idx_min = int(np.nanargmin(vals))
+                    out_arg[i, j] = argmax_dict[i, j, idx_min]
+                    out_max[i, j] = out_max[j, i] = valmax_dict[i, j, idx_min]
         return out_arg, out_max
 
     @property
@@ -617,18 +614,13 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     w_min = pd.Series(w.w_min[:, 0], index=index, name="w_min")
     w_argmin = pd.Series(w.w_argmin, index=w_min.index, name="w_argmin")
 
-    w_tran: pd.Series[Any] = (  # pyright: ignore[reportAssignmentType]
-        # pyrefly: ignore [bad-assignment]
-        pd  # noqa: PD013
-        .DataFrame(  # type: ignore[call-overload]
+    w_tran = validate.series(
+        pd.DataFrame(  # noqa: PD013
             w.w_tran,
             index=index,
             columns=index.get_level_values("phase").rename("phase_nebr"),
-        )
-        .stack()
-        # pyrefly: ignore [bad-argument-type]
-        .rename("w_tran")  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
-    )
+        ).stack()
+    ).rename("w_tran")
 
     # get argtrans values for each index
     index_map = {idx: i for i, idx in enumerate(index.get_level_values("phase"))}
@@ -659,20 +651,8 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     }  # [index_map, w.w_argtran]}
 
 
-class wFreeEnergyCollection:  # noqa: N801
-    r"""
-    Calculate the transition free energies for a :class:`lnpy.lnpiseries.lnPiCollection`.
-
-    :math:`w(N) = \beta f(N) = - \ln \Pi(N)`
-
-    Parameters
-    ----------
-    parent : lnPiCollection
-
-    Notes
-    -----
-    An instance of :class:`wFreeEnergyCollection` is normally created from the accessor :meth:`lnpy.lnpiseries.lnPiCollection.wfe`
-    """
+class wFreeEnergyCollectionBase:  # noqa: N801
+    """Base class for Free energy collection calculations."""
 
     def __init__(self, parent: lnPiCollection) -> None:
         self._parent = parent
@@ -774,6 +754,22 @@ class wFreeEnergyCollection:  # noqa: N801
 
         return delta_w.min("phase_nebr").fillna(0.0)
 
+
+class wFreeEnergyCollection(wFreeEnergyCollectionBase):  # noqa: N801
+    r"""
+    Calculate the transition free energies for a :class:`lnpy.lnpiseries.lnPiCollection`.
+
+    :math:`w(N) = \beta f(N) = - \ln \Pi(N)`
+
+    Parameters
+    ----------
+    parent : lnPiCollection
+
+    Notes
+    -----
+    An instance of :class:`wFreeEnergyCollection` is normally created from the accessor :meth:`lnpy.lnpiseries.lnPiCollection.wfe`
+    """
+
     def get_dw(
         self, idx: int, idx_nebr: int | list[int] | None = None
     ) -> pd.Series[Any]:
@@ -782,7 +778,7 @@ class wFreeEnergyCollection:  # noqa: N801
 
 
 # @lnPiCollection.decorate_accessor("wfe_phases")
-class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
+class wFreeEnergyPhases(wFreeEnergyCollectionBase):  # noqa: N801
     """
     Stripped down version of :class:`wFreeEnergyCollection` for single phase grouping.
 
@@ -799,6 +795,7 @@ class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
     """
 
     @property
+    @override
     @cached.meth
     def dwx(self) -> xr.DataArray:
         index = list(self._parent.index.get_level_values("phase"))
@@ -811,14 +808,13 @@ class wFreeEnergyPhases(wFreeEnergyCollection):  # noqa: N801
         return xr.DataArray(dw, dims=dims, coords=coords)
 
     @property
+    @override
     @cached.meth
     def dw(self) -> pd.Series[Any]:
         """Series representation of delta_w"""
         return self.dwx.to_series()
 
-    # FIX(wpk): fix this
-    # pyrefly: ignore [bad-override]
-    def get_dw(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]  # ty: ignore[invalid-method-override]
+    def get_dw(
         self, idx: int, idx_nebr: int | Iterable[int] | None = None
     ) -> float | NDArrayAny:
         dw = self.dwx

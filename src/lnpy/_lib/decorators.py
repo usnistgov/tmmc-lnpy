@@ -1,5 +1,4 @@
 # pyright: reportMissingImports=false, reportUnnecessaryTypeIgnoreComment=false
-# pylint: disable=import-error
 from __future__ import annotations
 
 import itertools

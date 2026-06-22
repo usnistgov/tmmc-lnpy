@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, cast, overload
 
 import numpy as np
 
+from . import validate
 from .docstrings import docfiller
-from .validate import validate_list, validate_sequence
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -22,13 +22,7 @@ if TYPE_CHECKING:
 def _convention_to_bool(convention: MaskConvention) -> bool:
     if isinstance(convention, bool):
         return convention
-    if convention == "image":
-        return True
-    if convention == "masked":
-        return False
-
-    msg = f"Bad value {convention} sent to _convention_to_bool"  # type: ignore[unreachable]  # pyright: ignore[reportUnreachable]
-    raise ValueError(msg)
+    return convention.lower() == "image"
 
 
 @overload
@@ -193,7 +187,7 @@ def labels_to_masks(
     if features is None:
         features = [i for i in np.unique(labels) if i > 0]
     else:
-        features = validate_list(features)
+        features = validate.as_list(features)
         if check_features:
             vals = np.unique(labels)
             if not np.all([x in vals for x in features]):
@@ -246,11 +240,11 @@ def masks_to_labels(
     --------
     labels_to_masks
     """
-    masks = validate_sequence(masks)
+    masks = validate.as_sequence(masks)
     if features is None:
         features = range(1, len(masks) + 1)
     else:
-        features = validate_sequence(features)
+        features = validate.as_sequence(features)
         if len(features) != len(masks):
             raise ValueError
 

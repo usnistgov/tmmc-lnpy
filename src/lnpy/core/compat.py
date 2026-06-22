@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from importlib import resources
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import numpy as np
 
@@ -23,8 +23,7 @@ def copy_if_needed(
 ) -> bool:  # Lie here so can support both versions...
     """Callable to return copy if needed convention..."""
     if not copy:
-        # pyrefly: ignore [bad-return]
-        return _COPY_IF_NEEDED  # type: ignore[return-value]  # pyright: ignore[reportReturnType] # ty: ignore[invalid-return-type]
+        return cast("bool", _COPY_IF_NEEDED)
     return copy
 
 
@@ -44,11 +43,12 @@ def xr_dot(
     """
     import xarray as xr
 
+    dim_ = cast("Any", dim)
+
     try:
-        # pyrefly: ignore [bad-argument-type]
-        return xr.dot(*arrays, dim=dim, **kwargs)  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
+        return cast("Any", xr.dot(*arrays, dim=dim_, **kwargs))
     except TypeError:
-        return xr.dot(*arrays, dims=dim, **kwargs)  # type: ignore[arg-type,unused-ignore]
+        return xr.dot(*arrays, dims=dim_, **kwargs)
 
 
 def rootresults(
@@ -66,22 +66,14 @@ def rootresults(
     """
     from scipy.optimize import RootResults
 
+    kws: dict[str, Any] = {
+        "root": root,
+        "iterations": iterations,
+        "function_calls": function_calls,
+        "flag": flag,
+    }
+
     try:
-        return RootResults(
-            root=root,
-            iterations=iterations,
-            function_calls=function_calls,
-            # pyrefly: ignore [bad-argument-type]
-            flag=flag,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
-            # pyrefly: ignore [bad-argument-type]
-            method=method,  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
-        )  # ty:ignore[invalid-return-type]
+        return RootResults(**kws, method=cast("Any", method))
     except TypeError:
-        # pyrefly: ignore [missing-argument]
-        return RootResults(  # type: ignore[call-arg] # pyright: ignore[reportCallIssue]  # pylint: disable=no-value-for-parameter # ty: ignore[missing-argument, invalid-return-type]
-            root=root,
-            iterations=iterations,
-            function_calls=function_calls,
-            # pyrefly: ignore [bad-argument-type]
-            flag=flag,  # type: ignore[arg-type]  # ty: ignore[invalid-argument-type]
-        )
+        return RootResults(**kws)
