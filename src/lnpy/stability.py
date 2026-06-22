@@ -468,7 +468,7 @@ def get_spinodal(
         -1,
         +1,
     }:
-        msg = f"{step=} must by +/- 1"
+        msg = f"{step=} must be +/- 1"
         raise ValueError(msg)
 
     # get initial bracket
