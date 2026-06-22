@@ -249,7 +249,7 @@ def _refine_bracket_spinodal_right(
 
     for i in range(nmax):
         dw = left.wfe_phases.get_dw(idx, idx_nebr)
-        if dw < vmax and dw > efac:
+        if efac < dw < vmax:
             left_done = True
 
         dw = right.wfe_phases.get_dw(idx, idx_nebr)
