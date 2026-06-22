@@ -249,11 +249,11 @@ def _refine_bracket_spinodal_right(
 
     for i in range(nmax):
         dw = left.wfe_phases.get_dw(idx, idx_nebr)
-        if dw < vmax and dw > efac:
+        if efac < dw < vmax:
             left_done = True
 
         dw = right.wfe_phases.get_dw(idx, idx_nebr)
-        if dw > vmin and dw < efac:
+        if vmin < dw < efac:
             right_done = True
 
         #########
@@ -468,7 +468,7 @@ def get_spinodal(
         -1,
         +1,
     }:
-        msg = f"{step=} must by +/- 1"
+        msg = f"{step=} must be +/- 1"
         raise ValueError(msg)
 
     # get initial bracket
