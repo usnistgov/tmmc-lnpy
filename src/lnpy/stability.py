@@ -269,7 +269,7 @@ def _refine_bracket_spinodal_right(
             # we've reached a breaking point
             if left_done:
                 # can't find a lower bound to efac, just return where we're at
-                root = float(left._get_lnz())
+                root = left._get_lnz()[idx]
                 r = rootresults(
                     root=root,
                     iterations=i + 1,
