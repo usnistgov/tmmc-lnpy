@@ -5,7 +5,7 @@ Thermodynamic stability (:mod:`~lnpy.stability`)
 Calculation of spinodal and binodal
 """
 
-# pylint: disable=chained-comparison,use-implicit-booleaness-not-comparison-to-zero
+# pylint: disable=use-implicit-booleaness-not-comparison-to-zero
 from __future__ import annotations
 
 import itertools
