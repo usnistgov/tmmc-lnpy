@@ -263,7 +263,6 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     _concat_dim = "sample"
     _concat_coords = "different"
-    _use_joblib = True
     _xarray_output = True
     _xarray_unstack = True
     _xarray_dot_kws: Final = {"optimize": "optimal"}
@@ -966,13 +965,18 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             build_kws = {}
 
         build_kws = dict(build_kws, phases_factory=False)
-        seq = get_tqdm(lnzs, desc="build")
+        total = len(lnzs)
+        seq = get_tqdm(
+            parallel_map(
+                build_phases, lnzs, total=total, ref=ref, nmax=nmax, **build_kws
+            ),
+            total=total,
+            desc="build",
+        )
 
         items: list[lnPiMasked] = []
         index: list[int] = []
-        for data, idx in parallel_map(
-            build_phases, seq, ref=ref, nmax=nmax, **build_kws
-        ):
+        for data, idx in seq:
             items += data
             index += list(idx)
         return cls.from_list(items, index, base_class=base_class, **kwargs)

@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, cast
 from lnpy.options import OPTIONS
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Sequence
+    from collections.abc import Callable, Iterable, Iterator, Sequence
     from typing import Any, Literal
 
     from .typing_compat import TypeVar
@@ -17,28 +17,30 @@ if TYPE_CHECKING:
     R = TypeVar("R")
 
 
-HAS_JOBLIB = find_spec("joblib")
+HAS_JOBLIB: bool = find_spec("joblib") is not None
 
 
 def _use_joblib(
-    items: Sequence[Any],
     len_key: Literal["joblib_len_calc", "joblib_len_build"],
+    *,
     use_joblib: bool = True,
-    total: int | None = None,
+    total: int,
 ) -> bool:
-    if use_joblib and HAS_JOBLIB and OPTIONS["joblib_use"]:
-        if total is None:
-            total = len(items)
-        return total >= OPTIONS[len_key]
-    return False
+    return (
+        use_joblib
+        and HAS_JOBLIB
+        and OPTIONS["joblib_use"]
+        and total >= OPTIONS[len_key]
+    )
 
 
-def _parallel(seq: Iterable[Any]) -> list[Any]:
+def _parallel(seq: Iterable[Any]) -> Iterator[Any]:
     import joblib
 
     return cast(
-        "list[Any]",
+        "Iterator[Any]",
         joblib.Parallel(
+            return_as="generator",
             n_jobs=OPTIONS["joblib_n_jobs"],
             backend=OPTIONS["joblib_backend"],
             **OPTIONS["joblib_kws"],
@@ -47,15 +49,18 @@ def _parallel(seq: Iterable[Any]) -> list[Any]:
 
 
 def parallel_map_build(
-    func: Callable[..., R], items: Iterable[Any], *args: Any, **kwargs: Any
-) -> list[R]:
+    func: Callable[..., R],
+    items: Iterable[Any],
+    *args: Any,
+    total: int,
+    **kwargs: Any,
+) -> Iterator[R]:
 
-    items = tuple(items)
-    if _use_joblib(items, "joblib_len_build"):
+    if _use_joblib("joblib_len_build", total=total):
         import joblib
 
         return _parallel(joblib.delayed(func)(x, *args, **kwargs) for x in items)
-    return [func(x, *args, **kwargs) for x in items]
+    return (func(x, *args, **kwargs) for x in items)
 
 
 def _func_call(x: Callable[..., R], *args: Any, **kwargs: Any) -> R:
@@ -64,39 +69,42 @@ def _func_call(x: Callable[..., R], *args: Any, **kwargs: Any) -> R:
 
 def parallel_map_call(
     items: Sequence[Callable[..., Any]],
-    use_joblib: bool,  # noqa: ARG001
     *args: Any,
+    total: int,
     **kwargs: Any,
-) -> list[Any]:
-    if _use_joblib(items, "joblib_len_calc"):
+) -> Iterator[Any]:
+    if _use_joblib("joblib_len_calc", total=total):
         import joblib
 
         return _parallel(joblib.delayed(_func_call)(x, *args, **kwargs) for x in items)
-    return [x(*args, **kwargs) for x in items]
+    return (x(*args, **kwargs) for x in items)
 
 
-def parallel_map_attr(attr: str, use_joblib: bool, items: Sequence[Any]) -> list[Any]:  # noqa: ARG001
+def parallel_map_attr(
+    attr: str,
+    items: Sequence[Any],
+    total: int,
+) -> Iterator[Any]:
     from operator import attrgetter
 
     func = attrgetter(attr)
 
-    if _use_joblib(items, "joblib_len_calc"):
+    if _use_joblib("joblib_len_calc", total=total):
         import joblib
 
         return _parallel(joblib.delayed(func)(x) for x in items)
-    return [func(x) for x in items]
+    return (func(x) for x in items)
 
 
 def parallel_map_func_starargs(
     func: Callable[..., R],
-    use_joblib: bool,  # noqa: ARG001
     items: Iterable[Any],
-    total: int | None = None,
-) -> list[R]:
+    total: int,
+) -> Iterator[R]:
     items = tuple(items)
 
-    if _use_joblib(items, "joblib_len_calc", total=total):
+    if _use_joblib("joblib_len_calc", total=total):
         import joblib
 
         return _parallel(starmap(joblib.delayed(func), items))
-    return list(starmap(func, items))
+    return starmap(func, items)

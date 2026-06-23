@@ -656,8 +656,6 @@ class wFreeEnergyCollectionBase:  # noqa: N801
 
     def __init__(self, parent: lnPiCollection) -> None:
         self._parent = parent
-        self._use_joblib = getattr(self._parent, "_use_joblib", False)
-
         self._cache: dict[str, Any] = {}
 
     def _get_items_ws(self) -> tuple[list[IndexAny], list[wFreeEnergy]]:
@@ -675,12 +673,18 @@ class wFreeEnergyCollectionBase:  # noqa: N801
     @cached.prop
     def _data(self) -> dict[str, pd.Series[Any]]:
         indexes, ws = self._get_items_ws()
+        total = len(ws)
+
         seq = get_tqdm(
-            zip(indexes, ws, strict=True), total=len(ws), desc="wFreeEnergyCollection"
+            parallel_map_func_starargs(
+                _get_w_data,
+                items=zip(indexes, ws, strict=True),
+                total=total,
+            ),
+            total=total,
+            desc="wFreeEnergyCollection",
         )
-        out = parallel_map_func_starargs(
-            _get_w_data, items=seq, use_joblib=self._use_joblib, total=len(ws)
-        )
+        out = list(seq)
 
         return {key: pd.concat([x[key] for x in out]) for key in out[0]}
 
