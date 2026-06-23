@@ -68,31 +68,28 @@ def tqdm(seq: Iterable[T], *args: Any, **kwargs: Any) -> Iterable[T]:
 def get_tqdm(
     seq: Iterable[T],
     len_min: int | Literal["tqdm_len_calc", "tqdm_len_build"],
+    *,
     leave: bool | None = None,
+    total: int,
     **kwargs: Any,
 ) -> Iterable[T]:
-    n = kwargs.get("total")
     if isinstance(len_min, str):
         len_min = OPTIONS[len_min]
 
-    if n is None:
-        seq = tuple(seq)
-        n = len(seq)
-
-    if HAS_TQDM and OPTIONS["tqdm_use"] and n >= len_min:
+    if HAS_TQDM and OPTIONS["tqdm_use"] and total >= len_min:
         if leave is None:
             leave = OPTIONS["tqdm_leave"]
-        seq = tqdm(seq, leave=leave, **kwargs)
+        seq = tqdm(seq, leave=leave, total=total, **kwargs)
     return seq
 
 
 def get_tqdm_calc(
-    seq: Iterable[T], leave: bool | None = None, **kwargs: Any
+    seq: Iterable[T], *, leave: bool | None = None, total: int, **kwargs: Any
 ) -> Iterable[T]:
-    return get_tqdm(seq, len_min="tqdm_len_calc", leave=leave, **kwargs)
+    return get_tqdm(seq, len_min="tqdm_len_calc", leave=leave, total=total, **kwargs)
 
 
 def get_tqdm_build(
-    seq: Iterable[T], leave: bool | None = None, **kwargs: Any
+    seq: Iterable[T], *, leave: bool | None = None, total: int, **kwargs: Any
 ) -> Iterable[T]:
-    return get_tqdm(seq, len_min="tqdm_len_build", leave=leave, **kwargs)
+    return get_tqdm(seq, len_min="tqdm_len_build", leave=leave, total=total, **kwargs)

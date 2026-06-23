@@ -5,7 +5,7 @@ Thermodynamic stability (:mod:`~lnpy.stability`)
 Calculation of spinodal and binodal
 """
 
-# pylint: disable=chained-comparison,use-implicit-booleaness-not-comparison-to-zero
+# pylint: disable=use-implicit-booleaness-not-comparison-to-zero
 from __future__ import annotations
 
 import itertools
@@ -269,7 +269,7 @@ def _refine_bracket_spinodal_right(
             # we've reached a breaking point
             if left_done:
                 # can't find a lower bound to efac, just return where we're at
-                root = float(left._get_lnz())
+                root = left._get_lnz()[idx]
                 r = rootresults(
                     root=root,
                     iterations=i + 1,
