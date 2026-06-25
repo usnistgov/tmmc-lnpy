@@ -408,6 +408,7 @@ def test_combine_keep_first_split_dataset(
             np.testing.assert_allclose(table_dataset["z"], new["z"])
 
     _test_output(
+        # pyrefly: ignore [bad-specialization]
         combine.keep_first(combine.concat_windows(seq, coord_names="x"), state_name="x")  # type: ignore[type-var]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     )
 

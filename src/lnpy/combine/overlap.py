@@ -358,6 +358,7 @@ def shift_lnpi_windows(
     grouper = factory_indexed_grouper(grouper, data=lnpi, dim=dim, axis=-1)
 
     if validate.series.typeis(lnpi):
+        # pyrefly: ignore [bad-return]
         return pd.Series(
             shift_lnpi_windows(
                 # pyrefly: ignore [missing-attribute]
@@ -387,6 +388,7 @@ def shift_lnpi_windows(
             ),
         )
 
+    # pyrefly: ignore [bad-return]
     return _shift_lnpi_windows_indexed(
         # pyrefly: ignore [bad-argument-type]
         lnpi,
@@ -417,6 +419,7 @@ def assign_shift_lnpi_windows(
     r"""Create new object with shifted :math:`\ln \Pi(N)`"""
     grouper = factory_indexed_grouper(grouper, data=table, dim=dim, axis=-1)
 
+    # pyrefly: ignore [bad-specialization]
     out = shift_lnpi_windows(
         table if validate.dataarray.typeis(table) else table[lnpi_name],  # type: ignore[redundant-expr]  # ty:ignore[invalid-argument-type]
         table[window_name],  # ty:ignore[invalid-argument-type]
