@@ -291,7 +291,6 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
 
     ds_stack = ds.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
     ds_out = combine.keep_first(ds_stack, state_name="x")
-    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     ds_out = combine.keep_first(ds_stack, state_name="x", reset_window=False)
@@ -300,7 +299,6 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     ds_out = combine.keep_first(
         combine.concat_windows([ds_stack], coord_names="x"), state_name="x"
     )
-    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     # dataarray
@@ -321,7 +319,6 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
 
     da_stack = da.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
     da_out = combine.keep_first(da_stack, state_name="x")
-    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(da, da_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     da_out = combine.keep_first(da_stack, state_name="x", reset_window=False)
@@ -330,7 +327,6 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     da_out = combine.keep_first(
         combine.concat_windows([da_stack], coord_names="x"), state_name="x"
     )
-    # pyrefly: ignore [not-callable]
     xr.testing.assert_allclose(da, da_out.drop_vars("window"))  # ty:ignore[call-non-callable]
 
     # multiple variables in index

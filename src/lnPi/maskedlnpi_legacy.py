@@ -61,7 +61,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         obj = np.ma.array(data, **kwargs).view(cls)
         # make sure to broadcast mask if it is just False
         if obj.mask is False:  # type: ignore[comparison-overlap, unused-ignore]
-            obj.mask = False  # type: ignore[unreachable, unused-ignore]  # pyrefly: ignore[bad-assignment]
+            obj.mask = False
 
         # set mu value:
         if lnz is None:
@@ -76,7 +76,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         if extra_kws is None:
             extra_kws = {}
 
-        obj._optinfo.update(  # type: ignore[attr-defined,unused-ignore]  # pyright: ignore[reportAttributeAccessIssue]  # pyrefly: ignore[missing-attribute]
+        obj._optinfo.update(  # pyright: ignore[reportAttributeAccessIssue]
             lnz=lnz,
             state_kws=state_kws,
             extra_kws=extra_kws,
