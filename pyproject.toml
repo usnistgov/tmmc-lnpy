@@ -285,9 +285,15 @@ matches = "src/lnpy/core/progress.py"
 ignore-missing-imports = [ "requirements.*" ]
 matches = "tools/sync_pyproject_min_versions.py"
 
+# Buggy issues
 [[tool.pyrefly.sub-config]]
 matches = "noxfile.py"
 ignore-missing-imports = [ "tools.*" ]
+
+[[tool.pyrefly.sub-config]]
+matches = "src/lnPi/maskedlnpi_legacy.py"
+errors.bad-assignment = "ignore"
+errors.missing-attribute = "ignore"
 
 [[tool.pyrefly.sub-config]]
 matches = "src/lnpy/**"
