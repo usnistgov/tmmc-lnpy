@@ -286,7 +286,7 @@ ignore-missing-imports = [ "requirements.*" ]
 matches = "tools/sync_pyproject_min_versions.py"
 
 [[tool.pyrefly.sub-config]]
-matches = "noxfily.py"
+matches = "noxfile.py"
 ignore-missing-imports = [ "tools.*" ]
 
 [[tool.pyrefly.sub-config]]
