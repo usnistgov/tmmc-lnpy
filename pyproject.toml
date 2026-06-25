@@ -236,7 +236,6 @@ enable_error_code = [
 strict = true
 warn_unused_configs = true
 
-<<<<<<< before updating
 [[tool.mypy.overrides]]
 module = [
     "bottleneck.*",
@@ -264,12 +263,6 @@ disallow_untyped_defs = false
 disallow_incomplete_defs = false
 strict = false
 
-=======
-## [[tool.mypy.overrides]]
-## module = [ "module.submodule.*" ]
-## ignore_missing_imports = true
-## ignore_errors = true
->>>>>>> after updating
 [tool.pyrefly]
 enabled-ignores = [ "pyrefly" ]
 project-includes = [
@@ -311,7 +304,6 @@ unused-ignore = "error"
 variance-mismatch = "error"
 
 [tool.pyright]
-<<<<<<< before updating
 typeCheckingMode = "standard"
 strict = [
     # "src",
@@ -323,9 +315,6 @@ strict = [
 ]
 # basedpyright
 failOnWarnings = true
-=======
-typeCheckingMode = "strict"
->>>>>>> after updating
 include = [
     "noxfile.py",
     "src",
@@ -343,26 +332,16 @@ exclude = [
 # Needed for pep728 support for TypeDict(closed=...)
 enableExperimentalFeatures = true
 enableTypeIgnoreComments = false
-<<<<<<< before updating
-# options
-# reportMissingSuperCall = true
-=======
->>>>>>> after updating
 deprecateTypingAliases = true
 reportCallInDefaultInitializer = true
 reportIgnoreCommentWithoutRule = true
 reportImplicitAbstractClass = false
+# reportImplicitOverride = true
 reportImplicitRelativeImport = true
 reportImplicitStringConcatenation = false
-<<<<<<< before updating
+# reportImportCycles = true
 reportInvalidCast = true
-# reportImplicitOverride = false  # TODO(wpk): enable
-# reportImportCycles = false  # TODO(wpk): enable
-=======
-reportImportCycles = true
-# options
 # reportMissingSuperCall = true
->>>>>>> after updating
 reportOverlappingOverload = true
 reportPrivateImportUsage = false
 reportPrivateLocalImportUsage = true
@@ -380,12 +359,6 @@ reportUnusedVariable = false
 enableReachabilityAnalysis = false
 strictGenericNarrowing = false
 
-# strict = [
-#     "src",
-#     "tests",
-#     "noxfile.py",
-#     "tools/*.py",
-# ]
 [[tool.pyright.executionEnvironments]]
 root = "tests"
 # reportArgumentType = false
@@ -527,11 +500,7 @@ pip-deps = [
     "grayskull>=3.1.1",
     "nbqa>=1.9.1",
     "prek>=0.4.5",
-<<<<<<< before updating
-    "pyrefly>=1.0.0",
-=======
     "pyrefly>=1.1.0",
->>>>>>> after updating
     "pyright>=1.1.410",
     "rooster>=0.1.1",
     "twine>=6.2.0",
