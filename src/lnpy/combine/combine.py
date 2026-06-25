@@ -1005,6 +1005,7 @@ def keep_first(
 
     # Do calculation
     if validate.dataframe.typeis(table):
+        # pyrefly: ignore [bad-return]
         return _process_dataframe(table)  # ty: ignore[invalid-return-type]
     # pyrefly: ignore [bad-specialization]
     return _process_xarray(table)  # ty: ignore[invalid-argument-type]
@@ -1203,6 +1204,7 @@ def assign_updown_from_collectionmatrix(
         **dict(  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
             zip(
                 [weight_name, down_name, up_name],
+                # pyrefly: ignore [bad-specialization]
                 updown_from_collectionmatrix(*(table[c] for c in matrix_names)),  # ty: ignore[invalid-argument-type]
                 strict=True,
             )
@@ -1248,6 +1250,7 @@ def delta_lnpi_from_updown(
 
         delta[..., 0] = 0.0
         delta[..., 1:] = np.log(up_[..., :-1] / down_[..., 1:])  # ty: ignore[invalid-argument-type]  # needed for ci typecheck
+        # pyrefly: ignore [bad-return]
         return np.moveaxis(delta, -1, axis)  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
 
     if validate.dataarray.typeis(down):
@@ -1267,9 +1270,11 @@ def delta_lnpi_from_updown(
             ),
         ).transpose(*down.dims)
 
+        # pyrefly: ignore [bad-return]
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     if validate.series.typeis(down):
+        # pyrefly: ignore [bad-return]
         return pd.Series(  # ty: ignore[invalid-return-type]
             delta_lnpi_from_updown(down=down.to_numpy(), up=up),  # type: ignore[arg-type]
             name=name,
@@ -1327,9 +1332,11 @@ def lnpi_from_updown(
             keep_attrs=True,
         ).transpose(*down.dims)
 
+        # pyrefly: ignore [bad-return]
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     if validate.series.typeis(down):
+        # pyrefly: ignore [bad-return]
         return pd.Series(  # ty: ignore[invalid-return-type]
             lnpi_from_updown(down=down.to_numpy(), up=up, norm=norm),  # type: ignore[arg-type]
             name=name,
@@ -1385,6 +1392,7 @@ def assign_lnpi_from_updown(
     DataFrame
         New dataframe with assigned :math:`\ln \Pi`.
     """
+    # pyrefly: ignore [bad-specialization]
     ln_prob = lnpi_from_updown(
         down=table[down_name],  # ty:ignore[invalid-argument-type]
         up=table[up_name],  # ty:ignore[invalid-argument-type]
@@ -1421,6 +1429,7 @@ def _apply_indexed_function(
     grouper = factory_indexed_grouper(grouper, data=first, dim=dim, axis=axis)
 
     if validate.series.typeis(first):
+        # pyrefly: ignore [bad-return]
         return pd.Series(
             _apply_indexed_function(
                 # pyrefly: ignore [missing-attribute]
@@ -1459,6 +1468,7 @@ def _apply_indexed_function(
                 output_dtypes=dtype if dtype is not None else np.float64,  # type: ignore[redundant-expr]
             ),
         ).transpose(*first.dims)
+        # pyrefly: ignore [bad-return]
         return xout  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     dtype = select_dtype(first, out=out, dtype=dtype)
@@ -1467,6 +1477,7 @@ def _apply_indexed_function(
     axes = [axis] * len(args) + [-1] * 3 + [axis]
     signature = [dtype] * len(args) + [np.int64] * 3 + [dtype]
 
+    # pyrefly: ignore [bad-return]
     return factory_gufunc(parallel_heuristic(parallel, size=first.size))(
         *args,
         grouper.index,

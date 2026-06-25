@@ -285,6 +285,16 @@ matches = "src/lnpy/core/progress.py"
 ignore-missing-imports = [ "requirements.*" ]
 matches = "tools/sync_pyproject_min_versions.py"
 
+# Buggy issues
+[[tool.pyrefly.sub-config]]
+matches = "noxfile.py"
+ignore-missing-imports = [ "tools.*" ]
+
+[[tool.pyrefly.sub-config]]
+matches = "src/lnPi/maskedlnpi_legacy.py"
+errors.bad-assignment = "ignore"
+errors.missing-attribute = "ignore"
+
 [[tool.pyrefly.sub-config]]
 matches = "src/lnpy/**"
 
@@ -332,17 +342,16 @@ exclude = [
 # Needed for pep728 support for TypeDict(closed=...)
 enableExperimentalFeatures = true
 enableTypeIgnoreComments = false
-# options
-# reportMissingSuperCall = true
 deprecateTypingAliases = true
 reportCallInDefaultInitializer = true
 reportIgnoreCommentWithoutRule = true
 reportImplicitAbstractClass = false
+# reportImplicitOverride = true
 reportImplicitRelativeImport = true
 reportImplicitStringConcatenation = false
+# reportImportCycles = true
 reportInvalidCast = true
-# reportImplicitOverride = false  # TODO(wpk): enable
-# reportImportCycles = false  # TODO(wpk): enable
+# reportMissingSuperCall = true
 reportOverlappingOverload = true
 reportPrivateImportUsage = false
 reportPrivateLocalImportUsage = true
@@ -501,11 +510,11 @@ pip-deps = [
     "grayskull>=3.1.1",
     "nbqa>=1.9.1",
     "prek>=0.4.5",
-    "pyrefly>=1.0.0",
+    "pyrefly>=1.1.0",
     "pyright>=1.1.410",
     "rooster>=0.1.1",
     "twine>=6.2.0",
-    "ty>=0.0.49",
+    "ty>=0.0.50",
 ]
 groups = [
     "basedpyright",
