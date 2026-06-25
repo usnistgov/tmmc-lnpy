@@ -22,7 +22,7 @@ from .core.typing_compat import override
 from .extensions import AccessorMixin
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable, Iterable, Mapping, Sequence
+    from collections.abc import Hashable, Iterable, Iterator, Mapping, Sequence
     from pathlib import Path
     from typing import Any
 
@@ -344,6 +344,26 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
             copy=copy,
         )
         return cls(lnz=lnz, base=base, mask=mask, copy=copy)
+
+    def as_pure(self) -> Iterator[Self]:
+        """
+        Iterator of pure component objects
+
+        Yields
+        ------
+        lnpi_component: lnPiMasked
+            Pure component lnPiMasked
+        """
+        for index in range(self.ndim):
+            slc = tuple(slice(None) if i == index else 0 for i in range(self.ndim))
+
+            yield type(self)(
+                lnz=self.lnz[index],
+                base=self._base.new_like(
+                    lnz=self._base.lnz[index],
+                    data=self._base.data[slc],
+                ),
+            )
 
     @property
     def _data(self) -> NDArrayAny:
