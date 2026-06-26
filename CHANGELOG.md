@@ -16,6 +16,18 @@ See the fragment files in [changelog.d]
 <!-- scriv-insert-here -->
 
 
+## 0.9.0
+
+Released on 2026-06-26.
+
+### Enhancements
+
+- feat: add as_pure method to lnPiMasked ([#171](https://github.com/usnistgov/tmmc-lnpy/pull/171))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
+
 ## 0.8.3
 
 Released on 2026-06-23.
