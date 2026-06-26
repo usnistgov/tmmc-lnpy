@@ -1039,6 +1039,10 @@ class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
         self._free_index = free_index
         self._last_stable: lnPiMasked | None = None
 
+    @override
+    def _get_lnz(self, lnz_index: float) -> NDArrayAny:
+        raise NotImplementedError
+
     def _get_lnz_total(self, lnz_index: float, lnz_free_index: float) -> list[float]:
         lnz = self.x.copy()
         lnz[self.index] = lnz_index
@@ -1108,15 +1112,15 @@ class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
 
         from scipy.optimize import newton
 
-        x0: Any
-        if lnz_free_index is None:
-            x0 = (self._last_stable.lnz if self._last_stable is not None else self.x)[
+        x0: Any = (
+            (self._last_stable.lnz if self._last_stable is not None else self.x)[
                 self._free_index
             ]
-        else:
-            x0 = lnz_free_index
+            if lnz_free_index is None
+            else lnz_free_index
+        )
 
-        _, result, *_ = newton(  # pyrefly: ignore[no-matching-overload]
+        _, result, *_ = newton(
             self._objective,
             args=(lnz_index,),
             fprime=self._jacobian,
