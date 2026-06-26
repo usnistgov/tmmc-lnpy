@@ -35,6 +35,22 @@ CollectionOrNoneT = TypeVar("CollectionOrNoneT", bound="lnPiCollection | None")
 """Type variable for output of Stability class (spinodal or binodal)"""
 
 
+class ConvergenceError(Exception):
+    """General convergence error"""
+
+
+class SpinodalError(ConvergenceError):
+    """General error in calculating spindal"""
+
+
+class SpinodalStepError(SpinodalError):
+    """Error in step creation"""
+
+
+class BinodalError(ConvergenceError):
+    """General error in cacluatiing binodal"""
+
+
 class RootResultTotal(RootResultDict, total=False):
     """Modified root result"""
 
@@ -167,7 +183,7 @@ def _initial_bracket_spinodal_right(
 
     if left is None:
         msg = "could not find left"
-        raise RuntimeError(msg)
+        raise SpinodalError(msg)
 
     # right
     right = None
@@ -192,7 +208,7 @@ def _initial_bracket_spinodal_right(
 
     if right is None:
         msg = "could not find right"
-        raise RuntimeError(msg)
+        raise SpinodalError(msg)
     return left, right
 
 
@@ -326,7 +342,7 @@ def _refine_bracket_spinodal_right(
     doneleft  : {left_done}
     doneright : {right_done}
     """
-    raise RuntimeError(msg)
+    raise SpinodalError(msg)
 
 
 def _get_step(collection: lnPiCollection, idx: int, idx_nebr: int | None) -> int:
@@ -342,7 +358,7 @@ def _get_step(collection: lnPiCollection, idx: int, idx_nebr: int | None) -> int
     ].wfe_phases.get_dw(idx, idx_nebr)
     if delta == 0:
         msg = "could not determine step, delta==0"
-        raise ValueError(msg)
+        raise SpinodalStepError(msg)
     if delta < 0.0:
         return +1
     return -1
@@ -502,36 +518,34 @@ def get_spinodal(
 
     if left is None and right is None:
         # no spinodal found and left and right are close
-        spin = None
-        r = rr
-    elif rr["converged"]:
+        return None, rr
+
+    if rr["converged"]:
         # converged to a solution
-        spin = left
         r = rr
         r["bracket_iteration"] = rr["iterations"]
         r["from_solve"] = False
-    else:
-        # assert left is not None
-        # assert right is not None
-        if left is None or right is None:
-            msg = f"{left=} and {right=} cannot be None"
-            raise ValueError(msg)
-        # solve
-        if step == -1:
-            left, right = right, left
+        return left, r
 
-        a, b = (x._get_lnz(build_phases.index) for x in (left, right))
-        _lnz, r, spin = _SolveSpinodal(
-            ref=ref,
-            idx=idx,
-            idx_nebr=idx_nebr,
-            efac=efac,
-            build_phases=build_phases,
-            build_kws=build_kws,
-        ).solve(a=a, b=b, **solve_kws)
+    if left is None or right is None:
+        msg = f"{left=} and {right=} cannot be None"
+        raise SpinodalError(msg)
+    # solve
+    if step == -1:
+        left, right = right, left
 
-        r["bracket_iteration"] = rr["iterations"]
-        r["from_solve"] = True
+    a, b = (x._get_lnz(build_phases.index) for x in (left, right))
+    _lnz, r, spin = _SolveSpinodal(
+        ref=ref,
+        idx=idx,
+        idx_nebr=idx_nebr,
+        efac=efac,
+        build_phases=build_phases,
+        build_kws=build_kws,
+    ).solve(a=a, b=b, **solve_kws)
+
+    r["bracket_iteration"] = rr["iterations"]
+    r["from_solve"] = True
 
     return spin, r
 
@@ -881,7 +895,7 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
         converged = all(x["converged"] for x in info.values())
         if raise_unconverged and not converged:
             msg = "Spinodal calculation did not converge"
-            raise ValueError(msg)
+            raise SpinodalError(msg)
 
         if inplace:
             self._items = out
@@ -1068,7 +1082,7 @@ class Binodals(StabilityBase["lnPiCollection"]):
         converged = all(x["converged"] for x in info.values())
         if raise_unconverged and not converged:
             msg = "Binodal calculation did not converge"
-            raise ValueError(msg)
+            raise BinodalError(msg)
 
         if unstack is None:
             unstack = self._parent._xarray_unstack
