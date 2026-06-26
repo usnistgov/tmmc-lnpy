@@ -16,6 +16,18 @@ See the fragment files in [changelog.d]
 <!-- scriv-insert-here -->
 
 
+## 0.9.1
+
+Released on 2026-06-26.
+
+### Bug fixes
+
+- fix: add Spinodal/Binodal exceptions ([#173](https://github.com/usnistgov/tmmc-lnpy/pull/173))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
+
 ## 0.9.0
 
 Released on 2026-06-26.
