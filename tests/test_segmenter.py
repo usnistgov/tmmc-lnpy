@@ -9,7 +9,7 @@ def test_new_like() -> None:
     rng = np.random.default_rng()
     refs = [
         lnpy.lnPiMasked.from_data(data=rng.random(n), lnz=n, lnz_data=n)
-        for n in [5, 10]
+        for n in (5, 10)
     ]
 
     creators = [lnpy.PhaseCreator(ref=ref, nmax=len(ref)) for ref in refs]

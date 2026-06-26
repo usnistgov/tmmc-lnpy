@@ -564,7 +564,7 @@ class PhaseCreator:
         PhaseCreator
             New :class:`PhaseCreator` object.
         """
-        for k in [
+        for k in (
             "nmax",
             "ref",
             "segmenter",
@@ -573,7 +573,7 @@ class PhaseCreator:
             "segment_kws",
             "free_energy_kws",
             "merge_kws",
-        ]:
+        ):
             kwargs.setdefault(k, getattr(self, k))
         return type(self)(**kwargs)
 

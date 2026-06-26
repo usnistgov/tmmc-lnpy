@@ -270,7 +270,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     def __init__(
         self,
-        data: Self | Sequence[lnPiMasked] | pd.Series[Any],
+        data: Self | Iterable[lnPiMasked] | pd.Series[Any],
         index: ArrayLike | IndexAny | pd.MultiIndex | None = None,
         xarray_output: bool = True,
         concat_dim: str | None = None,
@@ -421,6 +421,13 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     def copy(self) -> Self:
         return type(self)(data=self.s, base_class=self._base_class)
+
+    def apply_series_function(
+        self,
+        func: Callable[[pd.Series[Any]], pd.Series[Any]],
+    ) -> lnPiCollection:
+        """Apply function to series and wrap."""
+        return self.new_like(func(self._series))
 
     @overload
     def _wrapped_pandas_method(
@@ -898,7 +905,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     @classmethod
     def from_list(
         cls,
-        items: Sequence[lnPiMasked],
+        items: Iterable[lnPiMasked],
         index: Iterable[int] | NDArrayAny,
         **kwargs: Any,
     ) -> Self:
