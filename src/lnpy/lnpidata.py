@@ -22,7 +22,7 @@ from .core.typing_compat import override
 from .extensions import AccessorMixin
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable, Iterable, Mapping, Sequence
+    from collections.abc import Hashable, Iterable, Iterator, Mapping, Sequence
     from pathlib import Path
     from typing import Any
 
@@ -344,6 +344,50 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
             copy=copy,
         )
         return cls(lnz=lnz, base=base, mask=mask, copy=copy)
+
+    def as_pure(self) -> Iterator[Self]:
+        """
+        Iterator of pure component objects
+
+        Yields
+        ------
+        lnpi_component: lnPiMasked
+            Pure component lnPiMasked
+
+
+        Example
+        -------
+        >>> import numpy as np
+        >>> import lnpy
+        >>> ref = lnpy.lnPiMasked.from_data(
+        ...     data=np.arange(9).reshape(3, 3), lnz=[0, 2], lnz_data=[0, 2]
+        ... )
+        >>> ref
+        <lnPi(lnz=[0. 2.])>
+        >>> ref.data
+        array([[0, 1, 2],
+               [3, 4, 5],
+               [6, 7, 8]])
+        >>> pures = list(ref.as_pure())
+        >>> pures[0]
+        <lnPi(lnz=[0.])>
+        >>> pures[0].data
+        array([0, 3, 6])
+        >>> pures[1]
+        <lnPi(lnz=[2.])>
+        >>> pures[1].data
+        array([0, 1, 2])
+        """
+        for index in range(self.ndim):
+            slc = tuple(slice(None) if i == index else 0 for i in range(self.ndim))
+
+            yield type(self)(
+                lnz=self.lnz[index],
+                base=self._base.new_like(
+                    lnz=self._base.lnz[index],
+                    data=self._base.data[slc],
+                ),
+            )
 
     @property
     def _data(self) -> NDArrayAny:

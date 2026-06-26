@@ -97,6 +97,16 @@ def get_test_table(o, ref):
     )  # .to_csv('data_0.csv', index=False)
 
 
+def test_as_pure(ref: lnpy.lnPiMasked) -> None:
+    pures = list(ref.as_pure())
+
+    np.testing.assert_equal(pures[0].data, ref.data[:, 0])
+    assert pures[0].lnz[0] == ref.lnz[0]
+
+    np.testing.assert_equal(pures[1].data, ref.data[0, :])
+    assert pures[1].lnz[0] == ref.lnz[1]
+
+
 def test_collection(obj, build_phases, lnzs) -> None:
     ref = obj.ref
 

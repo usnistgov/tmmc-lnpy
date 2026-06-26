@@ -360,13 +360,14 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         if data is None:
             data = self.s
 
+        kwargs.setdefault("xarray_output", self._xarray_output)
+        kwargs.setdefault("concat_dim", self._concat_dim)
+        kwargs.setdefault("concat_coords", self._concat_coords)
+        kwargs.setdefault("unstack", self._xarray_unstack)
+
         return type(self)(
             data=data,
             index=index,
-            xarray_output=self._xarray_output,
-            concat_dim=self._concat_dim,
-            concat_coords=self._concat_coords,
-            unstack=self._xarray_unstack,
             **kwargs,
         )
 

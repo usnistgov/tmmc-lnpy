@@ -1021,6 +1021,123 @@ class BuildPhases_dmu(BuildPhasesBase):  # noqa: N801
         return self._dlnz + lnz_index
 
 
+class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
+    """
+    Here, None is the index we will set.
+    Free_index is the one which will be varied to reach specified beta_omega
+    """
+
+    def __init__(
+        self,
+        lnz: list[float | None],
+        free_index: int,
+        beta_omega: float,
+        phase_creator: PhaseCreator,
+    ) -> None:
+        super().__init__(x=lnz, phase_creator=phase_creator)
+        self._beta_omega = beta_omega
+        self._free_index = free_index
+        self._last_stable: lnPiMasked | None = None
+
+    @override
+    def _get_lnz(self, lnz_index: float) -> NDArrayAny:
+        raise NotImplementedError
+
+    def _get_lnz_total(self, lnz_index: float, lnz_free_index: float) -> list[float]:
+        lnz = self.x.copy()
+        lnz[self.index] = lnz_index
+        lnz[self._free_index] = lnz_free_index
+        return cast("list[float]", lnz)
+
+    def _build_stable(self, lnz: Sequence[float]) -> lnPiMasked:
+        lnpis, _ = self._phase_creator.build_phases(lnz, phases_factory=False)
+        # return minimum betaOmega
+        idx = np.argmin([lnpi.xge.betaOmega() for lnpi in lnpis])
+        return lnpis[idx]
+
+    def _get_stable(self, lnz: Sequence[float]) -> lnPiMasked:
+        if self._last_stable is not None and np.allclose(lnz, self._last_stable.lnz):
+            return self._last_stable
+        self._last_stable = self._build_stable(lnz)
+        return self._last_stable
+
+    def _objective(self, lnz_free_index: float, lnz_index: float) -> float:
+        lnz = self._get_lnz_total(lnz_index, lnz_free_index)
+        lnpi = self._get_stable(lnz)
+        return float(lnpi.xge.betaOmega()) - self._beta_omega
+
+    def _jacobian(self, lnz_free_index: float, lnz_index: float) -> float:
+        lnz = self._get_lnz_total(lnz_index, lnz_free_index)
+        lnpi = self._get_stable(lnz)
+        return -float(lnpi.xge.nvec.values[self._free_index])
+
+    @overload
+    def __call__(
+        self,
+        lnz_index: float,
+        *,
+        phases_factory: PhasesFactorySignature | Literal[True] = ...,
+        lnz_free_index: float | None = None,
+        **kwargs: Any,
+    ) -> lnPiCollection: ...
+
+    @overload
+    def __call__(
+        self,
+        lnz_index: float,
+        *,
+        phases_factory: Literal[False],
+        lnz_free_index: float | None = None,
+        **kwargs: Any,
+    ) -> tuple[list[lnPiMasked], NDArrayAny]: ...
+
+    @overload
+    def __call__(
+        self,
+        lnz_index: float,
+        *,
+        phases_factory: PhasesFactorySignature | bool,
+        lnz_free_index: float | None = None,
+        **kwargs: Any,
+    ) -> tuple[list[lnPiMasked], NDArrayAny] | lnPiCollection: ...
+
+    def __call__(
+        self,
+        lnz_index: float,
+        *,
+        phases_factory: PhasesFactorySignature | bool = True,
+        lnz_free_index: float | None = None,
+        **kwargs: Any,
+    ) -> tuple[list[lnPiMasked], NDArrayAny] | lnPiCollection:
+
+        from scipy.optimize import newton
+
+        x0: Any = (
+            (self._last_stable.lnz if self._last_stable is not None else self.x)[
+                self._free_index
+            ]
+            if lnz_free_index is None
+            else lnz_free_index
+        )
+
+        _, result, *_ = newton(
+            self._objective,
+            args=(lnz_index,),
+            fprime=self._jacobian,
+            x0=x0,
+            full_output=True,
+        )
+        if not result.converged:
+            msg = f"Failed {result=}"
+            raise ValueError(msg)
+
+        return self._phase_creator.build_phases(
+            lnz=self._get_lnz_total(lnz_index, result.root),
+            phases_factory=phases_factory,
+            **kwargs,
+        )
+
+
 @lru_cache(maxsize=10)
 def get_default_phasecreator(nmax: int) -> PhaseCreator:
     return PhaseCreator(nmax=nmax)
