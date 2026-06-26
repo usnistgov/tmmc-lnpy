@@ -39,6 +39,7 @@ if TYPE_CHECKING:
         PhasesFactorySignature,
         TagPhasesSignature,
     )
+    from .core.typing_compat import Self
     from .lnpidata import lnPiMasked
 
 
@@ -545,6 +546,36 @@ class PhaseCreator:
             if merge_kws is None
             else dict(merge_kws, convention=False, nfeature_max=self.nmax)
         )
+
+    def new_like(
+        self,
+        **kwargs: Any,
+    ) -> Self:
+        """
+        Create new object with optional new parameters
+
+        Parameters
+        ----------
+        **kwargs
+            Parameters to :class:`PhaseCreator`
+
+        Returns
+        -------
+        PhaseCreator
+            New :class:`PhaseCreator` object.
+        """
+        for k in (
+            "nmax",
+            "ref",
+            "segmenter",
+            "tag_phases",
+            "phases_factory",
+            "segment_kws",
+            "free_energy_kws",
+            "merge_kws",
+        ):
+            kwargs.setdefault(k, getattr(self, k))
+        return type(self)(**kwargs)
 
     # TODO(wpk): make this work with integer or string phase_ids
     @staticmethod
