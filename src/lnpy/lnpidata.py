@@ -353,6 +353,30 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         ------
         lnpi_component: lnPiMasked
             Pure component lnPiMasked
+
+
+        Example
+        -------
+        >>> import numpy as np
+        >>> import lnpy
+        >>> ref = lnpy.lnPiMasked.from_data(
+        ...     data=np.arange(9).reshape(3, 3), lnz=[0, 2], lnz_data=[0, 2]
+        ... )
+        >>> ref
+        <lnPi(lnz=[0. 2.])>
+        >>> ref.data
+        array([[0, 1, 2],
+               [3, 4, 5],
+               [6, 7, 8]])
+        >>> pures = list(ref.as_pure())
+        >>> pures[0]
+        <lnPi(lnz=[0.])>
+        >>> pures[0].data
+        array([0, 3, 6])
+        >>> pures[1]
+        <lnPi(lnz=[2.])>
+        >>> pures[1].data
+        array([0, 1, 2])
         """
         for index in range(self.ndim):
             slc = tuple(slice(None) if i == index else 0 for i in range(self.ndim))
