@@ -889,7 +889,7 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
             info[idx] = r
 
         if unstack is None:
-            unstack = self._parent._xarray_unstack
+            unstack = self._parent.xarray_unstack
         self.set_access_kws(unstack=unstack)
 
         converged = all(x["converged"] for x in info.values())
@@ -1085,7 +1085,7 @@ class Binodals(StabilityBase["lnPiCollection"]):
             raise BinodalError(msg)
 
         if unstack is None:
-            unstack = self._parent._xarray_unstack
+            unstack = self._parent.xarray_unstack
         self.set_access_kws(unstack=unstack)
 
         # either build output or inplace

@@ -32,7 +32,9 @@ classifiers = [
     "Topic :: Scientific/Engineering",
 ]
 dependencies = [
+    "attrs>=26.1.0",
     "bottleneck",
+    "cattrs>=26.1.0",
     "importlib-resources; python_version<'3.10'",
     "joblib",
     "lazy-loader",

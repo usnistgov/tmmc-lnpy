@@ -240,8 +240,8 @@ def get_lnz_max(
 
     def getter(p: lnPiCollection) -> xr.DataArray:
         v = p.xge.edge_distance(ref)
-        if not p._xarray_unstack:
-            v = v.unstack(p._concat_dim)
+        if not p.xarray_unstack:
+            v = v.unstack(p.concat_dim)
         return v.min("phase")
 
     # if have collection, try to use it

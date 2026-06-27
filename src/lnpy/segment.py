@@ -14,15 +14,19 @@ from __future__ import annotations
 
 import warnings
 from collections.abc import Iterable
-from functools import lru_cache
+from functools import lru_cache, partial
 from typing import TYPE_CHECKING, cast, overload
 
+import attrs
+import attrs.validators as av
 import numpy as np
 from module_utilities.docfiller import DocFiller
 
 from .core import validate
+from .core._attrs_utils import MyAttrsMixin
 from .core.docstrings import docfiller
 from .core.typing_compat import override
+from .lnpidata import lnPiMasked
 from .lnpienergy import wFreeEnergy
 from .lnpiseries import lnPiCollection, validate_lnpicollection
 
@@ -39,8 +43,6 @@ if TYPE_CHECKING:
         PhasesFactorySignature,
         TagPhasesSignature,
     )
-    from .core.typing_compat import Self
-    from .lnpidata import lnPiMasked
 
 
 # * Common doc strings
@@ -104,9 +106,9 @@ docfiller_local = docfiller.append(
 def peak_local_max_adaptive(
     data: NDArrayAny,
     *,
+    style: Literal["indices"] = ...,
     mask: NDArrayAny | None = ...,
     min_distance: Sequence[int] | None = ...,
-    style: Literal["indices"] = ...,
     threshold_rel: float = ...,
     threshold_abs: float = ...,
     num_peaks_max: int | None = ...,
@@ -120,9 +122,9 @@ def peak_local_max_adaptive(
 def peak_local_max_adaptive(
     data: NDArrayAny,
     *,
+    style: Literal["mask", "marker"],
     mask: NDArrayAny | None = ...,
     min_distance: Sequence[int] | None = ...,
-    style: Literal["mask", "marker"],
     threshold_rel: float = ...,
     threshold_abs: float = ...,
     num_peaks_max: int | None = ...,
@@ -136,9 +138,9 @@ def peak_local_max_adaptive(
 def peak_local_max_adaptive(
     data: NDArrayAny,
     *,
+    style: str,
     mask: NDArrayAny | None = ...,
     min_distance: Sequence[int] | None = ...,
-    style: str,
     threshold_rel: float = ...,
     threshold_abs: float = ...,
     num_peaks_max: int | None = ...,
@@ -152,9 +154,9 @@ def peak_local_max_adaptive(
 def peak_local_max_adaptive(
     data: NDArrayAny,
     *,
+    style: PeakStyle | str = "indices",
     mask: NDArrayAny | None = None,
     min_distance: int | Sequence[int] | None = None,
-    style: PeakStyle | str = "indices",
     threshold_rel: float = 0.0,
     threshold_abs: float = 0.2,
     num_peaks_max: float | None = None,
@@ -260,8 +262,9 @@ def peak_local_max_adaptive(
     return out
 
 
+@attrs.define(frozen=True)
 @docfiller_local
-class Segmenter:
+class Segmenter(MyAttrsMixin):
     """
     Data segmenter:
 
@@ -273,18 +276,8 @@ class Segmenter:
     {watershed_kws}
     """
 
-    def __init__(
-        self,
-        peak_kws: Mapping[str, Any] | None = None,
-        watershed_kws: Mapping[str, Any] | None = None,
-    ) -> None:
-        if peak_kws is None:
-            peak_kws = {}
-        self.peak_kws = peak_kws
-
-        if watershed_kws is None:
-            watershed_kws = {}
-        self.watershed_kws = watershed_kws
+    peak_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
+    watershed_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
 
     @overload
     def peaks(
@@ -488,7 +481,24 @@ class Segmenter:
         )
 
 
-class PhaseCreator:
+@partial(attrs.Converter, takes_self=True)
+def _convert_merge_kws(value: Mapping[str, Any] | None, self_: Any) -> dict[str, Any]:
+    if value is None:
+        return {}
+
+    return dict(value, convention=False, nfeature_max=self_.nmax)
+
+
+@partial(attrs.Converter, takes_self=True)
+def _convert_segment_kws(value: Mapping[str, Any] | None, self_: Any) -> dict[str, Any]:
+    value = {} if value is None else dict(value)
+
+    value["num_peaks_max"] = self_.nmax_peak or self_.nmax * 2
+    return value
+
+
+@attrs.define(frozen=True)
+class PhaseCreator(MyAttrsMixin):
     """
     Helper class to create phases
 
@@ -518,64 +528,24 @@ class PhaseCreator:
 
     """
 
-    def __init__(
-        self,
-        nmax: int,
-        nmax_peak: int | None = None,
-        ref: lnPiMasked | None = None,
-        segmenter: Segmenter | None = None,
-        segment_kws: Mapping[str, Any] | None = None,
-        tag_phases: TagPhasesSignature | None = None,
-        phases_factory: PhasesFactorySignature | None = None,
-        free_energy_kws: Mapping[str, Any] | None = None,
-        merge_kws: Mapping[str, Any] | None = None,
-    ) -> None:
-        self.nmax = nmax
-        self.ref = ref
-
-        self.segmenter = segmenter or Segmenter()
-        self.tag_phases = tag_phases
-        self.phases_factory = phases_factory or lnPiCollection.from_list
-
-        self.segment_kws = {} if segment_kws is None else dict(segment_kws)
-        self.segment_kws["num_peaks_max"] = nmax_peak or nmax * 2
-
-        self.free_energy_kws = free_energy_kws or {}
-        self.merge_kws = (
-            {}
-            if merge_kws is None
-            else dict(merge_kws, convention=False, nfeature_max=self.nmax)
-        )
-
-    def new_like(
-        self,
-        **kwargs: Any,
-    ) -> Self:
-        """
-        Create new object with optional new parameters
-
-        Parameters
-        ----------
-        **kwargs
-            Parameters to :class:`PhaseCreator`
-
-        Returns
-        -------
-        PhaseCreator
-            New :class:`PhaseCreator` object.
-        """
-        for k in (
-            "nmax",
-            "ref",
-            "segmenter",
-            "tag_phases",
-            "phases_factory",
-            "segment_kws",
-            "free_energy_kws",
-            "merge_kws",
-        ):
-            kwargs.setdefault(k, getattr(self, k))
-        return type(self)(**kwargs)
+    nmax: int
+    nmax_peak: int | None = None
+    ref: lnPiMasked | None = attrs.field(
+        default=None, validator=av.optional(av.instance_of(lnPiMasked))
+    )
+    segmenter: Segmenter = attrs.field(
+        factory=Segmenter, validator=av.instance_of(Segmenter)
+    )
+    segment_kws: dict[str, Any] = attrs.field(
+        default=None,
+        converter=_convert_segment_kws,  # type: ignore[misc]
+    )
+    tag_phases: TagPhasesSignature | None = None
+    phases_factory: PhasesFactorySignature = attrs.field(
+        default=lnPiCollection.from_list
+    )
+    free_energy_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
+    merge_kws: dict[str, Any] = attrs.field(default=None, converter=_convert_merge_kws)  # type: ignore[misc]
 
     # TODO(wpk): make this work with integer or string phase_ids
     @staticmethod
@@ -897,7 +867,7 @@ class PhaseCreator:
         """
         Factory constructor at fixed values of `dmu`.
 
-        Parameters
+        Parameter
         ----------
         {dlnz_buildphases_dmu}
 
@@ -914,27 +884,20 @@ class BuildPhasesBase:
     """Base class to build Phases objects from scalar values of `lnz`."""
 
     def __init__(self, x: list[float | None], phase_creator: PhaseCreator) -> None:
-        self._phase_creator = phase_creator
+        self.phase_creator = phase_creator
         # initial x
         if sum(x is None for x in x) != 1:
             msg = f"{x=} must have a single element which is None.  This will be the dimension varied."
             raise ValueError(msg)
-        self._x = x
-        self._ncomp = len(self._x)
-        self._index = self._x.index(None)
+        self.x = x
 
     @property
-    def x(self) -> list[float | None]:
-        return self._x
-
-    @property
-    def phase_creator(self) -> PhaseCreator:
-        return self._phase_creator
+    def ncomp(self) -> int:
+        return len(self.x)
 
     @property
     def index(self) -> int:
-        """Index number which varies"""
-        return self._index
+        return self.x.index(None)
 
     def _get_lnz(self, lnz_index: float) -> NDArrayAny:
         raise NotImplementedError
@@ -995,7 +958,7 @@ class BuildPhasesBase:
         PhaseCreator.build_phases
         """
         lnz = self._get_lnz(lnz_index)
-        return self._phase_creator.build_phases(
+        return self.phase_creator.build_phases(
             lnz=lnz, phases_factory=phases_factory, **kwargs
         )
 
@@ -1045,11 +1008,11 @@ class BuildPhases_dmu(BuildPhasesBase):  # noqa: N801
 
     def __init__(self, dlnz: list[float | None], phase_creator: PhaseCreator) -> None:
         super().__init__(x=dlnz, phase_creator=phase_creator)
-        self._dlnz = np.array([x if x is not None else 0.0 for x in self.x])
+        self.dlnz = np.array([x if x is not None else 0.0 for x in self.x])
 
     @override
     def _get_lnz(self, lnz_index: float) -> NDArrayAny:
-        return self._dlnz + lnz_index
+        return self.dlnz + lnz_index
 
 
 class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
@@ -1081,7 +1044,7 @@ class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
         return cast("list[float]", lnz)
 
     def _build_stable(self, lnz: Sequence[float]) -> lnPiMasked:
-        lnpis, _ = self._phase_creator.build_phases(lnz, phases_factory=False)
+        lnpis, _ = self.phase_creator.build_phases(lnz, phases_factory=False)
         # return minimum betaOmega
         idx = np.argmin([lnpi.xge.betaOmega() for lnpi in lnpis])
         return lnpis[idx]
@@ -1162,7 +1125,7 @@ class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
             msg = f"Failed {result=}"
             raise ValueError(msg)
 
-        return self._phase_creator.build_phases(
+        return self.phase_creator.build_phases(
             lnz=self._get_lnz_total(lnz_index, result.root),
             phases_factory=phases_factory,
             **kwargs,

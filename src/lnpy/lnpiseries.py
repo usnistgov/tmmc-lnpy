@@ -6,7 +6,7 @@ Collection of lnPi objects (:mod:`~lnpy.lnpiseries`)
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, cast, overload
+from typing import TYPE_CHECKING, ClassVar, cast, overload
 from warnings import warn
 
 import numpy as np
@@ -37,7 +37,7 @@ if TYPE_CHECKING:
     )
     from typing import (
         Any,
-        Final,
+        # Final,
         Literal,
     )
 
@@ -261,11 +261,11 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     """
 
-    _concat_dim = "sample"
-    _concat_coords = "different"
-    _xarray_output = True
-    _xarray_unstack = True
-    _xarray_dot_kws: Final = {"optimize": "optimal"}
+    concat_dim = "sample"
+    concat_coords = "different"
+    xarray_output = True
+    xarray_unstack = True
+    xarray_dot_kws: ClassVar[dict[str, str]] = {"optimize": "optimal"}
     _use_cache = True
 
     def __init__(
@@ -281,13 +281,13 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         dtype: DTypeLike | None = None,
     ) -> None:
         if concat_dim is not None:
-            self._concat_dim = concat_dim
+            self.concat_dim = concat_dim
         if concat_coords is not None:
-            self._concat_coords = concat_coords
+            self.concat_coords = concat_coords
         if xarray_output is not None:
-            self._xarray_output = xarray_output
+            self.xarray_output = xarray_output
         if unstack is not None:
-            self._xarray_unstack = unstack
+            self.xarray_unstack = unstack
 
         if isinstance(data, self.__class__):
             x = data
@@ -360,10 +360,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         if data is None:
             data = self.s
 
-        kwargs.setdefault("xarray_output", self._xarray_output)
-        kwargs.setdefault("concat_dim", self._concat_dim)
-        kwargs.setdefault("concat_coords", self._concat_coords)
-        kwargs.setdefault("unstack", self._xarray_unstack)
+        kwargs.setdefault("xarray_output", self.xarray_output)
+        kwargs.setdefault("concat_dim", self.concat_dim)
+        kwargs.setdefault("concat_coords", self.concat_coords)
+        kwargs.setdefault("unstack", self.xarray_unstack)
 
         return type(self)(
             data=data,
@@ -896,8 +896,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self, items: Sequence[Any] | Sequence[xr.DataArray]
     ) -> Sequence[Any] | xr.DataArray:
         """Utility to wrap output in :class:xarray.DataArray"""
-        if self._xarray_output and isinstance(items[0], xr.DataArray):
-            return xr.concat(items, self.index, coords=self._concat_coords)
+        if self.xarray_output and isinstance(items[0], xr.DataArray):
+            return xr.concat(items, self.index, coords=self.concat_coords)
         return items
 
     ##################################################
@@ -1028,12 +1028,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
                 dims=self.xge.dims_rec + self.xge.dims_n,
                 name="labels",
             )
-            .assign_coords({self._concat_dim: index, **self.state_kws})
+            .assign_coords({self.concat_dim: index, **self.state_kws})
             .assign_attrs(self.xge._standard_attrs)
         )
 
         if reset_index:
-            out = out.reset_index(self._concat_dim)
+            out = out.reset_index(self.concat_dim)
 
         return out
 
