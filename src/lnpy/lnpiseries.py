@@ -277,7 +277,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         concat_coords: str | None = None,
         unstack: bool = True,
         name: Hashable | None = None,
-        base_class: str | type = "first",
+        base_class: Literal["first"] | type[lnPiMasked] = "first",
         dtype: DTypeLike | None = None,
     ) -> None:
         if concat_dim is not None:
