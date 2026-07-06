@@ -114,6 +114,33 @@ KeepAttrs: TypeAlias = Union[
 
 IndexAny: TypeAlias = "pd.Index[Any]"
 
+InterpolationMethods = Literal[
+    "akima",
+    "barycentric",
+    "cubic",
+    "krogh",
+    "linear",
+    "makima",
+    "nearest",
+    "pchip",
+    "polynomial",
+    "quadratic",
+    "quintic",
+    "slinear",
+    "spline",
+    "zero",
+]
+ImageModeMethods = Literal[
+    "reflect",
+    "constant",
+    "nearest",
+    "mirror",
+    "wrap",
+    "grid-constant",
+    "grid-mirror",
+    "grid-wrap",
+]
+
 # * IndexedGrouper
 Groups: TypeAlias = Union[Sequence[Any], NDArrayAny, IndexAny, pd.MultiIndex]
 FactoryIndexedGrouperTypes: TypeAlias = Union[

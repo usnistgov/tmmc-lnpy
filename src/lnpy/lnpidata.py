@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING, cast
 
 import numpy as np
 import pandas as pd
+import xarray as xr
 from module_utilities import cached
 
 from .core import validate
@@ -26,11 +27,15 @@ if TYPE_CHECKING:
     from pathlib import Path
     from typing import Any
 
-    import xarray as xr
     from numpy.typing import ArrayLike, DTypeLike, NDArray
 
     from . import ensembles
-    from .core.typing import MaskConvention, NDArrayAny
+    from .core.typing import (
+        ImageModeMethods,
+        InterpolationMethods,
+        MaskConvention,
+        NDArrayAny,
+    )
     from .core.typing_compat import Self
 
 
@@ -202,6 +207,8 @@ class lnPiArray:  # noqa: N801
             axes = range(self.data.ndim)
         elif isinstance(axes, int):
             axes = (axes,)
+        else:
+            axes = tuple(axes)
 
         data = self.data
         datas: list[NDArrayAny] = []
@@ -211,8 +218,73 @@ class lnPiArray:  # noqa: N801
         if bfill:
             datas += [array_utils.bfill(data, axis=axis, limit=limit) for axis in axes]
 
-        if len(datas) > 0:
-            data = bottleneck.nanmean(datas, axis=0)
+        if datas:
+            data = datas[0] if len(datas) == 1 else bottleneck.nanmean(datas, axis=0)
+
+        return self.new_like(data=data)
+
+    def interpolate_na(
+        self,
+        axes: int | Iterable[int] | None = None,
+        add_coords: bool = False,
+        method: InterpolationMethods = "linear",
+        use_coordinate: bool = False,
+        **kwargs: Any,
+    ) -> Self:
+        """
+        Interpolate ``np.nan`` values.
+
+        Parameters
+        ----------
+        axes : int, sequence of int, optional
+            Axes to interpolate over.
+        add_coords: bool, default=False
+            Some of the options require the underlying :class:`~xarray.DataArray` to
+            have coordinates. Specify ``add_coords=True`` to enable these.
+        method: str, default="linear"
+            See :meth:`~xarray.DataArray.interpolate_na`
+        use_coordinate: bool, default=False
+            If True, use coordinates.  If False, assume evenly spaced.
+        **kwargs
+            Extra arguments to :meth:`~xarray.DataArray.interpolate_na`
+
+        Returns
+        -------
+        out: object
+            Object with `nan` values filled.
+
+        See Also
+        --------
+        ~xarray.DataArray.interpolate_na
+        """
+        if axes is None:
+            axes = range(self.data.ndim)
+        elif isinstance(axes, int):
+            axes = (axes,)
+        else:
+            axes = tuple(axes)
+
+        da = xr.DataArray(self.data)
+
+        if add_coords:
+            da = da.assign_coords({k: range(int(da[k].max()) + 1) for k in da.dims})
+
+        datas = [
+            da.interpolate_na(
+                dim=da.dims[axis],
+                method=method,
+                use_coordinate=use_coordinate,
+                **kwargs,
+            ).to_numpy()
+            for axis in axes
+        ]
+
+        if datas:
+            import bottleneck
+
+            data = datas[0] if len(datas) == 1 else bottleneck.nanmean(datas, axis=0)
+        else:
+            data = self.data
 
         return self.new_like(data=data)
 
@@ -227,6 +299,38 @@ class lnPiArray:  # noqa: N801
             data is excluded from calculating maximum.
         """
         data = self.data - np.ma.MaskedArray(self.data, mask).max()
+        return self.new_like(data=data)
+
+    def gaussian_filter(
+        self,
+        sigma: float | Sequence[float] = 4,
+        mode: ImageModeMethods = "nearest",
+        **kwargs: Any,
+    ) -> Self:
+        """
+        Apply gaussian filter smoothing to data
+
+        Parameters
+        ----------
+        sigma: float or sequence of float
+            Sigma parameter.
+        mode : str, default='nearest'
+            Arguments to :func:`~scipy.ndimage.gaussian_filter`
+        **kwargs
+            Extra arguments to :func:`~scipy.ndimage.gaussian_filter`
+
+        See Also
+        --------
+        ~scipy.ndimage.gaussian_filter
+        """
+        from scipy.ndimage import gaussian_filter
+
+        data = gaussian_filter(
+            self.data,
+            mode=mode,
+            sigma=sigma,
+            **kwargs,
+        )
         return self.new_like(data=data)
 
 
@@ -620,6 +724,8 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         Parameters
         ----------
+        axes : int, sequence of int, optional
+            Axes to interpolate over.
         {ffill}
         {bfill}
         {fill_limit}
@@ -627,21 +733,65 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         Returns
         -------
         out : lnPiMasked
-            padded object
+            Padded object.  Note that final result is the average over
+            all axes with specified back and forward fill.
 
 
         See Also
         --------
         lnPiArray.pad
         """
-        base = self._base.pad(axes=axes, ffill=ffill, bfill=bfill, limit=limit)
+        return self.new_like(
+            base=self._base.pad(axes=axes, ffill=ffill, bfill=bfill, limit=limit)
+        )
 
-        return self.new_like(base=base)
+    def interpolate_na(
+        self,
+        axes: int | Iterable[int] | None = None,
+        add_coords: bool = False,
+        method: InterpolationMethods = "linear",
+        use_coordinate: bool = False,
+        **kwargs: Any,
+    ) -> Self:
+        """
+        Interpolate ``np.nan`` values.
+
+        Parameters
+        ----------
+        axes : int, sequence of int, optional
+            Axes to interpolate over.
+        add_coords: bool, default=False
+            Some of the options require the underlying :class:`~xarray.DataArray` to
+            have coordinates. Specify ``add_coords=True`` to enable these.
+        method: str, default="linear"
+            See :meth:`~xarray.DataArray.interpolate_na`
+        use_coordinate: bool, default=False
+            If True, use coordinates.  If False, assume evenly spaced.
+        **kwargs
+            Extra arguments to :meth:`~xarray.DataArray.interpolate_na`
+
+        Returns
+        -------
+        out: object
+            Object with `nan` values filled.
+
+        See Also
+        --------
+        ~xarray.DataArray.interpolate_na
+        """
+        return self.new_like(
+            base=self._base.interpolate_na(
+                axes=axes,
+                add_coords=add_coords,
+                method=method,
+                use_coordinate=use_coordinate,
+                **kwargs,
+            )
+        )
 
     def mask_nan(self) -> Self:
         """Return new object with nan values masked."""
-        base = self._base
-        return self.new_like(base=base, mask=np.isnan(base.data))
+        return self.new_like(base=self._base, mask=np.isnan(self._base.data))
 
     def zeromax(self) -> Self:
         """
@@ -651,8 +801,33 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         --------
         lnPiArray.zeromax
         """
-        base = self._base.zeromax(mask=self._mask)
-        return self.new_like(base=base)
+        return self.new_like(base=self._base.zeromax(mask=self._mask))
+
+    def gaussian_filter(
+        self,
+        sigma: float | Sequence[float] = 4,
+        mode: ImageModeMethods = "nearest",
+        **kwargs: Any,
+    ) -> Self:
+        """
+        Apply gaussian filter smoothing to data
+
+        Parameters
+        ----------
+        sigma: float or sequence of float
+            Sigma parameter.
+        mode : str, default='nearest'
+            Arguments to :func:`~scipy.ndimage.gaussian_filter`
+        **kwargs
+            Extra arguments to :func:`~scipy.ndimage.gaussian_filter`
+
+        See Also
+        --------
+        ~scipy.ndimage.gaussian_filter
+        """
+        return self.new_like(
+            base=self._base.gaussian_filter(sigma=sigma, mode=mode, **kwargs)
+        )
 
     def reweight(self, lnz: float | ArrayLike) -> Self:
         """Create new object at specified value of `lnz`"""
