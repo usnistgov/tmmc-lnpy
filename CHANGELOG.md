@@ -16,6 +16,18 @@ See the fragment files in [changelog.d]
 <!-- scriv-insert-here -->
 
 
+## 0.9.2
+
+Released on 2026-07-06.
+
+### Bug fixes
+
+- fix: reindex `from_table` data and add `mask_nan` method ([#182](https://github.com/usnistgov/tmmc-lnpy/pull/182))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
+
 ## 0.9.1
 
 Released on 2026-06-26.
