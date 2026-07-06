@@ -635,7 +635,13 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         lnPiArray.pad
         """
         base = self._base.pad(axes=axes, ffill=ffill, bfill=bfill, limit=limit)
+
         return self.new_like(base=base)
+
+    def mask_nan(self) -> Self:
+        """Return new object with nan values masked."""
+        base = self._base
+        return self.new_like(base=base, mask=np.isnan(base.data))
 
     def zeromax(self) -> Self:
         """
@@ -701,6 +707,9 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
             kws.update(csv_kws)
 
         da = pd.read_csv(path, **kws).set_index(names[:-1])["lnpi"].to_xarray()
+        # reindex n_{i}
+        da = da.reindex({k: range(int(da[k].max()) + 1) for k in names[:-1]})
+
         return cls.from_data(
             data=da.values,
             mask=da.isnull().to_numpy(),  # noqa: PD003

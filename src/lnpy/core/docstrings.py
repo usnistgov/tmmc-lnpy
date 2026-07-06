@@ -26,7 +26,7 @@ fill_value : scalar, default=nan
     Value to fill for masked elements.
 data : array-like
     Value of lnPi.  Number of dimensions should be same as ``len(lnz)``.
-    For single component, ``data[k]`` is the value of lnPi for `k` particles.
+    For single component, ``data[k1, ...]`` is the value of lnPi for `k1, ...` particles.
 mask_masked | mask : None or ndarray of bool
     Mask using "masked" convention. Where `mask` is `True`, values are excluded.
 mask_image | mask : None or ndarray of bool
