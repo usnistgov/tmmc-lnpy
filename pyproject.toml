@@ -314,6 +314,7 @@ unused-ignore = "error"
 variance-mismatch = "error"
 
 [tool.pyright]
+<<<<<<< before updating
 typeCheckingMode = "standard"
 strict = [
     # "src",
@@ -325,6 +326,15 @@ strict = [
 ]
 # basedpyright
 failOnWarnings = true
+=======
+typeCheckingMode = "strict"
+# strict = [
+#     "noxfile.py",
+#     "src",
+#     "tests",
+#     "tools/*.py",
+# ]
+>>>>>>> after updating
 include = [
     "noxfile.py",
     "src",
