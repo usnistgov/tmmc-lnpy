@@ -9,6 +9,7 @@ import functools
 from typing import TYPE_CHECKING, ClassVar, cast, overload
 from warnings import warn
 
+import attrs
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -233,7 +234,8 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
         return out
 
 
-class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
+@attrs.define(frozen=True)  # noqa: PLR0904
+class lnPiCollection(AccessorMixin):  # noqa: N801
     r"""
     Wrapper around :class:`pandas.Series` for collection of :class:`~lnpy.lnpidata.lnPiMasked` objects.
 
