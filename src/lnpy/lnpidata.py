@@ -277,7 +277,10 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         self._base = base
         self._lnz: NDArray[np.float64] = lnz
-        self._dlnz = tuple(self._lnz - self._base.lnz)
+        self._dlnz = tuple(
+            0 if np.equal(lnz, base_lnz) else lnz - base_lnz
+            for lnz, base_lnz in zip(self._lnz, self._base.lnz, strict=True)
+        )
 
         self._cache: dict[str, Any] = {}
 
@@ -329,9 +332,15 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         )
         return cls(lnz=lnz, base=base, mask=mask, copy=copy)
 
-    def as_pure(self) -> Iterator[Self]:
+    def as_pure(self, keepdims: bool = False) -> Iterator[Self]:
         """
         Iterator of pure component objects
+
+        Parameters
+        ----------
+        keepdims: bool, default=False
+            If ``True``, keep the reduced dimensions (i.e., `ndim` is
+            unchanged). Otherwise return `1d` objects.
 
         Yields
         ------
@@ -363,12 +372,24 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         array([0, 1, 2])
         """
         for index in range(self.ndim):
-            slc = tuple(slice(None) if i == index else 0 for i in range(self.ndim))
+            zero = [0] if keepdims else 0
+            slc = tuple(slice(None) if i == index else zero for i in range(self.ndim))
+
+            if keepdims:
+                lnz = np.full_like(self.lnz, fill_value=-np.inf)
+                lnz[index] = self.lnz[index]
+
+                base_lnz = np.full_like(self.lnz, fill_value=-np.inf)
+                base_lnz[index] = self._base.lnz[index]
+
+            else:
+                lnz = self.lnz[index]
+                base_lnz = self._base.lnz[index]
 
             yield type(self)(
-                lnz=self.lnz[index],
+                lnz=lnz,
                 base=self._base.new_like(
-                    lnz=self._base.lnz[index],
+                    lnz=base_lnz,
                     data=self._base.data[slc],
                 ),
             )
