@@ -31,6 +31,7 @@ if TYPE_CHECKING:
 
 __all__ = [
     "IndexingInt",
+    "InterpolationMethods",
     "MaskConvention",
     "NDArrayAny",
     "PeakError",
@@ -130,16 +131,7 @@ InterpolationMethods = Literal[
     "spline",
     "zero",
 ]
-ImageModeMethods = Literal[
-    "reflect",
-    "constant",
-    "nearest",
-    "mirror",
-    "wrap",
-    "grid-constant",
-    "grid-mirror",
-    "grid-wrap",
-]
+"""Interpolation methods"""
 
 # * IndexedGrouper
 Groups: TypeAlias = Union[Sequence[Any], NDArrayAny, IndexAny, pd.MultiIndex]

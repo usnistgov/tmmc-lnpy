@@ -5,6 +5,8 @@ from module_utilities.docfiller import DocFiller
 _docstrings = """
 Parameters
 ----------
+fill_axes : int or iterable of int, optional
+    Axes to apply operation over.
 copy : bool, optional
     If True, copy the data.  If None or False, attempt to use view.
 copy_kws : mapping, optional
