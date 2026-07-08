@@ -119,7 +119,7 @@ test-all *options: (nox "-s test-all -- ++test-options" options)
 [group("test")]
 test-accept *options:
     DOCFILLER_SUB=False {{ UVRUN }} --group="test" --group="pytest-accept" --no-dev \
-    pytest -v --accept -n 1 {{ options }}
+    pytest -v --accept -n 0 {{ options }}
 
 # coverage report
 [group("test")]

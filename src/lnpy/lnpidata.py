@@ -8,10 +8,11 @@ lnPi data classes and routines (:mod:`~lnpy.lnpidata`)
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, cast, overload
 
 import numpy as np
 import pandas as pd
+import xarray as xr
 from module_utilities import cached
 
 from .core import validate
@@ -22,16 +23,28 @@ from .core.typing_compat import override
 from .extensions import AccessorMixin
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable, Iterable, Iterator, Mapping, Sequence
+    from collections.abc import (
+        Callable,
+        Hashable,
+        Iterable,
+        Iterator,
+        Mapping,
+        Sequence,
+    )
     from pathlib import Path
-    from typing import Any
+    from typing import Any, Concatenate, ParamSpec
 
-    import xarray as xr
     from numpy.typing import ArrayLike, DTypeLike, NDArray
 
     from . import ensembles
-    from .core.typing import MaskConvention, NDArrayAny
+    from .core.typing import (
+        InterpolationMethods,
+        MaskConvention,
+        NDArrayAny,
+    )
     from .core.typing_compat import Self
+
+    P = ParamSpec("P")
 
 
 # * Utilities -----------------------------------------------------------------
@@ -172,62 +185,29 @@ class lnPiArray:  # noqa: N801
             fill_value=self.fill_value,
         )
 
-    @docfiller.decorate
-    def pad(
+    @overload
+    def pipe(
         self,
-        axes: int | Iterable[int] | None = None,
-        ffill: bool = True,
-        bfill: bool = False,
-        limit: int | None = None,
+        func: Callable[Concatenate[NDArrayAny, P], NDArrayAny],
+        *args: P.args,
+        **kwargs: P.kwargs,
+    ) -> Self: ...
+    @overload
+    def pipe(
+        self,
+        func: Callable[..., NDArrayAny],
+        *args: Any,
+        **kwargs: Any,
+    ) -> Self: ...
+
+    def pipe(
+        self,
+        func: Callable[..., NDArrayAny],
+        *args: Any,
+        **kwargs: Any,
     ) -> Self:
-        """
-        Pad nan values in underlying data to values
-
-        Parameters
-        ----------
-        {ffill}
-        {bfill}
-        {fill_limit}
-
-        Returns
-        -------
-        out : lnPiArray
-            object with padded data
-        """
-        import bottleneck
-
-        from .core import array_utils
-
-        if axes is None:
-            axes = range(self.data.ndim)
-        elif isinstance(axes, int):
-            axes = (axes,)
-
-        data = self.data
-        datas: list[NDArrayAny] = []
-
-        if ffill:
-            datas += [array_utils.ffill(data, axis=axis, limit=limit) for axis in axes]
-        if bfill:
-            datas += [array_utils.bfill(data, axis=axis, limit=limit) for axis in axes]
-
-        if len(datas) > 0:
-            data = bottleneck.nanmean(datas, axis=0)
-
-        return self.new_like(data=data)
-
-    def zeromax(self, mask: NDArrayAny | bool = False) -> Self:
-        """
-        Shift values such that lnpi.max() == 0
-
-        Parameters
-        ----------
-        mask : bool or array-like of bool
-            Optional mask to apply to data.  Where `mask` is True,
-            data is excluded from calculating maximum.
-        """
-        data = self.data - np.ma.MaskedArray(self.data, mask).max()
-        return self.new_like(data=data)
+        """Apply numpy function to underlying data."""
+        return self.new_like(data=func(self.data, *args, **kwargs))
 
 
 # * Masked lnPi object --------------------------------------------------------
@@ -297,16 +277,19 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         self._base = base
         self._lnz: NDArray[np.float64] = lnz
-        self._dlnz = tuple(self._lnz - self._base.lnz)
+        self._dlnz = tuple(
+            0 if np.equal(lnz, base_lnz) else lnz - base_lnz
+            for lnz, base_lnz in zip(self._lnz, self._base.lnz, strict=True)
+        )
 
         self._cache: dict[str, Any] = {}
 
     @classmethod
     def from_data(
         cls,
-        lnz: float | ArrayLike,
-        lnz_data: float | ArrayLike,
         data: NDArrayAny,
+        lnz: float | ArrayLike,
+        lnz_data: float | ArrayLike | None = None,
         mask: NDArrayAny | None = None,
         state_kws: dict[str, Any] | None = None,
         extra_kws: dict[str, Any] | None = None,
@@ -320,8 +303,9 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         ----------
         lnz : float or sequence of float
             Value of `lnz` to reweight data to.
-        lnz_data : float or sequence of float
-            Value of `lnz` at which `data` was collected
+        lnz_data : float or sequence of float, optional
+            Value of `lnz` at which `data` was collected.
+            Defaults to ``lnz``.
         {data}
         {mask_masked}
         {state_kws}
@@ -335,6 +319,9 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         """
         fill_value = fill_value or np.nan
 
+        if lnz_data is None:
+            lnz_data = lnz
+
         base = cls._DataClass(
             lnz=lnz_data,
             data=data,
@@ -345,9 +332,15 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         )
         return cls(lnz=lnz, base=base, mask=mask, copy=copy)
 
-    def as_pure(self) -> Iterator[Self]:
+    def as_pure(self, keepdims: bool = False) -> Iterator[Self]:
         """
         Iterator of pure component objects
+
+        Parameters
+        ----------
+        keepdims: bool, default=False
+            If ``True``, keep the reduced dimensions (i.e., `ndim` is
+            unchanged). Otherwise return `1d` objects.
 
         Yields
         ------
@@ -379,12 +372,24 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         array([0, 1, 2])
         """
         for index in range(self.ndim):
-            slc = tuple(slice(None) if i == index else 0 for i in range(self.ndim))
+            zero = [0] if keepdims else 0
+            slc = tuple(slice(None) if i == index else zero for i in range(self.ndim))
+
+            if keepdims:
+                lnz = np.full_like(self.lnz, fill_value=-np.inf)
+                lnz[index] = self.lnz[index]
+
+                base_lnz = np.full_like(self.lnz, fill_value=-np.inf)
+                base_lnz[index] = self._base.lnz[index]
+
+            else:
+                lnz = self.lnz[index]
+                base_lnz = self._base.lnz[index]
 
             yield type(self)(
-                lnz=self.lnz[index],
+                lnz=lnz,
                 base=self._base.new_like(
-                    lnz=self._base.lnz[index],
+                    lnz=base_lnz,
                     data=self._base.data[slc],
                 ),
             )
@@ -607,6 +612,79 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         return type(self)(lnz=lnz, base=base, mask=mask, copy=copy)
 
+    @overload
+    def pipe(
+        self,
+        func: Callable[Concatenate[NDArrayAny, P], NDArrayAny],
+        *args: P.args,
+        **kwargs: P.kwargs,
+    ) -> Self: ...
+    @overload
+    def pipe(
+        self,
+        func: Callable[..., NDArrayAny],
+        *args: Any,
+        **kwargs: Any,
+    ) -> Self: ...
+
+    def pipe(
+        self,
+        func: Callable[..., NDArrayAny],
+        *args: Any,
+        **kwargs: Any,
+    ) -> Self:
+        """
+        Apply numpy function to underlying data, leaving other meta data unchanged.
+
+        Parameters
+        ----------
+        func : callable
+            Function to apply to data. First argument must accept the data as a
+            numpy array.
+        *args, **kwargs
+            Extra positional and keyword arguments to ``func``.
+
+        Returns
+        -------
+        lnPiMasked
+            New object with data transformed via ``func``.
+
+
+        Example
+        -------
+        Apply a gaussian filter to underlying data
+
+        >>> import numpy as np
+        >>> data = np.random.default_rng(seed=0).random((3, 3))
+        >>> ref = lnPiMasked.from_data(data=data, lnz=[0.0, 0.0])
+        >>> ref
+        <lnPi(lnz=[0. 0.])>
+        >>> ref.data
+        array([[0.637 , 0.2698, 0.041 ],
+               [0.0165, 0.8133, 0.9128],
+               [0.6066, 0.7295, 0.5436]])
+
+        Smooth data using gaussian filter
+
+        >>> from scipy.ndimage import gaussian_filter
+        >>> smoothed = ref.pipe(gaussian_filter, mode="nearest", sigma=2)
+        >>> smoothed  # No change to metadata
+        <lnPi(lnz=[0. 0.])>
+        >>> smoothed.data
+        array([[0.4638, 0.4249, 0.3835],
+               [0.4928, 0.4792, 0.4608],
+               [0.5297, 0.5303, 0.5245]])
+
+        """
+        return self.new_like(base=self._base.pipe(func, *args, **kwargs))
+
+    def _normalize_axes(self, axes: int | Iterable[int] | None) -> tuple[int, ...]:
+        if axes is None:
+            return tuple(range(self.data.ndim))
+        if isinstance(axes, int):
+            return (axes,)
+        return tuple(axes)
+
     @docfiller.decorate
     def pad(
         self,
@@ -620,6 +698,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
         Parameters
         ----------
+        {fill_axes}
         {ffill}
         {bfill}
         {fill_limit}
@@ -627,32 +706,99 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         Returns
         -------
         out : lnPiMasked
-            padded object
+            Padded object.  Note that final result is the average over
+            all axes with specified back and forward fill.
+        """
 
+        def _func(data: NDArrayAny, axes: tuple[int, ...]) -> NDArrayAny:
+            from .core import array_utils
+
+            datas: list[NDArrayAny] = []
+
+            if ffill:
+                datas += [
+                    array_utils.ffill(data, axis=axis, limit=limit) for axis in axes
+                ]
+            if bfill:
+                datas += [
+                    array_utils.bfill(data, axis=axis, limit=limit) for axis in axes
+                ]
+
+            if not datas:
+                return data
+
+            if len(datas) == 1:
+                return datas[0]
+
+            import bottleneck
+
+            return cast("NDArrayAny", bottleneck.nanmean(datas, axis=0))
+
+        return self.pipe(_func, axes=self._normalize_axes(axes))
+
+    @docfiller.decorate
+    def interpolate_na(
+        self,
+        axes: int | Iterable[int] | None = None,
+        add_coords: bool = False,
+        method: InterpolationMethods = "linear",
+        use_coordinate: bool = False,
+        **kwargs: Any,
+    ) -> Self:
+        """
+        Interpolate ``np.nan`` values.
+
+        Parameters
+        ----------
+        {fill_axes}
+        add_coords: bool, default=False
+            Some of the options require the underlying :class:`~xarray.DataArray` to
+            have coordinates. Specify ``add_coords=True`` to enable these.
+        method: str, default="linear"
+            See :meth:`~xarray.DataArray.interpolate_na`
+        use_coordinate: bool, default=False
+            If True, use coordinates.  If False, assume evenly spaced.
+        **kwargs
+            Extra arguments to :meth:`~xarray.DataArray.interpolate_na`
+
+        Returns
+        -------
+        out: object
+            Object with `nan` values filled.
 
         See Also
         --------
-        lnPiArray.pad
+        ~xarray.DataArray.interpolate_na
         """
-        base = self._base.pad(axes=axes, ffill=ffill, bfill=bfill, limit=limit)
 
-        return self.new_like(base=base)
+        def _func(data: NDArrayAny, axes: tuple[int, ...]) -> NDArrayAny:
+            da = xr.DataArray(data)
+            if add_coords:
+                da = da.assign_coords({k: range(int(da[k].max()) + 1) for k in da.dims})
+
+            for axis in axes:
+                da = da.interpolate_na(
+                    dim=da.dims[axis],
+                    method=method,
+                    use_coordinate=use_coordinate,
+                    **kwargs,
+                )
+
+            return da.to_numpy()
+
+        return self.pipe(_func, axes=self._normalize_axes(axes))
 
     def mask_nan(self) -> Self:
         """Return new object with nan values masked."""
-        base = self._base
-        return self.new_like(base=base, mask=np.isnan(base.data))
+        return self.new_like(base=self._base, mask=np.isnan(self._base.data))
 
     def zeromax(self) -> Self:
-        """
-        Shift so that lnpi.max() == 0 on reference
+        """Shift so that lnpi.max() == 0 on reference"""
 
-        See Also
-        --------
-        lnPiArray.zeromax
-        """
-        base = self._base.zeromax(mask=self._mask)
-        return self.new_like(base=base)
+        def _func(data: NDArrayAny) -> NDArrayAny:
+            return cast("NDArrayAny", data - np.ma.MaskedArray(data, self._mask).max())
+
+        return self.pipe(_func)
 
     def reweight(self, lnz: float | ArrayLike) -> Self:
         """Create new object at specified value of `lnz`"""

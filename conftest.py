@@ -2,14 +2,17 @@
 
 from functools import lru_cache
 
+import numpy as np
 import pytest
 
 
-@pytest.fixture(autouse=True)
-def add_standard_imports(doctest_namespace) -> None:  # noqa: ARG001
-    import numpy as np
+def pytest_configure(config) -> None:  # noqa: ARG001
+    np.set_printoptions(precision=4, suppress=True)
 
-    np.set_printoptions(precision=4)
+
+@pytest.fixture(autouse=True)
+def add_np(doctest_namespace):
+    doctest_namespace["np"] = np
 
 
 @lru_cache

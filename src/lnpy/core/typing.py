@@ -31,6 +31,7 @@ if TYPE_CHECKING:
 
 __all__ = [
     "IndexingInt",
+    "InterpolationMethods",
     "MaskConvention",
     "NDArrayAny",
     "PeakError",
@@ -113,6 +114,24 @@ KeepAttrs: TypeAlias = Union[
 ]
 
 IndexAny: TypeAlias = "pd.Index[Any]"
+
+InterpolationMethods = Literal[
+    "akima",
+    "barycentric",
+    "cubic",
+    "krogh",
+    "linear",
+    "makima",
+    "nearest",
+    "pchip",
+    "polynomial",
+    "quadratic",
+    "quintic",
+    "slinear",
+    "spline",
+    "zero",
+]
+"""Interpolation methods"""
 
 # * IndexedGrouper
 Groups: TypeAlias = Union[Sequence[Any], NDArrayAny, IndexAny, pd.MultiIndex]
