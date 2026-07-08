@@ -7,10 +7,11 @@ lnPi data classes and routines (:mod:`~lnpy.lnpidata`)
 # Delayed
 from __future__ import annotations
 
-from functools import lru_cache
+from functools import lru_cache, partial
 from typing import TYPE_CHECKING, cast, overload
 
 import attrs
+import attrs.validators as av
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -70,7 +71,7 @@ def _get_shift(
 def _get_data(base: lnPiArray, dlnz: tuple[float, ...]) -> NDArrayAny:
     if all(x == 0 for x in dlnz):  # pylint: disable=use-implicit-booleaness-not-comparison-to-zero
         return base.data
-    return _get_shift(base.shape, dlnz, base.data.dtype) + base.data
+    return _get_shift(base.data.shape, dlnz, base.data.dtype) + base.data
 
 
 def _get_maskedarray(
@@ -78,7 +79,7 @@ def _get_maskedarray(
 ) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
     return np.ma.MaskedArray(
         _get_data(base, dlnz),
-        mask=self._mask,
+        mask=self.mask,
         fill_value=base.fill_value,
     )
 
@@ -94,8 +95,6 @@ def _get_filled(
 
 
 # * lnPiArray -----------------------------------------------------------------
-
-
 def _convert_lnz(lnz: float | np.floating[Any] | ArrayLike) -> NDArray[np.float64]:
     return np.atleast_1d(lnz).astype(np.float64)
 
@@ -106,6 +105,17 @@ def _convert_fill_value(fill_value: SupportsFloat | None) -> float:
     return float(fill_value)
 
 
+if TYPE_CHECKING:
+
+    def _convert_data(data: Any) -> NDArrayAny: ...
+
+else:
+
+    @partial(attrs.Converter, takes_self=True)
+    def _convert_data(data: Any, self_: attrs.AttrsInstance) -> NDArrayAny:
+        return np.array(data, copy=copy_if_needed(self_.copy))
+
+
 def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noqa: ARG001
     if data.ndim != len(self_.lnz):
         msg = f"Length of {self_.lnz=} must be {data.ndim}"
@@ -113,7 +123,7 @@ def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noq
 
 
 @docfiller.decorate
-@attrs.frozen(eq=False)  # use eq=False to make hashable by object
+@attrs.frozen(eq=False, kw_only=True)  # use eq=False to make hashable by object
 class lnPiArray(MyAttrsMixin):  # noqa: N801
     """
     Wrapper on lnPi lnPiArray
@@ -128,8 +138,9 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
     {copy}
     """
 
+    copy: bool | None = None
     lnz: NDArray[np.float64] = attrs.field(converter=_convert_lnz)
-    data: NDArrayAny = attrs.field(converter=np.asarray, validator=_validate_data)
+    data: NDArrayAny = attrs.field(converter=_convert_data, validator=_validate_data)
     state_kws: dict[str, Any] = attrs.field(
         factory=dict, converter=convert_mapping_or_none_to_dict
     )
@@ -137,20 +148,13 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
         factory=dict, converter=convert_mapping_or_none_to_dict
     )
     fill_value: float = attrs.field(default=np.nan, converter=_convert_fill_value)
-    copy: bool | None = None
 
     def __attrs_post_init__(self) -> None:
-        if copy_if_needed(self.copy):
-            object.__setattr__(self, "data", self.data.copy())
         # reset copy
         object.__setattr__(self, "copy", None)
 
         # make data read only
         self.data.flags.writeable = False
-
-    @property
-    def shape(self) -> tuple[int, ...]:
-        return cast("tuple[int, ...]", self.data.shape)
 
     @overload
     def pipe(
@@ -178,8 +182,30 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
 
 
 # * Masked lnPi object --------------------------------------------------------
+if TYPE_CHECKING:
+    # NOTE: Lie to make typecheckers happy (see e.g., https://github.com/python/mypy/issues/15736)
+    def _convert_mask(mask: NDArrayAny | None) -> NDArrayAny: ...
+
+else:
+
+    @partial(attrs.Converter, takes_self=True)
+    def _convert_mask(
+        mask: NDArrayAny | None, self_: attrs.AttrsInstance
+    ) -> NDArray[np.bool_]:
+        if mask is None:
+            return np.full_like(self_.base.data, fill_value=False, dtype=np.bool_)
+        return np.asarray(mask, copy=copy_if_needed(self_.copy), dtype=np.bool_)
+
+
+def _validate_mask(self_: Any, attribute: Any, mask: NDArray[np.bool_]) -> None:  # noqa: ARG001
+    if mask.shape != self_.base.data.shape:
+        msg = f"{mask.shape=} must be {self_.base.data.shape}."
+        raise ValueError(msg)
+
+
 @docfiller.decorate  # noqa: PLR0904
-class lnPiMasked(AccessorMixin):  # noqa: N801
+@attrs.define(frozen=True, eq=False)
+class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
     """
     Masked array like wrapper for lnPi data.
 
@@ -214,42 +240,35 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
     * lnPi : log of macrostate distribution.
     """
 
+    lnz: NDArray[np.float64] = attrs.field(converter=_convert_lnz)
+    base: lnPiArray = attrs.field(validator=av.instance_of(lnPiArray))
+    copy: bool | None = None
+    mask: NDArray[np.bool_] = attrs.field(
+        default=None, converter=_convert_mask, validator=_validate_mask
+    )
+
+    _dlnz: tuple[float, ...] = attrs.field(factory=tuple, init=False, repr=False)
+    _cache: dict[str, Any] = attrs.field(
+        factory=dict[str, "Any"], init=False, repr=False
+    )
     _DataClass: ClassVar[type[lnPiArray]] = lnPiArray
 
-    def __init__(
-        self,
-        lnz: float | ArrayLike,
-        base: lnPiArray,
-        mask: NDArrayAny | None = None,
-        copy: bool | None = None,
-    ) -> None:
-        lnz = np.atleast_1d(lnz).astype(np.float64)
+    def __attrs_post_init__(self) -> None:
+        # reset copy
+        object.__setattr__(self, "copy", None)
 
-        if lnz.shape != base.lnz.shape:
-            msg = f"{lnz.shape=} must be {base.lnz.shape}"
-            raise ValueError(msg)
+        # make mask read only
+        self.mask.flags.writeable = False
 
-        mask = (
-            np.full(base.data.shape, fill_value=False, dtype=bool)
-            if mask is None
-            else np.array(mask, copy=copy_if_needed(copy), dtype=bool)
+        # set dlnz
+        object.__setattr__(
+            self,
+            "_dlnz",
+            tuple(
+                0 if np.equal(lnz, base_lnz) else float(lnz - base_lnz)
+                for lnz, base_lnz in zip(self.lnz, self.base.lnz, strict=True)
+            ),
         )
-
-        if mask.shape != base.data.shape:
-            msg = f"{mask.shape=} must be {base.data.shape}."
-            raise ValueError(msg)
-        self._mask = mask
-        # make mask read-only
-        self._mask.flags.writeable = False
-
-        self._base = base
-        self._lnz: NDArray[np.float64] = lnz
-        self._dlnz = tuple(
-            0 if np.equal(lnz, base_lnz) else lnz - base_lnz
-            for lnz, base_lnz in zip(self._lnz, self._base.lnz, strict=True)
-        )
-
-        self._cache: dict[str, Any] = {}
 
     @classmethod
     def from_data(
@@ -347,82 +366,68 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
                 lnz[index] = self.lnz[index]
 
                 base_lnz = np.full_like(self.lnz, fill_value=-np.inf)
-                base_lnz[index] = self._base.lnz[index]
+                base_lnz[index] = self.base.lnz[index]
 
             else:
                 lnz = self.lnz[index]
-                base_lnz = self._base.lnz[index]
+                base_lnz = self.base.lnz[index]
 
             yield type(self)(
                 lnz=lnz,
-                base=self._base.new_like(
+                base=self.base.new_like(
                     lnz=base_lnz,
-                    data=self._base.data[slc],
+                    data=self.base.data[slc],
                 ),
             )
 
     @property
-    def _data(self) -> NDArrayAny:
-        return self._base.data
-
-    @property
     def dtype(self) -> np.dtype[Any]:
         """Type (dtype) of underling data"""
-        return self._data.dtype
+        return self.base.data.dtype
 
     def _clear_cache(self) -> None:
-        self._cache = {}
+        self._cache.clear()
 
     @property
     def state_kws(self) -> dict[str, Any]:
         """State variables."""
-        return self._base.state_kws
+        return self.base.state_kws
 
     @property
     def extra_kws(self) -> dict[str, Any]:
         """Extra parameters."""
-        return self._base.extra_kws
+        return self.base.extra_kws
 
     @property
     def ma(self) -> np.ma.MaskedArray[Any, np.dtype[Any]]:
         """Masked array view of data reweighted data"""
-        return _get_maskedarray(self._base, self, self._dlnz)
+        return _get_maskedarray(self.base, self, self._dlnz)
 
     def filled(self, fill_value: float | None = None) -> NDArrayAny:
         """Filled view or reweighted data"""
-        return _get_filled(self._base, self, self._dlnz, fill_value)
+        return _get_filled(self.base, self, self._dlnz, fill_value)
 
     @property
     def data(self) -> NDArrayAny:
         """Reweighted data"""
-        return _get_data(self._base, self._dlnz)
-
-    @property
-    def mask(self) -> NDArrayAny:
-        """Where `True`, values are masked out."""
-        return self._mask
+        return _get_data(self.base, self._dlnz)
 
     @property
     def shape(self) -> tuple[int, ...]:
         """Shape of lnPiArray"""
-        return cast("tuple[int, ...]", self._data.shape)
+        return cast("tuple[int, ...]", self.base.data.shape)
 
     def __len__(self) -> int:
-        return len(self._data)
+        return len(self.base.data)
 
     @property
     def ndim(self) -> int:
-        return self._data.ndim
-
-    @property
-    def lnz(self) -> NDArray[np.float64]:
-        """Value of log(activity) evaluated at"""
-        return self._lnz
+        return self.base.data.ndim
 
     @property
     def betamu(self) -> NDArray[np.float64]:
         """Alias to `self.lnz`"""
-        return self._lnz
+        return self.lnz
 
     @property
     def volume(self) -> float | None:
@@ -436,7 +441,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
     @override
     def __repr__(self) -> str:
-        return f"<lnPi(lnz={self._lnz})>"
+        return f"<lnPi(lnz={self.lnz})>"
 
     @override
     def __str__(self) -> str:
@@ -552,33 +557,6 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
         """
         return float(ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)])
 
-    @docfiller.decorate
-    def new_like(
-        self,
-        lnz: float | ArrayLike | None = None,
-        base: lnPiArray | None = None,
-        mask: NDArrayAny | None = None,
-        copy: bool | None = None,
-    ) -> Self:
-        """
-        Create new object with optional parameters
-
-        Parameters
-        ----------
-        {lnz}
-        {base}
-        {mask_masked}
-        {copy}
-        """
-        if lnz is None:
-            lnz = self._lnz
-        if base is None:
-            base = self._base
-        if mask is None:
-            mask = self._mask
-
-        return type(self)(lnz=lnz, base=base, mask=mask, copy=copy)
-
     @overload
     def pipe(
         self,
@@ -643,7 +621,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
                [0.5297, 0.5303, 0.5245]])
 
         """
-        return self.new_like(base=self._base.pipe(func, *args, **kwargs))
+        return self.new_like(base=self.base.pipe(func, *args, **kwargs))
 
     def _normalize_axes(self, axes: int | Iterable[int] | None) -> tuple[int, ...]:
         if axes is None:
@@ -757,13 +735,13 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
     def mask_nan(self) -> Self:
         """Return new object with nan values masked."""
-        return self.new_like(base=self._base, mask=np.isnan(self._base.data))
+        return self.new_like(base=self.base, mask=np.isnan(self.base.data))
 
     def zeromax(self) -> Self:
         """Shift so that lnpi.max() == 0 on reference"""
 
         def _func(data: NDArrayAny) -> NDArrayAny:
-            return cast("NDArrayAny", data - np.ma.MaskedArray(data, self._mask).max())
+            return cast("NDArrayAny", data - np.ma.MaskedArray(data, self.mask).max())
 
         return self.pipe(_func)
 
