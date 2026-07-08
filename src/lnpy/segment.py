@@ -23,7 +23,7 @@ import numpy as np
 from module_utilities.docfiller import DocFiller
 
 from .core import validate
-from .core._attrs_utils import MyAttrsMixin
+from .core._attrs_utils import MyAttrsMixin, convert_mapping_or_none_to_dict
 from .core.docstrings import docfiller
 from .core.typing_compat import override
 from .lnpidata import lnPiMasked
@@ -276,8 +276,12 @@ class Segmenter(MyAttrsMixin):
     {watershed_kws}
     """
 
-    peak_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
-    watershed_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
+    peak_kws: dict[str, Any] = attrs.field(
+        factory=dict, converter=convert_mapping_or_none_to_dict
+    )
+    watershed_kws: dict[str, Any] = attrs.field(
+        factory=dict, converter=convert_mapping_or_none_to_dict
+    )
 
     @overload
     def peaks(

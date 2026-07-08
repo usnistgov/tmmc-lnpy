@@ -100,12 +100,6 @@ def _convert_lnz(lnz: ArrayLike) -> NDArray[np.float64]:
     return np.atleast_1d(lnz).astype(np.float64)
 
 
-def _convert_fill_value(fill_value: SupportsFloat | None) -> float:
-    if fill_value is None:
-        return np.nan
-    return float(fill_value)
-
-
 def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noqa: ARG001
     if data.ndim != len(self_.lnz):
         msg = f"Length of {self_.lnz=} must be {data.ndim}"
@@ -139,7 +133,7 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
     extra_kws: dict[str, Any] = attrs.field(
         factory=dict, converter=convert_mapping_or_none_to_dict
     )
-    fill_value: float = attrs.field(default=np.nan, converter=_convert_fill_value)
+    fill_value: float
 
     if TYPE_CHECKING:
         # Lie to make pyright/pyrefly/ty happy
@@ -151,7 +145,7 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
         data: ArrayLike,
         state_kws: OptionalKwsAny = None,
         extra_kws: OptionalKwsAny = None,
-        fill_value: float | None = np.nan,
+        fill_value: SupportsFloat | None = np.nan,
         copy: bool | None = None,
     ) -> None:
         # NOTE: maybe use view?
@@ -163,7 +157,7 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
             data=data,
             state_kws=state_kws,
             extra_kws=extra_kws,
-            fill_value=fill_value,
+            fill_value=np.nan if fill_value is None else float(fill_value),
         )
 
     @overload
@@ -261,6 +255,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
             if mask is None
             else np.asarray(mask, copy=copy_if_needed(copy), dtype=np.bool_)
         )
+        mask.flags.writeable = False
 
         self.__attrs_init__(
             lnz=lnz,
@@ -272,7 +267,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
             self,
             "_dlnz",
             tuple(
-                0 if np.equal(lnz, base_lnz) else float(lnz - base_lnz)
+                0.0 if np.equal(lnz, base_lnz) else float(lnz - base_lnz)
                 for lnz, base_lnz in zip(self.lnz, self.base.lnz, strict=True)
             ),
         )
