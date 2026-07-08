@@ -8,7 +8,14 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
     from typing import Any
 
+    from .typing import OptionalKwsAny
     from .typing_compat import Self
+
+
+def convert_mapping_or_none_to_dict(kws: OptionalKwsAny) -> dict[str, Any]:
+    if kws is None:
+        return {}
+    return dict(kws)
 
 
 def _get_smart_filter(

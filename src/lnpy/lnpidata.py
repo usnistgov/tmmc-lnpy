@@ -10,12 +10,14 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import TYPE_CHECKING, cast, overload
 
+import attrs
 import numpy as np
 import pandas as pd
 import xarray as xr
 from module_utilities import cached
 
 from .core import validate
+from .core._attrs_utils import MyAttrsMixin, convert_mapping_or_none_to_dict
 from .core.compat import copy_if_needed
 from .core.docstrings import docfiller
 from .core.mask import labels_to_masks, masks_change_convention
@@ -32,7 +34,7 @@ if TYPE_CHECKING:
         Sequence,
     )
     from pathlib import Path
-    from typing import Any, Concatenate, ParamSpec
+    from typing import Any, ClassVar, Concatenate, ParamSpec, SupportsFloat
 
     from numpy.typing import ArrayLike, DTypeLike, NDArray
 
@@ -92,98 +94,63 @@ def _get_filled(
 
 
 # * lnPiArray -----------------------------------------------------------------
-class lnPiArray:  # noqa: N801
+
+
+def _convert_lnz(lnz: float | np.floating[Any] | ArrayLike) -> NDArray[np.float64]:
+    return np.atleast_1d(lnz).astype(np.float64)
+
+
+def _convert_fill_value(fill_value: SupportsFloat | None) -> float:
+    if fill_value is None:
+        return np.nan
+    return float(fill_value)
+
+
+def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noqa: ARG001
+    if data.ndim != len(self_.lnz):
+        msg = f"Length of {self_.lnz=} must be {data.ndim}"
+        raise ValueError(msg)
+
+
+@docfiller.decorate
+@attrs.frozen(eq=False)  # use eq=False to make hashable by object
+class lnPiArray(MyAttrsMixin):  # noqa: N801
     """
     Wrapper on lnPi lnPiArray
 
     Parameters
     ----------
-    lnz : float or sequence of float
+    {lnz}
+    {data}
+    {state_kws}
+    {extra_kws}
+    {fill_value}
+    {copy}
     """
 
-    @docfiller.decorate
-    def __init__(
-        self,
-        lnz: float | ArrayLike,
-        data: NDArrayAny,
-        state_kws: dict[str, Any] | None = None,
-        extra_kws: dict[str, Any] | None = None,
-        fill_value: float | None = None,
-        copy: bool | None = None,
-    ) -> None:
-        """
-        Parameters
-        ----------
-        {lnz}
-        {data}
-        {state_kws}
-        {extra_kws}
-        {fill_value}
-        {copy}
-        """
-        lnz = np.atleast_1d(lnz).astype(np.float64)
-        data = np.array(data, copy=copy_if_needed(copy))
-        if data.ndim != len(lnz):
-            msg = f"Length of {lnz=} must be {data.ndim}"
-            raise ValueError(msg)
+    lnz: NDArray[np.float64] = attrs.field(converter=_convert_lnz)
+    data: NDArrayAny = attrs.field(converter=np.asarray, validator=_validate_data)
+    state_kws: dict[str, Any] = attrs.field(
+        factory=dict, converter=convert_mapping_or_none_to_dict
+    )
+    extra_kws: dict[str, Any] = attrs.field(
+        factory=dict, converter=convert_mapping_or_none_to_dict
+    )
+    fill_value: float = attrs.field(default=np.nan, converter=_convert_fill_value)
+    copy: bool | None = None
 
-        fill_value = fill_value or np.nan
+    def __attrs_post_init__(self) -> None:
+        if copy_if_needed(self.copy):
+            object.__setattr__(self, "data", self.data.copy())
+        # reset copy
+        object.__setattr__(self, "copy", None)
 
-        if state_kws is None:
-            state_kws = {}
-        if extra_kws is None:
-            extra_kws = {}
-
-        self.data = data
         # make data read only
         self.data.flags.writeable = False
-
-        self.state_kws = state_kws
-        self.extra_kws = extra_kws
-
-        self.lnz: NDArray[np.float64] = lnz
-        self.fill_value = fill_value
 
     @property
     def shape(self) -> tuple[int, ...]:
         return cast("tuple[int, ...]", self.data.shape)
-
-    def new_like(
-        self,
-        lnz: float | ArrayLike | None = None,
-        data: NDArrayAny | None = None,
-        copy: bool | None = None,
-    ) -> Self:
-        """
-        Create new object with optional replacements.
-
-        All parameters are optional.  If not passed, use values in `self`
-
-        Parameters
-        ----------
-        {lnz}
-        {data}
-        {copy}
-
-        Returns
-        -------
-        out : lnPiArray
-            New object with optionally updated parameters.
-
-        """
-        if lnz is None:
-            lnz = self.lnz
-        if data is None:
-            data = self.data
-
-        return type(self)(
-            lnz=lnz,
-            data=data,
-            copy=copy,
-            state_kws=self.state_kws,
-            extra_kws=self.extra_kws,
-            fill_value=self.fill_value,
-        )
 
     @overload
     def pipe(
@@ -247,7 +214,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
     * lnPi : log of macrostate distribution.
     """
 
-    _DataClass = lnPiArray
+    _DataClass: ClassVar[type[lnPiArray]] = lnPiArray
 
     def __init__(
         self,
@@ -680,7 +647,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
 
     def _normalize_axes(self, axes: int | Iterable[int] | None) -> tuple[int, ...]:
         if axes is None:
-            return tuple(range(self.data.ndim))
+            return tuple(range(self.ndim))
         if isinstance(axes, int):
             return (axes,)
         return tuple(axes)

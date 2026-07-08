@@ -41,6 +41,11 @@ __all__ = [
     "XArrayLike",
 ]
 
+# Optional keywords
+_T = TypeVar("_T")
+OptionalKws: TypeAlias = "Mapping[str, _T]| None"
+OptionalKwsAny: TypeAlias = "OptionalKws[Any]"
+
 # * NDArray
 NDArrayAny: TypeAlias = NDArray[Any]
 """Alias for simple :class:`numpy.typing.NDArray[Any]`"""
