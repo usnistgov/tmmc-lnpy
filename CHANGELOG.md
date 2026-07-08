@@ -16,6 +16,18 @@ See the fragment files in [changelog.d]
 <!-- scriv-insert-here -->
 
 
+## 0.9.3
+
+Released on 2026-07-08.
+
+### Bug fixes
+
+- fix: add interpolate_na to lnPiMasked ([#185](https://github.com/usnistgov/tmmc-lnpy/pull/185))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
+
 ## 0.9.2
 
 Released on 2026-07-06.
