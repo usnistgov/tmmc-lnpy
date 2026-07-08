@@ -38,6 +38,7 @@ if TYPE_CHECKING:
 
     from .core.typing import (
         NDArrayAny,
+        OptionalKwsAny,
         PeakError,
         PeakStyle,
         PhasesFactorySignature,
@@ -485,20 +486,26 @@ class Segmenter(MyAttrsMixin):
         )
 
 
-@partial(attrs.Converter, takes_self=True)
-def _convert_merge_kws(value: Mapping[str, Any] | None, self_: Any) -> dict[str, Any]:
-    if value is None:
-        return {}
+if TYPE_CHECKING:
 
-    return dict(value, convention=False, nfeature_max=self_.nmax)
+    def _convert_merge_kws(value: OptionalKwsAny) -> dict[str, Any]: ...
+    def _convert_segment_kws(value: OptionalKwsAny) -> dict[str, Any]: ...
 
+else:
 
-@partial(attrs.Converter, takes_self=True)
-def _convert_segment_kws(value: Mapping[str, Any] | None, self_: Any) -> dict[str, Any]:
-    value = {} if value is None else dict(value)
+    @partial(attrs.Converter, takes_self=True)
+    def _convert_merge_kws(value: OptionalKwsAny, self_: Any) -> dict[str, Any]:
+        if value is None:
+            return {}
 
-    value["num_peaks_max"] = self_.nmax_peak or self_.nmax * 2
-    return value
+        return dict(value, convention=False, nfeature_max=self_.nmax)
+
+    @partial(attrs.Converter, takes_self=True)
+    def _convert_segment_kws(value: OptionalKwsAny, self_: Any) -> dict[str, Any]:
+        value = {} if value is None else dict(value)
+
+        value["num_peaks_max"] = self_.nmax_peak or self_.nmax * 2
+        return value
 
 
 @attrs.define(frozen=True)
@@ -542,14 +549,14 @@ class PhaseCreator(MyAttrsMixin):
     )
     segment_kws: dict[str, Any] = attrs.field(
         default=None,
-        converter=_convert_segment_kws,  # type: ignore[misc]
+        converter=_convert_segment_kws,
     )
     tag_phases: TagPhasesSignature | None = None
     phases_factory: PhasesFactorySignature = attrs.field(
         default=lnPiCollection.from_list
     )
     free_energy_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
-    merge_kws: dict[str, Any] = attrs.field(default=None, converter=_convert_merge_kws)  # type: ignore[misc]
+    merge_kws: dict[str, Any] = attrs.field(default=None, converter=_convert_merge_kws)
 
     # TODO(wpk): make this work with integer or string phase_ids
     @staticmethod
