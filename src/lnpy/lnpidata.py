@@ -7,7 +7,7 @@ lnPi data classes and routines (:mod:`~lnpy.lnpidata`)
 # Delayed
 from __future__ import annotations
 
-from functools import lru_cache, partial
+from functools import lru_cache
 from typing import TYPE_CHECKING, cast, overload
 
 import attrs
@@ -44,6 +44,7 @@ if TYPE_CHECKING:
         InterpolationMethods,
         MaskConvention,
         NDArrayAny,
+        OptionalKwsAny,
     )
     from .core.typing_compat import Self
 
@@ -95,7 +96,7 @@ def _get_filled(
 
 
 # * lnPiArray -----------------------------------------------------------------
-def _convert_lnz(lnz: float | np.floating[Any] | ArrayLike) -> NDArray[np.float64]:
+def _convert_lnz(lnz: ArrayLike) -> NDArray[np.float64]:
     return np.atleast_1d(lnz).astype(np.float64)
 
 
@@ -105,17 +106,6 @@ def _convert_fill_value(fill_value: SupportsFloat | None) -> float:
     return float(fill_value)
 
 
-if TYPE_CHECKING:
-
-    def _convert_data(data: Any) -> NDArrayAny: ...
-
-else:
-
-    @partial(attrs.Converter, takes_self=True)
-    def _convert_data(data: Any, self_: attrs.AttrsInstance) -> NDArrayAny:
-        return np.array(data, copy=copy_if_needed(self_.copy))
-
-
 def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noqa: ARG001
     if data.ndim != len(self_.lnz):
         msg = f"Length of {self_.lnz=} must be {data.ndim}"
@@ -123,7 +113,9 @@ def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noq
 
 
 @docfiller.decorate
-@attrs.frozen(eq=False, kw_only=True)  # use eq=False to make hashable by object
+@attrs.frozen(
+    eq=False, kw_only=True, init=False
+)  # use eq=False to make hashable by object
 class lnPiArray(MyAttrsMixin):  # noqa: N801
     """
     Wrapper on lnPi lnPiArray
@@ -140,7 +132,7 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
 
     copy: bool | None = None
     lnz: NDArray[np.float64] = attrs.field(converter=_convert_lnz)
-    data: NDArrayAny = attrs.field(converter=_convert_data, validator=_validate_data)
+    data: NDArrayAny = attrs.field(validator=_validate_data)
     state_kws: dict[str, Any] = attrs.field(
         factory=dict, converter=convert_mapping_or_none_to_dict
     )
@@ -149,12 +141,30 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
     )
     fill_value: float = attrs.field(default=np.nan, converter=_convert_fill_value)
 
-    def __attrs_post_init__(self) -> None:
-        # reset copy
-        object.__setattr__(self, "copy", None)
+    if TYPE_CHECKING:
+        # Lie to make pyright/pyrefly/ty happy
+        def __attrs_init__(self, **kwargs: Any) -> None: ...
 
-        # make data read only
-        self.data.flags.writeable = False
+    def __init__(
+        self,
+        lnz: float | np.floating[Any] | ArrayLike,
+        data: ArrayLike,
+        state_kws: OptionalKwsAny = None,
+        extra_kws: OptionalKwsAny = None,
+        fill_value: float | None = np.nan,
+        copy: bool | None = None,
+    ) -> None:
+        # NOTE: maybe use view?
+        data = np.array(data, copy=copy_if_needed(copy))
+        data.flags.writeable = False
+
+        self.__attrs_init__(
+            lnz=lnz,
+            data=data,
+            state_kws=state_kws,
+            extra_kws=extra_kws,
+            fill_value=fill_value,
+        )
 
     @overload
     def pipe(
@@ -182,21 +192,6 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
 
 
 # * Masked lnPi object --------------------------------------------------------
-if TYPE_CHECKING:
-    # NOTE: Lie to make typecheckers happy (see e.g., https://github.com/python/mypy/issues/15736)
-    def _convert_mask(mask: NDArrayAny | None) -> NDArrayAny: ...
-
-else:
-
-    @partial(attrs.Converter, takes_self=True)
-    def _convert_mask(
-        mask: NDArrayAny | None, self_: attrs.AttrsInstance
-    ) -> NDArray[np.bool_]:
-        if mask is None:
-            return np.full_like(self_.base.data, fill_value=False, dtype=np.bool_)
-        return np.asarray(mask, copy=copy_if_needed(self_.copy), dtype=np.bool_)
-
-
 def _validate_mask(self_: Any, attribute: Any, mask: NDArray[np.bool_]) -> None:  # noqa: ARG001
     if mask.shape != self_.base.data.shape:
         msg = f"{mask.shape=} must be {self_.base.data.shape}."
@@ -204,7 +199,7 @@ def _validate_mask(self_: Any, attribute: Any, mask: NDArray[np.bool_]) -> None:
 
 
 @docfiller.decorate  # noqa: PLR0904
-@attrs.define(frozen=True, eq=False)
+@attrs.define(frozen=True, eq=False, init=False)
 class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
     """
     Masked array like wrapper for lnPi data.
@@ -242,25 +237,37 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     lnz: NDArray[np.float64] = attrs.field(converter=_convert_lnz)
     base: lnPiArray = attrs.field(validator=av.instance_of(lnPiArray))
-    copy: bool | None = None
-    mask: NDArray[np.bool_] = attrs.field(
-        default=None, converter=_convert_mask, validator=_validate_mask
-    )
+    mask: NDArray[np.bool_] = attrs.field(validator=_validate_mask)
 
-    _dlnz: tuple[float, ...] = attrs.field(factory=tuple, init=False, repr=False)
+    _dlnz: tuple[float, ...] = attrs.field(init=False, repr=False)
     _cache: dict[str, Any] = attrs.field(
         factory=dict[str, "Any"], init=False, repr=False
     )
     _DataClass: ClassVar[type[lnPiArray]] = lnPiArray
 
-    def __attrs_post_init__(self) -> None:
-        # reset copy
-        object.__setattr__(self, "copy", None)
+    if TYPE_CHECKING:
+        # Lie to make pyright/pyrefly/ty happy
+        def __attrs_init__(self, **kwargs: Any) -> None: ...
 
-        # make mask read only
-        self.mask.flags.writeable = False
+    def __init__(
+        self,
+        lnz: ArrayLike,
+        base: lnPiArray,
+        mask: ArrayLike | None = None,
+        copy: bool | None = None,
+    ) -> None:
+        mask = (
+            np.full_like(base.data, fill_value=False, dtype=np.bool_)
+            if mask is None
+            else np.asarray(mask, copy=copy_if_needed(copy), dtype=np.bool_)
+        )
 
-        # set dlnz
+        self.__attrs_init__(
+            lnz=lnz,
+            base=base,
+            mask=mask,
+        )
+
         object.__setattr__(
             self,
             "_dlnz",

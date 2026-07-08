@@ -233,7 +233,6 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
         return out
 
 
-# @attrs.frozen
 class lnPiCollection(AccessorMixin):  # noqa: N801, PLR0904
     r"""
     Wrapper around :class:`pandas.Series` for collection of :class:`~lnpy.lnpidata.lnPiMasked` objects.
@@ -262,37 +261,29 @@ class lnPiCollection(AccessorMixin):  # noqa: N801, PLR0904
 
     """
 
-    concat_dim = "sample"
-    concat_coords = "different"
-    xarray_output = True
-    xarray_unstack = True
     xarray_dot_kws: ClassVar[dict[str, str]] = {"optimize": "optimal"}
     _use_cache = True
 
     def __init__(
         self,
         data: Self | Iterable[lnPiMasked] | pd.Series[Any],
+        *,
         index: ArrayLike | IndexAny | pd.MultiIndex | None = None,
         xarray_output: bool = True,
-        concat_dim: str | None = None,
-        concat_coords: str | None = None,
+        concat_dim: str = "sample",
+        concat_coords: str = "different",
         unstack: bool = True,
         name: Hashable | None = None,
         base_class: Literal["first"] | type[lnPiMasked] = "first",
         dtype: DTypeLike | None = None,
     ) -> None:
-        if concat_dim is not None:
-            self.concat_dim = concat_dim
-        if concat_coords is not None:
-            self.concat_coords = concat_coords
-        if xarray_output is not None:
-            self.xarray_output = xarray_output
-        if unstack is not None:
-            self.xarray_unstack = unstack
+        self.concat_dim = concat_dim
+        self.concat_coords = concat_coords
+        self.xarray_output = xarray_output
+        self.unstack = unstack
 
         if isinstance(data, self.__class__):
-            x = data
-            data = x.s
+            data = data.s
 
         self._base_class = base_class
         self._verify = self._base_class is not None
@@ -371,6 +362,10 @@ class lnPiCollection(AccessorMixin):  # noqa: N801, PLR0904
             index=index,
             **kwargs,
         )
+
+    @property
+    def xarray_unstack(self) -> bool:
+        return self.unstack
 
     # ** Series Specific
     @property
