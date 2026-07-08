@@ -724,7 +724,7 @@ class lnPiMasked(AccessorMixin):  # noqa: N801
                     array_utils.bfill(data, axis=axis, limit=limit) for axis in axes
                 ]
 
-            if len(datas) == 0:
+            if not datas:
                 return data
 
             if len(datas) == 1:
