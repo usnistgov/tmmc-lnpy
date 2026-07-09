@@ -117,40 +117,40 @@ docfiller_local = docfiller.append(
 
 @overload
 def peak_local_max_adaptive(
-    data: NDArrayAny,
+    data: ArrayLike,
     *,
     style: Literal["indices"] = ...,
-    mask: NDArrayAny | None = ...,
+    mask: ArrayLike | None = ...,
     **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
 ) -> tuple[NDArrayAny, ...]: ...
 
 
 @overload
 def peak_local_max_adaptive(
-    data: NDArrayAny,
+    data: ArrayLike,
     *,
     style: Literal["mask", "marker"],
-    mask: NDArrayAny | None = ...,
+    mask: ArrayLike | None = ...,
     **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
 ) -> NDArrayAny: ...
 
 
 @overload
 def peak_local_max_adaptive(
-    data: NDArrayAny,
+    data: ArrayLike,
     *,
     style: str,
-    mask: NDArrayAny | None = ...,
+    mask: ArrayLike | None = ...,
     **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
 ) -> NDArrayAny | tuple[NDArrayAny, ...]: ...
 
 
 @docfiller_local
 def peak_local_max_adaptive(
-    data: NDArrayAny,
+    data: ArrayLike,
     *,
     style: PeakStyle | str = "indices",
-    mask: NDArrayAny | None = None,
+    mask: ArrayLike | None = None,
     min_distance: int | Sequence[int] | None = None,
     threshold_rel: float = 0.0,
     threshold_abs: float = 0.2,
@@ -213,6 +213,8 @@ def peak_local_max_adaptive(
     if not isinstance(min_distance, Iterable):
         min_distance = [min_distance]
 
+    data = np.asarray(data)
+    mask = np.asarray(mask)
     data = data - bottleneck.nanmin(data)  # noqa: PLR6104
 
     peak_local_max_kws = {} if peak_local_max_kws is None else dict(peak_local_max_kws)
@@ -284,50 +286,50 @@ class Segmenter(MyAttrsMixin):
     @overload
     def peaks(
         self,
-        data: NDArrayAny,
+        data: ArrayLike,
         *,
         style: Literal["marker"] = ...,
-        mask: NDArrayAny | None = ...,
+        mask: ArrayLike | None = ...,
         **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny: ...
 
     @overload
     def peaks(
         self,
-        data: NDArrayAny,
+        data: ArrayLike,
         *,
         style: Literal["mask"],
-        mask: NDArrayAny | None = ...,
+        mask: ArrayLike | None = ...,
         **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny: ...
 
     @overload
     def peaks(
         self,
-        data: NDArrayAny,
+        data: ArrayLike,
         *,
         style: Literal["indices"],
-        mask: NDArrayAny | None = ...,
+        mask: ArrayLike | None = ...,
         **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> tuple[NDArrayAny, ...]: ...
 
     @overload
     def peaks(
         self,
-        data: NDArrayAny,
+        data: ArrayLike,
         *,
         style: str,
-        mask: NDArrayAny | None = ...,
+        mask: ArrayLike | None = ...,
         **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny | tuple[NDArrayAny, ...]: ...
 
     @docfiller_local
     def peaks(
         self,
-        data: NDArrayAny,
+        data: ArrayLike,
         *,
         style: PeakStyle | str = "marker",
-        mask: NDArrayAny | None = None,
+        mask: ArrayLike | None = None,
         **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny | tuple[NDArrayAny, ...]:
         """
@@ -364,8 +366,8 @@ class Segmenter(MyAttrsMixin):
     @docfiller_local
     def watershed(
         self,
-        data: NDArrayAny,
-        markers: int | NDArrayAny,
+        data: ArrayLike,
+        markers: int | ArrayLike,
         mask: NDArrayAny,
         *,
         connectivity: int | NDArrayAny | None = None,
@@ -393,6 +395,7 @@ class Segmenter(MyAttrsMixin):
         """
         from skimage.segmentation import watershed  # pylint: disable=no-name-in-module
 
+        data = np.asarray(data)
         kwargs = dict(self.watershed_kws, **kwargs)
         if connectivity is not None:
             kwargs["connectivity"] = connectivity
