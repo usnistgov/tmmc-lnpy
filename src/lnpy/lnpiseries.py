@@ -264,7 +264,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     """
 
-    series: pd.Series[Any] = attrs.field(init=False, repr=False)
+    _data: pd.Series[Any] = attrs.field()
     concat_dim: str
     concat_coords: str
     xarray_output: bool
@@ -295,7 +295,17 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         base_class: Literal["first"] | type[lnPiMasked] = "first",
     ) -> None:
 
+        # NOTE: this avoids typing issues
+        kws: dict[str, Any] = {
+            "data": data.s if isinstance(data, self.__class__) else data,
+            "index": index,
+            "dtype": dtype,
+            "name": name,
+        }
+        series: pd.Series[Any] = pd.Series(**kws)
+
         self.__attrs_init__(
+            data=series,
             concat_dim=concat_dim,
             concat_coords=concat_coords,
             xarray_output=xarray_output,
@@ -303,20 +313,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
             base_class=base_class,
         )
 
-        if isinstance(data, self.__class__):
-            data = data.s
-
-        # NOTE: this avoids typing issues
-        kws: dict[str, Any] = {
-            "data": data,
-            "index": index,
-            "dtype": dtype,
-            "name": name,
-        }
-        series: pd.Series[Any] = pd.Series(**kws)
-
-        self._verify_series(series)
-        object.__setattr__(self, "series", series)
+        self._verify_series(self._data)
 
     def _verify_series(self, series: pd.Series[Any]) -> None:
         series = series.dropna()
@@ -359,6 +356,10 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
     @property
     def xarray_unstack(self) -> bool:
         return self.unstack
+
+    @property
+    def series(self) -> pd.Series[Any]:
+        return self._data
 
     @property
     def s(self) -> pd.Series[Any]:
@@ -908,7 +909,6 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         lnzs: Sequence[float] | NDArrayAny,
         # TODO(wpk): make better type for build_phases.
         build_phases: Callable[..., tuple[list[lnPiMasked], NDArrayAny]],
-        ref: lnPiMasked | None = None,
         build_kws: Mapping[str, Any] | None = None,
         nmax: int | None = None,
         base_class: str | type = "first",
@@ -946,9 +946,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         build_kws = dict(build_kws, phases_factory=False)
         total = len(lnzs)
         seq = get_tqdm(
-            parallel_map(
-                build_phases, lnzs, total=total, ref=ref, nmax=nmax, **build_kws
-            ),
+            parallel_map(build_phases, lnzs, total=total, nmax=nmax, **build_kws),
             total=total,
             desc="build",
         )
