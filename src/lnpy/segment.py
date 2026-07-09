@@ -25,7 +25,7 @@ from module_utilities.docfiller import DocFiller
 from .core import validate
 from .core._attrs_utils import MyAttrsMixin, convert_mapping_or_none_to_dict
 from .core.docstrings import docfiller
-from .core.typing_compat import override
+from .core.typing_compat import TypedDict, override
 from .lnpidata import lnPiMasked
 from .lnpienergy import wFreeEnergy
 from .lnpiseries import lnPiCollection, validate_lnpicollection
@@ -103,6 +103,18 @@ docfiller_local = docfiller.append(
 ).decorate
 
 
+class PeakLocalMaxAdaptiveKwargs(TypedDict, total=False, closed=True):  # type: ignore[call-arg]
+    """Keyword arguments to :func:`peak_local_max_adaptive`"""
+
+    min_distance: Sequence[int] | None
+    threshold_rel: float
+    threshold_abs: float
+    num_peaks_max: int | None
+    connectivity: int | None
+    errors: PeakError
+    peak_local_max_kws: OptionalKwsAny
+
+
 @overload
 def peak_local_max_adaptive(
     data: NDArrayAny,
@@ -115,7 +127,7 @@ def peak_local_max_adaptive(
     num_peaks_max: int | None = ...,
     connectivity: int | None = ...,
     errors: PeakError = ...,
-    **kwargs: Any,
+    peak_local_max_kws: OptionalKwsAny = ...,
 ) -> tuple[NDArrayAny, ...]: ...
 
 
@@ -131,7 +143,7 @@ def peak_local_max_adaptive(
     num_peaks_max: int | None = ...,
     connectivity: int | None = ...,
     errors: PeakError = ...,
-    **kwargs: Any,
+    peak_local_max_kws: OptionalKwsAny = ...,
 ) -> NDArrayAny: ...
 
 
@@ -147,7 +159,7 @@ def peak_local_max_adaptive(
     num_peaks_max: int | None = ...,
     connectivity: int | None = ...,
     errors: PeakError = ...,
-    **kwargs: Any,
+    peak_local_max_kws: OptionalKwsAny = ...,
 ) -> NDArrayAny | tuple[NDArrayAny, ...]: ...
 
 
@@ -163,7 +175,7 @@ def peak_local_max_adaptive(
     num_peaks_max: float | None = None,
     connectivity: int | None = None,
     errors: PeakError = "warn",
-    **kwargs: Any,
+    peak_local_max_kws: OptionalKwsAny = None,
 ) -> NDArrayAny | tuple[NDArrayAny, ...]:
     """
     Find local max with fall backs min_distance and filter.
@@ -185,7 +197,7 @@ def peak_local_max_adaptive(
         - If raise, raise exception if npeaks > num_peaks_max
         - If ignore, return all found maxima
         - If warn, raise warning if npeaks > num_peaks_max
-    **kwargs
+    peak_local_max_kws : dict
         Extra arguments to :func:`~skimage.feature.peak_local_max`
 
     Returns
@@ -221,7 +233,9 @@ def peak_local_max_adaptive(
         min_distance = [min_distance]
 
     data = data - bottleneck.nanmin(data)  # noqa: PLR6104
-    kwargs = dict({"exclude_border": False}, **kwargs)
+
+    peak_local_max_kws = {} if peak_local_max_kws is None else dict(peak_local_max_kws)
+    peak_local_max_kws.setdefault("exclude_border", False)
 
     n = idx = None
     for md in min_distance:
@@ -232,7 +246,7 @@ def peak_local_max_adaptive(
             threshold_abs=threshold_abs,
             threshold_rel=threshold_rel,
             # this option removed in future
-            **kwargs,
+            **peak_local_max_kws,
         )
 
         if (n := len(idx)) <= num_peaks_max:
@@ -833,13 +847,13 @@ class PhaseCreator(MyAttrsMixin):
 class BuildPhasesBase:
     """Base class to build Phases objects from scalar values of `lnz`."""
 
-    def __init__(self, x: list[float | None], phase_creator: PhaseCreator) -> None:
+    def __init__(self, x: Iterable[float | None], phase_creator: PhaseCreator) -> None:
         self.phase_creator = phase_creator
-        # initial x
+        self.x = list(x)
+
         if sum(x is None for x in x) != 1:
             msg = f"{x=} must have a single element which is None.  This will be the dimension varied."
             raise ValueError(msg)
-        self.x = x
 
     @property
     def ncomp(self) -> int:
