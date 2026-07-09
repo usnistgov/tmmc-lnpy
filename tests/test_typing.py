@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, assert_type
+from typing import TYPE_CHECKING
 
 from lnpy.core.typing import NDArrayAny
 
@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 def type_peak_local_max_adaptive(
     data: NDArrayAny, kws: PeakLocalMaxAdaptiveKwargs
 ) -> None:
+
+    from typing_extensions import assert_type
 
     from lnpy.segment import peak_local_max_adaptive
 
