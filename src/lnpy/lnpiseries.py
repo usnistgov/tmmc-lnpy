@@ -297,7 +297,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
         # NOTE: this avoids typing issues
         kws: dict[str, Any] = {
-            "data": data.s if isinstance(data, self.__class__) else data,
+            "data": data.series if isinstance(data, self.__class__) else data,
             "index": index,
             "dtype": dtype,
             "name": name,
@@ -364,7 +364,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
     @property
     def s(self) -> pd.Series[Any]:
         """Alias to :meth:`series`"""
-        return self.series
+        return self._data
 
     def __iter__(self) -> Iterator[lnPiMasked]:
         return iter(self.series)
