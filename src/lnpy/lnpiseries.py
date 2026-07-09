@@ -359,6 +359,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     @property
     def series(self) -> pd.Series[Any]:
+        """Underlying series."""
         return self._data
 
     @property
@@ -910,7 +911,6 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         # TODO(wpk): make better type for build_phases.
         build_phases: Callable[..., tuple[list[lnPiMasked], NDArrayAny]],
         build_kws: Mapping[str, Any] | None = None,
-        nmax: int | None = None,
         base_class: str | type = "first",
         **kwargs: Any,
     ) -> Self:
@@ -946,7 +946,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         build_kws = dict(build_kws, phases_factory=False)
         total = len(lnzs)
         seq = get_tqdm(
-            parallel_map(build_phases, lnzs, total=total, nmax=nmax, **build_kws),
+            parallel_map(build_phases, lnzs, total=total, **build_kws),
             total=total,
             desc="build",
         )

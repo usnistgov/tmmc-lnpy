@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import warnings
 from collections.abc import Iterable
-from functools import lru_cache, partial
+from functools import partial
 from typing import TYPE_CHECKING, cast, overload
 
 import attrs
@@ -313,6 +313,7 @@ class Segmenter(MyAttrsMixin):
         mask: NDArrayAny | None = ...,
         *,
         num_peaks_max: int | None = ...,
+        connectivity: int | None = None,
         style: Literal["indices"],
         **kwargs: Any,
     ) -> tuple[NDArrayAny, ...]: ...
@@ -324,6 +325,7 @@ class Segmenter(MyAttrsMixin):
         mask: NDArrayAny | None = ...,
         *,
         num_peaks_max: int | None = ...,
+        connectivity: int | None = None,
         style: str,
         **kwargs: Any,
     ) -> NDArrayAny | tuple[NDArrayAny, ...]: ...
@@ -335,6 +337,7 @@ class Segmenter(MyAttrsMixin):
         mask: NDArrayAny | None = None,
         *,
         num_peaks_max: int | None = None,
+        connectivity: int | None = None,
         style: PeakStyle | str = "marker",
         **kwargs: Any,
     ) -> NDArrayAny | tuple[NDArrayAny, ...]:
@@ -346,6 +349,7 @@ class Segmenter(MyAttrsMixin):
         ----------
         {data}
         {num_peaks_max}
+        {connectivity_morphology}
         {peak_style}
         {mask_image}
         **kwargs
@@ -370,6 +374,8 @@ class Segmenter(MyAttrsMixin):
             kwargs["mask"] = mask
         if num_peaks_max is not None:
             kwargs["num_peaks_max"] = num_peaks_max
+        if connectivity is None:
+            kwargs["connectivity"] = connectivity
         kwargs["style"] = style
         kwargs = dict(self.peak_kws, **kwargs)
         return cast(
@@ -411,7 +417,9 @@ class Segmenter(MyAttrsMixin):
         if connectivity is None:
             connectivity = data.ndim
 
-        kwargs = dict(self.watershed_kws, connectivity=connectivity, **kwargs)
+        kwargs = dict(self.watershed_kws, **kwargs)
+        kwargs.setdefault("connectivity", connectivity)
+
         return validate.ndarrayany(
             watershed(data, markers=markers, mask=mask, **kwargs)
         )
@@ -423,7 +431,7 @@ class Segmenter(MyAttrsMixin):
         markers: int | NDArrayAny | None = None,
         find_peaks: bool = True,
         num_peaks_max: int | None = None,
-        connectivity: NDArrayAny | None = None,
+        connectivity: int | NDArrayAny | None = None,
         peaks_kws: Mapping[str, Any] | None = None,
         watershed_kws: Mapping[str, Any] | None = None,
     ) -> NDArrayAny:
@@ -466,7 +474,9 @@ class Segmenter(MyAttrsMixin):
                     lnpi.data,
                     mask=~lnpi.mask,
                     num_peaks_max=num_peaks_max,
-                    connectivity=connectivity,
+                    connectivity=connectivity
+                    if not isinstance(connectivity, np.ndarray)
+                    else None,
                     style="marker",
                     **peaks_kws,
                 )
@@ -508,6 +518,7 @@ else:
         return value
 
 
+@docfiller_local
 @attrs.define(frozen=True)
 class PhaseCreator(MyAttrsMixin):
     """
@@ -534,16 +545,20 @@ class PhaseCreator(MyAttrsMixin):
         Defaults to :meth:`.lnPiCollection.from_list`.
     free_energy_kws : mapping, optional
         Optional arguments to ...
+    merge_phases: bool, default=True
+        If True, merge phases using :meth:`.wFreeEnergy.merge_regions`
     merge_kws : mapping, optional
-        Optional arguments to :func:`.merge_regions`
+        Optional arguments to :meth:`.wFreeEnergy.merge_regions`
+    merge_phase_ids: bool, default=True
+        If ``True``, merge phases with same phase id (from ``tag_phases``).
+    {connectivity_morphology}
 
     """
 
     nmax: int
+    ref: lnPiMasked = attrs.field(validator=av.instance_of(lnPiMasked))
     nmax_peak: int | None = None
-    ref: lnPiMasked | None = attrs.field(
-        default=None, validator=av.optional(av.instance_of(lnPiMasked))
-    )
+    connectivity: int | None = None
     segmenter: Segmenter = attrs.field(
         factory=Segmenter, validator=av.instance_of(Segmenter)
     )
@@ -556,7 +571,9 @@ class PhaseCreator(MyAttrsMixin):
         default=lnPiCollection.from_list
     )
     free_energy_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
+    merge_phases: bool = True
     merge_kws: dict[str, Any] = attrs.field(default=None, converter=_convert_merge_kws)
+    merge_phase_ids: bool = True
 
     # TODO(wpk): make this work with integer or string phase_ids
     @staticmethod
@@ -594,84 +611,40 @@ class PhaseCreator(MyAttrsMixin):
     def build_phases(
         self,
         lnz: float | Sequence[float] | ArrayLike | NDArrayAny | None = ...,
-        ref: lnPiMasked | None = ...,
         *,
         efac: float | None = ...,
-        nmax: int | None = ...,
-        nmax_peak: int | None = ...,
-        connectivity: int | None = ...,
-        reweight_kws: Mapping[str, Any] | None = ...,
-        merge_phase_ids: bool = True,
-        merge_phases: bool = True,
         phases_factory: PhasesFactorySignature | Literal[True] = ...,
         phase_kws: Mapping[str, Any] | None = ...,
-        segment_kws: Mapping[str, Any] | None = ...,
-        free_energy_kws: Mapping[str, Any] | None = ...,
-        merge_kws: Mapping[str, Any] | None = ...,
-        tag_phases: TagPhasesSignature | None = ...,
     ) -> lnPiCollection: ...
 
     @overload
     def build_phases(
         self,
         lnz: float | Sequence[float] | ArrayLike | NDArrayAny | None = ...,
-        ref: lnPiMasked | None = ...,
         *,
         efac: float | None = ...,
-        nmax: int | None = ...,
-        nmax_peak: int | None = ...,
-        connectivity: int | None = ...,
-        reweight_kws: Mapping[str, Any] | None = ...,
-        merge_phase_ids: bool = True,
-        merge_phases: bool = True,
         phases_factory: Literal[False],
         phase_kws: Mapping[str, Any] | None = ...,
-        segment_kws: Mapping[str, Any] | None = ...,
-        free_energy_kws: Mapping[str, Any] | None = ...,
-        merge_kws: Mapping[str, Any] | None = ...,
-        tag_phases: TagPhasesSignature | None = ...,
     ) -> tuple[list[lnPiMasked], NDArrayAny]: ...
 
     @overload
     def build_phases(
         self,
         lnz: float | Sequence[float] | ArrayLike | NDArrayAny | None = ...,
-        ref: lnPiMasked | None = ...,
         *,
         efac: float | None = ...,
-        nmax: int | None = ...,
-        nmax_peak: int | None = ...,
-        connectivity: int | None = ...,
-        reweight_kws: Mapping[str, Any] | None = ...,
-        merge_phase_ids: bool = True,
-        merge_phases: bool = True,
         phases_factory: PhasesFactorySignature | bool,
         phase_kws: Mapping[str, Any] | None = ...,
-        segment_kws: Mapping[str, Any] | None = ...,
-        free_energy_kws: Mapping[str, Any] | None = ...,
-        merge_kws: Mapping[str, Any] | None = ...,
-        tag_phases: TagPhasesSignature | None = ...,
     ) -> tuple[list[lnPiMasked], NDArrayAny] | lnPiCollection: ...
 
     @docfiller_local
     def build_phases(
         self,
         lnz: float | Sequence[float] | ArrayLike | NDArrayAny | None = None,
-        ref: lnPiMasked | None = None,
         *,
         efac: float | None = None,
-        nmax: int | None = None,
-        nmax_peak: int | None = None,
-        connectivity: int | None = None,
-        reweight_kws: Mapping[str, Any] | None = None,
-        merge_phase_ids: bool = True,
-        merge_phases: bool = True,
         phases_factory: PhasesFactorySignature | bool = True,
         phase_kws: Mapping[str, Any] | None = None,
-        segment_kws: Mapping[str, Any] | None = None,
-        free_energy_kws: Mapping[str, Any] | None = None,
-        merge_kws: Mapping[str, Any] | None = None,
-        tag_phases: TagPhasesSignature | None = None,
     ) -> tuple[list[lnPiMasked], NDArrayAny] | lnPiCollection:
         """
         Construct 'phases' for a lnPi object.
@@ -688,31 +661,12 @@ class PhaseCreator(MyAttrsMixin):
         lnz : int or sequence of int, optional
             lnz value to evaluate `ref` at.  If not specified, use
             `ref.lnz`
-        ref : lnPiMasked
-            Object to be segmented
         efac : float, optional
             Optional value to use in energetic merging of phases.
-        nmax : int, optional
-            Maximum number of phases.  Defaults to `self.nmax`
-        nmax_peak : int, optional
-            Maximum number of peaks to allow in :func:`peak_local_max_adaptive`.
-            Note that this value can be larger than `nmax`.  Defaults to `self.nmax_peak`.
         {connectivity_morphology}
-        reweight_kws : mapping, optional
-            Extra arguments to `ref.reweight`
-        merge_phase_ids : bool, default=True
-            If True and calling `tag_phases` routine, merge phases with same phase_id.
         {phases_factory}
         phase_kws : mapping, optional
             Extra arguments to `phases_factory`
-        segment_kws : mapping, optional
-            Extra arguments to `self.segmenter.segment_lnpi`
-        free_energy_kws : mapping, optional
-            Extra arguments to free energy calculation
-        merge_kws : mapping, optional
-            Extra arguments to merge
-        tag_phases : callable, optional
-            Function to tag phases.  Defaults to `self.tag_phases`
 
         Returns
         -------
@@ -728,51 +682,37 @@ class PhaseCreator(MyAttrsMixin):
         ) -> dict[str, Any]:
             return dict(class_kws or {}, **default_kws, **(passed_kws or {}))
 
-        if ref is None:
-            if self.ref is None:
-                msg = "must specify ref or self.ref"
-                raise ValueError(msg)
-            ref = self.ref
+        ref = self.ref
+        nmax = self.nmax
 
         # reweight
         if lnz is not None:
-            if reweight_kws is None:
-                reweight_kws = {}
-            ref = ref.reweight(lnz, **reweight_kws)
-
-        if nmax is None:
-            nmax = self.nmax
-
-        if nmax_peak is None:
-            nmax_peak = nmax * 2
+            ref = ref.reweight(lnz)
 
         connectivity_kws = {}
-        if connectivity is not None:
-            connectivity_kws["connectivity"] = connectivity
+        if self.connectivity is not None:
+            connectivity_kws["connectivity"] = self.connectivity
 
         if nmax > 1:
             # segment lnpi using watershed
             segment_kws = _combine_kws(
                 self.segment_kws,
-                segment_kws,
-                num_peaks_max=nmax_peak,
+                {},
                 **connectivity_kws,
             )
             labels = self.segmenter.segment_lnpi(lnpi=ref, **segment_kws)
 
             # analyze w = - lnPi
-            free_energy_kws = _combine_kws(
-                self.free_energy_kws, free_energy_kws, **connectivity_kws
-            )
+            free_energy_kws = _combine_kws(self.free_energy_kws, {}, **connectivity_kws)
             wlnpi = wFreeEnergy.from_labels(
                 data=ref.data, labels=labels, **free_energy_kws
             )
 
-            if merge_phases:
+            if self.merge_phases:
                 # merge
                 other_kws = {} if efac is None else {"efac": efac}
                 merge_kws = _combine_kws(
-                    self.merge_kws, merge_kws, nfeature_max=nmax, **other_kws
+                    self.merge_kws, {}, nfeature_max=nmax, **other_kws
                 )
                 masks, _, _ = wlnpi.merge_regions(**merge_kws)
             else:
@@ -782,11 +722,10 @@ class PhaseCreator(MyAttrsMixin):
             lnpis = ref.list_from_masks(masks, convention=False)
 
             # tag phases?
-            if tag_phases is None:
-                tag_phases = self.tag_phases
+            tag_phases = self.tag_phases
             if tag_phases is not None:
                 index = tag_phases(lnpis)
-                if merge_phase_ids:
+                if self.merge_phase_ids:
                     index, lnpis = self._merge_phase_ids(ref, index, lnpis)
             else:
                 index = list(range(len(lnpis)))
@@ -1141,8 +1080,3 @@ class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
             phases_factory=phases_factory,
             **kwargs,
         )
-
-
-@lru_cache(maxsize=10)
-def get_default_phasecreator(nmax: int) -> PhaseCreator:
-    return PhaseCreator(nmax=nmax)

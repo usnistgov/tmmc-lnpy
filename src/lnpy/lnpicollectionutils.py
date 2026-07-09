@@ -62,7 +62,6 @@ def get_lnz_min(
     component: int | str | None = None,
     dlnz: float = 0.5,
     dfac: float = 1.0,
-    ref: lnPiMasked | None = None,
     build_kws: Mapping[str, Any] | None = None,
     ntry: int = 20,
     solve_kws: Mapping[str, Any] | None = None,
@@ -87,8 +86,6 @@ def get_lnz_min(
     dlnz : float, default=0.5
         how to change the chemical potential if `collection` doesn't already
         bracket solution
-    ref : lnPiMasked, optional
-        optional lnPiMasked object to pass to build_phases
     build_kws : dictionary, optional
         optional arguments to `build_phases`
     ntry : int, default=20
@@ -148,9 +145,7 @@ def get_lnz_min(
         dlnz_left = dlnz
         for _i in range(ntry):
             new_lnz -= dlnz_left
-            p = build_phases._call_and_validate_is_lnpicollection(
-                new_lnz, ref=ref, **build_kws
-            )
+            p = build_phases._call_and_validate_is_lnpicollection(new_lnz, **build_kws)
             if phase_id in p._get_level("phase") and getter(p).to_numpy() < target:
                 left = p
                 break
@@ -171,9 +166,7 @@ def get_lnz_min(
 
         for _i in range(ntry):
             new_lnz += dlnz_right
-            p = build_phases._call_and_validate_is_lnpicollection(
-                new_lnz, ref=ref, **build_kws
-            )
+            p = build_phases._call_and_validate_is_lnpicollection(new_lnz, **build_kws)
 
             if phase_id not in p._get_level("phase"):
                 # went to far
@@ -194,9 +187,7 @@ def get_lnz_min(
 
     def f(x: float) -> float:
         lnz_new = x
-        p = build_phases._call_and_validate_is_lnpicollection(
-            lnz_new, ref=ref, **build_kws
-        )
+        p = build_phases._call_and_validate_is_lnpicollection(lnz_new, **build_kws)
         shared["lnpi"] = p
         return array_to_scalar(getter(p).values) - target
 
@@ -210,7 +201,6 @@ def get_lnz_min(
 def get_lnz_max(
     edge_distance_min: int,
     build_phases: BuildPhasesBase,
-    ref: lnPiMasked | None = None,
     lnz_start: float | None = None,
     collection: lnPiCollection | None = None,
     dlnz: float = 0.5,
@@ -221,10 +211,7 @@ def get_lnz_max(
 ) -> tuple[lnPiCollection, dict[str, int | float]]:
     """Find max lnz by bisection"""
     build_kws = build_kws or {}
-    if (ref := ref or build_phases.phase_creator.ref) is None:
-        msg = "must specify `ref` or build_phases must have access to reference lnPiMasked object"
-        raise ValueError(msg)
-
+    ref = build_phases.phase_creator.ref
     lnz_idx = build_phases.index
     lnz_start = float(lnz_start or ref.lnz[lnz_idx])
 
@@ -271,9 +258,7 @@ def get_lnz_max(
         dlnz_loc = dlnz
         for i in range(ntry):
             lnz_left -= dlnz_loc
-            p = build_phases._call_and_validate_is_lnpicollection(
-                lnz_left, ref=ref, **build_kws
-            )
+            p = build_phases._call_and_validate_is_lnpicollection(lnz_left, **build_kws)
             if getter(p).to_numpy() >= edge_distance_min:
                 left = p
                 n_left = i
@@ -294,7 +279,7 @@ def get_lnz_max(
         for i in range(ntry):
             lnz_right += dlnz_loc
             p = build_phases._call_and_validate_is_lnpicollection(
-                lnz_right, ref=ref, **build_kws
+                lnz_right, **build_kws
             )
 
             if getter(p).to_numpy() < edge_distance_min:
@@ -318,9 +303,7 @@ def get_lnz_max(
             tried = i
             break
         lnz_mid = 0.5 * (lnz[0] + lnz[1])
-        mid = build_phases._call_and_validate_is_lnpicollection(
-            lnz_mid, ref=ref, **build_kws
-        )
+        mid = build_phases._call_and_validate_is_lnpicollection(lnz_mid, **build_kws)
         y_mid = getter(mid).to_numpy()
 
         index = 0 if y_mid >= edge_distance_min else 1
@@ -440,9 +423,7 @@ def limited_collection(
     dens_min: float | None = None,
     lnz_min_kws: Mapping[str, Any] | None = None,
     lnz_max_kws: Mapping[str, Any] | None = None,
-    ref: lnPiMasked | None = None,
     build_kws: Mapping[str, Any] | None = None,
-    nmax: int | None = None,
     xarray_output: bool = True,
     collection_kws: Mapping[str, Any] | None = None,
     limit_course: bool = False,
@@ -454,13 +435,8 @@ def limited_collection(
     ----------
     build_phases :
     """
-    if lnz_range is None:
-        if (ref := ref or build_phases.phase_creator.ref) is None:
-            msg = "Must pass in ref or build_phases must have access to reference lnPiMasked object"
-            raise ValueError(msg)
-        x0 = ref.lnz[build_phases.index]
-    else:
-        x0 = None
+    ref = build_phases.phase_creator.ref
+    x0 = ref.lnz[build_phases.index] if lnz_range is None else None
 
     # TODO: update tests to get rid of outlier=True  # noqa: TD002
     lnzs = build_grid(
@@ -486,7 +462,6 @@ def limited_collection(
             lnzs[::course_step],
             build_phases=build_phases,
             build_kws=build_kws,
-            nmax=nmax,
             xarray_output=xarray_output,
             **collection_kws,
         )
@@ -523,7 +498,6 @@ def limited_collection(
         lnzs,
         build_phases=build_phases,
         build_kws=build_kws,
-        nmax=nmax,
         xarray_output=xarray_output,
         **collection_kws,
     )

@@ -26,7 +26,6 @@ if TYPE_CHECKING:
     from scipy.optimize import RootResults
 
     from .core.typing_compat import Self
-    from .lnpidata import lnPiMasked
     from .lnpiseries import lnPiCollection
     from .segment import BuildPhasesBase
 
@@ -110,7 +109,6 @@ def _initial_bracket_spinodal_right(
     dfac: float = 1.0,
     ntry: int = 20,
     step: int = +1,
-    ref: lnPiMasked | None = None,
     build_kws: Mapping[str, Any] | None = None,
 ) -> tuple[lnPiCollection, lnPiCollection]:
     """
@@ -118,7 +116,6 @@ def _initial_bracket_spinodal_right(
 
     Parameters
     ----------
-    ref : lnPiMasked, optional
     build_phases : callable
         scalar function to build phases
     collection : lnPiCollection
@@ -171,9 +168,7 @@ def _initial_bracket_spinodal_right(
         new_lnz = collection.mloc[s_idx.index[[0]]]._get_lnz(build_phases.index)
         for _i in range(ntry):
             new_lnz -= step * dlnz
-            t = build_phases._call_and_validate_is_lnpicollection(
-                new_lnz, ref=ref, **build_kws
-            )
+            t = build_phases._call_and_validate_is_lnpicollection(new_lnz, **build_kws)
             if (
                 idx in t._get_level("phase")
                 and t.wfe_phases.get_dw(idx, idx_nebr) > efac
@@ -195,9 +190,7 @@ def _initial_bracket_spinodal_right(
         dlnz_ = dlnz
         for _i in range(ntry):
             new_lnz += step * dlnz_
-            t = build_phases._call_and_validate_is_lnpicollection(
-                new_lnz, ref=ref, **build_kws
-            )
+            t = build_phases._call_and_validate_is_lnpicollection(new_lnz, **build_kws)
             if (
                 idx not in t._get_level("phase")
                 or t.wfe_phases.get_dw(idx, idx_nebr) < efac
@@ -222,7 +215,6 @@ def _refine_bracket_spinodal_right(
     nmax: int = 30,
     vmax: float = 1e5,
     vmin: float = 0.0,
-    ref: lnPiMasked | None = None,
     build_kws: Mapping[str, Any] | None = None,
     close_kws: Mapping[str, Any] | None = None,
 ) -> tuple[lnPiCollection | None, lnPiCollection | None, RootResultTotal]:
@@ -322,9 +314,7 @@ def _refine_bracket_spinodal_right(
             left._get_lnz(build_phases.index) + right._get_lnz(build_phases.index)
         )
 
-        mid = build_phases._call_and_validate_is_lnpicollection(
-            lnz_mid, ref=ref, **build_kws
-        )
+        mid = build_phases._call_and_validate_is_lnpicollection(lnz_mid, **build_kws)
         if (idx in mid._get_level("phase")) and (
             mid.wfe_phases.get_dw(idx, idx_nebr) >= efac
         ):
@@ -373,14 +363,12 @@ class _SolveSpinodal:
         idx: int,
         idx_nebr: int | None = None,
         efac: float = 1.0,
-        ref: lnPiMasked | None = None,
         build_kws: Mapping[str, Any] | None = None,
     ) -> None:
         self.build_phases = build_phases
         self.idx = idx
         self.idx_nebr = idx_nebr
         self.efac = efac
-        self.ref = ref
         self.build_kws = build_kws or {}
         self._collection: lnPiCollection | None = None
 
@@ -393,7 +381,7 @@ class _SolveSpinodal:
 
     def objective(self, x: float) -> float:
         self._collection = self.build_phases._call_and_validate_is_lnpicollection(
-            x, ref=self.ref, **self.build_kws
+            x, **self.build_kws
         )
         dw = self._collection.wfe_phases.get_dw(self.idx, self.idx_nebr)
 
@@ -426,7 +414,6 @@ def get_spinodal(
     ntry: int = 20,
     step: int | None = None,
     nmax: int = 20,
-    ref: lnPiMasked | None = None,
     build_kws: Mapping[str, Any] | None = None,
     close_kws: Mapping[str, Any] | None = None,
     solve_kws: Mapping[str, Any] | None = None,
@@ -436,7 +423,6 @@ def get_spinodal(
 
     Parameters
     ----------
-    ref : lnPiMasked
     collection : lnPiCollection
         initial estimates to work from.  Function assumes collection is in lnz sorted order
     idx, idx_nebr : int
@@ -457,8 +443,8 @@ def get_spinodal(
         if None, try to determine step
     nmax : int, default=20
         max number of steps to refine bracket
-    build_phases : callable, optional
-        Function to create Phases.  Default is that from get_default_phasecreator
+    build_phases : callable
+        Function to create Phases.
     build_kws : dict, optional
         extra arguments to ``build_phases``
     close_kws : dict, optional
@@ -496,7 +482,6 @@ def get_spinodal(
         dfac=dfac,
         ntry=ntry,
         step=step,
-        ref=ref,
         build_phases=build_phases,
         build_kws=build_kws,
     )
@@ -510,7 +495,6 @@ def get_spinodal(
         nmax=nmax,
         vmin=vmin,
         vmax=vmax,
-        ref=ref,
         build_phases=build_phases,
         build_kws=build_kws,
         close_kws=close_kws,
@@ -536,7 +520,6 @@ def get_spinodal(
 
     a, b = (x._get_lnz(build_phases.index) for x in (left, right))
     _lnz, r, spin = _SolveSpinodal(
-        ref=ref,
         idx=idx,
         idx_nebr=idx_nebr,
         efac=efac,
@@ -558,8 +541,6 @@ class _SolveBinodal:
 
     Parameters
     ----------
-    ref : lnPiMasked
-        object to reweight
     build_phases : callable
         function to create Phases object
     build_kws : dict, optional
@@ -569,11 +550,9 @@ class _SolveBinodal:
     def __init__(
         self,
         build_phases: BuildPhasesBase,
-        ref: lnPiMasked | None = None,
         build_kws: Mapping[str, Any] | None = None,
     ) -> None:
         self.build_phases = build_phases
-        self.ref = ref
         self.build_kws = build_kws or {}
         self._ids: tuple[int, int] | None = None
         self._collection: lnPiCollection | None = None
@@ -594,7 +573,7 @@ class _SolveBinodal:
 
     def objective(self, x: float) -> float:
         self._collection = self.build_phases._call_and_validate_is_lnpicollection(
-            x, ref=self.ref, **self.build_kws
+            x, **self.build_kws
         )
         out = (
             self._collection.xge
@@ -763,7 +742,6 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
         build_phases: BuildPhasesBase,
         *,
         inplace: Literal[True] = ...,
-        ref: lnPiMasked | None = ...,
         build_kws: Mapping[str, Any] | None = ...,
         force: bool = ...,
         as_dict: bool = ...,
@@ -779,7 +757,6 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
         build_phases: BuildPhasesBase,
         *,
         inplace: Literal[False],
-        ref: lnPiMasked | None = ...,
         build_kws: Mapping[str, Any] | None = ...,
         force: bool = ...,
         as_dict: bool = ...,
@@ -797,7 +774,6 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
         build_phases: BuildPhasesBase,
         *,
         inplace: bool,
-        ref: lnPiMasked | None = ...,
         build_kws: Mapping[str, Any] | None = ...,
         force: bool = ...,
         as_dict: bool = ...,
@@ -818,7 +794,6 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
         build_phases: BuildPhasesBase,
         *,
         inplace: bool = True,
-        ref: lnPiMasked | None = None,
         build_kws: Mapping[str, Any] | None = None,
         force: bool = False,
         as_dict: bool = True,
@@ -841,7 +816,6 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
         build_phases : callable
             Factory function to build phases.
             This should most likely be an instance of :class:`lnpy.segment.BuildPhasesBase`
-        ref : lnPiMasked, optional
         build_kws : dict, optional
             optional arguments to `build_phases`
         inplace : bool, default=True
@@ -878,7 +852,6 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
         info: dict[int, RootResultTotal] = {}
         for idx in phase_ids:
             s, r = get_spinodal(
-                ref=ref,
                 collection=self._parent,
                 idx=idx,
                 build_phases=build_phases,
@@ -955,7 +928,6 @@ class Binodals(StabilityBase["lnPiCollection"]):
         *,
         inplace: Literal[True] = ...,
         spinodals: Spinodals | None = ...,
-        ref: lnPiMasked | None = ...,
         build_kws: Mapping[str, Any] | None = ...,
         force: bool = ...,
         as_dict: bool = ...,
@@ -972,7 +944,6 @@ class Binodals(StabilityBase["lnPiCollection"]):
         *,
         inplace: Literal[False],
         spinodals: Spinodals | None = ...,
-        ref: lnPiMasked | None = ...,
         build_kws: Mapping[str, Any] | None = ...,
         force: bool = ...,
         as_dict: bool = ...,
@@ -991,7 +962,6 @@ class Binodals(StabilityBase["lnPiCollection"]):
         *,
         inplace: bool,
         spinodals: Spinodals | None = ...,
-        ref: lnPiMasked | None = ...,
         build_kws: Mapping[str, Any] | None = ...,
         force: bool = ...,
         as_dict: bool = ...,
@@ -1010,7 +980,6 @@ class Binodals(StabilityBase["lnPiCollection"]):
         *,
         inplace: bool = True,
         spinodals: Spinodals | None = None,
-        ref: lnPiMasked | None = None,
         build_kws: Mapping[str, Any] | None = None,
         force: bool = False,
         as_dict: bool = True,
@@ -1034,7 +1003,6 @@ class Binodals(StabilityBase["lnPiCollection"]):
         spinodals : optional
             if not passes, then use parent.spinodal
             Used for bounding binodal
-        ref : lnPiMasked, optional
         build_kws : dict, optional
             optional arguments to `build_phases`
         force : bool, optional
@@ -1059,9 +1027,7 @@ class Binodals(StabilityBase["lnPiCollection"]):
         if inplace and self._items is not None and not force:
             return self
 
-        self._solver = _SolveBinodal(
-            ref=ref, build_phases=build_phases, build_kws=build_kws
-        )
+        self._solver = _SolveBinodal(build_phases=build_phases, build_kws=build_kws)
 
         phase_ids = list(range(phase_ids) if isinstance(phase_ids, int) else phase_ids)
 
