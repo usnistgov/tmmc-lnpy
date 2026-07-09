@@ -110,6 +110,6 @@ def test_1(ref) -> None:
         ref=ref,
         tag_phases=None,
         merge_kws={"efac": 0.1},
-        segment_kws={"peaks_kws": {"min_distance": [5]}},
+        peak_kws={"min_distance": [5]},
     )
     do_test(phase_creator, ref, "data_1.csv")

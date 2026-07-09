@@ -37,9 +37,9 @@ if TYPE_CHECKING:
     _FindBoundariesMethod = Literal["exact", "approx"]
     _Extrema = Literal["min", "max"]
 
-    _FillArg: TypeAlias = "int | None"
-    _FillVal: TypeAlias = "float | None"
-    _ExtremaArg: TypeAlias = "int | tuple[int, ...] | None"
+    _FillArg: TypeAlias = int | None
+    _FillVal: TypeAlias = float | None
+    _ExtremaArg: TypeAlias = int | tuple[int, ...] | None
 
 
 @docfiller.decorate
@@ -436,6 +436,7 @@ class wFreeEnergy:  # noqa: N801
         connectivity: int | None = None,
         features: Sequence[int] | None = None,
         include_boundary: bool = False,
+        check_features: bool = True,
         **kwargs: Any,
     ) -> Self:
         """
@@ -449,8 +450,9 @@ class wFreeEnergy:  # noqa: N801
         {find_boundary_connectivity}
         {features}
         {include_boundary}
+        {check_features}
         **kwargs
-            Extra arguments to :func:`~lnpy.core.mask.labels_to_masks`
+            Extra arguments to :func:`skimage.segmentation.find_boundaries`
 
         Returns
         -------
@@ -463,8 +465,9 @@ class wFreeEnergy:  # noqa: N801
         masks, features = labels_to_masks(
             labels,
             features=features,
-            convention="image",
             include_boundary=include_boundary,
+            convention="image",
+            check_features=check_features,
             **kwargs,
         )
         return cls(data=data, masks=masks, connectivity=connectivity)

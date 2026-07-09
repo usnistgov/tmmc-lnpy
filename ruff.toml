@@ -52,6 +52,9 @@ ignore = [
     "S607",    # - start-process-with-partial-path
     "TID252",  # - Allow relative imports
 ]
+# typing modules
+typing-modules = [ "lnpy.core.typing", "lnpy.core.typing_compat", "lnpy.core.typing_kwargs" ]
+
 
 [lint.isort]
 known-first-party = [
@@ -126,7 +129,7 @@ strictly-empty-init-modules = false
 "src/lnpy/_lib/factory.py" = [
     "D101",
 ]
-"src/lnpy/core/typing.py" = [
+"src/lnpy/core/typing" = [
     "A005",
 ]
 "src/lnpy/ensembles.py" = [

@@ -44,7 +44,7 @@ __all__ = [
 # Optional keywords
 _T = TypeVar("_T")
 OptionalKws: TypeAlias = "Mapping[str, _T]| None"
-OptionalKwsAny: TypeAlias = "OptionalKws[Any]"
+OptionalKwsAny: TypeAlias = "Mapping[str, Any] | None"
 
 # * NDArray
 NDArrayAny: TypeAlias = NDArray[Any]

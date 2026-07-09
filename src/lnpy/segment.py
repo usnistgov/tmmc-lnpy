@@ -21,11 +21,22 @@ import attrs
 import attrs.validators as av
 import numpy as np
 from module_utilities.docfiller import DocFiller
+from skimage.feature import peak_local_max
 
 from .core import validate
-from .core._attrs_utils import MyAttrsMixin, convert_mapping_or_none_to_dict
+from .core._attrs_utils import MyAttrsMixin
 from .core.docstrings import docfiller
-from .core.typing_compat import TypedDict, override
+from .core.typing_compat import override
+from .core.typing_kwargs import (
+    MergeKwargs,
+    PeakLocalMaxAdaptiveKwargs,
+    WatershedKwargs,
+    convert_free_energy_kws,
+    convert_merge_kws,
+    convert_peak_kws,
+    convert_watershed_kws,
+    wFreeEnergyKwargs,
+)
 from .lnpidata import lnPiMasked
 from .lnpienergy import wFreeEnergy
 from .lnpiseries import lnPiCollection, validate_lnpicollection
@@ -44,6 +55,7 @@ if TYPE_CHECKING:
         PhasesFactorySignature,
         TagPhasesSignature,
     )
+    from .core.typing_compat import Unpack
 
 
 # * Common doc strings
@@ -103,31 +115,13 @@ docfiller_local = docfiller.append(
 ).decorate
 
 
-class PeakLocalMaxAdaptiveKwargs(TypedDict, total=False, closed=True):  # type: ignore[call-arg]
-    """Keyword arguments to :func:`peak_local_max_adaptive`"""
-
-    min_distance: Sequence[int] | None
-    threshold_rel: float
-    threshold_abs: float
-    num_peaks_max: int | None
-    connectivity: int | None
-    errors: PeakError
-    peak_local_max_kws: OptionalKwsAny
-
-
 @overload
 def peak_local_max_adaptive(
     data: NDArrayAny,
     *,
     style: Literal["indices"] = ...,
     mask: NDArrayAny | None = ...,
-    min_distance: Sequence[int] | None = ...,
-    threshold_rel: float = ...,
-    threshold_abs: float = ...,
-    num_peaks_max: int | None = ...,
-    connectivity: int | None = ...,
-    errors: PeakError = ...,
-    peak_local_max_kws: OptionalKwsAny = ...,
+    **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
 ) -> tuple[NDArrayAny, ...]: ...
 
 
@@ -137,13 +131,7 @@ def peak_local_max_adaptive(
     *,
     style: Literal["mask", "marker"],
     mask: NDArrayAny | None = ...,
-    min_distance: Sequence[int] | None = ...,
-    threshold_rel: float = ...,
-    threshold_abs: float = ...,
-    num_peaks_max: int | None = ...,
-    connectivity: int | None = ...,
-    errors: PeakError = ...,
-    peak_local_max_kws: OptionalKwsAny = ...,
+    **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
 ) -> NDArrayAny: ...
 
 
@@ -153,13 +141,7 @@ def peak_local_max_adaptive(
     *,
     style: str,
     mask: NDArrayAny | None = ...,
-    min_distance: Sequence[int] | None = ...,
-    threshold_rel: float = ...,
-    threshold_abs: float = ...,
-    num_peaks_max: int | None = ...,
-    connectivity: int | None = ...,
-    errors: PeakError = ...,
-    peak_local_max_kws: OptionalKwsAny = ...,
+    **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
 ) -> NDArrayAny | tuple[NDArrayAny, ...]: ...
 
 
@@ -186,9 +168,9 @@ def peak_local_max_adaptive(
     Parameters
     ----------
     {data}
+    {peak_style}
     {mask_image}
     {min_distance}
-    {peak_style}
     threshold_rel, threshold_abs : float
         thresholds parameters
     {num_peaks_max}
@@ -215,7 +197,6 @@ def peak_local_max_adaptive(
     The option `mask` is passed as the value `labels` in :func:`~skimage.feature.peak_local_max`
     """
     import bottleneck
-    from skimage.feature import peak_local_max  # pylint: disable=no-name-in-module
     from skimage.morphology import label as morphology_label
 
     possible_styles = {"indices", "mask", "marker"}
@@ -291,69 +272,63 @@ class Segmenter(MyAttrsMixin):
     {watershed_kws}
     """
 
-    peak_kws: dict[str, Any] = attrs.field(
-        factory=dict, converter=convert_mapping_or_none_to_dict
+    peak_kws: PeakLocalMaxAdaptiveKwargs = attrs.field(
+        factory=PeakLocalMaxAdaptiveKwargs,
+        converter=convert_peak_kws,
     )
-    watershed_kws: dict[str, Any] = attrs.field(
-        factory=dict, converter=convert_mapping_or_none_to_dict
+    watershed_kws: WatershedKwargs = attrs.field(
+        factory=WatershedKwargs,
+        converter=convert_watershed_kws,
     )
 
     @overload
     def peaks(
         self,
         data: NDArrayAny,
-        mask: NDArrayAny | None = ...,
         *,
-        num_peaks_max: int | None = ...,
         style: Literal["marker"] = ...,
-        **kwargs: Any,
+        mask: NDArrayAny | None = ...,
+        **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny: ...
 
     @overload
     def peaks(
         self,
         data: NDArrayAny,
-        mask: NDArrayAny | None = ...,
         *,
-        num_peaks_max: int | None = ...,
         style: Literal["mask"],
-        **kwargs: Any,
+        mask: NDArrayAny | None = ...,
+        **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny: ...
 
     @overload
     def peaks(
         self,
         data: NDArrayAny,
-        mask: NDArrayAny | None = ...,
         *,
-        num_peaks_max: int | None = ...,
-        connectivity: int | None = None,
         style: Literal["indices"],
-        **kwargs: Any,
+        mask: NDArrayAny | None = ...,
+        **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> tuple[NDArrayAny, ...]: ...
 
     @overload
     def peaks(
         self,
         data: NDArrayAny,
-        mask: NDArrayAny | None = ...,
         *,
-        num_peaks_max: int | None = ...,
-        connectivity: int | None = None,
         style: str,
-        **kwargs: Any,
+        mask: NDArrayAny | None = ...,
+        **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny | tuple[NDArrayAny, ...]: ...
 
     @docfiller_local
     def peaks(
         self,
         data: NDArrayAny,
-        mask: NDArrayAny | None = None,
         *,
-        num_peaks_max: int | None = None,
-        connectivity: int | None = None,
         style: PeakStyle | str = "marker",
-        **kwargs: Any,
+        mask: NDArrayAny | None = None,
+        **kwargs: Unpack[PeakLocalMaxAdaptiveKwargs],
     ) -> NDArrayAny | tuple[NDArrayAny, ...]:
         """
         Interface to :func:`peak_local_max_adaptive` with default values from `self`.
@@ -362,12 +337,11 @@ class Segmenter(MyAttrsMixin):
         Parameters
         ----------
         {data}
-        {num_peaks_max}
-        {connectivity_morphology}
         {peak_style}
         {mask_image}
         **kwargs
-            Extra arguments to :func:`peak_local_max_adaptive`.
+            Extra arguments to :func:`peak_local_max_adaptive`.  Note that these override
+            ``self.peak_kws``.
 
         Returns
         -------
@@ -384,18 +358,8 @@ class Segmenter(MyAttrsMixin):
         Any value not set will be inherited from `self.peak_kws`
 
         """
-        if mask is not None:
-            kwargs["mask"] = mask
-        if num_peaks_max is not None:
-            kwargs["num_peaks_max"] = num_peaks_max
-        if connectivity is None:
-            kwargs["connectivity"] = connectivity
-        kwargs["style"] = style
-        kwargs = dict(self.peak_kws, **kwargs)
-        return cast(
-            "NDArrayAny | tuple[NDArrayAny, ...]",
-            peak_local_max_adaptive(data, **kwargs),
-        )
+        kwargs = {**self.peak_kws, **kwargs}
+        return peak_local_max_adaptive(data, style=style, mask=mask, **kwargs)
 
     @docfiller_local
     def watershed(
@@ -403,6 +367,7 @@ class Segmenter(MyAttrsMixin):
         data: NDArrayAny,
         markers: int | NDArrayAny,
         mask: NDArrayAny,
+        *,
         connectivity: int | NDArrayAny | None = None,
         **kwargs: Any,
     ) -> NDArrayAny:
@@ -428,11 +393,11 @@ class Segmenter(MyAttrsMixin):
         """
         from skimage.segmentation import watershed  # pylint: disable=no-name-in-module
 
-        if connectivity is None:
-            connectivity = data.ndim
-
         kwargs = dict(self.watershed_kws, **kwargs)
-        kwargs.setdefault("connectivity", connectivity)
+        if connectivity is not None:
+            kwargs["connectivity"] = connectivity
+        else:
+            _ = kwargs.setdefault("connectivity", data.ndim)
 
         return validate.ndarrayany(
             watershed(data, markers=markers, mask=mask, **kwargs)
@@ -443,11 +408,8 @@ class Segmenter(MyAttrsMixin):
         self,
         lnpi: lnPiMasked,
         markers: int | NDArrayAny | None = None,
-        find_peaks: bool = True,
-        num_peaks_max: int | None = None,
-        connectivity: int | NDArrayAny | None = None,
-        peaks_kws: Mapping[str, Any] | None = None,
-        watershed_kws: Mapping[str, Any] | None = None,
+        peak_kws: OptionalKwsAny = None,
+        watershed_kws: OptionalKwsAny = None,
     ) -> NDArrayAny:
         """
         Perform segmentations of lnPi object using watershed on negative of lnPi data.
@@ -457,11 +419,6 @@ class Segmenter(MyAttrsMixin):
         lnpi : lnPiMasked
             Object to be segmented
         {markers}
-
-        find_peaks : bool, default=True
-            If True, use :func:`peak_local_max_adaptive` to construct `markers`.
-        {num_peaks_max}
-        {connectivity_watershed}
         {peak_kws}
         {watershed_kws}
 
@@ -477,58 +434,55 @@ class Segmenter(MyAttrsMixin):
 
         """
         if markers is None:
-            if find_peaks:
-                if peaks_kws is None:
-                    peaks_kws = {}
-                else:
-                    peaks_kws = dict(peaks_kws)
-                    peaks_kws.pop("style", None)
+            peak_kws_: PeakLocalMaxAdaptiveKwargs = (
+                self.peak_kws
+                if peak_kws is None
+                else {**self.peak_kws, **convert_peak_kws(peak_kws)}
+            )
 
-                markers = self.peaks(
-                    lnpi.data,
-                    mask=~lnpi.mask,
-                    num_peaks_max=num_peaks_max,
-                    connectivity=connectivity
-                    if not isinstance(connectivity, np.ndarray)
-                    else None,
-                    style="marker",
-                    **peaks_kws,
-                )
-            else:
-                markers = num_peaks_max
+            markers = self.peaks(
+                lnpi.data,
+                mask=~lnpi.mask,
+                style="marker",
+                **peak_kws_,
+            )
 
-        if not isinstance(markers, (int, np.ndarray)):
-            msg = f"{type(markers)=} must be int or np.ndarray"
-            raise TypeError(msg)
+        watershed_kws_: WatershedKwargs = (
+            self.watershed_kws
+            if watershed_kws is None
+            else {**self.watershed_kws, **convert_watershed_kws(watershed_kws)}
+        )
 
         return self.watershed(
             -lnpi.data,
             markers=markers,
             mask=~lnpi.mask,
-            connectivity=connectivity,
-            **(watershed_kws or {}),
+            **watershed_kws_,
         )
 
 
 if TYPE_CHECKING:
 
-    def _convert_merge_kws(value: OptionalKwsAny) -> dict[str, Any]: ...
-    def _convert_segment_kws(value: OptionalKwsAny) -> dict[str, Any]: ...
+    def _convert_merge_kws(value: OptionalKwsAny) -> MergeKwargs: ...
+    def _convert_phase_creator_peak_kws(
+        value: Mapping[Any, Any],
+    ) -> PeakLocalMaxAdaptiveKwargs: ...
 
 else:
 
     @partial(attrs.Converter, takes_self=True)
-    def _convert_merge_kws(value: OptionalKwsAny, self_: Any) -> dict[str, Any]:
-        if value is None:
-            return {}
-
-        return dict(value, convention=False, nfeature_max=self_.nmax)
+    def _convert_merge_kws(value: OptionalKwsAny, self_: Any) -> MergeKwargs:
+        out = MergeKwargs() if value is None else convert_merge_kws(value)
+        out.update(convention=False, nfeature_max=self_.nmax)
+        return out
 
     @partial(attrs.Converter, takes_self=True)
-    def _convert_segment_kws(value: OptionalKwsAny, self_: Any) -> dict[str, Any]:
-        value = {} if value is None else dict(value)
-
+    def _convert_phase_creator_peak_kws(
+        value: Mapping[Any, Any], self_: Any
+    ) -> PeakLocalMaxAdaptiveKwargs:
+        value = convert_peak_kws(value)
         value["num_peaks_max"] = self_.nmax_peak or self_.nmax * 2
+
         return value
 
 
@@ -549,8 +503,8 @@ class PhaseCreator(MyAttrsMixin):
         Reference object.
     segmenter : :class:`Segmenter`, optional
         segmenter object to create labels/masks. Defaults to using base segmenter.
-    segment_kws : mapping, optional
-        Optional arguments to be passed to :meth:`.Segmenter.segment_lnpi`.
+    {peak_kws}
+    {watershed_kws}
     tag_phases : callable, optional
         Optional function which takes a list of :class:`~.lnPiMasked` objects
         and returns on integer label for each object.
@@ -558,35 +512,43 @@ class PhaseCreator(MyAttrsMixin):
         Factory function for returning Collection from a list of :class:`~lnpy.lnpidata.lnPiMasked` object.
         Defaults to :meth:`.lnPiCollection.from_list`.
     free_energy_kws : mapping, optional
-        Optional arguments to ...
+        Optional arguments to :meth:`.wFreeEnergy.from_labels`
     merge_phases: bool, default=True
         If True, merge phases using :meth:`.wFreeEnergy.merge_regions`
     merge_kws : mapping, optional
         Optional arguments to :meth:`.wFreeEnergy.merge_regions`
     merge_phase_ids: bool, default=True
         If ``True``, merge phases with same phase id (from ``tag_phases``).
-    {connectivity_morphology}
-
     """
 
     nmax: int
     ref: lnPiMasked = attrs.field(validator=av.instance_of(lnPiMasked))
     nmax_peak: int | None = None
-    connectivity: int | None = None
     segmenter: Segmenter = attrs.field(
         factory=Segmenter, validator=av.instance_of(Segmenter)
     )
-    segment_kws: dict[str, Any] = attrs.field(
-        default=None,
-        converter=_convert_segment_kws,
+    peak_kws: PeakLocalMaxAdaptiveKwargs = attrs.field(
+        factory=PeakLocalMaxAdaptiveKwargs,
+        converter=_convert_phase_creator_peak_kws,
+    )
+    watershed_kws: WatershedKwargs = attrs.field(
+        factory=WatershedKwargs,
+        converter=convert_watershed_kws,
     )
     tag_phases: TagPhasesSignature | None = None
     phases_factory: PhasesFactorySignature = attrs.field(
         default=lnPiCollection.from_list
     )
-    free_energy_kws: dict[str, Any] = attrs.field(factory=dict, converter=dict)
+
+    free_energy_kws: wFreeEnergyKwargs = attrs.field(
+        factory=wFreeEnergyKwargs,
+        converter=convert_free_energy_kws,
+    )
     merge_phases: bool = True
-    merge_kws: dict[str, Any] = attrs.field(default=None, converter=_convert_merge_kws)
+    merge_kws: MergeKwargs = attrs.field(
+        factory=MergeKwargs,
+        converter=_convert_merge_kws,
+    )
     merge_phase_ids: bool = True
 
     # TODO(wpk): make this work with integer or string phase_ids
@@ -703,30 +665,23 @@ class PhaseCreator(MyAttrsMixin):
         if lnz is not None:
             ref = ref.reweight(lnz)
 
-        connectivity_kws = {}
-        if self.connectivity is not None:
-            connectivity_kws["connectivity"] = self.connectivity
-
         if nmax > 1:
             # segment lnpi using watershed
-            segment_kws = _combine_kws(
-                self.segment_kws,
-                {},
-                **connectivity_kws,
+            labels = self.segmenter.segment_lnpi(
+                lnpi=ref, peak_kws=self.peak_kws, watershed_kws=self.watershed_kws
             )
-            labels = self.segmenter.segment_lnpi(lnpi=ref, **segment_kws)
 
             # analyze w = - lnPi
-            free_energy_kws = _combine_kws(self.free_energy_kws, {}, **connectivity_kws)
             wlnpi = wFreeEnergy.from_labels(
-                data=ref.data, labels=labels, **free_energy_kws
+                data=ref.data, labels=labels, **self.free_energy_kws
             )
 
             if self.merge_phases:
                 # merge
-                other_kws = {} if efac is None else {"efac": efac}
-                merge_kws = _combine_kws(
-                    self.merge_kws, {}, nfeature_max=nmax, **other_kws
+                merge_kws = (
+                    self.merge_kws
+                    if efac is None
+                    else convert_merge_kws(dict(self.merge_kws, efac=efac))
                 )
                 masks, _, _ = wlnpi.merge_regions(**merge_kws)
             else:
