@@ -14,6 +14,11 @@ defining-attr-methods = [
     "setUp",
 ]
 
+[tool.pylint.dunder]
+good-dunder-names = [
+    "__attrs_init__",
+]
+
 [tool.pylint.design]
 max-args = 25
 max-attributes = 40

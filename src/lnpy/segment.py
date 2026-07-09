@@ -21,7 +21,7 @@ import attrs
 import attrs.validators as av
 import numpy as np
 from module_utilities.docfiller import DocFiller
-from skimage.feature import peak_local_max
+from skimage.feature import peak_local_max  # pylint: disable=no-name-in-module
 
 from .core import validate
 from .core._attrs_utils import MyAttrsMixin
@@ -694,9 +694,8 @@ class PhaseCreator(MyAttrsMixin):
             lnpis = ref.list_from_masks(masks, convention=False)
 
             # tag phases?
-            tag_phases = self.tag_phases
-            if tag_phases is not None:
-                index = tag_phases(lnpis)
+            if self.tag_phases is not None:
+                index = self.tag_phases(lnpis)
                 if self.merge_phase_ids:
                     index, lnpis = self._merge_phase_ids(ref, index, lnpis)
             else:

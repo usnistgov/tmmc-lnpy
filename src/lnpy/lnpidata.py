@@ -137,7 +137,8 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
 
     if TYPE_CHECKING:
         # Lie to make pyright/pyrefly/ty happy
-        def __attrs_init__(self, **kwargs: Any) -> None: ...
+        def __attrs_init__(self, **kwargs: Any) -> None:
+            pass
 
     def __init__(
         self,
@@ -241,7 +242,8 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     if TYPE_CHECKING:
         # Lie to make pyright/pyrefly/ty happy
-        def __attrs_init__(self, **kwargs: Any) -> None: ...
+        def __attrs_init__(self, **kwargs: Any) -> None:
+            pass
 
     def __init__(
         self,

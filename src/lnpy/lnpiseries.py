@@ -279,7 +279,8 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     if TYPE_CHECKING:
 
-        def __attrs_init__(self, **kwargs: Any) -> None: ...
+        def __attrs_init__(self, **kwargs: Any) -> None:
+            pass
 
     def __init__(
         self,
@@ -921,12 +922,12 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         ----------
         lnzs : sequence of float
             One dimensional array of lnz value for the varying component.
-        ref : lnPiMasked
-            lnpi_phases to reweight to get list of lnpi's
         build_phases : callable
             Typically one of `PhaseCreator.build_phases_mu` or `PhaseCreator.build_phases_dmu`
         build_kws : optional
             optional arguments to `build_phases`
+        **kwargs
+            Extra arguments to :meth:`from_list`
 
         Returns
         -------
