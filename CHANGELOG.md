@@ -16,6 +16,18 @@ See the fragment files in [changelog.d]
 <!-- scriv-insert-here -->
 
 
+## 0.10.0
+
+Released on 2026-07-10.
+
+### Breaking changes
+
+- feat!: simplify phase_creator ([#188](https://github.com/usnistgov/tmmc-lnpy/pull/188))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
+
 ## 0.9.3
 
 Released on 2026-07-08.
