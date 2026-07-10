@@ -157,7 +157,7 @@ def peak_local_max_adaptive(
     num_peaks_max: float | None = None,
     connectivity: int | None = None,
     errors: PeakError = "warn",
-    peak_local_max_kws: OptionalKwsAny = None,
+    **kwargs: Any,
 ) -> NDArrayAny | tuple[NDArrayAny, ...]:
     """
     Find local max with fall backs min_distance and filter.
@@ -179,8 +179,8 @@ def peak_local_max_adaptive(
         - If raise, raise exception if npeaks > num_peaks_max
         - If ignore, return all found maxima
         - If warn, raise warning if npeaks > num_peaks_max
-    peak_local_max_kws : dict
-        Extra arguments to :func:`~skimage.feature.peak_local_max`
+    **kwargs
+        Extra arguments to :func:`skimage.feature.peak_local_max`
 
     Returns
     -------
@@ -217,8 +217,7 @@ def peak_local_max_adaptive(
     mask = np.asarray(mask)
     data = data - bottleneck.nanmin(data)  # noqa: PLR6104
 
-    peak_local_max_kws = {} if peak_local_max_kws is None else dict(peak_local_max_kws)
-    peak_local_max_kws.setdefault("exclude_border", False)
+    kwargs.setdefault("exclude_border", False)
 
     n = idx = None
     for md in min_distance:
@@ -229,7 +228,7 @@ def peak_local_max_adaptive(
             threshold_abs=threshold_abs,
             threshold_rel=threshold_rel,
             # this option removed in future
-            **peak_local_max_kws,
+            **kwargs,
         )
 
         if (n := len(idx)) <= num_peaks_max:

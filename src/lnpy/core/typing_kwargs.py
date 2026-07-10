@@ -8,13 +8,17 @@ from typing import Any, Literal
 
 import cattrs
 
-from .typing import OptionalKwsAny, PeakError
+from .typing import PeakError
 from .typing_compat import TypedDict
 
 
 # * kwargs
-class PeakLocalMaxAdaptiveKwargs(TypedDict, total=False, closed=True):  # type: ignore[call-arg]
-    """Keyword arguments to :func:`.peak_local_max_adaptive`"""
+class PeakLocalMaxAdaptiveKwargs(TypedDict, total=False):
+    """
+    Keyword arguments to :func:`.peak_local_max_adaptive`
+
+    Extras passed to :func:`skimage.feature.peak_local_max`
+    """
 
     min_distance: Sequence[int] | None
     threshold_rel: float
@@ -22,15 +26,13 @@ class PeakLocalMaxAdaptiveKwargs(TypedDict, total=False, closed=True):  # type: 
     num_peaks_max: int | None
     connectivity: int | None
     errors: PeakError
-    peak_local_max_kws: OptionalKwsAny
 
 
 class WatershedKwargs(TypedDict, total=False):
     """
     Keywords to :meth:`.Segmenter.watershed`
 
-    Extras passed to segmentation.watershed
-
+    Extras passed to :func:`skimage.segmentation.watershed`
     """
 
     connectivity: Any  # TODO(wpk):  get `int | NDArrayAny | None` to work with cattrs
