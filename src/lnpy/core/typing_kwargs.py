@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from typing import Any
+from typing import Any, Literal
 
 import cattrs
 
@@ -55,7 +55,7 @@ class MergeKwargs(TypedDict, total=False, closed=True):  # type: ignore[call-arg
     nfeature_max: int | None
     efac: float
     force: bool
-    convention: Any  # TODO(wpk): get `Literal["mask", "image"] | bool` to work
+    convention: Literal["image", "masked", True, False]  # noqa: RUF038  # use this to make cattrs happy
     warn: bool
 
 
