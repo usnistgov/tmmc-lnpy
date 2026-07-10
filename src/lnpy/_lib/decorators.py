@@ -38,7 +38,7 @@ def _thread_backend() -> str | None:
     # pylint: disable=unused-import
     # Note that `importlib.util.find_spec` doesn't work for these; it will falsely return True
     try:
-        from numba.np.ufunc import (
+        from numba.np.ufunc import (  # type: ignore[attr-defined, unused-ignore]
             # pyrefly: ignore [missing-module-attribute]
             tbbpool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
         )
@@ -48,7 +48,7 @@ def _thread_backend() -> str | None:
         return "tbb"
 
     try:
-        from numba.np.ufunc import (
+        from numba.np.ufunc import (  # type: ignore[attr-defined, unused-ignore]
             # pyrefly: ignore [missing-module-attribute]
             omppool,  # noqa: F401  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
         )
@@ -93,7 +93,7 @@ def myguvectorize(
 
     return cast(  # ty: ignore[invalid-return-type]
         "Callable[[FuncT], FuncT]",
-        guvectorize(
+        guvectorize(  # type: ignore[no-untyped-call, unused-ignore]
             *args,
             nopython=nopython,
             target=target,
@@ -129,7 +129,7 @@ def myjit(
 
     return cast(  # ty: ignore[invalid-return-type]
         "Callable[[FuncT], FuncT]",
-        njit(*args, fastmath=fastmath, cache=cache, parallel=parallel, **kwargs),
+        njit(*args, fastmath=fastmath, cache=cache, parallel=parallel, **kwargs),  # type: ignore[call-overload, unused-ignore]  # pyright: ignore[reportCallIssue,reportArgumentType]
     )
 
 
@@ -147,7 +147,7 @@ def _get_target(parallel: bool) -> str:
 def _get_signatures(
     signature: Iterable[Sequence[NumbaType]] | None,
     signature_generator: Iterable[NumbaType | Sequence[NumbaType]] | None,
-) -> list[tuple[NumbaType, ...]]:
+) -> Any:
     signatures = [] if signature is None else [tuple(x) for x in signature]
 
     if signature_generator is not None:
