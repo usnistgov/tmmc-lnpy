@@ -648,8 +648,8 @@ class StabilityBase(Generic[CollectionOrNoneT]):
         self._parent = collection
         self.access_kws: dict[str, Any] = {}
         self._cache: dict[str, Any] = {}
-        self._items: dict[int, CollectionOrNoneT] | None = None
-        self._info: dict[int, RootResultTotal] | None = None
+        self._items: dict[int, CollectionOrNoneT] = {}
+        self._info: dict[int, RootResultTotal] = {}
 
     @property
     def parent(self) -> lnPiCollection:
@@ -663,14 +663,14 @@ class StabilityBase(Generic[CollectionOrNoneT]):
     @property
     def items(self) -> dict[int, CollectionOrNoneT]:
         """Access to the underlying data"""
-        if self._items is None:
+        if not self._items:
             msg = "Items not set"
             raise ValueError(msg)
         return self._items
 
     @property
     def info(self) -> dict[int, RootResultTotal]:
-        if self._info is None:
+        if not self._info:
             msg = "Info not set"
             raise ValueError(msg)
         return self._info
@@ -839,7 +839,7 @@ class Spinodals(StabilityBase["lnPiCollection | None"]):
             if inplace, return self.
             if not inplace, and as dict, return dict, else return :class:`lnpy.lnpiseries.lnPiCollection` with phase_id in index
         """
-        if self._items is not None and not force:
+        if self._items and not force:
             if inplace:
                 return self
             if as_dict:
@@ -890,7 +890,7 @@ class Binodals(StabilityBase["lnPiCollection"]):
     def __init__(self, collection: lnPiCollection) -> None:
         super().__init__(collection)
         self._solver: _SolveBinodal | None = None
-        self._index: dict[int, tuple[int, int]] | None = None
+        self._index: dict[int, tuple[int, int]] = {}
 
     def get_pair(
         self,
@@ -1024,7 +1024,7 @@ class Binodals(StabilityBase["lnPiCollection"]):
             if inplace, return self
             if not inplace, and as dict, return dict, else return lnPiCollection with phase_id in index
         """
-        if inplace and self._items is not None and not force:
+        if inplace and self._items and not force:
             return self
 
         self._solver = _SolveBinodal(build_phases=build_phases, build_kws=build_kws)
