@@ -255,7 +255,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
         mask = (
             np.full_like(base.data, fill_value=False, dtype=np.bool_)
             if mask is None
-            else np.asarray(mask, copy=copy_if_needed(copy), dtype=np.bool_)
+            else np.array(mask, copy=copy_if_needed(copy), dtype=np.bool_)
         )
         mask.flags.writeable = False
 
