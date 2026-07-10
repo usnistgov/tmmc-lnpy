@@ -95,7 +95,7 @@ def do_test(phase_creator, ref, fname) -> None:
 def test_0(ref) -> None:
     phase_creator = lnpy.segment.PhaseCreator(
         nmax=2,  # number of phases
-        nmax_peak=10,  # max number of peaks in lnPi
+        nmax_peak=4,  # max number of peaks in lnPi
         ref=ref,
         tag_phases=tag_phases2,
         merge_kws={"efac": 0.8},
@@ -106,10 +106,10 @@ def test_0(ref) -> None:
 def test_1(ref) -> None:
     phase_creator = lnpy.segment.PhaseCreator(
         nmax=20,  # number of phases
-        nmax_peak=50,  # max number of peaks in lnPi
+        nmax_peak=40,  # max number of peaks in lnPi
         ref=ref,
         tag_phases=None,
         merge_kws={"efac": 0.1},
-        segment_kws={"peaks_kws": {"min_distance": [5]}},
+        peak_kws={"min_distance": [5]},
     )
     do_test(phase_creator, ref, "data_1.csv")

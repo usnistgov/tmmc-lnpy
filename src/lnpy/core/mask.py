@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
     from typing import Any
 
-    from numpy.typing import DTypeLike, NDArray
+    from numpy.typing import ArrayLike, DTypeLike, NDArray
 
     from .typing import MaskConvention, NDArrayAny, NDArrayBool
 
@@ -35,7 +35,7 @@ def mask_change_convention(
 
 @overload
 def mask_change_convention(
-    mask: NDArrayAny,
+    mask: ArrayLike,
     convention_in: MaskConvention = ...,
     convention_out: MaskConvention = ...,
 ) -> NDArrayBool: ...
@@ -43,7 +43,7 @@ def mask_change_convention(
 
 @docfiller.decorate
 def mask_change_convention(
-    mask: NDArrayAny | None,
+    mask: ArrayLike | None,
     convention_in: MaskConvention = "image",
     convention_out: MaskConvention = "masked",
 ) -> NDArrayBool | None:
@@ -70,7 +70,7 @@ def mask_change_convention(
     if mask is None:
         return mask
 
-    mask = mask.astype(np.bool_, copy=False)
+    mask = np.asarray(mask, dtype=np.bool_)
     if _convention_to_bool(convention_in) != _convention_to_bool(convention_out):
         mask = ~mask
     return mask
@@ -78,7 +78,7 @@ def mask_change_convention(
 
 @overload
 def masks_change_convention(  # pyright: ignore[reportOverlappingOverload]
-    masks: Iterable[NDArrayAny],
+    masks: Iterable[ArrayLike],
     convention_in: MaskConvention = ...,
     convention_out: MaskConvention = ...,
 ) -> list[NDArrayBool]: ...
@@ -90,14 +90,14 @@ def masks_change_convention(
 ) -> list[None]: ...
 @overload
 def masks_change_convention(
-    masks: Iterable[NDArrayAny | None],
+    masks: Iterable[ArrayLike | None],
     convention_in: MaskConvention = ...,
     convention_out: MaskConvention = ...,
 ) -> list[NDArrayBool | None]: ...
 
 
 def masks_change_convention(
-    masks: Iterable[NDArrayAny] | Iterable[None] | Iterable[NDArrayAny | None],
+    masks: Iterable[ArrayLike] | Iterable[None] | Iterable[ArrayLike | None],
     convention_in: MaskConvention = "image",
     convention_out: MaskConvention = "masked",
 ) -> list[NDArrayBool] | list[None] | list[NDArrayBool | None]:
@@ -133,7 +133,7 @@ def masks_change_convention(
         if mask is None:
             out.append(mask)
         else:
-            m = mask.astype(np.bool_, copy=False)
+            m = np.asarray(mask, dtype=np.bool_)
             out.append(m if same_convention else ~m)
 
     return out
@@ -142,7 +142,7 @@ def masks_change_convention(
 # ** labels
 @docfiller.decorate
 def labels_to_masks(
-    labels: NDArrayAny,
+    labels: ArrayLike,
     features: Iterable[int] | None = None,
     include_boundary: bool = False,
     convention: MaskConvention = "image",
@@ -182,6 +182,8 @@ def labels_to_masks(
     """
     from skimage import segmentation
 
+    labels = np.asarray(labels)
+
     if include_boundary:
         kwargs = dict({"mode": "outer", "connectivity": labels.ndim}, **kwargs)
     if features is None:
@@ -215,7 +217,7 @@ def labels_to_masks(
 
 @docfiller.decorate
 def masks_to_labels(
-    masks: Iterable[NDArrayAny],
+    masks: Iterable[ArrayLike],
     features: Iterable[int] | None = None,
     convention: MaskConvention = "image",
     dtype: DTypeLike | None = np.int64,
@@ -248,8 +250,8 @@ def masks_to_labels(
         if len(features) != len(masks):
             raise ValueError
 
-    labels = np.full(masks[0].shape, fill_value=0, dtype=dtype)
     masks = masks_change_convention(masks, convention, True)
+    labels = np.full(masks[0].shape, fill_value=0, dtype=dtype)
 
     for i, m in zip(features, masks, strict=True):
         labels[m] = i

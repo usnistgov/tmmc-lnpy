@@ -99,7 +99,7 @@ def xr_name(
             if long_name is not None:
                 attrs["long_name"] = long_name
             out = out.assign_attrs(**attrs)
-            if unstack and self._xarray_unstack:
+            if unstack and self.xarray_unstack:
                 out = out.unstack()  # noqa: PD010
             return out
 
@@ -225,8 +225,8 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
         self._rec_name: str | None
         first: lnPiMasked
         if isinstance(parent, lnPiCollection):
-            self._rec_name = parent._concat_dim
-            first = parent._series.iloc[0]
+            self._rec_name = parent.concat_dim
+            first = parent.series.iloc[0]
         else:
             self._rec_name = None
             first = parent
@@ -239,8 +239,8 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
         return getattr(self._parent, "_use_cache", False)
 
     @property
-    def _xarray_unstack(self) -> bool:
-        return getattr(self._parent, "_xarray_unstack", True)
+    def xarray_unstack(self) -> bool:
+        return getattr(self._parent, "xarray_unstack", True)
 
     @cached_prop
     def _standard_attrs(self) -> dict[str, Any]:
@@ -259,13 +259,13 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             return dict(self._parent._index_dict(), **self._parent.state_kws)
 
         return {
-            self._parent._concat_dim: self._parent.index,
+            self._parent.concat_dim: self._parent.index,
             **self._parent.state_kws,
         }
 
     @property
-    def _xarray_dot_kws(self) -> dict[str, str]:
-        return getattr(self._parent, "_xarray_dot_kws", {})
+    def xarray_dot_kws(self) -> dict[str, str]:
+        return getattr(self._parent, "xarray_dot_kws", {})
 
     @property
     def ncoords(self) -> xr.DataArray:
@@ -413,7 +413,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
 
     def _mean_pi(self, x: xr.DataArray, **kwargs: Any) -> xr.DataArray:  # noqa: ARG002
         return validate.dataarray(
-            xr_dot(self.pi_norm, x, dim=self.dims_n, **self._xarray_dot_kws),
+            xr_dot(self.pi_norm, x, dim=self.dims_n, **self.xarray_dot_kws),
         )
 
     @xr_name()
@@ -519,7 +519,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             yy = y - self._mean_pi(y)
 
         return validate.dataarray(
-            xr_dot(self.pi_norm, xx, yy, dim=self.dims_n, **self._xarray_dot_kws),
+            xr_dot(self.pi_norm, xx, yy, dim=self.dims_n, **self.xarray_dot_kws),
         )
 
     def pipe(self, func: Callable[..., R], *args: Any, **kwargs: Any) -> R:
@@ -588,7 +588,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             raise TypeError(msg)
 
         return {
-            k: xr.DataArray(v, dims=self._parent._concat_dim)
+            k: xr.DataArray(v, dims=self._parent.concat_dim)
             for k, v in zip(self.dims_n, self._argmax_indexer(), strict=True)
         }
 
@@ -599,8 +599,8 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             raise TypeError(msg)
 
         return {
-            self._parent._concat_dim: xr.DataArray(
-                range(len(self._parent)), dims=self._parent._concat_dim
+            self._parent.concat_dim: xr.DataArray(
+                range(len(self._parent)), dims=self._parent.concat_dim
             )
         }
 
@@ -746,10 +746,10 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             msg = "only implemented for lnPiCollection"
             raise TypeError(msg)
 
-        if not self._xarray_unstack:
+        if not self.xarray_unstack:
             # raise Value'only mask with unstack')
             pv = self.betapV()
-            sample = self._parent._concat_dim
+            sample = self._parent.concat_dim
             return validate.dataarray(
                 pv  # noqa: PD010, PD013
                 .unstack(sample)
@@ -844,7 +844,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
         if mask_stable:
             # mask_stable inserts nan in non-stable
             mask = self.mask_stable
-            if not self._xarray_unstack:
+            if not self.xarray_unstack:
                 ds = ds.where(mask, drop=True)
             else:
                 phase = ds.phase
@@ -867,7 +867,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     def betaG(self) -> xr.DataArray:
         r"""Scaled Gibbs free energy :math:`\beta G = \sum_i \beta \mu_i \overline{N}_i`."""
         return validate.dataarray(
-            xr_dot(self.betamu, self.nvec, dim=self.dims_comp, **self._xarray_dot_kws)
+            xr_dot(self.betamu, self.nvec, dim=self.dims_comp, **self.xarray_dot_kws)
         )
 
     @property
@@ -929,8 +929,8 @@ class CanonicalEnsemble:
         return self._xge.lnpi(fill_value=fill_value)
 
     @property
-    def _xarray_unstack(self) -> bool:
-        return getattr(self._parent, "_xarray_unstack", True)
+    def xarray_unstack(self) -> bool:
+        return getattr(self._parent, "xarray_unstack", True)
 
     @cached_prop
     def ncoords(self) -> xr.DataArray:

@@ -29,6 +29,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Sequence
     from typing import Any, Literal, SupportsIndex
 
+    from numpy.typing import ArrayLike
+
     from .core.typing import MaskConvention, NDArrayAny, NDArrayInt
     from .core.typing_compat import IndexAny, Self, TypeAlias
     from .lnpiseries import lnPiCollection
@@ -37,9 +39,9 @@ if TYPE_CHECKING:
     _FindBoundariesMethod = Literal["exact", "approx"]
     _Extrema = Literal["min", "max"]
 
-    _FillArg: TypeAlias = "int | None"
-    _FillVal: TypeAlias = "float | None"
-    _ExtremaArg: TypeAlias = "int | tuple[int, ...] | None"
+    _FillArg: TypeAlias = int | None
+    _FillVal: TypeAlias = float | None
+    _ExtremaArg: TypeAlias = int | tuple[int, ...] | None
 
 
 @docfiller.decorate
@@ -190,7 +192,7 @@ def find_boundaries_overlap(
 
 @docfiller.decorate
 def find_masked_extrema(
-    data: NDArrayAny,
+    data: ArrayLike,
     masks: Iterable[NDArrayAny | None],
     convention: MaskConvention = "image",
     extrema: _Extrema = "max",
@@ -235,6 +237,7 @@ def find_masked_extrema(
 
     masks = masks_change_convention(masks, convention, "image")
 
+    data = np.asarray(data)
     data_flat = data.reshape(-1)
     positions_flat = np.arange(data.size)
 
@@ -380,7 +383,7 @@ class wFreeEnergy:  # noqa: N801
 
     Parameters
     ----------
-    data : ndarray
+    data : array-like
         lnPi data
     {masks_general}
     {mask_convention}
@@ -399,11 +402,11 @@ class wFreeEnergy:  # noqa: N801
 
     def __init__(
         self,
-        data: NDArrayAny,
+        data: ArrayLike,
         masks: Iterable[NDArrayAny],
         convention: MaskConvention = "image",
         connectivity: int | None = None,
-        index: Sequence[int] | NDArrayAny | None = None,
+        index: ArrayLike | None = None,
     ) -> None:
         self.data = np.asarray(data)
 
@@ -431,11 +434,12 @@ class wFreeEnergy:  # noqa: N801
     @docfiller.decorate
     def from_labels(
         cls,
-        data: NDArrayAny,
+        data: ArrayLike,
         labels: NDArrayAny,
         connectivity: int | None = None,
         features: Sequence[int] | None = None,
         include_boundary: bool = False,
+        check_features: bool = True,
         **kwargs: Any,
     ) -> Self:
         """
@@ -443,14 +447,15 @@ class wFreeEnergy:  # noqa: N801
 
         Parameters
         ----------
-        data : ndarray
+        data : array-like
             lnPi data
         {labels}
         {find_boundary_connectivity}
         {features}
         {include_boundary}
+        {check_features}
         **kwargs
-            Extra arguments to :func:`~lnpy.core.mask.labels_to_masks`
+            Extra arguments to :func:`skimage.segmentation.find_boundaries`
 
         Returns
         -------
@@ -463,8 +468,9 @@ class wFreeEnergy:  # noqa: N801
         masks, features = labels_to_masks(
             labels,
             features=features,
-            convention="image",
             include_boundary=include_boundary,
+            convention="image",
+            check_features=check_features,
             **kwargs,
         )
         return cls(data=data, masks=masks, connectivity=connectivity)

@@ -41,6 +41,11 @@ __all__ = [
     "XArrayLike",
 ]
 
+# Optional keywords
+_T = TypeVar("_T")
+OptionalKws: TypeAlias = "Mapping[str, _T]| None"
+OptionalKwsAny: TypeAlias = "Mapping[str, Any] | None"
+
 # * NDArray
 NDArrayAny: TypeAlias = NDArray[Any]
 """Alias for simple :class:`numpy.typing.NDArray[Any]`"""
@@ -81,7 +86,7 @@ PhasesFactorySignature = Callable[..., "lnpy.lnpiseries.lnPiCollection"]
 PeakStyle = Literal["indices", "mask", "marker"]
 PeakError = Literal["ignore", "raise", "warn"]
 
-MaskConvention: TypeAlias = 'Literal["image", "masked"] | bool'
+MaskConvention: TypeAlias = Literal["image", "masked"] | bool
 """Convention for boolean masks."""
 
 Casting = Literal["no", "equiv", "safe", "same_kind", "unsafe"]

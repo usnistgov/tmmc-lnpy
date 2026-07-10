@@ -6,15 +6,17 @@ Collection of lnPi objects (:mod:`~lnpy.lnpiseries`)
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, cast, overload
+from typing import TYPE_CHECKING, ClassVar, cast, overload
 from warnings import warn
 
+import attrs
 import numpy as np
 import pandas as pd
 import xarray as xr
 from module_utilities import cached
 
 from .core import validate
+from .core._attrs_utils import MyAttrsMixin
 from .core.docstrings import docfiller
 from .core.joblib import parallel_map_build as parallel_map
 from .core.mask import labels_to_masks, masks_to_labels
@@ -37,7 +39,7 @@ if TYPE_CHECKING:
     )
     from typing import (
         Any,
-        Final,
+        # Final,
         Literal,
     )
 
@@ -58,7 +60,7 @@ class _CallableResult:
         self._func = func
 
     def __call__(self, *args: Any, **kwargs: Any) -> lnPiCollection:
-        return self._parent.new_like(self._func(*args, **kwargs))
+        return self._parent.new_like(data=self._func(*args, **kwargs))
 
 
 class _Groupby:
@@ -67,14 +69,14 @@ class _Groupby:
         self._group = group
 
     def __iter__(self) -> Iterator[tuple[Any, lnPiCollection]]:
-        return ((meta, self._parent.new_like(x)) for meta, x in self._group)
+        return ((meta, self._parent.new_like(data=x)) for meta, x in self._group)
 
     def __getattr__(self, attr: str) -> _CallableResult | lnPiCollection:
         if hasattr(self._group, attr):
             out = getattr(self._group, attr)
             if callable(out):
                 return _CallableResult(self._parent, out)
-            return self._parent.new_like(out)
+            return self._parent.new_like(data=out)
 
         msg = f"no attribute {attr} in groupby"
         raise AttributeError(msg)
@@ -90,7 +92,7 @@ class _LocIndexer:
 
     def __init__(self, parent: lnPiCollection) -> None:
         self._parent = parent
-        self._loc = self._parent._series.loc
+        self._loc = self._parent.series.loc
 
     @overload
     def __getitem__(self, idx: Scalar | tuple[Scalar, ...]) -> lnPiMasked: ...
@@ -107,13 +109,13 @@ class _LocIndexer:
     def __getitem__(self, idx: Any) -> lnPiMasked | lnPiCollection:
         out = self._loc[idx]
         if isinstance(out, pd.Series):
-            return self._parent.new_like(out)
+            return self._parent.new_like(data=out)
         return validate_lnpimasked_or_lnpicollection(out)
 
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
     ) -> None:
-        self._parent._series.loc[idx] = values
+        self._parent.series.loc[idx] = values
 
 
 # @SeriesWrapper.decorate_accessor("iloc")
@@ -126,7 +128,7 @@ class _iLocIndexer:  # noqa: N801
 
     def __init__(self, parent: lnPiCollection) -> None:
         self._parent = parent
-        self._iloc = self._parent._series.iloc
+        self._iloc = self._parent.series.iloc
 
     @overload
     def __getitem__(self, idx: IndexingInt) -> lnPiMasked: ...
@@ -140,13 +142,13 @@ class _iLocIndexer:  # noqa: N801
     def __getitem__(self, idx: Any) -> lnPiMasked | lnPiCollection:
         out = self._iloc[idx]
         if isinstance(out, pd.Series):
-            return self._parent.new_like(out)
+            return self._parent.new_like(data=out)
         return validate_lnpimasked_or_lnpicollection(out)
 
     def __setitem__(
         self, idx: Any, values: lnPiMasked | pd.Series[Any] | Sequence[lnPiMasked]
     ) -> None:
-        self._parent._series.iloc[idx] = values
+        self._parent.series.iloc[idx] = values
 
 
 # @SeriesWrapper.decorate_accessor("query")
@@ -177,7 +179,7 @@ class _LocIndexer_unstack_zloc:  # noqa: N801
     ) -> None:
         self._parent = parent
         self._level = level
-        self._loc = self._parent._series.unstack(self._level).iloc  # noqa: PD010
+        self._loc = self._parent.series.unstack(self._level).iloc  # noqa: PD010
 
     def __getitem__(self, idx: Any) -> lnPiCollection:
         out = self._loc[idx]
@@ -186,7 +188,7 @@ class _LocIndexer_unstack_zloc:  # noqa: N801
         out = out.dropna()
 
         if isinstance(out, pd.Series):
-            out = self._parent.new_like(out)
+            out = self._parent.new_like(data=out)
         else:
             msg = "unknown indexer for zloc"
             raise TypeError(msg)
@@ -207,7 +209,7 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
         self._index = self._parent._multiindex
 
         self._index_names = set(self._index.names)
-        self._loc = self._parent._series.iloc
+        self._loc = self._parent.series.iloc
 
     def _get_loc_idx(self, idx: pd.MultiIndex | IndexAny) -> Any:
         if isinstance(idx, pd.MultiIndex):
@@ -226,14 +228,15 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
         out = self._loc[indexer]
 
         if isinstance(out, pd.Series):
-            out = self._parent.new_like(out)
+            out = self._parent.new_like(data=out)
         else:
             msg = "unknown indexer for mloc"
             raise TypeError(msg)
         return out
 
 
-class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
+@attrs.define(frozen=True, init=False)  # noqa: PLR0904
+class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
     r"""
     Wrapper around :class:`pandas.Series` for collection of :class:`~lnpy.lnpidata.lnPiMasked` objects.
 
@@ -261,58 +264,59 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
 
     """
 
-    _concat_dim = "sample"
-    _concat_coords = "different"
-    _xarray_output = True
-    _xarray_unstack = True
-    _xarray_dot_kws: Final = {"optimize": "optimal"}
-    _use_cache = True
+    _data: pd.Series[Any] = attrs.field()
+    concat_dim: str
+    concat_coords: str
+    xarray_output: bool
+    unstack: bool
+    _base_class: Literal["first"] | type[lnPiMasked] = "first"
+    _use_cache: bool = attrs.field(default=True, init=False, repr=False)
+    _cache: dict[str, Any] = attrs.field(
+        factory=dict[str, "Any"], init=False, repr=False
+    )
+
+    xarray_dot_kws: ClassVar[dict[str, str]] = {"optimize": "optimal"}
+
+    if TYPE_CHECKING:
+
+        def __attrs_init__(self, **kwargs: Any) -> None:
+            pass
 
     def __init__(
         self,
         data: Self | Iterable[lnPiMasked] | pd.Series[Any],
+        *,
         index: ArrayLike | IndexAny | pd.MultiIndex | None = None,
-        xarray_output: bool = True,
-        concat_dim: str | None = None,
-        concat_coords: str | None = None,
-        unstack: bool = True,
         name: Hashable | None = None,
-        base_class: str | type = "first",
         dtype: DTypeLike | None = None,
+        xarray_output: bool = True,
+        concat_dim: str = "sample",
+        concat_coords: str = "different",
+        unstack: bool = True,
+        base_class: Literal["first"] | type[lnPiMasked] = "first",
     ) -> None:
-        if concat_dim is not None:
-            self._concat_dim = concat_dim
-        if concat_coords is not None:
-            self._concat_coords = concat_coords
-        if xarray_output is not None:
-            self._xarray_output = xarray_output
-        if unstack is not None:
-            self._xarray_unstack = unstack
-
-        if isinstance(data, self.__class__):
-            x = data
-            data = x.s
-
-        self._base_class = base_class
-        self._verify = self._base_class is not None
 
         # NOTE: this avoids typing issues
         kws: dict[str, Any] = {
-            "data": data,
+            "data": data.series if isinstance(data, self.__class__) else data,
             "index": index,
             "dtype": dtype,
             "name": name,
         }
         series: pd.Series[Any] = pd.Series(**kws)
 
-        self._verify_series(series)
-        self._series = series
-        self._cache: dict[str, Any] = {}
+        self.__attrs_init__(
+            data=series,
+            concat_dim=concat_dim,
+            concat_coords=concat_coords,
+            xarray_output=xarray_output,
+            unstack=unstack,
+            base_class=base_class,
+        )
+
+        self._verify_series(self._data)
 
     def _verify_series(self, series: pd.Series[Any]) -> None:
-        if not self._verify:
-            return
-
         series = series.dropna()
 
         if series.empty:
@@ -350,51 +354,27 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     def _validate_lnpimasked_or_self(cls, obj: object) -> lnPiMasked | Self:
         return Validator[lnPiMasked | Self](lnPiMasked | cls).validate(obj)
 
-    def new_like(
-        self,
-        data: Sequence[lnPiMasked] | pd.Series[Any] | None = None,
-        index: ArrayLike | IndexAny | pd.MultiIndex | None = None,
-        **kwargs: Any,
-    ) -> Self:
-        """Create new object with optional new data/index"""
-        if data is None:
-            data = self.s
+    @property
+    def xarray_unstack(self) -> bool:
+        return self.unstack
 
-        kwargs.setdefault("xarray_output", self._xarray_output)
-        kwargs.setdefault("concat_dim", self._concat_dim)
-        kwargs.setdefault("concat_coords", self._concat_coords)
-        kwargs.setdefault("unstack", self._xarray_unstack)
-
-        return type(self)(
-            data=data,
-            index=index,
-            **kwargs,
-        )
-
-    # ** Series Specific
     @property
     def series(self) -> pd.Series[Any]:
-        """View of the underlying :class:`pandas.Series`"""
-        return self._series
-
-    @series.setter
-    def series(self, series: pd.Series[Any]) -> None:
-        self._cache = {}
-        self._verify_series(series)
-        self._series = series
+        """Underlying series."""
+        return self._data
 
     @property
     def s(self) -> pd.Series[Any]:
         """Alias to :meth:`series`"""
-        return self.series
+        return self._data
 
     def __iter__(self) -> Iterator[lnPiMasked]:
-        return iter(self._series)
+        return iter(self.series)
 
     @property
     def values(self) -> NDArrayAny:
         """Series values"""
-        return self._series.to_numpy()
+        return self.series.to_numpy()
 
     @property
     def items(self) -> NDArrayAny:
@@ -404,12 +384,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     @property
     def index(self) -> IndexAny:
         """Series index"""
-        return self._series.index
+        return self.series.index
 
     @property
     def _multiindex(self) -> pd.MultiIndex:
-        if isinstance(self._series.index, pd.MultiIndex):
-            return self._series.index
+        if isinstance(self.series.index, pd.MultiIndex):
+            return self.series.index
 
         msg = "self.index is not a MultiIndex"
         raise TypeError(msg)
@@ -417,7 +397,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     @property
     def name(self) -> Hashable:
         """Series name"""
-        return self._series.name
+        return self.series.name
 
     def copy(self) -> Self:
         return type(self)(data=self.s, base_class=self._base_class)
@@ -427,7 +407,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         func: Callable[[pd.Series[Any]], pd.Series[Any]],
     ) -> lnPiCollection:
         """Apply function to series and wrap."""
-        return self.new_like(func(self._series))
+        return self.new_like(data=func(self.series))
 
     @overload
     def _wrapped_pandas_method(
@@ -462,10 +442,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         **kwargs: Any,
     ) -> lnPiMasked | pd.Series[Any] | Self:
         """Wrap a generic pandas method to ensure it returns a GeoSeries"""
-        val: object = getattr(self._series, mtd)(*args, **kwargs)
+        val: object = getattr(self.series, mtd)(*args, **kwargs)
         if validate.series.typeis(val):
             if wrap:
-                return self.new_like(val)
+                return self.new_like(data=val)
             return val
         return self._validate_lnpimasked_or_self(val)
 
@@ -490,7 +470,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self, idx: Any, values: lnPiMasked | Sequence[lnPiMasked] | pd.Series[Any]
     ) -> None:
         """Interface to :meth:`pandas.Series.__setitem__`"""
-        self._series[idx] = values
+        self.series[idx] = values
 
     def __len__(self) -> int:
         return len(self.s)
@@ -501,7 +481,6 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         ignore_index: bool = False,
         verify_integrity: bool = True,
         concat_kws: Mapping[str, Any] | None = None,
-        inplace: bool = False,
     ) -> Self:
         """
         Interface to :func:`pandas.concat`
@@ -515,7 +494,6 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         verify_integrity : bool, default=True
         concat_kws : mapping, optional
             Extra arguments to
-        inplace : bool, default=False
 
         See Also
         --------
@@ -539,11 +517,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             **concat_kws,
         )
 
-        if inplace:
-            self.series = s
-            return self
-
-        return self.new_like(s)
+        return self.new_like(data=s)
 
     def droplevel(self, level: int | Hashable | Sequence[int | Hashable]) -> Self:
         """
@@ -553,7 +527,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         --------
         pandas.Series.droplevel
         """
-        return self.new_like(self._series.droplevel(level=level, axis=0))
+        return self.new_like(data=self.series.droplevel(level=level, axis=0))
 
     def apply(
         self,
@@ -709,10 +683,10 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
             out: dict[Hashable, pd.Series[Any]] = {}
             for k in objs:
                 v = objs[k]
-                out[k] = validate.series(v._series if isinstance(v, cls) else v)
+                out[k] = validate.series(v.series if isinstance(v, cls) else v)
             return validate.series(pd.concat(out, **concat_kws))
 
-        gen = (validate.series(o._series if isinstance(o, cls) else o) for o in objs)
+        gen = (validate.series(o.series if isinstance(o, cls) else o) for o in objs)
         return validate.series(pd.concat(gen, **concat_kws))
 
     def concat_like(
@@ -723,7 +697,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     ) -> Self:
         """Concat a sequence of objects like `self`"""
         s = self._concat_to_series(objs, **concat_kws)
-        return self.new_like(s)
+        return self.new_like(data=s)
 
     @classmethod
     def concat(
@@ -767,7 +741,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     # ** lnPi Specific
     @cached.prop
     def _lnz_series(self) -> pd.Series[Any]:
-        return validate.series(self._series.apply(lambda x: x.lnz))
+        return validate.series(self.series.apply(lambda x: x.lnz))
 
     @override
     def __repr__(self) -> str:
@@ -828,7 +802,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         returns self.iloc[idx].lnz[component]
         """
         v: lnPiMasked = (
-            self.zloc[zloc]._series if zloc is not None else self._series
+            self.zloc[zloc].series if zloc is not None else self.series
         ).iloc[iloc]
         lnz = v.lnz
         if component is not None:
@@ -850,7 +824,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
     # @cached.prop
     @property
     def _nrec(self) -> int:
-        return len(self._series)
+        return len(self.series)
 
     def _lnpi_tot(self, fill_value: float | None = None) -> NDArrayAny:
         # new method
@@ -896,8 +870,8 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         self, items: Sequence[Any] | Sequence[xr.DataArray]
     ) -> Sequence[Any] | xr.DataArray:
         """Utility to wrap output in :class:xarray.DataArray"""
-        if self._xarray_output and isinstance(items[0], xr.DataArray):
-            return xr.concat(items, self.index, coords=self._concat_coords)
+        if self.xarray_output and isinstance(items[0], xr.DataArray):
+            return xr.concat(items, self.index, coords=self.concat_coords)
         return items
 
     ##################################################
@@ -937,9 +911,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         lnzs: Sequence[float] | NDArrayAny,
         # TODO(wpk): make better type for build_phases.
         build_phases: Callable[..., tuple[list[lnPiMasked], NDArrayAny]],
-        ref: lnPiMasked | None = None,
         build_kws: Mapping[str, Any] | None = None,
-        nmax: int | None = None,
         base_class: str | type = "first",
         **kwargs: Any,
     ) -> Self:
@@ -950,12 +922,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         ----------
         lnzs : sequence of float
             One dimensional array of lnz value for the varying component.
-        ref : lnPiMasked
-            lnpi_phases to reweight to get list of lnpi's
         build_phases : callable
             Typically one of `PhaseCreator.build_phases_mu` or `PhaseCreator.build_phases_dmu`
         build_kws : optional
             optional arguments to `build_phases`
+        **kwargs
+            Extra arguments to :meth:`from_list`
 
         Returns
         -------
@@ -975,9 +947,7 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
         build_kws = dict(build_kws, phases_factory=False)
         total = len(lnzs)
         seq = get_tqdm(
-            parallel_map(
-                build_phases, lnzs, total=total, ref=ref, nmax=nmax, **build_kws
-            ),
+            parallel_map(build_phases, lnzs, total=total, **build_kws),
             total=total,
             desc="build",
         )
@@ -1028,12 +998,12 @@ class lnPiCollection(AccessorMixin):  # noqa: PLR0904, N801
                 dims=self.xge.dims_rec + self.xge.dims_n,
                 name="labels",
             )
-            .assign_coords({self._concat_dim: index, **self.state_kws})
+            .assign_coords({self.concat_dim: index, **self.state_kws})
             .assign_attrs(self.xge._standard_attrs)
         )
 
         if reset_index:
-            out = out.reset_index(self._concat_dim)
+            out = out.reset_index(self.concat_dim)
 
         return out
 
