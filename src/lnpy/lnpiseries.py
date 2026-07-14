@@ -243,7 +243,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     Parameters
     ----------
-    data : sequence of lnPiMasked
+    data : sequence, mapping, lnPiCollection, or Series
         :math:`\ln \Pi(N)` instances to consider.
     index : array-like, pandas.Index, pandas.MultiIndex, optional
         Index to apply to Series.
@@ -262,6 +262,10 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
     *args **kwargs
         Extra arguments to Series constructor
 
+
+    Note
+    ----
+    Underlying data is created from ``pd.Series(data, index=index, dtype=dtype, name=name)``
     """
 
     _data: pd.Series[Any] = attrs.field()
@@ -284,7 +288,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     def __init__(
         self,
-        data: Self | Iterable[lnPiMasked] | pd.Series[Any],
+        data: Self | Iterable[lnPiMasked] | Mapping[Any, lnPiMasked] | pd.Series[Any],
         *,
         index: ArrayLike | IndexAny | pd.MultiIndex | None = None,
         name: Hashable | None = None,
