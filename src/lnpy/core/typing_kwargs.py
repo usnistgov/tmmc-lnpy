@@ -4,11 +4,12 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 import cattrs
+import numpy as np
 
-from .typing import PeakError
+from .typing import NDArrayAny, PeakError
 from .typing_compat import TypedDict
 
 
@@ -35,7 +36,7 @@ class WatershedKwargs(TypedDict, total=False):
     Extras passed to :func:`skimage.segmentation.watershed`
     """
 
-    connectivity: Any  # TODO(wpk):  get `int | NDArrayAny | None` to work with cattrs
+    connectivity: int | NDArrayAny | None
 
 
 class wFreeEnergyKwargs(TypedDict, total=False):  # noqa: N801
@@ -57,19 +58,41 @@ class MergeKwargs(TypedDict, total=False, closed=True):  # type: ignore[call-arg
     nfeature_max: int | None
     efac: float
     force: bool
-    convention: Literal["image", "masked", True, False]  # noqa: RUF038  # use this to make cattrs happy
+    convention: Literal["image", "masked"] | bool
     warn: bool
 
 
-_forbid_extra_keys_converter = cattrs.Converter(forbid_extra_keys=True)
+# converters
+_peak_converter = cattrs.Converter(forbid_extra_keys=True)
+_watershed_converter = cattrs.Converter()
+_merge_converter = cattrs.Converter(forbid_extra_keys=True)
+
+
+@_watershed_converter.register_structure_hook
+def _validate_connectivity(val: Any, _: Any) -> int | NDArrayAny | None:
+    if val is None or isinstance(val, int):
+        return val
+    return np.asarray(val)
+
+
+@_merge_converter.register_structure_hook
+def _validate_convention(val: Any, _: Any) -> Literal["image", "masked"] | bool:
+    if isinstance(val, bool):
+        return val
+
+    if isinstance(val, str) and val in {"image", "masked"}:
+        return cast("Literal['image','masked']", val)
+
+    msg = "Convention must be bool, 'image', or 'masked'"
+    raise ValueError(msg)
 
 
 def convert_peak_kws(x: Mapping[Any, Any]) -> PeakLocalMaxAdaptiveKwargs:
-    return _forbid_extra_keys_converter.structure(x, PeakLocalMaxAdaptiveKwargs)
+    return _peak_converter.structure(x, PeakLocalMaxAdaptiveKwargs)
 
 
 def convert_watershed_kws(x: Mapping[Any, Any]) -> WatershedKwargs:
-    return cattrs.structure(x, WatershedKwargs)
+    return _watershed_converter.structure(x, WatershedKwargs)
 
 
 def convert_free_energy_kws(x: Mapping[Any, Any]) -> wFreeEnergyKwargs:
@@ -77,4 +100,4 @@ def convert_free_energy_kws(x: Mapping[Any, Any]) -> wFreeEnergyKwargs:
 
 
 def convert_merge_kws(x: Mapping[Any, Any]) -> MergeKwargs:
-    return _forbid_extra_keys_converter.structure(x, MergeKwargs)
+    return _merge_converter.structure(x, MergeKwargs)
