@@ -16,6 +16,18 @@ See the fragment files in [changelog.d]
 <!-- scriv-insert-here -->
 
 
+## 0.10.2
+
+Released on 2026-07-14.
+
+### Bug fixes
+
+- fix: fix cattr converters for complicated types ([#196](https://github.com/usnistgov/tmmc-lnpy/pull/196))
+
+### Contributors
+
+- [@wpk-nist-gov](https://github.com/wpk-nist-gov)
+
 ## 0.10.1
 
 Released on 2026-07-10.
