@@ -728,14 +728,17 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     @cached.prop
     def query(self) -> _Query:
+        """Query data.  See :meth:`pandas.DataFrame.query`"""
         return _Query(self)
 
     @cached.prop
     def zloc(self) -> _LocIndexer_unstack_zloc:
+        """Positional indexer for everything but `phase`."""
         return _LocIndexer_unstack_zloc(self)
 
     @cached.prop
     def mloc(self) -> _LocIndexer_unstack_mloc:
+        """Index with pandas index"""
         return _LocIndexer_unstack_mloc(self)
 
     # ** lnPi Specific
