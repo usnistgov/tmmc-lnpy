@@ -471,7 +471,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
         pi_sum = pi.sum()
         pi_norm = pi / pi_sum
 
-        lnpi_zero = self.data.ravel()[0] - lnpi_local_max
+        lnpi_zero = self.data.flat[0] - lnpi_local_max
 
         return pi_norm, pi_sum, lnpi_zero
 
@@ -761,7 +761,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
         """
 
         def _func(data: NDArrayAny) -> NDArrayAny:
-            return data - data.ravel()[0]
+            return cast("NDArrayAny", data - data.flat[0])
 
         return self.pipe(_func)
 
