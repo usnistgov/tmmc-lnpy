@@ -471,7 +471,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
         pi_sum = pi.sum()
         pi_norm = pi / pi_sum
 
-        lnpi_zero = self.data.ravel()[0] - lnpi_local_max
+        lnpi_zero = self.data.flat[0] - lnpi_local_max
 
         return pi_norm, pi_sum, lnpi_zero
 
@@ -742,10 +742,26 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
         return self.new_like(base=self.base, mask=np.isnan(self.base.data))
 
     def zeromax(self) -> Self:
-        """Shift so that lnpi.max() == 0 on reference"""
+        """
+        Shift so that lnpi.max() == 0 on reference
+
+        Note that ``lnpi.max()`` is performed on the masked data.
+        """
 
         def _func(data: NDArrayAny) -> NDArrayAny:
             return cast("NDArrayAny", data - np.ma.MaskedArray(data, self.mask).max())
+
+        return self.pipe(_func)
+
+    def zerozero(self) -> Self:
+        """
+        Shift so that ``lnpi[0, ..., 0] == 0`` on reference
+
+        Data is shifted regardless of `lnpi[0, ..., 0]` being masked.
+        """
+
+        def _func(data: NDArrayAny) -> NDArrayAny:
+            return cast("NDArrayAny", data - data.flat[0])
 
         return self.pipe(_func)
 

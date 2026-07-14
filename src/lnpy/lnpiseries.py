@@ -243,7 +243,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     Parameters
     ----------
-    data : sequence of lnPiMasked
+    data : sequence, mapping, lnPiCollection, or Series
         :math:`\ln \Pi(N)` instances to consider.
     index : array-like, pandas.Index, pandas.MultiIndex, optional
         Index to apply to Series.
@@ -262,6 +262,10 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
     *args **kwargs
         Extra arguments to Series constructor
 
+
+    Note
+    ----
+    Underlying data is created from ``pd.Series(data, index=index, dtype=dtype, name=name)``
     """
 
     _data: pd.Series[Any] = attrs.field()
@@ -284,7 +288,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     def __init__(
         self,
-        data: Self | Iterable[lnPiMasked] | pd.Series[Any],
+        data: Self | Iterable[lnPiMasked] | Mapping[Any, lnPiMasked] | pd.Series[Any],
         *,
         index: ArrayLike | IndexAny | pd.MultiIndex | None = None,
         name: Hashable | None = None,
@@ -720,22 +724,27 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     @cached.prop
     def loc(self) -> _LocIndexer:
+        """Indexer by value. See :attr:`pandas.Series.loc`"""
         return _LocIndexer(self)
 
     @cached.prop
     def iloc(self) -> _iLocIndexer:
+        """Index by position. See :attr:`pandas.Series.iloc`"""
         return _iLocIndexer(self)
 
     @cached.prop
     def query(self) -> _Query:
+        """Query data.  See :meth:`pandas.DataFrame.query`"""
         return _Query(self)
 
     @cached.prop
     def zloc(self) -> _LocIndexer_unstack_zloc:
+        """Positional indexer for everything but `phase`."""
         return _LocIndexer_unstack_zloc(self)
 
     @cached.prop
     def mloc(self) -> _LocIndexer_unstack_mloc:
+        """Index with pandas index"""
         return _LocIndexer_unstack_mloc(self)
 
     # ** lnPi Specific

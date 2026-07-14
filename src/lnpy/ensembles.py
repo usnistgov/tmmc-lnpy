@@ -686,7 +686,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
         Parameters
         ----------
         lnpi_zero : float or None
-            if None, lnpi_zero = self.data.ravel()[0]
+            if None, lnpi_zero = self.data.flat[0]
         """
         # Note.  Put calculation in _betaOmega
         # because so many other things
@@ -967,7 +967,7 @@ class CanonicalEnsemble:
 
         if lnpi_zero is None:
             # TODO(wpk): Take another look at this...
-            lnpi_zero = self._parent.data.ravel()[0]
+            lnpi_zero = self._parent.data.flat[0]
 
         return (
             (
