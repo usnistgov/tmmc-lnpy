@@ -761,7 +761,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
         """
 
         def _func(data: NDArrayAny) -> NDArrayAny:
-            return data - self.data.ravel()[0]
+            return cast("NDArrayAny", data - data.ravel()[0])
 
         return self.pipe(_func)
 
