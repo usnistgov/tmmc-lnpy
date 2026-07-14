@@ -720,10 +720,12 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
     @cached.prop
     def loc(self) -> _LocIndexer:
+        """Indexer by value. See :attr:`pandas.Series.loc`"""
         return _LocIndexer(self)
 
     @cached.prop
     def iloc(self) -> _iLocIndexer:
+        """Index by position:  See :attr:`pandas.Series.iloc`"""
         return _iLocIndexer(self)
 
     @cached.prop
