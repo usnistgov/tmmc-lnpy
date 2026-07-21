@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from .core.typing_compat import Unpack
 
 
-class Options(TypedDict, total=False, closed=True):  # type: ignore[call-arg]
+class Options(TypedDict, total=False, closed=True):
     """Options."""
 
     tqdm_use: bool
@@ -36,7 +36,7 @@ class Options(TypedDict, total=False, closed=True):  # type: ignore[call-arg]
     joblib_len_build: int
 
 
-class OptionsReq(TypedDict, total=True, closed=True):  # type: ignore[call-arg]
+class OptionsReq(TypedDict, total=True, closed=True):
     """Options with required parameters."""
 
     tqdm_use: bool
@@ -53,7 +53,7 @@ class OptionsReq(TypedDict, total=True, closed=True):  # type: ignore[call-arg]
     joblib_len_build: int
 
 
-class Validators(TypedDict, closed=True):  # type: ignore[call-arg]
+class Validators(TypedDict, closed=True):
     """Validators."""
 
     tqdm_use: ValidatorFunc

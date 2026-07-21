@@ -192,7 +192,7 @@ def _concat_windows_xarray(
                                 *validate.as_str_or_iterable(coord_names),
                             ]
                         }
-                    )  # pyright: ignore[reportArgumentType]
+                    )  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
                 )
                 for window, ds in enumerate(tables)
             ),
@@ -977,7 +977,7 @@ def keep_first(
                 msg = f"Passed Dataset or DataArray must contain {window_name} and {state_name} in dimensions"
                 raise ValueError(msg)
             # set index
-            data = data.stack({index_name: [window_name, state_name]})  # noqa: PD013
+            data = data.stack({index_name: [window_name, state_name]})  # noqa: PD013  # ty: ignore[invalid-argument-type]
 
         # indexing dataframe
         frame = (

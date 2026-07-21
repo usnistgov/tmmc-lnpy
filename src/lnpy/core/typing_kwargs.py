@@ -52,7 +52,7 @@ class wFreeEnergyKwargs(TypedDict, total=False):  # noqa: N801
     check_features: bool
 
 
-class MergeKwargs(TypedDict, total=False, closed=True):  # type: ignore[call-arg]
+class MergeKwargs(TypedDict, total=False, closed=True):
     """Keyword arguments to :func:`.wFreeEnergy.merge_regions`"""
 
     nfeature_max: int | None
