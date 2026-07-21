@@ -241,7 +241,7 @@ def peak_local_max_adaptive(
     if n > num_peaks_max:
         if errors == "ignore":
             pass
-        elif errors in {"raise", "ignore"}:
+        else:
             message = f"{n} maxima found greater than {num_peaks_max}"
             if errors == "raise":
                 raise RuntimeError(message)

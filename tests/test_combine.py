@@ -291,7 +291,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
 
     ds_stack = ds.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
     ds_out = combine.keep_first(ds_stack, state_name="x")
-    xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))  # ty:ignore[call-non-callable]
+    xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))
 
     ds_out = combine.keep_first(ds_stack, state_name="x", reset_window=False)
     xr.testing.assert_allclose(ds_stack, ds_out)
@@ -299,7 +299,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     ds_out = combine.keep_first(
         combine.concat_windows([ds_stack], coord_names="x"), state_name="x"
     )
-    xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))  # ty:ignore[call-non-callable]
+    xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))
 
     # dataarray
     da = ds["z"]
@@ -319,7 +319,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
 
     da_stack = da.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
     da_out = combine.keep_first(da_stack, state_name="x")
-    xr.testing.assert_allclose(da, da_out.drop_vars("window"))  # ty:ignore[call-non-callable]
+    xr.testing.assert_allclose(da, da_out.drop_vars("window"))
 
     da_out = combine.keep_first(da_stack, state_name="x", reset_window=False)
     xr.testing.assert_allclose(da_stack, da_out)
@@ -327,7 +327,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     da_out = combine.keep_first(
         combine.concat_windows([da_stack], coord_names="x"), state_name="x"
     )
-    xr.testing.assert_allclose(da, da_out.drop_vars("window"))  # ty:ignore[call-non-callable]
+    xr.testing.assert_allclose(da, da_out.drop_vars("window"))
 
     # multiple variables in index
     da_stack = da.expand_dims(["rec", "window"]).stack(index=["rec", "window", "x"])  # noqa: PD013
@@ -427,7 +427,7 @@ def test_combine_keep_first_split_dataset(
                 coord_names="x",
             ),  # ty:ignore[no-matching-overload]
             state_name="x",
-        )  # ty:ignore[invalid-argument-type]
+        )
     )
 
     # using single table:
@@ -446,7 +446,7 @@ def test_combine_keep_first_split_dataset(
         combine.keep_first(
             stacked,
             state_name="x",
-        )  # ty:ignore[invalid-argument-type]
+        )
     )
 
     # wrong name
