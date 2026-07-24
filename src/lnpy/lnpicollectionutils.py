@@ -438,7 +438,7 @@ def limited_collection(
     ref = build_phases.phase_creator.ref
     x0 = ref.lnz[build_phases.index] if lnz_range is None else None
 
-    # TODO: update tests to get rid of outlier=True  # noqa: TD002
+    # TODO: update tests to get rid of outlier=True  # ruff:ignore[missing-todo-author]
     lnzs = build_grid(
         dx=dlnz,
         x_range=lnz_range,
@@ -475,7 +475,7 @@ def limited_collection(
                 )
                 if o["converged"]:
                     lnz_min = p_min.iloc[0].lnz[build_phases.index] - dlnz
-            except Exception:  # noqa: BLE001, S110
+            except Exception:  # ruff:ignore[blind-except, try-except-pass]
                 pass
 
         if edge_distance_min is not None:
@@ -490,7 +490,7 @@ def limited_collection(
                     **lnz_max_kws,
                 )
                 lnz_max = p_max.iloc[0].lnz[build_phases.index]
-            except Exception:  # noqa: BLE001,S110
+            except Exception:  # ruff:ignore[blind-except, try-except-pass]
                 pass
 
     lnzs = lnzs[(lnzs >= lnz_min) & (lnzs <= lnz_max)]

@@ -100,7 +100,7 @@ def xr_name(
                 attrs["long_name"] = long_name
             out = out.assign_attrs(**attrs)
             if unstack and self.xarray_unstack:
-                out = out.unstack()  # noqa: PD010
+                out = out.unstack()  # ruff:ignore[pandas-use-of-dot-pivot-or-unstack]
             return out
 
         return wrapper
@@ -125,7 +125,7 @@ class LogPiWrapper:
         n_name: str = "n",
         lnz_name: str = "lnz",
         comp_name: str = "component",
-        phase_name: str = "phase",  # noqa: ARG002
+        phase_name: str = "phase",  # ruff:ignore[unused-method-argument]
     ) -> None:
         self.shape = shape
         self.ndim = len(shape)
@@ -210,7 +210,7 @@ class LogPiWrapper:
 
 
 # * Grandcanonical ensemble (xge) ---------------------------------------------
-class GrandCanonicalEnsemble:  # noqa: PLR0904
+class GrandCanonicalEnsemble:  # ruff:ignore[too-many-public-methods]
     """
     :class:`~xarray.DataArray` accessor to Grand Canonical properties from lnPi
 
@@ -411,7 +411,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             x = xr.DataArray(x, dims=self.dims_n)
         return x
 
-    def _mean_pi(self, x: xr.DataArray, **kwargs: Any) -> xr.DataArray:  # noqa: ARG002
+    def _mean_pi(self, x: xr.DataArray, **kwargs: Any) -> xr.DataArray:  # ruff:ignore[unused-method-argument]
         return validate.dataarray(
             xr_dot(self.pi_norm, x, dim=self.dims_n, **self.xarray_dot_kws),
         )
@@ -456,11 +456,11 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
     # def _central_moment_bar(
     #     self,
     #     x,
-    #     y=None,  # noqa: ERA001
-    #     xmom=2,  # noqa: ERA001
-    #     ymom=None,  # noqa: ERA001
-    #     xmom_dim="xmom",  # noqa: ERA001
-    #     ymom_dim="ymom",  # noqa: ERA001
+    #     y=None,  # ruff:ignore[commented-out-code]
+    #     xmom=2,  # ruff:ignore[commented-out-code]
+    #     ymom=None,  # ruff:ignore[commented-out-code]
+    #     xmom_dim="xmom",  # ruff:ignore[commented-out-code]
+    #     ymom_dim="ymom",  # ruff:ignore[commented-out-code]
     #     *args,
     #     **kwargs,
     # ):
@@ -473,17 +473,17 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
 
     #     """
     #     def _get_dx(xx, mom, mom_dim):
-    #         xx = self._array_or_callable_to_xarray(xx, *args, **kwargs)  # noqa: ERA001
+    #         xx = self._array_or_callable_to_xarray(xx, *args, **kwargs)  # ruff:ignore[commented-out-code]
     #         if isinstance(mom, int):
-    #             mom = [mom]  # noqa: ERA001
-    #         mom = xr.DataArray(mom, dims=mom_dim, coords={mom_dim: mom})  # noqa: ERA001
-    #         return (xx - self._mean_pi(xx)) ** mom  # noqa: ERA001
+    #             mom = [mom]  # ruff:ignore[commented-out-code]
+    #         mom = xr.DataArray(mom, dims=mom_dim, coords={mom_dim: mom})  # ruff:ignore[commented-out-code]
+    #         return (xx - self._mean_pi(xx)) ** mom  # ruff:ignore[commented-out-code]
 
-    #     dx = _get_dx(x, xmom, xmom_dim)  # noqa: ERA001
+    #     dx = _get_dx(x, xmom, xmom_dim)  # ruff:ignore[commented-out-code]
     #     if y is not None:
-    #         dy = _get_dx(y, ymom, ymom_dim)  # noqa: ERA001
-    #         dx = dx * dy  # noqa: ERA001
-    #     return self._mean_pi(dx)  # noqa: ERA001
+    #         dy = _get_dx(y, ymom, ymom_dim)  # ruff:ignore[commented-out-code]
+    #         dx = dx * dy  # ruff:ignore[commented-out-code]
+    #     return self._mean_pi(dx)  # ruff:ignore[commented-out-code]
 
     def var_pi(
         self,
@@ -616,7 +616,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
 
         # NOTE : This assumes each n value corresponds to index
         # alternatively, could put through filter like
-        # coords = {k : out[k].isel(**{k : v}) for k, v in self._argmax_index_dict.items()}  # noqa: ERA001
+        # coords = {k : out[k].isel(**{k : v}) for k, v in self._argmax_index_dict.items()}  # ruff:ignore[commented-out-code]
 
         if add_n_coords:
             out = out.assign_coords(self._argmax_indexer_dict)
@@ -722,7 +722,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             If True, :math:`C(N) = \ln \Pi(N) `.  Otherwise, :math:`C=0`.
         """
         if correction:
-            betaF_can = betaF_can + self.lnpi_norm  # noqa: PLR6104
+            betaF_can = betaF_can + self.lnpi_norm  # ruff:ignore[non-augmented-assignment]
         return self._mean_pi(betaF_can)
 
     ################################################################################
@@ -751,7 +751,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
             pv = self.betapV()
             sample = self._parent.concat_dim
             return validate.dataarray(
-                pv  # noqa: PD010, PD013
+                pv  # ruff:ignore[pandas-use-of-dot-pivot-or-unstack, pandas-use-of-dot-stack]
                 .unstack(sample)
                 .pipe(lambda x: x.max("phase") == x)
                 .stack(sample=pv.indexes[sample].names)
@@ -833,7 +833,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
                     if callable(v):
                         v = v()
                     out.append(validate.dataarray(v))
-            except Exception:  # noqa: PERF203, BLE001, S110  # pylint: disable=broad-exception-caught
+            except Exception:  # ruff:ignore[try-except-in-loop, blind-except, try-except-pass]  # pylint: disable=broad-exception-caught
                 pass
 
         ds: xr.Dataset = xr.merge(out, compat="no_conflicts")
@@ -852,7 +852,7 @@ class GrandCanonicalEnsemble:  # noqa: PLR0904
                     ds
                     .where(mask)
                     .max("phase")
-                    .assign_coords(phase=lambda x: phase[mask.argmax("phase")])  # noqa: ARG005
+                    .assign_coords(phase=lambda x: phase[mask.argmax("phase")])  # ruff:ignore[unused-lambda-argument]
                 )
 
         if dim_to_suffix is not None:
@@ -938,7 +938,7 @@ class CanonicalEnsemble:
         return (
             self._xge.ncoords
             # NOTE: if don't use '.values', then get extra coords don't want
-            .where(~self._xge.lnpi(np.nan).isnull().to_numpy())  # noqa: PD003
+            .where(~self._xge.lnpi(np.nan).isnull().to_numpy())  # ruff:ignore[pandas-use-of-dot-is-null]
         )
 
     @property
@@ -1126,7 +1126,7 @@ class CanonicalEnsemble:
                 if callable(v):
                     v = v()
                 out.append(validate.dataarray(v))
-            except Exception:  # noqa: PERF203, BLE001, S110  # pylint: disable=broad-exception-caught
+            except Exception:  # ruff:ignore[try-except-in-loop, blind-except, try-except-pass]  # pylint: disable=broad-exception-caught
                 pass
 
         ds = xr.merge(out, compat="no_conflicts")

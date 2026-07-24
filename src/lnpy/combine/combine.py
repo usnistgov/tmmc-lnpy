@@ -185,7 +185,7 @@ def _concat_windows_xarray(
         out = xr.concat(  # pyright: ignore[reportCallIssue]
             (
                 (
-                    _process_object(ds, window).stack(  # noqa: PD013
+                    _process_object(ds, window).stack(  # ruff:ignore[pandas-use-of-dot-stack]
                         {
                             index_name: [
                                 window_name,
@@ -977,7 +977,7 @@ def keep_first(
                 msg = f"Passed Dataset or DataArray must contain {window_name} and {state_name} in dimensions"
                 raise ValueError(msg)
             # set index
-            data = data.stack({index_name: [window_name, state_name]})  # noqa: PD013  # ty: ignore[invalid-argument-type]
+            data = data.stack({index_name: [window_name, state_name]})  # ruff:ignore[pandas-use-of-dot-stack]  # ty: ignore[invalid-argument-type]
 
         # indexing dataframe
         frame = (

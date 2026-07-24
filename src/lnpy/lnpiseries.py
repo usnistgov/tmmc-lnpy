@@ -119,7 +119,7 @@ class _LocIndexer:
 
 
 # @SeriesWrapper.decorate_accessor("iloc")
-class _iLocIndexer:  # noqa: N801
+class _iLocIndexer:  # ruff:ignore[invalid-class-name]
     """
     Indexer by position.
 
@@ -169,7 +169,7 @@ class _Query:
 
 
 # @SeriesWrapper.decorate_accessor("zloc")
-class _LocIndexer_unstack_zloc:  # noqa: N801
+class _LocIndexer_unstack_zloc:  # ruff:ignore[invalid-class-name]
     """positional indexer for everything but phase"""
 
     def __init__(
@@ -179,12 +179,12 @@ class _LocIndexer_unstack_zloc:  # noqa: N801
     ) -> None:
         self._parent = parent
         self._level = level
-        self._loc = self._parent.series.unstack(self._level).iloc  # noqa: PD010
+        self._loc = self._parent.series.unstack(self._level).iloc  # ruff:ignore[pandas-use-of-dot-pivot-or-unstack]
 
     def __getitem__(self, idx: Any) -> lnPiCollection:
         out = self._loc[idx]
         if isinstance(out, pd.DataFrame):
-            out = out.stack(self._level, future_stack=True)  # noqa: PD013
+            out = out.stack(self._level, future_stack=True)  # ruff:ignore[pandas-use-of-dot-stack]
         out = out.dropna()
 
         if isinstance(out, pd.Series):
@@ -196,7 +196,7 @@ class _LocIndexer_unstack_zloc:  # noqa: N801
 
 
 # @SeriesWrapper.decorate_accessor("mloc")
-class _LocIndexer_unstack_mloc:  # noqa: N801
+class _LocIndexer_unstack_mloc:  # ruff:ignore[invalid-class-name]
     """indexer with pandas index"""
 
     def __init__(
@@ -235,8 +235,8 @@ class _LocIndexer_unstack_mloc:  # noqa: N801
         return out
 
 
-@attrs.define(frozen=True, init=False)  # noqa: PLR0904
-class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
+@attrs.define(frozen=True, init=False)  # ruff:ignore[too-many-public-methods]
+class lnPiCollection(AccessorMixin, MyAttrsMixin):  # ruff:ignore[invalid-class-name]
     r"""
     Wrapper around :class:`pandas.Series` for collection of :class:`~lnpy.lnpidata.lnPiMasked` objects.
 
@@ -1151,7 +1151,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         return wFreeEnergyPhases(self)
 
     @property
-    def wlnPi(self) -> lnpienergy.wFreeEnergyCollection:  # noqa: N802
+    def wlnPi(self) -> lnpienergy.wFreeEnergyCollection:  # ruff:ignore[invalid-function-name]
         """
         Deprecated accessor to :class:`~lnpy.lnpienergy.wFreeEnergyCollection` from :attr:`wlnPi`.
 
@@ -1164,7 +1164,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # noqa: N801
         return self.wfe
 
     @property
-    def wlnPi_single(self) -> lnpienergy.wFreeEnergyPhases:  # noqa: N802
+    def wlnPi_single(self) -> lnpienergy.wFreeEnergyPhases:  # ruff:ignore[invalid-function-name]
         """
         Deprecated accessor to :class:`~lnpy.lnpienergy.wFreeEnergyPhases` from :attr:`wlnPi_single`.
 

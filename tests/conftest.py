@@ -75,12 +75,12 @@ def get_ref(
 
 
 @pytest.fixture(scope="session")
-def path_data_lnPi():  # noqa: N802
+def path_data_lnPi():  # ruff:ignore[invalid-function-name]
     return Path(__file__).parent / "../examples/archived/LJ_cfs_2.5sig"
 
 
 @pytest.fixture(scope="session")
-def ref_lnPi(path_data_lnPi):  # noqa: N802,N803
+def ref_lnPi(path_data_lnPi):  # ruff:ignore[invalid-function-name, invalid-argument-name]
     import lnPi
 
     path_data = path_data_lnPi

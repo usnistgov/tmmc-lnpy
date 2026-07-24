@@ -2,7 +2,7 @@
 Typing definitions for :mod:`lnpy`
 ==================================
 """
-# ruff: noqa: UP007
+# ruff:file-ignore[non-pep604-annotation-union]
 # pylint: disable=consider-alternative-union-syntax
 
 from __future__ import annotations

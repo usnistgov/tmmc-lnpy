@@ -10,12 +10,12 @@ import lnpy.examples
 
 # get meta data
 @pytest.fixture(scope="session")
-def ref(ref_lnPi):  # noqa: N803
+def ref(ref_lnPi):  # ruff:ignore[invalid-argument-name]
     return ref_lnPi
 
 
 @pytest.fixture(scope="session")
-def path_data(path_data_lnPi):  # noqa: N803
+def path_data(path_data_lnPi):  # ruff:ignore[invalid-argument-name]
     return path_data_lnPi
 
 

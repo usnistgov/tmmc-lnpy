@@ -86,7 +86,7 @@ def table_sequence(
     table_sequence = []
     for i in range(n + 1):
         ub = lb + split + 1
-        table_sequence.append(table.iloc[lb:ub].assign(y=lambda x: x["y"] + 10 * i))  # noqa: B023  # pylint: disable=cell-var-from-loop
+        table_sequence.append(table.iloc[lb:ub].assign(y=lambda x: x["y"] + 10 * i))  # ruff:ignore[function-uses-loop-variable]  # pylint: disable=cell-var-from-loop
 
         lb += split
         if lb >= len(table):
@@ -289,7 +289,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     )
     xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))
 
-    ds_stack = ds.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
+    ds_stack = ds.expand_dims("window").stack(index=["window", "x"])  # ruff:ignore[pandas-use-of-dot-stack]
     ds_out = combine.keep_first(ds_stack, state_name="x")
     xr.testing.assert_allclose(ds, ds_out.drop_vars("window"))
 
@@ -317,7 +317,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     )
     xr.testing.assert_allclose(da, da_out.drop_vars("window"))
 
-    da_stack = da.expand_dims("window").stack(index=["window", "x"])  # noqa: PD013
+    da_stack = da.expand_dims("window").stack(index=["window", "x"])  # ruff:ignore[pandas-use-of-dot-stack]
     da_out = combine.keep_first(da_stack, state_name="x")
     xr.testing.assert_allclose(da, da_out.drop_vars("window"))
 
@@ -330,7 +330,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
     xr.testing.assert_allclose(da, da_out.drop_vars("window"))
 
     # multiple variables in index
-    da_stack = da.expand_dims(["rec", "window"]).stack(index=["rec", "window", "x"])  # noqa: PD013
+    da_stack = da.expand_dims(["rec", "window"]).stack(index=["rec", "window", "x"])  # ruff:ignore[pandas-use-of-dot-stack]
     da_out = combine.keep_first(da_stack, state_name="x")
     expected = da_stack.reset_index("window")
     xr.testing.assert_allclose(expected, da_out)
@@ -339,7 +339,7 @@ def test_combine_keep_first_single_table(table: pd.DataFrame) -> None:
 def test_combine_keep_first_xarray_routines(table_dataset: xr.Dataset) -> None:
     # no window in coords:
     with pytest.raises(ValueError, match=r".* tables.indexes.*"):
-        combine.keep_first(table_dataset.stack(index=["x"]))  # noqa: PD013
+        combine.keep_first(table_dataset.stack(index=["x"]))  # ruff:ignore[pandas-use-of-dot-stack]
 
     # not window in dims
     with pytest.raises(ValueError, match=r".* in dimensions"):
@@ -433,7 +433,7 @@ def test_combine_keep_first_split_dataset(
     # using single table:
     stacked = xr.concat(
         (
-            x  # noqa: PD013
+            x  # ruff:ignore[pandas-use-of-dot-stack]
             .expand_dims("window")
             .assign_coords(window=("window", [i]))
             .stack(index=["window", "x"])

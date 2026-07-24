@@ -1,5 +1,5 @@
 """TypedDict keyword arguments to various functions/methods"""
-# ruff: noqa: TC001, TC003
+# ruff:file-ignore[typing-only-first-party-import, typing-only-standard-library-import]
 
 from __future__ import annotations
 
@@ -39,7 +39,7 @@ class WatershedKwargs(TypedDict, total=False):
     connectivity: int | NDArrayAny | None
 
 
-class wFreeEnergyKwargs(TypedDict, total=False):  # noqa: N801
+class wFreeEnergyKwargs(TypedDict, total=False):  # ruff:ignore[invalid-class-name]
     """
     Keywords to :meth:`.wFreeEnergy.from_labels`
 

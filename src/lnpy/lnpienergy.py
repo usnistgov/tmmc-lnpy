@@ -377,7 +377,7 @@ def merge_regions(
 
 
 @docfiller.decorate
-class wFreeEnergy:  # noqa: N801
+class wFreeEnergy:  # ruff:ignore[invalid-class-name]
     r"""
     Analysis of local free energy :math:`w = \beta f = - \ln \Pi`.
 
@@ -621,7 +621,7 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     w_argmin = pd.Series(w.w_argmin, index=w_min.index, name="w_argmin")
 
     w_tran = validate.series(
-        pd.DataFrame(  # noqa: PD013
+        pd.DataFrame(  # ruff:ignore[pandas-use-of-dot-stack]
             w.w_tran,
             index=index,
             columns=index.get_level_values("phase").rename("phase_nebr"),
@@ -657,7 +657,7 @@ def _get_w_data(index: pd.MultiIndex, w: wFreeEnergy) -> dict[str, pd.Series[Any
     }  # [index_map, w.w_argtran]}
 
 
-class wFreeEnergyCollectionBase:  # noqa: N801
+class wFreeEnergyCollectionBase:  # ruff:ignore[invalid-class-name]
     """Base class for Free energy collection calculations."""
 
     def __init__(self, parent: lnPiCollection) -> None:
@@ -765,7 +765,7 @@ class wFreeEnergyCollectionBase:  # noqa: N801
         return delta_w.min("phase_nebr").fillna(0.0)
 
 
-class wFreeEnergyCollection(wFreeEnergyCollectionBase):  # noqa: N801
+class wFreeEnergyCollection(wFreeEnergyCollectionBase):  # ruff:ignore[invalid-class-name]
     r"""
     Calculate the transition free energies for a :class:`lnpy.lnpiseries.lnPiCollection`.
 
@@ -788,7 +788,7 @@ class wFreeEnergyCollection(wFreeEnergyCollectionBase):  # noqa: N801
 
 
 # @lnPiCollection.decorate_accessor("wfe_phases")
-class wFreeEnergyPhases(wFreeEnergyCollectionBase):  # noqa: N801
+class wFreeEnergyPhases(wFreeEnergyCollectionBase):  # ruff:ignore[invalid-class-name]
     """
     Stripped down version of :class:`wFreeEnergyCollection` for single phase grouping.
 

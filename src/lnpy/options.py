@@ -122,7 +122,7 @@ _VALIDATORS: Validators = {
 _SETTERS: dict[str, Any] = {}
 
 
-class set_options:  # noqa: N801
+class set_options:  # ruff:ignore[invalid-class-name]
     """
     Set options for xarray in a controlled context.
     Currently supported options:
@@ -173,7 +173,7 @@ class set_options:  # noqa: N801
 
     def __exit__(
         self,
-        type: type[BaseException] | None,  # noqa: A002
+        type: type[BaseException] | None,  # ruff:ignore[builtin-argument-shadowing]
         value: BaseException | None,
         traceback: TracebackType | None,
     ) -> None:

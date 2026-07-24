@@ -75,6 +75,6 @@ def test_collection(obj) -> None:
             lnz_values[:], phase_creator.build_phases, unstack=False
         )
 
-    other = get_test_table(o, ref).unstack("sample").to_dataframe().reset_index()  # noqa: PD010
+    other = get_test_table(o, ref).unstack("sample").to_dataframe().reset_index()  # ruff:ignore[pandas-use-of-dot-pivot-or-unstack]
 
     pd.testing.assert_frame_equal(other, test)
