@@ -1,4 +1,5 @@
 # pyright: reportUnreachable=false
+# ruff:file-ignore[builtin-argument-shadowing]
 """
 Light weight argparser from a dataclass.
 
@@ -150,11 +151,11 @@ class Option:
         const: Any = UNDEFINED,
         default: Any | None = UNDEFINED,
         dest: str = UNDEFINED,
-        help: str = UNDEFINED,  # ruff:ignore[builtin-argument-shadowing]
+        help: str = UNDEFINED,
         metavar: str = UNDEFINED,
         nargs: str | int | None = UNDEFINED,
         required: bool = UNDEFINED,
-        type: Callable[[Any], Any] = UNDEFINED,  # ruff:ignore[builtin-argument-shadowing]
+        type: Callable[[Any], Any] = UNDEFINED,
     ) -> Self:
         """Factory method."""
         return cls(
@@ -182,11 +183,11 @@ def add_option(
     choices: Container[Any] = UNDEFINED,
     const: Any = UNDEFINED,
     dest: str = UNDEFINED,
-    help: str = UNDEFINED,  # ruff:ignore[builtin-argument-shadowing]
+    help: str = UNDEFINED,
     metavar: str = UNDEFINED,
     nargs: str | int | None = UNDEFINED,
     required: bool = UNDEFINED,
-    type: Callable[[Any], Any] = UNDEFINED,  # ruff:ignore[builtin-argument-shadowing]
+    type: Callable[[Any], Any] = UNDEFINED,
     **field_kws: Any,  # ruff:ignore[unused-function-argument]
 ) -> Any:
     """Add option."""
