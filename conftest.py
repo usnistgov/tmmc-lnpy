@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 
-def pytest_configure(config) -> None:  # noqa: ARG001
+def pytest_configure(config) -> None:  # ruff:ignore[unused-function-argument]
     np.set_printoptions(precision=4, suppress=True)
 
 

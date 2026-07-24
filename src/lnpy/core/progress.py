@@ -42,7 +42,7 @@ def _get_tqdm_default() -> Callable[..., Any]:
             return cast("Callable[..., Any]", tqdm_.tqdm)
     else:
 
-        def wrapper(seq: Iterable[T], *args: Any, **kwargs: Any) -> Iterable[T]:  # noqa: ARG001
+        def wrapper(seq: Iterable[T], *args: Any, **kwargs: Any) -> Iterable[T]:  # ruff:ignore[unused-function-argument]
             return seq
 
         return wrapper

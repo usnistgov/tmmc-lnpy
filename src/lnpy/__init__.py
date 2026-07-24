@@ -1,5 +1,5 @@
 """Publicly accessible classes/routines."""
-# ruff: noqa: RUF067
+# ruff:file-ignore[non-empty-init-module]
 
 # updated versioning scheme
 from importlib.metadata import PackageNotFoundError

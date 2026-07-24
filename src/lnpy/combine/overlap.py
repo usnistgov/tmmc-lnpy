@@ -460,8 +460,8 @@ def _keep_first_indexer(
 
     # recreate grouper in order with state_max ...
     # If unsorted use something like:
-    # state_max_array = np.empty_like(state, dtype=state_max.dtype)  # noqa: ERA001
-    # state_max_array[grouper_rec_window.index] = np.repeat(...)  # noqa: ERA001
+    # state_max_array = np.empty_like(state, dtype=state_max.dtype)  # ruff:ignore[commented-out-code]
+    # state_max_array[grouper_rec_window.index] = np.repeat(...)  # ruff:ignore[commented-out-code]
     state_max_array = np.repeat(
         state_max,
         (grouper_rec_window.end - grouper_rec_window.start),

@@ -215,7 +215,7 @@ def peak_local_max_adaptive(
 
     data = np.asarray(data)
     mask = np.asarray(mask)
-    data = data - bottleneck.nanmin(data)  # noqa: PLR6104
+    data = data - bottleneck.nanmin(data)  # ruff:ignore[non-augmented-assignment]
 
     kwargs.setdefault("exclude_border", False)
 
@@ -895,7 +895,7 @@ class BuildPhasesBase:
 
 
 @docfiller_local
-class BuildPhases_mu(BuildPhasesBase):  # noqa: N801
+class BuildPhases_mu(BuildPhasesBase):  # ruff:ignore[invalid-class-name]
     """
     create phases from scalar value of mu for fixed value of mu for other species
 
@@ -916,7 +916,7 @@ class BuildPhases_mu(BuildPhasesBase):  # noqa: N801
 
 
 @docfiller_local
-class BuildPhases_dmu(BuildPhasesBase):  # noqa: N801
+class BuildPhases_dmu(BuildPhasesBase):  # ruff:ignore[invalid-class-name]
     """
     Create phases from scalar value of mu at fixed value of dmu for other species
 
@@ -935,7 +935,7 @@ class BuildPhases_dmu(BuildPhasesBase):  # noqa: N801
         return self.dlnz + lnz_index
 
 
-class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # noqa: N801
+class BuildPhases_Fixed_betaOmega(BuildPhasesBase):  # ruff:ignore[invalid-class-name]
     """
     Here, None is the index we will set.
     Free_index is the one which will be varied to reach specified beta_omega

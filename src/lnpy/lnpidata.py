@@ -100,7 +100,7 @@ def _convert_lnz(lnz: ArrayLike) -> NDArray[np.float64]:
     return np.atleast_1d(lnz).astype(np.float64)
 
 
-def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noqa: ARG001
+def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # ruff:ignore[unused-function-argument]
     if data.ndim != len(self_.lnz):
         msg = f"Length of {self_.lnz=} must be {data.ndim}"
         raise ValueError(msg)
@@ -110,7 +110,7 @@ def _validate_data(self_: Any, attribute: Any, data: NDArrayAny) -> None:  # noq
 @attrs.frozen(
     eq=False, kw_only=True, init=False
 )  # use eq=False to make hashable by object
-class lnPiArray(MyAttrsMixin):  # noqa: N801
+class lnPiArray(MyAttrsMixin):  # ruff:ignore[invalid-class-name]
     """
     Wrapper on lnPi lnPiArray
 
@@ -187,15 +187,15 @@ class lnPiArray(MyAttrsMixin):  # noqa: N801
 
 
 # * Masked lnPi object --------------------------------------------------------
-def _validate_mask(self_: Any, attribute: Any, mask: NDArray[np.bool_]) -> None:  # noqa: ARG001
+def _validate_mask(self_: Any, attribute: Any, mask: NDArray[np.bool_]) -> None:  # ruff:ignore[unused-function-argument]
     if mask.shape != self_.base.data.shape:
         msg = f"{mask.shape=} must be {self_.base.data.shape}."
         raise ValueError(msg)
 
 
-@docfiller.decorate  # noqa: PLR0904
+@docfiller.decorate  # ruff:ignore[too-many-public-methods]
 @attrs.define(frozen=True, eq=False, init=False)
-class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
+class lnPiMasked(AccessorMixin, MyAttrsMixin):  # ruff:ignore[invalid-class-name]
     """
     Masked array like wrapper for lnPi data.
 
@@ -823,7 +823,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
 
         return cls.from_data(
             data=da.values,
-            mask=da.isnull().to_numpy(),  # noqa: PD003
+            mask=da.isnull().to_numpy(),  # ruff:ignore[pandas-use-of-dot-is-null]
             lnz=lnz,
             lnz_data=lnz,
             state_kws=state_kws,
@@ -861,7 +861,7 @@ class lnPiMasked(AccessorMixin, MyAttrsMixin):  # noqa: N801
         if "mask" in da.coords:
             kws["mask"] = da.mask.to_numpy()
         else:
-            kws["mask"] = da.isnull().to_numpy()  # noqa: PD003
+            kws["mask"] = da.isnull().to_numpy()  # ruff:ignore[pandas-use-of-dot-is-null]
 
         # where are state variables
         if state_as_attrs is None:

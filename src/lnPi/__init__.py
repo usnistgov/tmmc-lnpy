@@ -2,7 +2,7 @@
 Legacy interface to :mod:`lnpy` (:mod:`lnPi`)
 =============================================
 """
-# ruff: noqa: RUF067
+# ruff:file-ignore[non-empty-init-module]
 
 from warnings import warn
 
