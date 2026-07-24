@@ -191,20 +191,6 @@ def check_for_change_manager(
     If exit normally, write hashes to hash_path file
 
     """
-<<<<<<< before updating
-    # pylint: disable=try-except-raise,no-else-raise
-    try:
-        changed, hashes, hash_path = check_hash_path_for_change(
-            *deps,
-            target_path=target_path,
-            hash_path=hash_path,
-        )
-
-        yield changed
-
-    except Exception:  # ruff:ignore[useless-try-except]
-        raise
-=======
     changed, hashes, hash_path = check_hash_path_for_change(
         *deps,
         target_path=target_path,
@@ -212,7 +198,6 @@ def check_for_change_manager(
     )
 
     yield changed  # ruff:ignore[fallible-context-manager]
->>>>>>> after updating
 
     if force_write or changed:
         logger.info(f"Writing {hash_path}")
