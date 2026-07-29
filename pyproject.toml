@@ -125,8 +125,12 @@ docs-spelling = [
 ipython = [ "ipython" ]
 mypy = [ "mypy[faster-cache]>=2.3.0" ]
 notebook = [ "ipykernel", "nbclient" ]
+<<<<<<< before updating
 nox = [ "nox>=2026.4.10" ]
 optional = [ "tmmc-lnpy[all]" ]
+=======
+nox = [ "nox>=2026.7.11" ]
+>>>>>>> after updating
 pylint = [ "pylint" ]
 pytest = [ "pytest" ]
 pytest-accept = [ "pytest-accept" ]
@@ -270,6 +274,7 @@ strict = false
 [tool.pyrefly]
 enabled-ignores = [ "pyrefly" ]
 project-includes = [
+    "examples/usage/*.ipynb",
     "noxfile.py",
     "src",
     "tests",
@@ -330,6 +335,7 @@ strict = [
 # basedpyright
 failOnWarnings = true
 include = [
+    "examples/usage/*.ipynb",
     "noxfile.py",
     "src",
     "tests",
@@ -382,7 +388,11 @@ reportUnusedCallResult = false
 
 [tool.ty]
 src.include = [
+<<<<<<< before updating
     # tools
+=======
+    "examples/usage/*.ipynb",
+>>>>>>> after updating
     "noxfile.py",
     "src",
     "tests",
@@ -523,6 +533,7 @@ pip-deps = [
 groups = [
     "basedpyright",
     "mypy",
+    "nox",
     "typecheck-runner",
 ]
 skip-package = true
@@ -533,7 +544,11 @@ scripts = [
     "noxfile.py",
     "tools/check_dist_version.py",
     "tools/clean_kernelspec.py",
+<<<<<<< before updating
     "tools/sync_pyproject_min_versions.py",
+=======
+    "tools/cog_runner.py",
+>>>>>>> after updating
 ]
 
 [[tool.uv-locker.requirements]]
