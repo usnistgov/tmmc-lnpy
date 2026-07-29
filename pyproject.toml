@@ -92,6 +92,7 @@ test = [
     { include-group = "pytest" },
 ]
 type = [
+    "joblib-stubs",
     "pandas-stubs",
     "scipy-stubs",
     "types-tqdm",
@@ -125,7 +126,7 @@ docs-spelling = [
 ipython = [ "ipython" ]
 mypy = [ "mypy[faster-cache]>=2.3.0" ]
 notebook = [ "ipykernel", "nbclient" ]
-nox = [ "nox>=2026.4.10" ]
+nox = [ "nox>=2026.7.11" ]
 optional = [ "tmmc-lnpy[all]" ]
 pylint = [ "pylint" ]
 pytest = [ "pytest" ]
@@ -244,7 +245,6 @@ warn_unused_configs = true
 module = [
     "bottleneck.*",
     "IPython.*",
-    "joblib.*",
     "lnPi.*",
     "matplotlib.*",
     "numba.*",
@@ -270,6 +270,7 @@ strict = false
 [tool.pyrefly]
 enabled-ignores = [ "pyrefly" ]
 project-includes = [
+    "examples/usage/*.ipynb",
     "noxfile.py",
     "src",
     "tests",
@@ -330,6 +331,7 @@ strict = [
 # basedpyright
 failOnWarnings = true
 include = [
+    "examples/usage/*.ipynb",
     "noxfile.py",
     "src",
     "tests",
@@ -380,9 +382,16 @@ root = "tests"
 # reportMissingImports = false
 reportUnusedCallResult = false
 
+[[tool.pyright.executionEnvironments]]
+root = "examples/usage"
+reportCallIssue = false
+reportUnusedCallResult = false
+reportGeneralTypeIssues = false
+reportMissingImports = false
+
 [tool.ty]
 src.include = [
-    # tools
+    "examples/usage/*.ipynb",
     "noxfile.py",
     "src",
     "tests",
@@ -523,6 +532,7 @@ pip-deps = [
 groups = [
     "basedpyright",
     "mypy",
+    "nox",
     "typecheck-runner",
 ]
 skip-package = true
@@ -533,7 +543,6 @@ scripts = [
     "noxfile.py",
     "tools/check_dist_version.py",
     "tools/clean_kernelspec.py",
-    "tools/sync_pyproject_min_versions.py",
 ]
 
 [[tool.uv-locker.requirements]]

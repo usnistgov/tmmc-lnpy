@@ -1494,6 +1494,66 @@ wheels = [
 ]
 
 [[package]]
+name = "joblib-stubs"
+version = "1.5.2.0.20250831"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.11' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
+    "python_full_version < '3.11' and platform_machine == 'ARM64' and sys_platform == 'win32'",
+    "(python_full_version < '3.11' and platform_machine != 'x86_64' and sys_platform == 'darwin') or (python_full_version < '3.11' and platform_machine != 'ARM64' and sys_platform == 'win32') or (python_full_version < '3.11' and sys_platform != 'darwin' and sys_platform != 'win32')",
+]
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/88/80/2e0ea0e43642ab69b33ad0d39c73378f52cc8b961b3dfc2519d53639e518/joblib_stubs-1.5.2.0.20250831.tar.gz", hash = "sha256:1b419c5b5238cbfd2759ef2e463ae3399ba1d3a6cbdc213a9ac339e6312b21ef", size = 19886, upload-time = "2025-08-31T11:39:17.607Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/57/f7/f73413f8c13d208f291d1430528b415331320868c352b6e8e5442c5ad053/joblib_stubs-1.5.2.0.20250831-py3-none-any.whl", hash = "sha256:2b75f04fbb98975d207cc3d7b686c538ee1b2a749cb63c035ce41ff97a0eb4bc", size = 36252, upload-time = "2025-08-31T11:39:16.447Z" },
+]
+
+[[package]]
+name = "joblib-stubs"
+version = "1.5.3.1.20260117"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.15' and platform_machine == 'ARM64' and sys_platform == 'win32'",
+    "python_full_version == '3.14.*' and platform_machine == 'ARM64' and sys_platform == 'win32'",
+    "python_full_version >= '3.15' and platform_machine != 'ARM64' and platform_machine != 'x86_64' and sys_platform == 'win32'",
+    "python_full_version == '3.14.*' and platform_machine != 'ARM64' and platform_machine != 'x86_64' and sys_platform == 'win32'",
+    "python_full_version >= '3.15' and platform_machine != 'x86_64' and sys_platform == 'emscripten'",
+    "python_full_version == '3.14.*' and platform_machine != 'x86_64' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.15' and platform_machine != 'x86_64' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.14.*' and platform_machine != 'x86_64' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version >= '3.15' and platform_machine == 'x86_64' and sys_platform == 'win32'",
+    "python_full_version == '3.14.*' and platform_machine == 'x86_64' and sys_platform == 'win32'",
+    "python_full_version >= '3.15' and platform_machine == 'x86_64' and sys_platform == 'emscripten'",
+    "python_full_version == '3.14.*' and platform_machine == 'x86_64' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.15' and platform_machine == 'x86_64' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.14.*' and platform_machine == 'x86_64' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.13.*' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
+    "python_full_version == '3.12.*' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
+    "python_full_version == '3.11.*' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
+    "python_full_version == '3.13.*' and platform_machine == 'ARM64' and sys_platform == 'win32'",
+    "python_full_version == '3.13.*' and platform_machine != 'ARM64' and sys_platform == 'win32'",
+    "python_full_version == '3.13.*' and sys_platform == 'emscripten'",
+    "(python_full_version == '3.13.*' and platform_machine != 'x86_64' and sys_platform == 'darwin') or (python_full_version == '3.13.*' and sys_platform != 'darwin' and sys_platform != 'emscripten' and sys_platform != 'win32')",
+    "python_full_version == '3.12.*' and platform_machine == 'ARM64' and sys_platform == 'win32'",
+    "python_full_version == '3.12.*' and platform_machine != 'ARM64' and sys_platform == 'win32'",
+    "python_full_version == '3.11.*' and platform_machine == 'ARM64' and sys_platform == 'win32'",
+    "python_full_version == '3.11.*' and platform_machine != 'ARM64' and sys_platform == 'win32'",
+    "python_full_version == '3.12.*' and sys_platform == 'emscripten'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten'",
+    "(python_full_version == '3.12.*' and platform_machine != 'x86_64' and sys_platform == 'darwin') or (python_full_version == '3.12.*' and sys_platform != 'darwin' and sys_platform != 'emscripten' and sys_platform != 'win32')",
+    "(python_full_version == '3.11.*' and platform_machine != 'x86_64' and sys_platform == 'darwin') or (python_full_version == '3.11.*' and sys_platform != 'darwin' and sys_platform != 'emscripten' and sys_platform != 'win32')",
+]
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/4e/a4801406630955fe935d9d99efef72fd7398543f51fe5a787be80c235b4f/joblib_stubs-1.5.3.1.20260117.tar.gz", hash = "sha256:d420f9e26636df01e1bda851bf5bce9a8dbd6db84f08afe1dfdb963e6651e724", size = 14147, upload-time = "2026-01-17T11:16:43.666Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/37/7c/67ada9621b3c93caa75aba1a0b651dae988b22cdea93b33e7e49261364f5/joblib_stubs-1.5.3.1.20260117-py3-none-any.whl", hash = "sha256:ef9f570617b232263c8166f5b4351a5dcc90669d8b07e7e2cd7b25c3b0f26d5f", size = 21358, upload-time = "2026-01-17T11:16:44.327Z" },
+]
+
+[[package]]
 name = "jsonschema"
 version = "4.26.0"
 source = { registry = "https://pypi.org/simple" }
@@ -5060,6 +5120,7 @@ basedpyright = [
 ]
 dev = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
+    { name = "joblib-stubs", version = "1.5.3.1.20260117", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
     { name = "mypy", extra = ["faster-cache"], marker = "python_full_version >= '3.13'" },
     { name = "nbclient", marker = "python_full_version >= '3.13'" },
     { name = "nbval", marker = "python_full_version >= '3.13'" },
@@ -5157,6 +5218,8 @@ test-notebook = [
     { name = "tmmc-lnpy", extra = ["viz"] },
 ]
 type = [
+    { name = "joblib-stubs", version = "1.5.2.0.20250831", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "joblib-stubs", version = "1.5.3.1.20260117", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "nox", marker = "python_full_version >= '3.13'" },
     { name = "pandas-stubs", version = "2.3.3.260113", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "pandas-stubs", version = "3.0.3.260530", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -5208,10 +5271,11 @@ provides-extras = ["all", "resample", "viz"]
 basedpyright = [{ name = "basedpyright", specifier = ">=1.39.9" }]
 dev = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
+    { name = "joblib-stubs", marker = "python_full_version >= '3.13'" },
     { name = "mypy", extras = ["faster-cache"], marker = "python_full_version >= '3.13'", specifier = ">=2.3.0" },
     { name = "nbclient", marker = "python_full_version >= '3.13'" },
     { name = "nbval", marker = "python_full_version >= '3.13'" },
-    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.4.10" },
+    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.7.11" },
     { name = "pandas-stubs", marker = "python_full_version >= '3.13'" },
     { name = "pylint", marker = "python_full_version >= '3.13'" },
     { name = "pytest", marker = "python_full_version >= '3.13'" },
@@ -5263,7 +5327,7 @@ notebook = [
     { name = "ipykernel", marker = "python_full_version >= '3.13'" },
     { name = "nbclient", marker = "python_full_version >= '3.13'" },
 ]
-nox = [{ name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.4.10" }]
+nox = [{ name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.7.11" }]
 optional = [{ name = "tmmc-lnpy", extras = ["all"] }]
 pylint = [{ name = "pylint" }]
 pytest = [{ name = "pytest" }]
@@ -5292,7 +5356,8 @@ test-notebook = [
     { name = "tmmc-lnpy", extras = ["viz"] },
 ]
 type = [
-    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.4.10" },
+    { name = "joblib-stubs" },
+    { name = "nox", marker = "python_full_version >= '3.13'", specifier = ">=2026.7.11" },
     { name = "pandas-stubs" },
     { name = "pylint" },
     { name = "pytest" },
