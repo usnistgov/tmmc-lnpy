@@ -7,11 +7,7 @@ ci:
   skip:
     - uv-lock
     - pip-compile
-<<<<<<< before updating
-    - pyproject2conda-project
-=======
     - sync-pyproject-min-versions
->>>>>>> after updating
 default_install_hook_types:
   - pre-commit
   - commit-msg
