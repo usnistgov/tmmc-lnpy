@@ -149,11 +149,8 @@ default-groups = [ "dev" ]
 fork-strategy = "requires-python"
 exclude-newer = "7 days"
 managed = true
-<<<<<<< before updating
 build-backend.module-name = [ "lnPi", "lnpy" ]
-=======
 build-backend.source-exclude = [ ".*cache" ]
->>>>>>> after updating
 build-backend.source-include = [ "tests/**" ]
 pip.annotation-style = "line"
 pip.generate-hashes = true
@@ -177,6 +174,7 @@ extend-exclude = [
     ".numba_cache",
     ".venv",
     "dist-conda",
+    "examples/archived",
 ]
 fix = true
 # unsafe-fixes = true
@@ -193,6 +191,7 @@ select = [
 # fixable = [ "ALL" ]
 unfixable = [
     "PLR6104",
+    "F401",
     "ERA",
     "T",
 ]
@@ -217,9 +216,6 @@ ignore = [
     "S603",    # - subprocess-without-shell-equals-true
     "S607",    # - start-process-with-partial-path
     "TID252",  # - Allow relative imports
-    # numpy/pandas
-    "NPY",     # - not using numpy?
-    "PD",      # - not using pandas?
 ]
 isort.known-first-party = [
     "lnpy",
@@ -232,14 +228,43 @@ ruff.strictly-empty-init-modules = false
 
 # Project specific ignores
 [tool.ruff.lint.per-file-ignores]
-"**/*.ipynb" = [
-    # "B018",  # - Don't remove useless expressions in notebooks
-    # "D100",  # - undocumented-public-module
-    # "INP001",
+"src/**/*.py" = [
+    "C901",
+    "D102",    # - Missing docstring in public method
+    "D103",    # - Missing docstring in public function
+    "FIX002",
+    "N999",
+    "PLR091",
+    "PLR2004",
+    "SLF001",
+    "TD003",
 ]
 "tests/**/*.py" = [
-    "D",    # - Don't need to document tests
-    "S101", # - Assert is fine with tests
+    "ANN",
+    "D",       # - Don't need to document tests
+    "PLR2004",
+    "S101",    # - Assert is fine with tests
+]
+"**/*.ipynb" = [
+    "ANN",
+    "D103",
+    "E302",
+    "E305",
+    "E402",
+    "PD010",
+    "PD013",
+    "PLR2004",
+    "S110",
+    "T201",
+]
+"src/lnPi/**/*.py" = [
+    "ANN",
+    "B",
+    "N",
+    "PGH",
+    "PL",
+    "S101",
+    "SIM",
 ]
 
 # * Checks ---------------------------------------------------------------------
@@ -270,13 +295,10 @@ expand_tables = [
     "tool.pyrefly",
     "tool.pyright.executionEnvironments",
     "tool.pytest",
-<<<<<<< before updating
-    "tool.ty.overrides",
-=======
     "tool.ruff.format",
     "tool.ruff.lint",
     "tool.ruff.lint.per-file-ignores",
->>>>>>> after updating
+    "tool.ty.overrides",
     "tool.typos",
     "tool.uv.dependency-groups",
     "tool.uv.exclude-newer-package",

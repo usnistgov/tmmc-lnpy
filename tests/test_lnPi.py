@@ -1,3 +1,4 @@
+# ruff:file-ignore[invalid-module-name]
 from __future__ import annotations
 
 import numpy as np

@@ -1,4 +1,5 @@
 # pyright: reportPrivateUsage=false
+# ruff:file-ignore[invalid-function-name,invalid-argument-name,non-lowercase-variable-in-function]
 """
 Ensemble averages (:mod:`~lnpy.ensembles`)
 ==========================================
