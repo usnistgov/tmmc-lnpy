@@ -442,7 +442,6 @@ def test_combine_keep_first_split_dataset(
         dim="index",
     )
     _test_output(
-        # pyrefly: ignore [bad-argument-type, bad-specialization]
         combine.keep_first(
             stacked,
             state_name="x",
@@ -451,7 +450,6 @@ def test_combine_keep_first_split_dataset(
 
     # wrong name
     with pytest.raises(ValueError, match=r".*names"):
-        # pyrefly: ignore [bad-specialization]
         combine.keep_first(
             stacked,
             state_name="x",
