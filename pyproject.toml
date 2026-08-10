@@ -228,7 +228,7 @@ ruff.strictly-empty-init-modules = false
 
 # Project specific ignores
 [tool.ruff.lint.per-file-ignores]
-"src/**/*.py" = [
+"src/**" = [
     "C901",
     "D102",    # - Missing docstring in public method
     "D103",    # - Missing docstring in public function
@@ -239,13 +239,13 @@ ruff.strictly-empty-init-modules = false
     "SLF001",
     "TD003",
 ]
-"tests/**/*.py" = [
-    "ANN",
+"tests/**" = [
     "D",       # - Don't need to document tests
-    "PLR2004",
     "S101",    # - Assert is fine with tests
+    "ANN",
+    "PLR2004",
 ]
-"**/*.ipynb" = [
+"examples/**" = [
     "ANN",
     "D103",
     "E302",
@@ -257,7 +257,7 @@ ruff.strictly-empty-init-modules = false
     "S110",
     "T201",
 ]
-"src/lnPi/**/*.py" = [
+"src/lnPi/**" = [
     "ANN",
     "B",
     "N",
@@ -413,6 +413,7 @@ matches = "src/lnpy/**"
 implicit-abstract-class = "error"
 implicit-any = "error"
 implicitly-defined-attribute = "error"
+implicit-any-lambda = "ignore"  # used with xarray assign
 missing-override-decorator = "error"
 missing-source = "ignore"
 not-required-key-access = "error"

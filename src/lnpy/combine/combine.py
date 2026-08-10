@@ -182,7 +182,7 @@ def _concat_windows_xarray(
                 })
             return obj
 
-        out = xr.concat(  # pyright: ignore[reportCallIssue]
+        out = xr.concat(  # pyright: ignore[reportCallIssue]  # pyrefly: ignore [no-matching-overload]
             (
                 (
                     _process_object(ds, window).stack(  # ruff:ignore[pandas-use-of-dot-stack]
@@ -201,7 +201,6 @@ def _concat_windows_xarray(
     else:
         # pyrefly: ignore [no-matching-overload]
         out = xr.concat(tables, dim=index_name)  # pyright: ignore[reportCallIssue, reportArgumentType]
-    # pyrefly: ignore [bad-return]
     return out  # type: ignore[no-any-return, unused-ignore]
 
 
