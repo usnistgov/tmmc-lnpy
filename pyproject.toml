@@ -228,7 +228,6 @@ ruff.strictly-empty-init-modules = false
 
 [tool.ruff.lint.per-file-ignores]
 "src/**" = [
-<<<<<<< before updating
     "C901",
     "D102",    # - Missing docstring in public method
     "D103",    # - Missing docstring in public function
@@ -265,19 +264,6 @@ ruff.strictly-empty-init-modules = false
     "PL",
     "S101",
     "SIM",
-=======
-    "NPY", # - not using numpy?
-    "PD",  # - not using pandas?
-]
-"tests/**" = [
-    "D",    # - Don't need to document tests
-    "S101", # - Assert is fine with tests
->>>>>>> after updating
-]
-"examples/**" = [
-    # "B018",  # - Don't remove useless expressions in notebooks
-    # "D100",  # - undocumented-public-module
-    # "INP001",
 ]
 
 # * Checks ---------------------------------------------------------------------
