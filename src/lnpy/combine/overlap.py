@@ -391,7 +391,7 @@ def shift_lnpi_windows(
     # pyrefly: ignore [bad-return]
     return _shift_lnpi_windows_indexed(
         # pyrefly: ignore [bad-argument-type]
-        lnpi,
+        lnpi,  # ty: ignore[invalid-argument-type]
         # pyrefly: ignore [bad-argument-type]
         window,  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
         np.stack(macrostate, axis=-1),
