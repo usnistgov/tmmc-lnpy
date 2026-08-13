@@ -1142,7 +1142,7 @@ def stack_weight_and_average(
     """
     weight, average = (
         x.to_xarray() if validate.series.typeis(x) else x for x in (weight, average)
-    )
+    )  # ty: ignore[invalid-assignment]
 
     if validate.dataarray.typeis(weight):
         xout: xr.DataArray = xr.apply_ufunc(
