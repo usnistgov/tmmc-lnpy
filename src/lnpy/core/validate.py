@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, Any, Generic, cast
+from typing import TYPE_CHECKING, Any, Generic
 
 import numpy as np
 import pandas as pd
@@ -69,7 +69,7 @@ def as_str_or_iterable(x: str | Iterable[str]) -> list[str]:
 
 def as_sequence(iterable: Iterable[T]) -> Sequence[T]:
     if isinstance(iterable, Sequence):
-        return cast("Sequence[T]", iterable)
+        return iterable
     return list(iterable)
 
 

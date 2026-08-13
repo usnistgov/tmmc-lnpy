@@ -364,7 +364,7 @@ def factory_indexed_grouper(
             data=data,
             axis=axis,
             dim=dim,
-            **grouper,  # ty: ignore[invalid-argument-type]
+            **grouper,
             **kwargs,
         )
     return factory_indexed_grouper(
