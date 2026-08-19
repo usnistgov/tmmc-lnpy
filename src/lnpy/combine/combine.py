@@ -1164,13 +1164,14 @@ def stack_weight_and_average(
 @docfiller_local
 def updown_from_collectionmatrix(
     c0: DataAnyT,
-    c1: DataAnyT,
-    c2: DataAnyT,
+    c1: Any,
+    c2: Any,
 ) -> tuple[DataAnyT, DataAnyT, DataAnyT]:
+    assert type(c0) is type(c1) is type(c2)  # ruff: ignore[assert]
     weight = c0 + c1 + c2
     down = c0 / weight
     up = c2 / weight
-    return weight, down, up  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
+    return weight, down, up  # ty: ignore[invalid-return-type]
 
 
 @docfiller_local

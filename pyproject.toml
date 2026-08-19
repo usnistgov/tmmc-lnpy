@@ -496,6 +496,7 @@ reportGeneralTypeIssues = false
 reportMissingImports = false
 
 [tool.ty]
+src.exclude = [ "**/combine.py" ]
 src.include = [
     "examples/usage/*.ipynb",
     "noxfile.py",

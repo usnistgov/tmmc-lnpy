@@ -8,6 +8,8 @@ from typing import TYPE_CHECKING, cast
 
 import numba as nb
 from numba import guvectorize, njit
+from numba.core.types.npytypes import Array as nb_Array
+from numba.core.types.scalars import Integer as nb_Integer
 
 OPTIONS = {"fastmath": True, "cache": True}
 
@@ -154,7 +156,7 @@ def _get_signatures(
         signatures.extend(
             itertools.product(
                 *(
-                    (x,) if isinstance(x, (nb.types.Integer, nb.types.Array)) else x  # type: ignore[attr-defined,unused-ignore] # pyright: ignore[reportAttributeAccessIssue]
+                    (x,) if isinstance(x, (nb_Integer, nb_Array)) else x
                     for x in signature_generator
                 )
             )
