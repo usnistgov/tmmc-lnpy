@@ -241,7 +241,8 @@ def _shift_lnpi_windows(
     # first get unique windows
     window_codes, _ = pd.factorize(windows, sort=False)
 
-    if not (window_max := int(window_codes.max())):
+    window_max = int(window_codes.max())
+    if not window_max:  # pylint:disable=consider-using-assignment-expr
         return lnpi
 
     if macrostate.ndim == 1:
