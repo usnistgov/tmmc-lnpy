@@ -241,9 +241,7 @@ def _shift_lnpi_windows(
     # first get unique windows
     window_codes, _ = pd.factorize(windows, sort=False)
 
-    # window_max = window_codes.max()  # ruff: ignore[commented-out-code]
-    # if not window_max:  # pylint:disable=consider-using-assignment-expr
-    if not (window_max := window_codes.max()):
+    if not (window_max := int(window_codes.max())):
         return lnpi
 
     if macrostate.ndim == 1:
@@ -525,7 +523,7 @@ def keep_first_indexer(
             _ = _create_overlap_table(
                 g,
                 window_index_name="window",
-                window_max=window.max(),
+                window_max=int(window.max()),
                 macrostate_names=["state"],
                 lnpi_name="rec",
                 check_connected=check_connected,
