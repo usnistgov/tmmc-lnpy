@@ -835,14 +835,15 @@ def typecheck(  # ruff:ignore[too-many-branches]
     othercheckers: list[str] = []
     for c in cmd:
         if c in {"mypy", "pyright", "basedpyright", "ty", "pyrefly"}:
-            if c == "mypy":
-                line = "mypy[faster-cache]"
-            elif c == "ty":
-                line = "ty check -v"
-            else:
-                line = c
+            # if c == "mypy":
+            #     line = "mypy[faster-cache]"  # ruff: ignore[commented-out-code]
+            # elif c == "ty":  # ruff: ignore[commented-out-code]
+            #     line = "ty check -v"  # ruff: ignore[commented-out-code]
+            # else:  # ruff: ignore[commented-out-code]
+            #     line = c  # ruff: ignore[commented-out-code]
 
-            typecheckers.extend(["--check", line])
+            # typecheckers.extend(["--check", line])  # ruff: ignore[commented-out-code]
+            typecheckers.append(f"--check={'mypy[faster-cache]' if c == 'mypy' else c}")
         else:
             othercheckers.append(c)
 
