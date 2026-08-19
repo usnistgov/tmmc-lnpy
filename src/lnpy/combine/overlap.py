@@ -362,12 +362,12 @@ def shift_lnpi_windows(
         return pd.Series(
             shift_lnpi_windows(
                 # pyrefly: ignore [missing-attribute]
-                *(a.to_numpy() for a in chain((lnpi, window), macrostate)),  # type: ignore[arg-type]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload]
+                *(a.to_numpy() for a in chain((lnpi, window), macrostate)),  # type: ignore[arg-type]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload, invalid-attribute-access]
                 grouper=grouper,
                 use_sparse=use_sparse,
                 check_connected=check_connected,
             ),
-            index=lnpi.index,
+            index=lnpi.index,  # ty: ignore[invalid-attribute-access]
         )  # ty:ignore[invalid-return-type]
 
     if validate.dataarray.typeis(lnpi):
@@ -436,7 +436,7 @@ def assign_shift_lnpi_windows(
         # pyrefly: ignore [bad-return]
         return out  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
     # pyrefly: ignore [bad-argument-type]
-    return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+    return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type, call-non-callable, invalid-attribute-access]
 
 
 # * Keep first combine --------------------------------------------------------
@@ -558,9 +558,9 @@ def keep_first(
         check_connected=check_connected,
     )
     if validate.dataframe.typeis(table):
-        return table.iloc[indexer]
+        return table.iloc[indexer]  # ty: ignore[invalid-attribute-access]
 
     # pyrefly: ignore [bad-argument-type]
     axis, dim = select_axis_dim(table, axis, dim)
     # pyrefly: ignore [not-callable]
-    return table.isel({dim: indexer})  # ty:ignore[invalid-argument-type]
+    return table.isel({dim: indexer})  # ty:ignore[invalid-argument-type, call-non-callable, invalid-attribute-access]
