@@ -1316,7 +1316,10 @@ def lnpi_from_updown(
         ln_prob = delta_lnpi_from_updown(down=down, up=up, axis=axis).cumsum(axis=axis)
         # subtract maximum
         ln_prob -= ln_prob.max(axis=axis, keepdims=True)
-        return normalize_lnpi(ln_prob, axis=axis) if norm else ln_prob  # ty: ignore[invalid-return-type]
+        return cast(  # type: ignore[redundant-cast]
+            "GenArrayOrSeriesT",
+            normalize_lnpi(ln_prob, axis=axis) if norm else ln_prob,
+        )
 
     if validate.dataarray.typeis(down):
         axis, dim = select_axis_dim(down, axis, dim)

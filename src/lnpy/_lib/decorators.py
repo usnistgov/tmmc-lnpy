@@ -154,7 +154,7 @@ def _get_signatures(
         signatures.extend(
             itertools.product(
                 *(
-                    (x,) if isinstance(x, (nb.types.Integer, nb.types.Array)) else x
+                    (x,) if isinstance(x, (nb.types.Integer, nb.types.Array)) else x  # type: ignore[attr-defined,unused-ignore] # pyright: ignore[reportAttributeAccessIssue]
                     for x in signature_generator
                 )
             )
