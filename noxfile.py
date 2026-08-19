@@ -3,7 +3,7 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#     "nox>=2026.7.11",
+#     "nox>=2026.8.10",
 # ]
 # ///
 
@@ -809,9 +809,9 @@ def typecheck(  # ruff:ignore[too-many-branches]
     if "all" in cmd:
         cmd = [
             "pyrefly",
-            "ty",
             "mypy",
             "basedpyright",
+            "ty",
             "pylint",
             "mypy-notebook",
             "pylint-notebook",
@@ -835,7 +835,14 @@ def typecheck(  # ruff:ignore[too-many-branches]
     othercheckers: list[str] = []
     for c in cmd:
         if c in {"mypy", "pyright", "basedpyright", "ty", "pyrefly"}:
-            typecheckers.append(f"--check={'mypy[faster-cache]' if c == 'mypy' else c}")
+            if c == "mypy":
+                line = "mypy[faster-cache]"
+            elif c == "ty":
+                line = "ty check -v"
+            else:
+                line = c
+
+            typecheckers.extend(["--check", line])
         else:
             othercheckers.append(c)
 

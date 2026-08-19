@@ -9,6 +9,7 @@ Routines to segment lnPi
     a. Merge based on low free energy difference
  4. combination of 1-3.
 """
+# pyright: reportUnnecessaryTypeIgnoreComment=false
 
 from __future__ import annotations
 
@@ -252,7 +253,7 @@ def peak_local_max_adaptive(
         return cast("tuple[NDArrayAny, ...]", idx)
 
     out = np.zeros_like(data, dtype=bool)
-    out[idx] = True
+    out[idx] = True  # pyright: ignore[reportCallIssue, reportArgumentType]
 
     if style == "marker":
         out = validate.ndarrayany(morphology_label(out, connectivity=connectivity))

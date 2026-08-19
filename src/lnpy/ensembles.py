@@ -100,7 +100,7 @@ def xr_name(
             if long_name is not None:
                 attrs["long_name"] = long_name
             out = out.assign_attrs(**attrs)
-            if unstack and self.xarray_unstack:
+            if unstack and self.xarray_unstack:  # ty: ignore[invalid-attribute-access]
                 out = out.unstack()  # ruff:ignore[pandas-use-of-dot-pivot-or-unstack]
             return out
 

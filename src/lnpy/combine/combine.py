@@ -168,11 +168,11 @@ def _concat_windows_xarray(
     index_name: str,
     overwrite_window: bool = True,
 ) -> DataT:
-    if index_name not in first.coords:
+    if index_name not in first.coords:  # ty: ignore[invalid-attribute-access]
         # stack each object
         # if wait until end, dtype might change because of missing values during concat and stack...
         def _process_object(obj: DataT, window: int) -> DataT:
-            if window_name not in obj.dims:
+            if window_name not in obj.dims:  # ty: ignore[invalid-attribute-access]
                 return obj.expand_dims(window_name).assign_coords({  # ty: ignore[invalid-argument-type]
                     window_name: (window_name, [window])
                 })
@@ -966,13 +966,13 @@ def keep_first(
 
     def _process_xarray(data: DataT) -> DataT:
         # make sure correct
-        if index_name in data.coords:
-            names = data.indexes[index_name].names
+        if index_name in data.coords:  # ty: ignore[invalid-attribute-access]
+            names = data.indexes[index_name].names  # ty: ignore[invalid-attribute-access]
             if window_name not in names or state_name not in names:
                 msg = f"Passed Dataset or DataArray must contain {window_name} and {state_name} in tables.indexes['{index_name}'].names"
                 raise ValueError(msg)
         else:
-            if window_name not in data.dims or state_name not in data.dims:
+            if window_name not in data.dims or state_name not in data.dims:  # ty: ignore[invalid-attribute-access]
                 msg = f"Passed Dataset or DataArray must contain {window_name} and {state_name} in dimensions"
                 raise ValueError(msg)
             # set index
@@ -1164,13 +1164,14 @@ def stack_weight_and_average(
 @docfiller_local
 def updown_from_collectionmatrix(
     c0: DataAnyT,
-    c1: DataAnyT,
-    c2: DataAnyT,
+    c1: Any,
+    c2: Any,
 ) -> tuple[DataAnyT, DataAnyT, DataAnyT]:
+    assert type(c0) is type(c1) is type(c2)  # ruff: ignore[assert]
     weight = c0 + c1 + c2
     down = c0 / weight
     up = c2 / weight
-    return weight, down, up  # pyright: ignore[reportReturnType]  # ty: ignore[invalid-return-type]
+    return weight, down, up  # ty: ignore[invalid-return-type]
 
 
 @docfiller_local
@@ -1267,7 +1268,7 @@ def delta_lnpi_from_updown(
             **factory_apply_ufunc_kwargs(
                 apply_ufunc_kwargs=apply_ufunc_kwargs,
             ),
-        ).transpose(*down.dims)
+        ).transpose(*down.dims)  # ty: ignore[invalid-attribute-access]
 
         # pyrefly: ignore [bad-return]
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
@@ -1275,9 +1276,9 @@ def delta_lnpi_from_updown(
     if validate.series.typeis(down):
         # pyrefly: ignore [bad-return]
         return pd.Series(  # ty: ignore[invalid-return-type]
-            delta_lnpi_from_updown(down=down.to_numpy(), up=up),  # type: ignore[arg-type]
+            delta_lnpi_from_updown(down=down.to_numpy(), up=up),  # type: ignore[arg-type]  # ty: ignore[invalid-attribute-access]
             name=name,
-            index=down.index,
+            index=down.index,  # ty: ignore[invalid-attribute-access]
         )
 
     msg = f"Unknown {type(up)=}"  # pragma: no cover  # pyright: ignore[reportUnreachable]
@@ -1316,7 +1317,10 @@ def lnpi_from_updown(
         ln_prob = delta_lnpi_from_updown(down=down, up=up, axis=axis).cumsum(axis=axis)
         # subtract maximum
         ln_prob -= ln_prob.max(axis=axis, keepdims=True)
-        return normalize_lnpi(ln_prob, axis=axis) if norm else ln_prob  # ty: ignore[invalid-return-type]
+        return cast(  # type: ignore[redundant-cast]
+            "GenArrayOrSeriesT",
+            normalize_lnpi(ln_prob, axis=axis) if norm else ln_prob,
+        )
 
     if validate.dataarray.typeis(down):
         axis, dim = select_axis_dim(down, axis, dim)
@@ -1329,7 +1333,7 @@ def lnpi_from_updown(
             output_core_dims=[[dim]],
             kwargs={"axis": -1, "norm": norm},
             keep_attrs=True,
-        ).transpose(*down.dims)
+        ).transpose(*down.dims)  # ty: ignore[invalid-attribute-access]
 
         # pyrefly: ignore [bad-return]
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
@@ -1337,9 +1341,9 @@ def lnpi_from_updown(
     if validate.series.typeis(down):
         # pyrefly: ignore [bad-return]
         return pd.Series(  # ty: ignore[invalid-return-type]
-            lnpi_from_updown(down=down.to_numpy(), up=up, norm=norm),  # type: ignore[arg-type]
+            lnpi_from_updown(down=down.to_numpy(), up=up, norm=norm),  # type: ignore[arg-type]  # ty: ignore[invalid-attribute-access]
             name=name,
-            index=down.index,
+            index=down.index,  # ty: ignore[invalid-attribute-access]
         )
 
     msg = f"Unknown {type(up)=}"  # pyright: ignore[reportUnreachable]
@@ -1432,7 +1436,7 @@ def _apply_indexed_function(
         return pd.Series(
             _apply_indexed_function(
                 # pyrefly: ignore [missing-attribute]
-                *(a.to_numpy() for a in args),  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload]
+                *(a.to_numpy() for a in args),  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload, invalid-attribute-access]
                 factory_gufunc=factory_gufunc,
                 axis=-1,
                 grouper=grouper,
@@ -1441,7 +1445,7 @@ def _apply_indexed_function(
                 casting=casting,
                 parallel=parallel,
             ),
-            index=first.index,
+            index=first.index,  # ty: ignore[invalid-attribute-access]
         )  # ty:ignore[invalid-return-type]
 
     if validate.dataarray.typeis(first):
@@ -1466,7 +1470,7 @@ def _apply_indexed_function(
                 apply_ufunc_kwargs=apply_ufunc_kwargs,
                 output_dtypes=dtype if dtype is not None else np.float64,  # type: ignore[redundant-expr]
             ),
-        ).transpose(*first.dims)
+        ).transpose(*first.dims)  # ty: ignore[invalid-attribute-access]
         # pyrefly: ignore [bad-return]
         return xout  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
