@@ -362,12 +362,12 @@ def shift_lnpi_windows(
         return pd.Series(
             shift_lnpi_windows(
                 # pyrefly: ignore [missing-attribute]
-                *(a.to_numpy() for a in chain((lnpi, window), macrostate)),  # type: ignore[arg-type]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload, invalid-attribute-access]
+                *(a.to_numpy() for a in chain((lnpi, window), macrostate)),  # type: ignore[arg-type]  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload]
                 grouper=grouper,
                 use_sparse=use_sparse,
                 check_connected=check_connected,
             ),
-            index=lnpi.index,  # ty: ignore[invalid-attribute-access]
+            index=lnpi.index,
         )  # ty:ignore[invalid-return-type]
 
     if validate.dataarray.typeis(lnpi):
@@ -434,9 +434,9 @@ def assign_shift_lnpi_windows(
 
     if validate.dataarray.typeis(table):
         # pyrefly: ignore [bad-return]
-        return out  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
+        return out  # pyright: ignore[reportReturnType]
     # pyrefly: ignore [bad-argument-type]
-    return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type, call-non-callable, invalid-attribute-access]
+    return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
 
 # * Keep first combine --------------------------------------------------------
@@ -502,13 +502,13 @@ def keep_first_indexer(
     check_connected: bool = False,
 ) -> NDArrayInt:
     def _factorize(*x: str | ArrayLike, sort: bool = False) -> NDArrayInt:
-        args = [table[k] if isinstance(k, str) else k for k in x]  # ty:ignore[invalid-argument-type]
+        args = [table[k] if isinstance(k, str) else k for k in x]
         # pyrefly: ignore [bad-argument-type]
         idx = args[0] if len(args) == 1 else pd.MultiIndex.from_arrays(args)  # type: ignore[arg-type,unused-ignore]  # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
         # pyrefly: ignore [no-matching-overload]
         return pd.factorize(idx, sort=sort)[0]  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
 
-    state = np.array(table[state] if isinstance(state, str) else state)  # ty:ignore[invalid-argument-type]
+    state = np.array(table[state] if isinstance(state, str) else state)
     window = _factorize(window)
     rec = (
         _factorize(*group) if len(group) > 0 else np.zeros(len(window), dtype=np.int64)
@@ -558,9 +558,9 @@ def keep_first(
         check_connected=check_connected,
     )
     if validate.dataframe.typeis(table):
-        return table.iloc[indexer]  # ty: ignore[invalid-attribute-access]
+        return table.iloc[indexer]
 
     # pyrefly: ignore [bad-argument-type]
     axis, dim = select_axis_dim(table, axis, dim)
     # pyrefly: ignore [not-callable]
-    return table.isel({dim: indexer})  # ty:ignore[invalid-argument-type, call-non-callable, invalid-attribute-access]
+    return table.isel({dim: indexer})  # ty:ignore[invalid-argument-type, call-non-callable]
