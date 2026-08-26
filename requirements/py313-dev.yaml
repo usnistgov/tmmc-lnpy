@@ -28,7 +28,7 @@ dependencies:
   - nbclient
   - nbval
   - netcdf4
-  - nox>=2026.8.10
+  - nox>=2026.8.17
   - numba>=0.58
   - numpy
   - pandas-stubs

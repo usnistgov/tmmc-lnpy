@@ -126,7 +126,7 @@ docs-spelling = [
 ipython = [ "ipython" ]
 mypy = [ "mypy[faster-cache]>=2.3.1" ]
 notebook = [ "ipykernel", "nbclient" ]
-nox = [ "nox>=2026.8.10" ]
+nox = [ "nox>=2026.8.17" ]
 optional = [ "tmmc-lnpy[all]" ]
 pylint = [ "pylint" ]
 pytest = [ "pytest" ]
@@ -634,7 +634,7 @@ pip-deps = [
     "pyright>=1.1.411",
     "rooster>=0.1.1",
     "twine>=7.0.0",
-    "ty>=0.0.72",
+    "ty>=0.0.73",
 ]
 groups = [
     "basedpyright",
