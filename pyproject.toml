@@ -192,32 +192,32 @@ select = [
 ]
 # fixable = [ "ALL" ]
 unfixable = [
-    "PLR6104",
-    "F401",
+    "non-augmented-assignment",
+    "unused-import",
     "ERA",
     "T",
 ]
 ignore = [
-    "ANN401",  # - Any ok sometimes
-    "COM",     # - flake8-commas, formatter should take care of this?
-    "CPY",     # - Don't require copyright
-    "D105",    # - Missing magic method docstring
-    "D107",    # - Missing docstring in __init__
-    "D203",    # - 1 blank line required before class docstring
-    "D205",    # - blank line after summary
-    "D212",    # - Multi-line docstring summary should start at the first line
-    "D400",    # - First line should end with a period
-    "D401",    # - First line of docstring should be in imperative mood: "{first_line}"
-    "DOC201",  # - Missing return from documentation
-    "DOC501",  # - Missing raises from documentation
-    "E501",    # - line too long - let formatter fix this
-    "E731",    # - do not assign a lambda expression, use a def
-    "FBT",     # - bools are ok
-    "PLC0415", # - import should be at top level (leads to issues with imports in func?)
-    "S404",    # - Want to use subprocess sometimes
-    "S603",    # - subprocess-without-shell-equals-true
-    "S607",    # - start-process-with-partial-path
-    "TID252",  # - Allow relative imports
+    "any-type",                             # - Any ok sometimes
+    "COM",                                  # - flake8-commas, formatter should take care of this?
+    "CPY",                                  # - Don't require copyright
+    "undocumented-magic-method",            # - Missing magic method docstring
+    "undocumented-public-init",             # - Missing docstring in __init__
+    "incorrect-blank-line-before-class",    # - 1 blank line required before class docstring
+    "missing-blank-line-after-summary",     # - blank line after summary
+    "multi-line-summary-first-line",        # - Multi-line docstring summary should start at the first line
+    "missing-trailing-period",              # - First line should end with a period
+    "non-imperative-mood",                  # - First line of docstring should be in imperative mood: "{first_line}"
+    "docstring-missing-returns",            # - Missing return from documentation
+    "docstring-missing-exception",          # - Missing raises from documentation
+    "line-too-long",                        # - line too long - let formatter fix this
+    "lambda-assignment",                    # - do not assign a lambda expression, use a def
+    "FBT",                                  # - bools are ok
+    "import-outside-top-level",             # - import should be at top level (leads to issues with imports in func?)
+    "suspicious-subprocess-import",         # - Want to use subprocess sometimes
+    "subprocess-without-shell-equals-true", # - subprocess-without-shell-equals-true
+    "start-process-with-partial-path",      # - start-process-with-partial-path
+    "relative-imports",                     # - Allow relative imports
 ]
 isort.known-first-party = [
     "lnpy",
@@ -230,33 +230,33 @@ ruff.strictly-empty-init-modules = false
 
 [tool.ruff.lint.per-file-ignores]
 "src/**" = [
-    "C901",
-    "D102",    # - Missing docstring in public method
-    "D103",    # - Missing docstring in public function
-    "FIX002",
-    "N999",
+    "complex-structure",
+    "undocumented-public-method",   # - Missing docstring in public method
+    "undocumented-public-function", # - Missing docstring in public function
+    "line-contains-todo",
+    "invalid-module-name",
     "PLR091",
-    "PLR2004",
-    "SLF001",
-    "TD003",
+    "magic-value-comparison",
+    "private-member-access",
+    "missing-todo-link",
 ]
 "tests/**" = [
-    "D",       # - Don't need to document tests
-    "S101",    # - Assert is fine with tests
+    "D",                      # - Don't need to document tests
+    "assert",                 # - Assert is fine with tests
     "ANN",
-    "PLR2004",
+    "magic-value-comparison",
 ]
 "examples/**" = [
     "ANN",
-    "D103",
-    "E302",
-    "E305",
-    "E402",
-    "PD010",
-    "PD013",
-    "PLR2004",
-    "S110",
-    "T201",
+    "undocumented-public-function",
+    "blank-lines-top-level",
+    "blank-lines-after-function-or-class",
+    "module-import-not-at-top-of-file",
+    "pandas-use-of-dot-pivot-or-unstack",
+    "pandas-use-of-dot-stack",
+    "magic-value-comparison",
+    "try-except-pass",
+    "print",
 ]
 "src/lnPi/**" = [
     "ANN",
@@ -264,7 +264,7 @@ ruff.strictly-empty-init-modules = false
     "N",
     "PGH",
     "PL",
-    "S101",
+    "assert",
     "SIM",
 ]
 
