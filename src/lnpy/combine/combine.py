@@ -721,7 +721,7 @@ def shift_lnpi_windows(
             window_max=window_max,
         )
 
-        lhs = (asp.T @ asp).toarray()
+        lhs = (asp.T @ asp).toarray()  # pyrefly: ignore [missing-attribute]
         # There's a bug with multiplying a shape=(1,1) a into b.
         # The result will be a scalar.
         # so make sure its a vector
