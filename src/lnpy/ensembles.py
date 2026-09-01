@@ -516,7 +516,7 @@ class GrandCanonicalEnsemble:  # ruff:ignore[too-many-public-methods]
         if y is None:
             yy = xx
         else:
-            y = self._array_or_callable_to_xarray(x, **kwargs)
+            y = self._array_or_callable_to_xarray(y, **kwargs)
             yy = y - self._mean_pi(y)
 
         return validate.dataarray(

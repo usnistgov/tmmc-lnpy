@@ -653,14 +653,6 @@ class PhaseCreator(MyAttrsMixin):
             If no phase creator, return list of lnPiMasked objects and array of phase indices.
             Otherwise, lnPiCollection object.
         """
-
-        def _combine_kws(
-            class_kws: Mapping[str, Any] | None,
-            passed_kws: Mapping[str, Any] | None,
-            **default_kws: Any,
-        ) -> dict[str, Any]:
-            return dict(class_kws or {}, **default_kws, **(passed_kws or {}))
-
         ref = self.ref
         nmax = self.nmax
 

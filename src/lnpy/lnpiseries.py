@@ -344,8 +344,18 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # ruff:ignore[invalid-class-
         shape = first.shape
 
         for lnpi in series:
-            if lnpi.state_kws != state_kws or lnpi.shape != shape:
-                raise ValueError
+            if lnpi.state_kws != state_kws:
+                msg = (
+                    "all elements must have matching state_kws. "
+                    f"expected {state_kws}, found {lnpi.state_kws}."
+                )
+                raise ValueError(msg)
+            if lnpi.shape != shape:
+                msg = (
+                    "all elements must have matching shape. "
+                    f"expected {shape}, found {lnpi.shape}."
+                )
+                raise ValueError(msg)
             # would like to do this, but
             # fails for parallel builds
             # assert lnpi._base is _base
@@ -1159,7 +1169,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # ruff:ignore[invalid-class-
         """
         warn(
             "Using `wlnPi` accessor is deprecated.  Please use `wfe` accessor instead",
-            stacklevel=1,
+            stacklevel=2,
         )
         return self.wfe
 
@@ -1172,7 +1182,7 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # ruff:ignore[invalid-class-
         """
         warn(
             "Using `wlnPi_single is deprecated.  Please use `self.wfe_phases` instead",
-            stacklevel=1,
+            stacklevel=2,
         )
         return self.wfe_phases
 
