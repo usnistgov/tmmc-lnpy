@@ -345,7 +345,6 @@ class lnPiCollection(AccessorMixin, MyAttrsMixin):  # ruff:ignore[invalid-class-
 
         for lnpi in series:
             if lnpi.state_kws != state_kws:
-                raise ValueError
                 msg = (
                     "all elements must have matching state_kws. "
                     f"expected {state_kws}, found {lnpi.state_kws}."
