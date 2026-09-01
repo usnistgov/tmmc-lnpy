@@ -39,7 +39,7 @@ class ConvergenceError(Exception):
 
 
 class SpinodalError(ConvergenceError):
-    """General error in calculating spindal"""
+    """General error in calculating spinodal"""
 
 
 class SpinodalStepError(SpinodalError):
@@ -47,7 +47,7 @@ class SpinodalStepError(SpinodalError):
 
 
 class BinodalError(ConvergenceError):
-    """General error in cacluatiing binodal"""
+    """General error in calculating binodal"""
 
 
 class RootResultTotal(RootResultDict, total=False):
@@ -915,8 +915,8 @@ class Binodals(StabilityBase["lnPiCollection"]):
                 raise ValueError(msg)
             return s._get_lnz(solver.build_phases.index)
 
-        lnz_min = lnz_min or _get_lnz(ids[0])
-        lnz_max = lnz_max or _get_lnz(ids[1])
+        lnz_min = lnz_min if lnz_min is not None else _get_lnz(ids[0])
+        lnz_max = lnz_max if lnz_max is not None else _get_lnz(ids[1])
 
         return solver.solve(ids=ids, lnz_min=lnz_min, lnz_max=lnz_max, **kwargs)
 

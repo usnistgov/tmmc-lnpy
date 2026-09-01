@@ -178,7 +178,7 @@ Full set of changes:
 
 ### Changed
 
-- Changed `examples.load_example_maskddata` to
+- Changed `examples.load_example_maskeddata` to
 `examples.load_example_lnpimasked` for consistency with other method names.
 
 ## v0.3.0 — 2023-05-02
