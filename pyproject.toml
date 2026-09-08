@@ -3,11 +3,7 @@
 [build-system]
 build-backend = "uv_build"
 requires = [
-<<<<<<< before updating
-    "uv-build>=0.12.6,<0.13.0",
-=======
     "uv-build>=0.12.8,<0.13.0",
->>>>>>> after updating
 ]
 
 [project]
@@ -191,33 +187,48 @@ docstring-code-format = true
 
 [tool.ruff.lint.per-file-ignores]
 "src/**" = [
-    "NPY", # - not using numpy?
-    "PD",  # - not using pandas?
+    "complex-structure",
+    "invalid-module-name",
+    "line-contains-todo",
+    "magic-value-comparison",
+    "missing-todo-link",
+    "PLR091",
+    "private-member-access",
+    "undocumented-public-function", # - Missing docstring in public function
+    "undocumented-public-method",   # - Missing docstring in public method
 ]
 "tests/**" = [
-    "assert", # - Assert is fine with tests
-    "D",      # - Don't need to document tests
+    "ANN",
+    "assert",                 # - Assert is fine with tests
+    "D",                      # - Don't need to document tests
+    "magic-value-comparison",
 ]
 "examples/**" = [
-    # "useless-expression",         # - Don't remove useless expressions in notebooks
-    # "undocumented-public-module", # - undocumented-public-module
-    # "implicit-namespace-package",
+    "ANN",
+    "blank-lines-after-function-or-class",
+    "blank-lines-top-level",
+    "magic-value-comparison",
+    "module-import-not-at-top-of-file",
+    "pandas-use-of-dot-pivot-or-unstack",
+    "pandas-use-of-dot-stack",
+    "print",
+    "try-except-pass",
+    "undocumented-public-function",
+]
+"src/lnPi/**" = [
+    "ANN",
+    "assert",
+    "B",
+    "N",
+    "PGH",
+    "PL",
+    "SIM",
 ]
 
 [tool.ruff.lint]
 select = [
     "ALL",
 ]
-<<<<<<< before updating
-# fixable = [ "ALL" ]
-unfixable = [
-    "non-augmented-assignment",
-    "unused-import",
-    "ERA",
-    "T",
-]
-=======
->>>>>>> after updating
 ignore = [
     "any-type",                             # - Any ok sometimes
     "COM",                                  # - flake8-commas, formatter should take care of this?
@@ -245,6 +256,7 @@ unfixable = [
     "ERA",
     "non-augmented-assignment",
     "T",
+    "unused-import",
 ]
 isort.known-first-party = [
     "lnpy",
@@ -256,49 +268,6 @@ pylint.max-public-methods = 30
 preview = true
 ruff.strictly-empty-init-modules = false
 
-<<<<<<< before updating
-[tool.ruff.lint.per-file-ignores]
-"src/**" = [
-    "complex-structure",
-    "undocumented-public-method",   # - Missing docstring in public method
-    "undocumented-public-function", # - Missing docstring in public function
-    "line-contains-todo",
-    "invalid-module-name",
-    "PLR091",
-    "magic-value-comparison",
-    "private-member-access",
-    "missing-todo-link",
-]
-"tests/**" = [
-    "D",                      # - Don't need to document tests
-    "assert",                 # - Assert is fine with tests
-    "ANN",
-    "magic-value-comparison",
-]
-"examples/**" = [
-    "ANN",
-    "undocumented-public-function",
-    "blank-lines-top-level",
-    "blank-lines-after-function-or-class",
-    "module-import-not-at-top-of-file",
-    "pandas-use-of-dot-pivot-or-unstack",
-    "pandas-use-of-dot-stack",
-    "magic-value-comparison",
-    "try-except-pass",
-    "print",
-]
-"src/lnPi/**" = [
-    "ANN",
-    "B",
-    "N",
-    "PGH",
-    "PL",
-    "assert",
-    "SIM",
-]
-
-=======
->>>>>>> after updating
 # * Checks ---------------------------------------------------------------------
 [tool.repo-review]
 ignore = [
@@ -413,8 +382,8 @@ project-includes = [
     "tests",
     "tools",
 ]
-<<<<<<< before updating
 search-path = [ "src" ]
+enabled-ignores = [ "pyrefly" ]
 
 [[tool.pyrefly.sub-config]]
 ignore-missing-imports = [ "matplotlib.*" ]
@@ -456,10 +425,6 @@ unannotated-return = "error"
 untyped-import = "error"
 unused-ignore = "error"
 variance-mismatch = "error"
-=======
-search-path = [ "." ]
-enabled-ignores = [ "pyrefly" ]
->>>>>>> after updating
 
 [tool.pyright]
 typeCheckingMode = "standard"
@@ -533,7 +498,6 @@ reportGeneralTypeIssues = false
 reportMissingImports = false
 
 [tool.ty]
-src.exclude = [ "**/combine.py" ]
 src.include = [
     "examples/usage/*.ipynb",
     "noxfile.py",
@@ -541,6 +505,7 @@ src.include = [
     "tests",
     "tools",
 ]
+src.exclude = [ "**/combine.py" ]
 rules.division-by-zero = "error"
 rules.possibly-missing-import = "error"
 rules.possibly-unresolved-reference = "error"
@@ -570,7 +535,8 @@ rules = { unresolved-attribute = "ignore", invalid-method-override = "ignore" }
 [tool.pytest.ini_options]
 minversion = "8"
 testpaths = [
-    "README.md",
+    # "README.md"
+    "lnPi",
     "lnpy",
     "tests",
 ]
@@ -586,13 +552,6 @@ addopts = [
     "-n",
     "4",
 ]
-<<<<<<< before updating
-testpaths = [
-    # "README.md"
-    "lnPi",
-    "lnpy",
-    "tests",
-]
 # options
 filterwarnings = [
     "error",
@@ -603,11 +562,6 @@ filterwarnings = [
     "ignore: importing 'Const' from 'astroid':DeprecationWarning",
     "ignore: lnPi is deprecated.  Please transition to using lnpy instead:DeprecationWarning",
 ]
-log_cli_level = "INFO"
-=======
-# options
-filterwarnings = [ "error" ]
->>>>>>> after updating
 log_level = "INFO"
 log_cli_level = "INFO"
 strict_xfail = "true"
@@ -674,19 +628,15 @@ pip-deps = [
     # these used solely for specking tools to be run via uvx ...
     "conda-lock>=4.0.2",
     "copier-template-extensions>=0.3.3",
-    "copier>=9.18.1",
+    "copier>=9.17.2",
     "grayskull>=3.1.1",
     "nbqa>=1.9.1",
-<<<<<<< before updating
     "prek>=0.5.1",
-=======
-    "prek>=0.5.2",
->>>>>>> after updating
     "pyrefly>=1.2.0",
     "pyright>=1.1.411",
     "rooster>=0.1.1",
     "twine>=7.0.0",
-    "ty>=0.0.77",
+    "ty>=0.0.74",
 ]
 groups = [
     "basedpyright",
@@ -702,11 +652,7 @@ scripts = [
     "noxfile.py",
     "tools/check_dist_version.py",
     "tools/clean_kernelspec.py",
-<<<<<<< before updating
-=======
-    "tools/cog_runner.py",
     "tools/get_version_from_pre_commit_config.py",
->>>>>>> after updating
 ]
 
 [[tool.uv-locker.requirements]]

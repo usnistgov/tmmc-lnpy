@@ -11,7 +11,7 @@ def pytest_configure(config) -> None:  # ruff:ignore[unused-function-argument]
     np.set_printoptions(precision=4, suppress=True)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True)  # ruff: ignore[pytest-fixture-autouse]
 def add_np(doctest_namespace):
     doctest_namespace["np"] = np
 
