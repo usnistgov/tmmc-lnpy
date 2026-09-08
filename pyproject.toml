@@ -94,7 +94,9 @@ test = [
 type = [
     "joblib-stubs",
     "pandas-stubs",
+    "pyyaml",
     "scipy-stubs",
+    "types-pyyaml",
     "types-tqdm",
     { include-group = "nox" },
     { include-group = "pylint" },

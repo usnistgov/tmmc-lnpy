@@ -40,11 +40,13 @@ dependencies:
   - pytest-env
   - pytest-sugar
   - pytest-xdist
+  - pyyaml
   - scikit-image>=0.21
   - scipy
   - scipy-stubs
   - tqdm
   - typecheck-runner>=0.2.0
+  - types-pyyaml
   - types-tqdm
   - typing-extensions>=4.10.0
   - xarray
