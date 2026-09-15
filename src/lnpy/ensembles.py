@@ -400,7 +400,7 @@ class GrandCanonicalEnsemble:  # ruff:ignore[too-many-public-methods]
         **kwargs: Any,
     ) -> xr.DataArray:
         if callable(func_or_array):
-            x = func_or_array(self, **kwargs)  # ty: ignore[call-top-callable]
+            x = func_or_array(self, **kwargs)
         elif allow_extra_kws:
             x = self._get_prop_from_extra_kws(func_or_array)
         else:
