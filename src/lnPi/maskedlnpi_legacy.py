@@ -189,7 +189,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
     def edge_distance(self, ref, *args, **kwargs):
         return ref.edge_distance_matrix[self.local_argmax(*args, **kwargs)]
 
-    def __setitem__(self, index, value) -> None:  # pyrefly: ignore [bad-param-name-override]
+    def __setitem__(self, index, value) -> None:
         self._clear_cache()
         super().__setitem__(index, value)
 
@@ -217,7 +217,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         """
         import bottleneck
 
-        from lnpy.core.array_utils import bfill, ffill
+        import lnpy.core.array_utils as array_utils
 
         if axes is None:
             axes = range(self.ndim)
@@ -225,12 +225,10 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         data = self.data
         datas = []
 
-        # pyrefly: ignore [redundant-condition]
         if ffill:
-            datas += [ffill(data, axis=axis, limit=limit) for axis in axes]
-        # pyrefly: ignore [redundant-condition]
+            datas += [array_utils.ffill(data, axis=axis, limit=limit) for axis in axes]
         if bfill:
-            datas += [bfill(data, axis=axis, limit=limit) for axis in axes]
+            datas += [array_utils.bfill(data, axis=axis, limit=limit) for axis in axes]
 
         if len(datas) > 0:
             data = bottleneck.nanmean(datas, axis=0)

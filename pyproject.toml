@@ -386,6 +386,10 @@ project-includes = [
 ]
 search-path = [ "src" ]
 enabled-ignores = [ "pyrefly" ]
+min-severity = "warn"
+
+[tool.pyrefly.errors]
+unused-ignore = "warn"
 
 [[tool.pyrefly.sub-config]]
 ignore-missing-imports = [ "matplotlib.*" ]
