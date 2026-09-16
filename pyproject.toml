@@ -388,6 +388,7 @@ project-includes = [
 search-path = [ "src" ]
 enabled-ignores = [ "pyrefly" ]
 min-severity = "warn"
+preset = "strict"
 
 [tool.pyrefly.errors]
 unused-ignore = "warn"
