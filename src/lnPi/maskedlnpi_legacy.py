@@ -90,7 +90,7 @@ class MaskedlnPiLegacy(np.ma.MaskedArray, AccessorMixin):
         self._clear_cache()
 
     def _clear_cache(self) -> None:
-        self._cache = {}  # type: ignore[var-annotated]  # pyright: ignore[reportUninitializedInstanceVariable]
+        self._cache = {}  # type: ignore[var-annotated]  # pyright: ignore[reportUninitializedInstanceVariable]  # pyrefly: ignore [implicitly-defined-attribute]
 
     ##################################################
     # properties
