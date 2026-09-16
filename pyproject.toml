@@ -394,7 +394,15 @@ preset = "strict"
 unused-ignore = "warn"
 
 [[tool.pyrefly.sub-config]]
+matches = "tests/**"
+errors.implicit-any-parameter = "ignore"
+errors.implicit-any-lambda = "ignore"
+
+[[tool.pyrefly.sub-config]]
 ignore-missing-imports = [ "matplotlib.*" ]
+errors.implicit-any-parameter = "ignore"
+errors.implicit-any-empty-container = "ignore"
+errors.implicit-any-lambda = "ignore"
 matches = "examples/**"
 
 [[tool.pyrefly.sub-config]]
@@ -414,6 +422,9 @@ ignore-missing-imports = [ "tools.*" ]
 matches = "src/lnPi/maskedlnpi_legacy.py"
 errors.bad-assignment = "ignore"
 errors.missing-attribute = "ignore"
+errors.implicit-any-parameter = "ignore"
+errors.missing-override-decorator = "ignore"
+errors.implicit-any-empty-container = "ignore"
 
 [[tool.pyrefly.sub-config]]
 matches = "src/lnpy/**"
