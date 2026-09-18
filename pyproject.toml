@@ -407,7 +407,6 @@ unused-ignore = "error"
 variance-mismatch = "error"
 
 [[tool.pyrefly.sub-config]]
-<<<<<<< before updating
 matches = "tests/**"
 errors.implicit-any-parameter = "ignore"
 errors.implicit-any-lambda = "ignore"
@@ -433,6 +432,7 @@ ignore-missing-imports = [ "requirements.*" ]
 [[tool.pyrefly.sub-config]]
 matches = "noxfile.py"
 ignore-missing-imports = [ "tools.*" ]
+errors.open-unpacking = "ignore"
 
 [[tool.pyrefly.sub-config]]
 matches = "src/lnPi/**"
@@ -449,10 +449,6 @@ errors.implicit-abstract-class = "error"
 errors.implicit-any = "error"
 errors.implicit-any-lambda = "ignore"  # used with xarray assign
 errors.implicitly-defined-attribute = "error"
-=======
-matches = "noxfile.py"
-errors.open-unpacking = "ignore"
->>>>>>> after updating
 
 [tool.pyright]
 typeCheckingMode = "standard"

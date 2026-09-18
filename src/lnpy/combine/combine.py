@@ -721,11 +721,11 @@ def shift_lnpi_windows(
             window_max=window_max,
         )
 
-        lhs = (asp.T @ asp).toarray()  # pyrefly: ignore [missing-attribute]
+        lhs = (asp.T @ asp).toarray()
         # There's a bug with multiplying a shape=(1,1) a into b.
         # The result will be a scalar.
         # so make sure its a vector
-        rhs = np.atleast_1d(asp.T @ b)  # pyrefly: ignore[no-matching-overload]
+        rhs = np.atleast_1d(asp.T @ b)
 
     else:
         a = _create_lhs_matrix_numpy(
@@ -1694,8 +1694,8 @@ def lnpi_from_updown_indexed(
         "apply_ufunc_kwargs": apply_ufunc_kwargs,
     }
 
-    delta_lnpi: GenArrayOrSeriesT = delta_lnpi_from_updown_indexed(down, up, **kws)  # type: ignore[arg-type]
-    return lnpi_from_delta_lnpi_indexed(delta_lnpi, normalize=normalize, **kws)  # type: ignore[arg-type]
+    delta_lnpi: GenArrayOrSeriesT = delta_lnpi_from_updown_indexed(down, up, **kws)  # type: ignore[arg-type]  # pyrefly: ignore [open-unpacking]
+    return lnpi_from_delta_lnpi_indexed(delta_lnpi, normalize=normalize, **kws)  # type: ignore[arg-type]  # pyrefly: ignore [open-unpacking]
 
 
 # ** Assignment
