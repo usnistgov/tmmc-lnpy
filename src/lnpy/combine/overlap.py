@@ -291,11 +291,11 @@ def _shift_lnpi_windows(
             window_max=window_max,
         )
 
-        lhs = (asp.T @ asp).toarray()  # pyrefly: ignore [missing-attribute]
+        lhs = (asp.T @ asp).toarray()
         # There's a bug with multiplying a shape=(1,1) a into b.
         # The result will be a scalar.
         # so make sure its a vector
-        rhs = np.atleast_1d(asp.T @ b)  # pyrefly: ignore[no-matching-overload]
+        rhs = np.atleast_1d(asp.T @ b)
 
     else:
         a = _create_lhs_matrix_numpy(

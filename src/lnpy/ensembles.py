@@ -972,7 +972,7 @@ class CanonicalEnsemble:
 
         return (
             (
-                -(x.lnpi(np.nan) - lnpi_zero)  # pyright: ignore[reportOperatorIssue]
+                -(x.lnpi(np.nan) - lnpi_zero)  # pyright: ignore[reportOperatorIssue]  # pyrefly: ignore [unsupported-operation]
                 + (x.ncoords * x.betamu).sum(x.dims_comp)
             )
             .assign_coords(x._wrapper.coords_n)
