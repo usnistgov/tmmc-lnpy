@@ -1274,11 +1274,13 @@ def delta_lnpi_from_updown(
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     if validate.series.typeis(down):
-        # pyrefly: ignore [bad-return]
-        return pd.Series(  # ty: ignore[invalid-return-type]
-            delta_lnpi_from_updown(down=down.to_numpy(), up=up),  # type: ignore[arg-type]  # ty: ignore[invalid-attribute-access]
-            name=name,
-            index=down.index,  # ty: ignore[invalid-attribute-access]
+        return cast(  # type: ignore[redundant-cast]
+            "GenArrayOrSeriesT",
+            pd.Series(
+                delta_lnpi_from_updown(down=down.to_numpy(), up=up),  # type: ignore[arg-type]
+                name=name,
+                index=down.index,
+            ),
         )
 
     msg = f"Unknown {type(up)=}"  # pragma: no cover  # pyright: ignore[reportUnreachable]
@@ -1339,11 +1341,13 @@ def lnpi_from_updown(
         return out.rename(name)  # pyright: ignore[reportReturnType]  # ty:ignore[invalid-return-type]
 
     if validate.series.typeis(down):
-        # pyrefly: ignore [bad-return]
-        return pd.Series(  # ty: ignore[invalid-return-type]
-            lnpi_from_updown(down=down.to_numpy(), up=up, norm=norm),  # type: ignore[arg-type]  # ty: ignore[invalid-attribute-access]
-            name=name,
-            index=down.index,  # ty: ignore[invalid-attribute-access]
+        return cast(  # type: ignore[redundant-cast]
+            "GenArrayOrSeriesT",
+            pd.Series(
+                lnpi_from_updown(down=down.to_numpy(), up=up, norm=norm),  # type: ignore[arg-type]
+                name=name,
+                index=down.index,
+            ),
         )
 
     msg = f"Unknown {type(up)=}"  # pyright: ignore[reportUnreachable]
@@ -1432,21 +1436,22 @@ def _apply_indexed_function(
     grouper = factory_indexed_grouper(grouper, data=first, dim=dim, axis=axis)
 
     if validate.series.typeis(first):
-        # pyrefly: ignore [bad-return]
-        return pd.Series(
-            _apply_indexed_function(
-                # pyrefly: ignore [missing-attribute]
-                *(a.to_numpy() for a in args),  # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-argument-type, no-matching-overload, invalid-attribute-access]
-                factory_gufunc=factory_gufunc,
-                axis=-1,
-                grouper=grouper,
-                out=out,
-                dtype=dtype,
-                casting=casting,
-                parallel=parallel,
+        return cast(
+            "GenArrayOrSeriesT",
+            pd.Series(
+                _apply_indexed_function(
+                    *(a.to_numpy() for a in cast("tuple[pd.Series[Any], ...]", args)),  # type: ignore[redundant-cast]
+                    factory_gufunc=factory_gufunc,
+                    axis=-1,
+                    grouper=grouper,
+                    out=out,
+                    dtype=dtype,
+                    casting=casting,
+                    parallel=parallel,
+                ),
+                index=first.index,  # ty: ignore[invalid-attribute-access]
             ),
-            index=first.index,  # ty: ignore[invalid-attribute-access]
-        )  # ty:ignore[invalid-return-type]
+        )
 
     if validate.dataarray.typeis(first):
         dtype = select_dtype(first, out=out, dtype=dtype)
