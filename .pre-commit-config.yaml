@@ -178,7 +178,8 @@ repos:
     hooks:
       - id: pooch-registry
         name: pooch-registry
-        entry: python -c  "import pooch; pooch.make_registry('examples/data', 
+        entry:
+          python -c  "import pooch; pooch.make_registry('examples/data',
           'src/lnpy/data/registry.txt')"
         language: python
         additional_dependencies:
@@ -208,7 +209,8 @@ repos:
           - "-ignore"
           - 'specifying action "\$/.+" in invalid format because ref is missing'
           - "-ignore"
-          - 'reusable workflow call "\$/.+" at "uses" is not following the format'
+          - 'reusable workflow call "\$/.+" at "uses" is not following the
+            format'
         language: golang # means renovate will also update `additional_dependencies`
         additional_dependencies:
           # actionlint has a shellcheck integration which extracts shell scripts in `run:` steps from GitHub Actions
