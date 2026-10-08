@@ -37,7 +37,6 @@ dependencies = [
     "attrs>=26.1.0",
     "bottleneck",
     "cattrs>=26.1.0",
-    "importlib-resources; python_version<'3.10'",
     "joblib",
     "lazy-loader",
     "module-utilities>=0.9.0",
@@ -285,9 +284,13 @@ src_dir = [ "src" ]
 toplevel = [ "lnPi", "lnpy" ]
 
 [tool.deptry]
-known_first_party = [ "lnpy" ]
+extend_exclude = [ "examples/archived/.*" ]
+known_first_party = [ "lnpy", "lnPy" ]
+package_module_name_map.scikit-image = "skimage"
+package_module_name_map.tmmc-lnpy = "lnpy"
 # Group: ignores
 per_rule_ignores.DEP001 = [ "pkginfo" ]
+per_rule_ignores.DEP002 = [ "cmomy", "dask", "netcdf4", "ipywidgets" ]
 per_rule_ignores.DEP004 = [ "nox", "pytest" ]
 
 [tool.pyproject-fmt]
