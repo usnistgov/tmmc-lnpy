@@ -438,7 +438,7 @@ class GrandCanonicalEnsemble:  # ruff:ignore[too-many-public-methods]
             convert it to one.
         allow_extra_kws : bool
             If `True`, allow getting property from `extra_kws`.
-        *args, **kwargs
+        **kwargs
             Extra arguments to `x` if passing callable
 
         Returns
@@ -972,7 +972,7 @@ class CanonicalEnsemble:
 
         return (
             (
-                -(x.lnpi(np.nan) - lnpi_zero)  # pyright: ignore[reportOperatorIssue]  # pyrefly: ignore [unsupported-operation]
+                -(x.lnpi(np.nan) - lnpi_zero)  # pyright: ignore[reportOperatorIssue]
                 + (x.ncoords * x.betamu).sum(x.dims_comp)
             )
             .assign_coords(x._wrapper.coords_n)
