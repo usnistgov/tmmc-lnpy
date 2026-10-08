@@ -842,7 +842,7 @@ def typecheck(  # ruff:ignore[too-many-branches]
             if c == "mypy":
                 line = "mypy[faster-cache]"
             elif c == "ty":
-                line = "ty check -v"
+                line = "ty check"
             else:
                 line = c
 
