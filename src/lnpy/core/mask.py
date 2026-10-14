@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from .typing import MaskConvention, NDArrayAny, NDArrayBool
 
 
-# * Mask conventions ----------------------------------------------------------
+# * Mask conventions -------------------------------------------------------------------
 def _convention_to_bool(convention: MaskConvention) -> bool:
     if isinstance(convention, bool):
         return convention

@@ -1416,7 +1416,7 @@ def assign_lnpi_from_updown(
     return table.assign({lnpi_name: table[down_name].copy(data=ln_prob)})
 
 
-# * Indexed routines ----------------------------------------------------------
+# * Indexed routines -------------------------------------------------------------------
 def _apply_indexed_function(
     *args: GenArrayOrSeriesT,
     factory_gufunc: Callable[[bool], Callable[..., NDArrayAny]],

@@ -29,7 +29,7 @@ if TYPE_CHECKING:
     from lnpy.core.typing_compat import Self
 
 
-# * Factor functions ----------------------------------------------------------
+# * Factor functions -------------------------------------------------------------------
 def factor_by(
     by: Groups,
     sort: bool = True,
@@ -199,7 +199,7 @@ def factor_by_to_index(
     return groups, indexes_sorted, n_start, n_end
 
 
-# * Indexer class -------------------------------------------------------------
+# * Indexer class ----------------------------------------------------------------------
 class IndexedGrouper:
     """
     Indexed grouping wrapper.

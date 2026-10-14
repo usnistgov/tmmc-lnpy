@@ -51,7 +51,7 @@ if TYPE_CHECKING:
     P = ParamSpec("P")
 
 
-# * Utilities -----------------------------------------------------------------
+# * Utilities --------------------------------------------------------------------------
 def _get_n_ranges(shape: tuple[int, ...], dtype: DTypeLike | None) -> list[NDArrayAny]:
     return [np.arange(s, dtype=dtype) for s in shape]
 
@@ -95,7 +95,7 @@ def _get_filled(
     return _get_maskedarray(base, self, dlnz).filled(fill_value)
 
 
-# * lnPiArray -----------------------------------------------------------------
+# * lnPiArray --------------------------------------------------------------------------
 def _convert_lnz(lnz: ArrayLike) -> NDArray[np.float64]:
     return np.atleast_1d(lnz).astype(np.float64)
 
@@ -186,7 +186,7 @@ class lnPiArray(MyAttrsMixin):  # ruff:ignore[invalid-class-name]
         return self.new_like(data=func(self.data, *args, **kwargs))
 
 
-# * Masked lnPi object --------------------------------------------------------
+# * Masked lnPi object -----------------------------------------------------------------
 def _validate_mask(self_: Any, attribute: Any, mask: NDArray[np.bool_]) -> None:  # ruff:ignore[unused-function-argument]
     if mask.shape != self_.base.data.shape:
         msg = f"{mask.shape=} must be {self_.base.data.shape}."

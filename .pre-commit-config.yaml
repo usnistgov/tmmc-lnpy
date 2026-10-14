@@ -74,11 +74,7 @@ repos:
       - id: pyproject-fmt
   # ** validate (schema-store)
   - repo: https://github.com/henryiii/validate-pyproject-schema-store
-<<<<<<< before updating
-    rev: "2026.10.02"
-=======
     rev: "2026.10.06"
->>>>>>> after updating
     hooks:
       - id: validate-pyproject
         name: validate-pyproject-schema-store
@@ -142,7 +138,7 @@ repos:
   # * Spelling
   # ** typos
   - repo: https://github.com/adhtruong/mirrors-typos
-    rev: "v1.50.3"
+    rev: "v1.51.1"
     hooks:
       - id: typos
         exclude_types: [jupyter]
@@ -172,7 +168,7 @@ repos:
 
   # * Commit message
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: "v4.19.1"
+    rev: "v4.19.2"
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -180,19 +176,10 @@ repos:
   # * auto-files
   - repo: local
     hooks:
-<<<<<<< before updating
       - id: parallel-files
         name: parallel-files
         alias: auto-files
         entry: python tools/auto_parallel_files.py
-=======
-      - id: cog-readme
-        name: cog-readme
-        alias: cog
-        entry: >-
-          uv run tools/cog_runner.py --format=prettier --lint=markdownlint-cli2 --
-        # if need package, prefix with uv run --no-dev --isolated
->>>>>>> after updating
         language: python
         files: ^src/lnpy/_lib/.*\.py$
         pass_filenames: false
@@ -202,9 +189,7 @@ repos:
     hooks:
       - id: pooch-registry
         name: pooch-registry
-        entry:
-          python -c  "import pooch; pooch.make_registry('examples/data',
-          'src/lnpy/data/registry.txt')"
+        entry: python -c  "import pooch; pooch.make_registry('examples/data', 'src/lnpy/data/registry.txt')"
         language: python
         additional_dependencies:
           - pooch >= 1.8.2
@@ -271,7 +256,7 @@ repos:
         name: nbqa-typos
         alias: typos
         additional_dependencies: &typos-deps
-          - typos==1.50.3
+          - typos==1.51.1
         args:
           - typos
           - --force-exclude

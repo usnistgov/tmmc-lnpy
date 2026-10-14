@@ -50,7 +50,7 @@ def factory_apply_ufunc_kwargs(
     return out
 
 
-# * xarray utils --------------------------------------------------------------
+# * xarray utils -----------------------------------------------------------------------
 def dim_to_suffix_dataarray(
     da: xr.DataArray, dim: Hashable, join: str = "_"
 ) -> xr.Dataset:
@@ -92,7 +92,7 @@ def dim_to_suffix(
     return dim_to_suffix_dataset(ds, dim=dim, join=join)
 
 
-# * Select Axis ---------------------------------------------------------------
+# * Select Axis ------------------------------------------------------------------------
 def select_axis_dim(
     target: xr.DataArray | xr.Dataset, axis: AxisReduce, dim: DimReduce | None
 ) -> tuple[int, DimReduce]:

@@ -40,7 +40,7 @@ cached_prop = cached.prop(check_use_cache=True)
 cached_meth = cached.meth(check_use_cache=True)
 
 
-# * Utilities -----------------------------------------------------------------
+# * Utilities --------------------------------------------------------------------------
 @lru_cache(maxsize=10)
 def _get_indices(shape: tuple[int, ...]) -> NDArray[np.int64]:
     return np.indices(shape)
@@ -109,7 +109,7 @@ def xr_name(
     return decorator
 
 
-# * lnPi wrapper --------------------------------------------------------------
+# * lnPi wrapper -----------------------------------------------------------------------
 class LogPiWrapper:
     """
     Wraps lnPi objects with xarray functionality
@@ -210,7 +210,7 @@ class LogPiWrapper:
         return xr.DataArray(lnpi_0, dims=self.dims_rec, **kwargs)
 
 
-# * Grandcanonical ensemble (xge) ---------------------------------------------
+# * Grandcanonical ensemble (xge) ------------------------------------------------------
 class GrandCanonicalEnsemble:  # ruff:ignore[too-many-public-methods]
     """
     :class:`~xarray.DataArray` accessor to Grand Canonical properties from lnPi
@@ -910,7 +910,7 @@ class GrandCanonicalEnsemble:  # ruff:ignore[too-many-public-methods]
         return self.S(lnpi_zero, ndim) / self.ntot
 
 
-# * Canonical ensembles (xce) -------------------------------------------------
+# * Canonical ensembles (xce) ----------------------------------------------------------
 class CanonicalEnsemble:
     """
     Canonical ensemble properties

@@ -27,13 +27,13 @@ if TYPE_CHECKING:
     T = TypeVar("T")
 
 
-# * pandas stuff --------------------------------------------------------------
+# * pandas stuff -----------------------------------------------------------------------
 def allbut(levels: Iterable[Hashable], *names: Hashable) -> list[Hashable]:
     name_set = set(names)
     return [item for item in levels if item not in name_set]
 
 
-# * Utilities -----------------------------------------------------------------
+# * Utilities --------------------------------------------------------------------------
 def get_lnz_iter(lnz: Iterable[float | None], x: ArrayLike) -> NDArrayAny:
     """
     Create a lnz_iter object for varying a single lnz
@@ -153,7 +153,7 @@ def dataset_to_lnpimasked(
     return lnPiMasked.from_dataarray(da=data, extra_kws=extra_kws, **kwargs)
 
 
-# * Helpers -------------------------------------------------------------------
+# * Helpers ----------------------------------------------------------------------------
 def peek_at(iterable: Iterable[T]) -> tuple[T, Iterator[T]]:
     """Returns the first value from iterable, as well as a new iterator with
     the same content as the original iterable
