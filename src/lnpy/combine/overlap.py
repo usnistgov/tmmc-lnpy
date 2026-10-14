@@ -40,7 +40,7 @@ if TYPE_CHECKING:
     )
 
 
-# * Overlap -------------------------------------------------------------------
+# * Overlap ----------------------------------------------------------------------------
 class OverlapError(ValueError):
     """Specific error for missing overlaps."""
 
@@ -229,7 +229,7 @@ def _create_lhs_matrix_numpy(
     return a
 
 
-# * Shift combine -------------------------------------------------------------
+# * Shift combine ----------------------------------------------------------------------
 @np.vectorize(signature="(n), (n), (n, d), (), () -> (n)")
 def _shift_lnpi_windows(
     lnpi: NDArrayAny,
@@ -439,7 +439,7 @@ def assign_shift_lnpi_windows(
     return table.assign(**{lnpi_name: out})  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 
-# * Keep first combine --------------------------------------------------------
+# * Keep first combine -----------------------------------------------------------------
 def _keep_first_indexer(
     state: NDArrayAny,
     window: NDArrayAny,

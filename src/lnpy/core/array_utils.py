@@ -84,7 +84,7 @@ def asarray_maybe_recast(
     return np.asarray(data, dtype=dtype)
 
 
-# * Filling -------------------------------------------------------------------
+# * Filling ----------------------------------------------------------------------------
 def ffill(arr: NDArrayAny, axis: int = -1, limit: int | None = None) -> NDArrayAny:
     import bottleneck
 
