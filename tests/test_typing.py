@@ -17,11 +17,12 @@ def type_peak_local_max_adaptive(
     from lnpy.segment import peak_local_max_adaptive
 
     _ = assert_type(
-        peak_local_max_adaptive(data, style="indices", **kws), tuple[NDArrayAny, ...]
+        peak_local_max_adaptive(data, style="indices", **kws),  # pyrefly: ignore[open-unpacking]
+        tuple[NDArrayAny, ...],
     )
-    _ = assert_type(peak_local_max_adaptive(data, style="mask", **kws), NDArrayAny)
-    _ = assert_type(peak_local_max_adaptive(data, style="marker", **kws), NDArrayAny)
+    _ = assert_type(peak_local_max_adaptive(data, style="mask", **kws), NDArrayAny)  # pyrefly: ignore[open-unpacking]
+    _ = assert_type(peak_local_max_adaptive(data, style="marker", **kws), NDArrayAny)  # pyrefly: ignore[open-unpacking]
     _ = assert_type(
-        peak_local_max_adaptive(data, style="other", **kws),
+        peak_local_max_adaptive(data, style="other", **kws),  # pyrefly: ignore[open-unpacking]
         tuple[NDArrayAny, ...] | NDArrayAny,
     )
