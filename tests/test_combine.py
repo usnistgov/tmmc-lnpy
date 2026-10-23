@@ -581,7 +581,7 @@ def test_assign_delta_assign_lnpi_from_updown(table_updown: pd.DataFrame) -> Non
     # pyrefly: ignore [missing-attribute]
     delta_lnpi = np.log(  # type: ignore[attr-defined]
         table_updown["prob_up"].shift(1) / table_updown["prob_down"]
-    ).fillna(0.0)  # pyright: ignore[reportAttributeAccessIssue]
+    ).fillna(0.0)  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-attribute]
 
     out = combine.assign_delta_lnpi_from_updown_indexed(table_updown)
     np.testing.assert_allclose(delta_lnpi, out["delta_lnpi"])

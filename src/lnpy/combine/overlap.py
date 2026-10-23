@@ -450,7 +450,7 @@ def _keep_first_indexer(
     parallel = parallel_heuristic(parallel, size=state.size)
 
     grouper_rec_window = IndexedGrouper.from_groups(rec, window, sort=False)
-    state_max = factory_state_max(parallel)(  # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
+    state_max = factory_state_max(parallel)(  # pylint: disable=no-value-for-parameter
         state,
         grouper_rec_window.index,
         grouper_rec_window.start,
@@ -478,7 +478,7 @@ def _keep_first_indexer(
     ]
     state_min[grouper_grouper_rec.index[grouper_grouper_rec.start]] = -1
 
-    indexer, count = factory_keep_first_indexer(parallel)(  # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
+    indexer, count = factory_keep_first_indexer(parallel)(  # pylint: disable=no-value-for-parameter
         state,
         state_min,
         grouper_rec_window.index,

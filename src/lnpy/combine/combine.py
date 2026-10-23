@@ -1699,8 +1699,8 @@ def lnpi_from_updown_indexed(
         "apply_ufunc_kwargs": apply_ufunc_kwargs,
     }
 
-    delta_lnpi: GenArrayOrSeriesT = delta_lnpi_from_updown_indexed(down, up, **kws)  # type: ignore[arg-type]  # pyrefly: ignore [open-unpacking]
-    return lnpi_from_delta_lnpi_indexed(delta_lnpi, normalize=normalize, **kws)  # type: ignore[arg-type]  # pyrefly: ignore [open-unpacking]
+    delta_lnpi: GenArrayOrSeriesT = delta_lnpi_from_updown_indexed(down, up, **kws)  # type: ignore[arg-type]
+    return lnpi_from_delta_lnpi_indexed(delta_lnpi, normalize=normalize, **kws)  # type: ignore[arg-type]
 
 
 # ** Assignment
