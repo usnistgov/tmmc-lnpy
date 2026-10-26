@@ -45,7 +45,7 @@ dependencies:
   - scipy
   - scipy-stubs
   - tqdm
-  - typecheck-runner>=0.2.0
+  - typecheck-runner>=0.2.2
   - types-pyyaml
   - types-tqdm
   - typing-extensions>=4.10.0
