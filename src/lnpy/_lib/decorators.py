@@ -42,7 +42,7 @@ def _thread_backend() -> str | None:
     try:
         from numba.np.ufunc import (  # type: ignore[attr-defined, unused-ignore]
             # pyrefly: ignore [missing-module-attribute]
-            tbbpool,  # ruff:ignore[unused-import]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
+            tbbpool,  # ruff:ignore[unused-import]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[import-not-found]
         )
     except ImportError:
         pass
@@ -52,7 +52,7 @@ def _thread_backend() -> str | None:
     try:
         from numba.np.ufunc import (  # type: ignore[attr-defined, unused-ignore]
             # pyrefly: ignore [missing-module-attribute]
-            omppool,  # ruff:ignore[unused-import]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-import]
+            omppool,  # ruff:ignore[unused-import]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[import-not-found]
         )
     except ImportError:
         pass
