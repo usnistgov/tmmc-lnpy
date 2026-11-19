@@ -834,7 +834,7 @@ class GrandCanonicalEnsemble:  # ruff:ignore[too-many-public-methods]
                     if callable(v):
                         v = v()
                     out.append(validate.dataarray(v))
-            except Exception:  # ruff:ignore[try-except-in-loop, blind-except, try-except-pass]  # pylint: disable=broad-exception-caught
+            except Exception:  # ruff:ignore[blind-except, try-except-pass]  # pylint: disable=broad-exception-caught
                 pass
 
         ds: xr.Dataset = xr.merge(out, compat="no_conflicts")
@@ -1127,7 +1127,7 @@ class CanonicalEnsemble:
                 if callable(v):
                     v = v()
                 out.append(validate.dataarray(v))
-            except Exception:  # ruff:ignore[try-except-in-loop, blind-except, try-except-pass]  # pylint: disable=broad-exception-caught
+            except Exception:  # ruff:ignore[blind-except, try-except-pass]  # pylint: disable=broad-exception-caught
                 pass
 
         ds = xr.merge(out, compat="no_conflicts")

@@ -12,7 +12,7 @@ def type_peak_local_max_adaptive(
     data: NDArrayAny, kws: PeakLocalMaxAdaptiveKwargs
 ) -> None:
 
-    from typing_extensions import assert_type
+    from typing import assert_type
 
     from lnpy.segment import peak_local_max_adaptive
 

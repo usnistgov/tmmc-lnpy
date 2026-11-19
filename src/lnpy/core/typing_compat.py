@@ -13,7 +13,9 @@ from typing import (  # pylint: disable=unused-import
 if sys.version_info >= (3, 11):
     from typing import Self, TypedDict, Unpack, assert_never
 else:
-    from typing_extensions import Self, TypedDict, Unpack, assert_never
+    from typing import Self, assert_never
+
+    from typing_extensions import TypedDict, Unpack
 
 
 if sys.version_info >= (3, 12):
