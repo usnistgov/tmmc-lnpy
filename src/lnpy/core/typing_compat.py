@@ -9,7 +9,6 @@ from typing import (  # pylint: disable=unused-import
     ParamSpec,
     Self,
     TypeAlias,
-    TypedDict,
     Unpack,
     assert_never,
 )
