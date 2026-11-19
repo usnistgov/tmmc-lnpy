@@ -7,16 +7,12 @@ from typing import (  # pylint: disable=unused-import
     Any,
     Concatenate,
     ParamSpec,
+    Self,
     TypeAlias,
+    TypedDict,
+    Unpack,
+    assert_never,
 )
-
-if sys.version_info >= (3, 11):
-    from typing import Self, TypedDict, Unpack, assert_never
-else:
-    from typing import Self, assert_never
-
-    from typing_extensions import TypedDict, Unpack
-
 
 if sys.version_info >= (3, 12):
     from typing import override

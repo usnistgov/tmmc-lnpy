@@ -1,5 +1,5 @@
 """Config for doctests and test collection"""
-# ruff:file-ignore[undocumented-public-function,missing-type-function-argument,missing-return-type-undocumented-public-function]
+# ruff:file-ignore[undocumented-public-function,missing-type-function-argument,missing-return-type-public-function]
 
 from functools import lru_cache
 

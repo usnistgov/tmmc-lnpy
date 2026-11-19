@@ -548,11 +548,11 @@ unused-ignore-comment = "error"
 [[tool.ty.overrides]]
 analysis.allowed-unresolved-imports = [ "matplotlib.*" ]
 include = [ "examples/**" ]
-rules = { missing-argument = "ignore" }
+rules.missing-argument = "ignore"
 
 [[tool.ty.overrides]]
 include = [ "src/lnpy/combine/combine.py" ]  # numpy versions disagreement
-rules = { unused-ignore-comment = "ignore" }
+rules.missing-attribute = "ignore"
 
 [[tool.ty.overrides]]
 include = [ "src/lnpy/core/progress.py" ]
@@ -560,7 +560,8 @@ analysis.allowed-unresolved-imports = [ "IPython.core.getipython" ]
 
 [[tool.ty.overrides]]
 include = [ "src/lnPi/maskedlnpi_legacy.py" ]
-rules = { unresolved-attribute = "ignore", invalid-method-override = "ignore" }
+rules.missing-attribute = "ignore"
+rules.incompatible-method-override = "ignore"
 
 # * Testing ----------------------------------------------------------------------------------------
 [tool.pytest.ini_options]
