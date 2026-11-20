@@ -93,7 +93,7 @@ def myguvectorize(
             (writable,) if isinstance(writable, str) else tuple(writable)
         )
 
-    return cast(  # ty: ignore[invalid-return-type]
+    return cast(  # ty: ignore[invalid-explicit-return]
         "Callable[[FuncT], FuncT]",
         guvectorize(  # type: ignore[no-untyped-call, unused-ignore]
             *args,
@@ -129,7 +129,7 @@ def myjit(
     if inline is not None:
         kwargs["inline"] = "always" if inline else "never"
 
-    return cast(  # ty: ignore[invalid-return-type]
+    return cast(  # ty: ignore[invalid-explicit-return]
         "Callable[[FuncT], FuncT]",
         njit(*args, fastmath=fastmath, cache=cache, parallel=parallel, **kwargs),  # type: ignore[call-overload, unused-ignore]  # pyright: ignore[reportCallIssue,reportArgumentType]
     )

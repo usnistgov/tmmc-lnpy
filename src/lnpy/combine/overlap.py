@@ -368,7 +368,7 @@ def shift_lnpi_windows(
                 check_connected=check_connected,
             ),
             index=lnpi.index,
-        )  # ty:ignore[invalid-return-type]
+        )  # ty:ignore[invalid-explicit-return]
 
     if validate.dataarray.typeis(lnpi):
         _, dim = select_axis_dim(lnpi, -1, dim)
@@ -400,7 +400,7 @@ def shift_lnpi_windows(
         grouper.end,
         use_sparse,
         check_connected,
-    )  # ty:ignore[invalid-return-type]
+    )  # ty:ignore[invalid-explicit-return]
 
 
 def assign_shift_lnpi_windows(
@@ -563,4 +563,4 @@ def keep_first(
     # pyrefly: ignore [bad-argument-type]
     axis, dim = select_axis_dim(table, axis, dim)
     # pyrefly: ignore [not-callable]
-    return table.isel({dim: indexer})  # ty:ignore[call-non-callable]
+    return table.isel({dim: indexer})  # ty:ignore[not-callable]
