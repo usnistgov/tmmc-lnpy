@@ -250,7 +250,7 @@ def peak_local_max_adaptive(
 
     idx = tuple(idx.T)
     if style == "indices":
-        return cast("tuple[NDArrayAny, ...]", idx)
+        return cast("tuple[NDArrayAny, ...]", idx)  # pyrefly: ignore[redundant-cast]
 
     out = np.zeros_like(data, dtype=bool)
     out[idx] = True  # pyright: ignore[reportCallIssue, reportArgumentType]

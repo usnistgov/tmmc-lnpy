@@ -32,7 +32,7 @@ __all__ = ["resources", "rootresults", "xr_dot"]
 
 def xr_dot(
     *arrays: Any,
-    dim: str | Iterable[Hashable] | "ellipsis" | None = None,  # ruff:ignore[undefined-name, quoted-annotation]
+    dim: str | Iterable[Hashable] | "ellipsis" | None = None,  # ruff:ignore[undefined-name, quoted-annotation]  # pyrefly: ignore[unknown-name]
     **kwargs: Any,
 ) -> Any:
     """
